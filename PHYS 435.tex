@@ -1,0 +1,1935 @@
+\documentclass[12pt,a4paper,titlepage]{article}
+% Daniel Wong December 28, 2019
+
+\usepackage[fleqn]{amsmath} % To write aligned equations
+\usepackage{amssymb} % To write math symbols
+\usepackage{graphicx,float} % To add pictures
+\usepackage{caption} % To add captions
+\usepackage{subcaption} % To add subcaptions
+\usepackage{multirow} % To add multirow lines in tables
+\usepackage{multicol} % To add multicolumn lines in tables
+\usepackage{hyperref} % To add hyperlinks
+\usepackage[normalem]{ulem} % To underline
+\usepackage[backend=bibtex,citestyle=numeric,autocite=plain,sorting=none]{biblatex} % To add references
+\usepackage[english]{babel} % To write accented vowels
+\usepackage[toc,page]{appendix} % To add table of contents
+\usepackage{physics} % To use supported physics notation
+\usepackage[none]{hyphenat} % To remove hyphenation
+
+\usepackage{fancyhdr} % To input custom headers
+\pagestyle{fancy} % Defines header for all pages other than plain-style pages
+\fancyhf{}
+\rhead{\nouppercase\leftmark}
+\lfoot{Daniel Wong}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt} % Defining width of header line
+\renewcommand{\footrulewidth}{0.4pt} % Defining width of footer line
+
+\usepackage{tikz} % To input mathematical plots and diagrams
+\usetikzlibrary{decorations.pathreplacing,decorations.pathmorphing,decorations.markings} % For curly braces, wavy lines, and arrow markings
+\usetikzlibrary{tikzmark} % For adding annotations to equations
+\usetikzlibrary{shapes.geometric} % For drawing regular polygons
+
+\tikzset{->-/.style={decoration={markings,mark=at position #1 with {\arrow{>}}},postaction={decorate}}} 
+\tikzset{-<-/.style={decoration={markings,mark=at position #1 with {\arrow{<}}},postaction={decorate}}}% Defining lines with arrows in the middle
+
+\usepackage{color} % To use different colours
+\usepackage[makeroom]{cancel} % To cancel terms in equations
+
+\newcommand{\trm}[1]{\textrm{#1}} % Shorthand for \textrm command
+\newcommand{\up}{\uparrow} % Shorthand for \uparrow command
+\newcommand{\dn}{\downarrow} % Shorthand for \downarrow command
+\newcommand{\en}{\epsilon_{0}} % Shorthand for \epsilon_{0}
+\newcommand{\ul}[1]{\underline{\smash{#1}}} % Properly underlines words
+\newcommand{\explain}{\quad\rotatebox[origin=c]{180}{$\Lsh$}} % Adds an arrow to allow for explanations in equations
+\newcommand{\aside}[1]{% Aligns the environment for asides
+	\ul{Aside}:\hfill
+	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
+	#1
+	\end{minipage}\hspace{4em}\bigskip
+}
+\newcommand{\definition}[1]{% Aligns the environment for definitions
+	\ul{Definition}:\hfill
+	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
+	#1
+	\end{minipage}\hspace{4em}\bigskip
+}
+\newcommand{\example}[2]{% Aligns the environment for examples
+	\ul{Ex #1}:\hfill
+	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
+	#2
+	\end{minipage}\hspace{4em}\bigskip
+}
+
+\newcommand{\angstrom}{\textup{\AA}} % Angstrom symbol
+\renewcommand{\Re}{\trm{Re}} % Real
+\renewcommand{\Im}{\trm{Im}} % Imaginary
+\renewcommand{\CancelColor}{\color{red}} % Changes the cancel colour to red
+
+\begin{document}
+\title{PHYS 435: Current Topics in Condensed Matter Physics}
+\author{Daniel Wong\\University of Waterloo\\Instructor: Dr. Anton Burkov}
+\date{Winter 2018}
+\maketitle
+
+\setlength\parindent{0pt}
+\pagenumbering{roman}
+
+\section*{Disclaimer}
+These notes may be freely used by anyone who comes across them. If any errors are found within these notes, please email me at \ul{temp@temp.com}. If you are the previous instructor of this course (Dr. Anton Burkov) and have concerns about keeping these notes on my website, please contact me at the email provided.\\
+
+Other course notes may be found on my website at \url{www.temp.com/notes}.
+
+\newpage
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section{Introduction}
+When referring to condensed matter, ``condensed" refers to anything that is not a gas (i.e. liquids and solids). In this course, we will be mainly interested in solids. For gases, they do not have shape nor volume. Meanwhile, liquids have a well-defined volume but no shape. However, solids have not only a fixed volume, but also a fixed shape. This leads to the main characteristic of solids: \ul{rigidity}.\\
+
+Rigidity occurs as a consequence of atoms in a solid forming an ordered crystal lattice. Localized to each atom is a bunch of electrons. Electrons in outer orbitals may be weakly bound to their respective atoms and are able to move around the lattice structure. These are \ul{valence electrons}.
+
+\newpage
+\section{Effects of the Electronic Structure Topology}
+\subsection{Toy Model of a Solid}
+A large part of the physics of solids has to deal with the motion of valence electrons in a periodic potential created by the ionized atoms of the crystal lattice. Consider the simplest toy model of a solid: 1D periodic chain of atoms.\\
+
+\begin{tikzpicture}
+	\draw[dotted] (0,0) -- (1,0);
+	\fill (2,0) circle (3pt) node[above,yshift=0.3cm] {$n = 0$};
+	\fill (4,0) circle (3pt) node[above,yshift=0.3cm] {$n = 1$};
+	\fill (6,0) circle (3pt) node[above,yshift=0.3cm] {$n = 2$};
+	\fill (8,0) circle (3pt);
+	\fill (10,0) circle (3pt);
+	\fill (12,0) circle (3pt);
+	\draw (1,0) -- (13,0);
+	\draw[dotted] (13,0) -- (14,0);
+	\draw[|-|] (2,-0.5) --node[below] {$a$} (4,-0.5);
+	\draw[dashed] (5,0.5) -- (5,-0.5);
+	\draw[dashed] (7,0.5) -- (7,-0.5);
+	\draw[decorate,decoration={brace,amplitude=10pt,mirror}] (5,-0.5) -- (7,-0.5) node[below,midway,yshift=-0.3cm] {primitive unit cell};
+\end{tikzpicture}\\
+where $a$ is the lattice constant. Different atoms will be labeled by the integer index $n$. The crystal can be created by translating the primitive unit cell by the lattice constant. The location of the $n^{\trm{th}}$ atom is $na$.\\
+
+Every atom has a single valence electron. Let $\ket{n}$ represent the electron localized at the $n^{\trm{th}}$ atom. Quantum mechanically, one expects the motion of electrons to occur due to tunneling through the chain. Say the energy of the electron $\ket{n}$ localized to an atom is $\bra{n}H\ket{n}=\varepsilon_{0}=0$. Let the probability amplitude for tunneling be $t$. Thus
+\begin{equation}
+\bra{n\pm1}H\ket{n}=-t
+\end{equation} 
+
+Therefore
+\begin{equation}
+H=-t\sum_{n}(\ketbra{n+1}{n}+\ketbra{n-1}{n})
+\end{equation}
+Note that no diagonal terms exist since $\varepsilon_{0}=0$.\\
+
+\vspace{0.5cm}
+\begin{tikzpicture}
+	\draw[dotted] (0,0) -- (1,0);
+	\fill (2,0) circle (3pt) node[above,yshift=0.3cm] {$n = 0$};
+	\fill (4,0) circle (3pt) node[above,yshift=0.3cm] {$n = 1$};
+	\fill (6,0) circle (3pt) node[above,yshift=0.3cm] {$n = 2$};
+	\fill (8,0) circle (3pt);
+	\fill (10,0) circle (3pt);
+	\fill (12,0) circle (3pt);
+	\draw[dotted] (13,0) -- (14,0);
+	\draw (1,0) -- (13,0);
+	\draw[dotted,red] (0,-1.5) -- (1,-1.5); 
+	\draw[domain=1:13,samples=200,red] plot (\x, {(cos(deg(pi/2*(\x-2))))^10 - 1.5});
+	\draw[dotted,red] (13,-1.5) -- (14,-1.5) node[right] {$V(x)$};
+\end{tikzpicture}
+\vspace{0.5cm}
+
+From the Heisenberg uncertainty principle: $\Delta p \Delta x \sim \hbar$. Therefore
+\begin{equation}
+E_\trm{min}\sim\frac{\Delta p^{2}}{2m}\sim\frac{\hbar^{2}}{2m\Delta x^{2}}
+\end{equation}
+
+When $t$ is positive, $t$ describes the energy gain due to localization of an electron between neighbouring atoms.\\
+
+Let us find the eigenstates of $H$. Since $H$ is non-diagonal in the $\ket{n}$ basis, let us use the \ul{lattice Fourier transform} to obtain H in a different basis. The lattice Fourier transform is given by
+\begin{equation}\label{eq:4}
+\ket{n}=\sum_{k}\ket{k}\braket{k}{n}
+\end{equation}
+where $k$ is a wavevector of the electron and $p=\hbar k$ is its momentum.\\
+
+For free electrons, we know that $\braket{x}{k}\sim e^{ikx}$. Thus, analogously $\braket{n}{k}\sim e^{ikna}$. Thus far, no restrictions have been placed on the range of $n$. Since a real substance will posses a finite number of unit cells, let us say that there are $N$ unit cells, such that $n$ runs from 0 to $N-1$. Since $\abs{\braket{n}{k}}^{2}$ is the probability an electron is found localized to atom $n$, $\sum_{n}\abs{\braket{n}{k}}^{2}=1$. Let the normalization constant be $C$.
+\begin{equation}\label{eq:5}
+\begin{aligned}
+1&=\sum_{n=0}^{N-1}\abs{\braket{n}{k}}^{2}\\
+&=\sum_{n=0}^{N-1}\abs{Ce^{ikna}}^{2}\\
+&=NC^{2}\\
+\implies C &= \frac{1}{\sqrt{N}}
+\end{aligned}
+\end{equation}
+
+Thus, from equations \eqref{eq:4} and \eqref{eq:5}
+\begin{equation}\label{eq:6}
+\begin{aligned}
+\braket{n}{k}&=\frac{1}{\sqrt{N}}e^{ikna}\\
+\implies \ket{n}&=\frac{1}{\sqrt{N}}\sum_{k}e^{-ikna}\ket{k}
+\end{aligned}
+\end{equation}
+
+What do we do at the boundaries of finite sized lattices? One could apply periodic boundary conditions. This allows us to avoid talking about boundaries when $N$ is large.\\
+\begin{center}
+\begin{tikzpicture}
+	\draw circle (2cm) node {$L$};
+	\foreach \a in {3,4,...,11}{
+		\fill (\a*360/12: 2cm) circle (3pt);
+	}
+	\fill (360/12: 2cm) circle (3pt) node[right,yshift=0.5cm,xshift=0.5cm] {$n=0$};
+	\fill (2*360/12: 2cm) circle (3pt) node[above,yshift=0.5cm,xshift=0.9cm] {$n=1$};
+	\fill (360: 2cm) circle (3pt) node[right,xshift=0.5cm] {$n=N-1$};
+\end{tikzpicture}
+\end{center}
+This allows us to better consider the electrons if we are concerned only with the bulk properties of the system. Thus
+\begin{equation}\label{eq:7}
+\ket{n}=\ket{n+N}
+\end{equation}
+Therefore, from equations \eqref{eq:6} and \eqref{eq:7}
+\begin{equation}
+\begin{aligned}
+\braket{n+N}{k}&=\braket{n}{k}\\
+\implies e^{ik(n+N)a}&=e^{ikna}\\
+\implies e^{ikNa}&=1
+\end{aligned}
+\end{equation}
+Finally, this leads to
+\begin{equation}
+k=\frac{2\pi m}{Na}=\frac{2\pi m}{L}, m \in \mathbb{Z}
+\end{equation}
+Thus, values of $k$ are discrete, justifying writing $\ket{n}$ as a sum over $k$ rather than as an integral. This allows us to write the Hamiltonian as
+\begin{equation}
+H=-\frac{t}{N}\sum_{n=0}^{N-1}\sum_{k_{1}k_{2}}(\ketbra{k_{1}}{k_{2}}e^{-ik_{1}(n+1)a}e^{ik_{2}na}+\ketbra{k_{1}}{k_{2}}e^{-ik_{1}(n-1)a}e^{ik_{2}na})
+\end{equation}
+
+Note that
+\begin{equation}
+\frac{1}{N}\sum_{k=1}^{N}e^{2\pi i\frac{k}{N}(n-m)}=\delta_{nm}
+\end{equation}
+Since $k_{1}-k_{2}$ is a multiple of $\frac{2\pi}{Na}$
+\begin{equation}
+\frac{1}{N}\sum_{n=0}^{N-1}e^{-i(k_{1}-k_{2})na}=\delta_{k_{1}k_{2}}
+\end{equation}
+Thus, one writes
+\begin{equation}
+\begin{aligned}
+H&=-t\sum_{k}\ketbra{k}{k}(e^{-ika}+e^{ika})\\
+&=-2t\sum_{k}\cos(ka)\ketbra{k}{k}\\
+&=\sum_{k}\varepsilon(k)\ketbra{k}
+\end{aligned}
+\end{equation}
+
+Thus, the energy eigenvalues (energy level of state) $\varepsilon(k)$ are $-2t\cos(ka)$ for an electron moving in a 1D periodic potential. Contrast this with $\varepsilon(k)$ for a free electron, where
+\begin{equation}
+\varepsilon(k)=\frac{p^{2}}{2m}=\frac{\hbar^{2}k^{2}}{2m}
+\end{equation}
+
+$t$ acts as a tunneling coefficient that dictates a tunneling rate (up to a constant $\hbar$). The eigenstates $\ket{k}$ are
+\begin{equation}
+\ket{k}=\sum_{n}\ket{n}\braket{n}{k}=\frac{1}{\sqrt{N}}\sum_{n}\ket{n}e^{ikna}
+\end{equation}
+The kets $\ket{k}$ are called \ul{Bloch states}.\\
+
+Suppose one transforms $k$ into $k+\frac{2\pi m}{a}, m\in\mathbb{Z}$. The Bloch state does not change
+\begin{equation}
+\begin{aligned}
+\ket{k+\frac{2\pi m}{a}}&=\frac{1}{\sqrt{N}}\sum_{n}e^{i\left(k+\frac{2\pi m}{a}\right)na}\ket{n}\\
+&=\frac{1}{\sqrt{N}}e^{ikna}\cancelto{1}{e^{i2\pi mn}}\ket{n}\\
+&=\ket{k}
+\end{aligned}
+\end{equation}
+Note that this is not dependent on the periodic boundary condition. Thus, physically distinct values of $k$ are restricted to a finite interval in $k$-space of length $\frac{2\pi}{a}$. Taking this to be symmetric around $k=0$
+\[
+-\frac{\pi}{a}\leq k < \frac{\pi}{a}\quad\trm{(\ul{First Brillouin zone})}
+\]
+
+\hspace{-1cm}
+\begin{tikzpicture}
+	\fill[red, fill opacity=0.2, text opacity=1] (pi,2) rectangle (-pi,-2) node[xshift=-1cm,yshift=-1cm] {energy band};
+	\draw[line width=0.05mm, red, text=black] (-pi,2) -- (pi,2) node[right] {$2t$};
+	\draw[line width=0.05mm, red, text=black] (-pi,-2) -- (pi,-2) node[right] {$-2t$};
+	\draw[red,->] (-4,-2.75) .. controls (-4,-1.5) .. (-3.5,-1.5);
+	\draw[<->] (-4,0) -- (4,0) node[right] {$k$};
+	\draw[<->] (0,-2.5) -- (0,2.5) node[above] {$\varepsilon(k)$};
+	\draw[thick,domain=-pi:pi,samples=200] plot (\x, {-2*cos(deg(\x)});
+	\draw[dashed] (-pi,2.5) -- node[above left] {$-\frac{\pi}{a}$} (-pi,-2.5); 
+	\draw[dashed] (pi,2.5) -- node[above right] {$\frac{\pi}{a}$} (pi,-2.5);
+	\node[anchor=north west,right] at (3.5,1.5)
+		{\[
+			\begin{aligned}
+				&\trm{\ul{NOTE}:}\\
+				&\varepsilon\left(k+\frac{2\pi m}{a}\right)&&=-2t\cos(ka+2\pi m)\\
+				& &&=-2t\cos(ka)\\
+				& &&=\varepsilon(k)
+			\end{aligned}
+		\]};
+\end{tikzpicture}\\
+The accessible energy levels are confined to the finite interval between $\varepsilon_{\trm{max}}=2t$ and $\varepsilon_{\trm{min}}=-2t$. It has a \ul{bandwidth} $\Delta\varepsilon=\varepsilon_{\trm{max}}-\varepsilon_{\trm{min}}=4t$. The interval of allowed values of energy is called an \ul{energy band}.
+
+\begin{align*}
+\trm{\ul{Aside}:}\quad\ket{k}&=\frac{1}{\sqrt{N}}\sum_{n}e^{ikna}\ket{n}\trm{ is the \ul{lattice Fourier transform}}.\\
+ \ket{n}&=\frac{1}{\sqrt{N}}\sum_{k}e^{-ikna}\ket{k}\trm{ is the \ul{inverse lattice Fourier transform}}.
+\end{align*}
+
+In general, the energy spectrum of electrons in a solid takes the form of several bands separated by \ul{band gaps} (intervals of forbidden values).\\
+
+How many quantum states are there in a band? Due to periodic boundary conditions
+\begin{equation}
+\begin{aligned}
+-\frac{\pi}{a}&\leq k<\frac{\pi}{a}\\
+-\frac{\pi}{a}&\leq\frac{2\pi m}{Na}<\frac{\pi}{a}\\
+-\frac{N}{2}&\leq m<\frac{N}{2}
+\end{aligned}
+\end{equation}
+
+Since $m$ is an integer, there are $N$ allowed values for $m$ (and hence $k$). Accounting for the spins of electrons, there are actually $2N$ states available in every band. Suppose one has one valence electron for each of the $N$ atoms in the chain. Thus, there will be $N$ electrons. By Pauli's exclusion principle, which states that only one fermion can occupy a given state in a band, exactly half of the total number of states in the band will be filled.
+\begin{center}
+\begin{tikzpicture}
+	\fill [gray,domain=-pi:-pi/2,fill opacity=0.2] (-pi,0) -- plot (\x, {-2*cos(deg(\x)}) -- (-pi/2,0) -- cycle;
+	\fill [red,domain=-pi/2:pi/2,fill opacity=0.2] (-pi/2,0) -- plot (\x, {-2*cos(deg(\x)}) -- (pi/2,0) -- cycle;
+	\fill [gray,domain=pi/2:pi,fill opacity=0.2] (pi/2,0) -- plot (\x, {-2*cos(deg(\x)}) -- (pi,0) -- cycle;
+	\draw[<->] (-4,0) -- (4,0) node[right] {$k$};
+	\draw[<->] (0,-2.5) -- (0,2.5) node[above] {$\varepsilon(k)$};
+	\draw[thick,domain=-pi:pi,samples=200] plot (\x, {-2*cos(deg(\x)});
+	\draw[dashed] (-pi,2.5) -- node[above left] {$-\frac{\pi}{a}$} (-pi,-2.5); 
+	\draw[dashed] (pi,2.5) -- node[above right] {$\frac{\pi}{a}$} (pi,-2.5);
+	\draw (pi,2) node[right] {$2t$};
+	\draw (pi,-2) node[right] {$-2t$};
+	\draw (pi/2,0.1) --node[above left] {$\frac{\pi}{2a}$} (pi/2,-0.1);
+	\draw (-pi/2,0.1) --node[above right] {$-\frac{\pi}{2a}$} (-pi/2,-0.1);
+	\draw[red] (0,-2.5) node[left] {occupied};
+	\draw[red,->] (-0.75,-2.25) -- (-0.5,-1);
+	\draw (pi/2,2) node[left] {empty};
+	\draw[->] (pi/2,2) -- (3*pi/4,1);
+	\draw[->] (0.1,2) -- (-3*pi/4,1);
+	\draw[->] (-4,-2) node[left] {$\varepsilon_{F}=0$} .. controls(-pi/2,-2) .. (-pi/2,-0.2);
+\end{tikzpicture}
+\end{center}
+When the electrons in the material are at zero temperature, the electrons occupy all of the lowest possible energy states. The \ul{Fermi energy} ($\varepsilon_{F}$) for a system occurs at the interface between filled energy states and unfilled energy states at zero temperature for non-interacting fermions. Thus, $\varepsilon_{F}=0$ in this problem.\\
+
+Note that in this problem, any perturbation will excite an electron below $\varepsilon_{F}$ to above $\varepsilon_{F}$. An infinitesimally small electric field can achieve this, which is a property of metals. In fact, if the Fermi energy crosses a band, it is a metal.\bigskip
+
+To find the corresponding $k$ for $\varepsilon_{F}=0$
+\begin{equation}
+\varepsilon(k)=\varepsilon_{F}=0\quad\implies\quad k=\pm\frac{\pi}{2a}=\pm k_{F}
+\end{equation}
+where $k_{F}$ is the \ul{Fermi wave vector}. Again, $k_{F}$ separates filled states from empty states. $\abs{k}<k_{F}$ are filled states while $\abs{k}>k_{F}$ are empty states. The surface in momentum space (or $k$-space) separating filled and unfilled states is the \ul{Fermi surface}. Most observed properties of a metal follow from the existence of the Fermi surface. The dimension of the Fermi surface is one less than the dimension of the system.\\
+
+The volume of filled states in $k$-space bounded by the Fermi surface (or the volume of the Fermi sea) is related to the density of electrons
+
+\begin{equation}
+	\tikzmarknode{A}{2}\left[\frac{\tikzmarknode{B}{(2k_{F})}}{\tikzmarknode{C}{\left(\frac{2\pi}{Na}\right)}}\right]=\tikzmarknode{D}{n}\tikzmarknode{E}{(Na)}
+\end{equation}
+\begin{tikzpicture}[overlay,remember picture,shorten <=1mm,font=\footnotesize]
+	\draw[red,<-] (A.south) -- ++ (-0.3,-0.3) node[left,xshift=0.1cm,yshift=-0.1cm] {2 spin states};
+	\draw[red,<-] (B.east) -- ++ (1,0.6) node[right] {volume of Fermi sea};
+	\draw[red,<-] (C.south) -- ++ (0.2,-0.4) node[below right,xshift=-0.1cm,yshift=0.2cm] {volume corresponding to a single $k$ since $k$ is quantized as $k=\frac{2\pi m}{Na}$, $m\in\mathbb{Z}$};
+	\draw[red,<-] (D.south) -- ++ (0.3,-0.3) node[right,xshift=-0.1cm,yshift=-0.1cm] {number density};
+	\draw[red,<-] (E.east) -- ++(0.8,0.2) node[right] {length of chain};
+\end{tikzpicture}
+
+Thus
+\begin{equation}
+k_{F}=\frac{\pi}{2}n
+\end{equation}
+
+This makes sense as that implies $n=\frac{1}{a}$ which is true as there is one electron per unit cell. In fact, this result is always true and arises from \ul{Luttinger's theorem}, which states that the volume enclosed by the Fermi surface is directly propertional to the electron density.
+
+\subsection{Polyacetylene}
+This model can be modified to represent the one-dimensional crystalline polymer polyacetylene. It consists of weakly-interacting 1D chains of CH units.  The electronic configuration of H and C are given by $1s$ and $1s^{2}2s^{2}2p^{2}$ respectively.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{Images/2/polyacetylene.png}
+	\caption{Polyacetylene with unit cell}
+\end{figure}
+H has one valence electron while C has four valence electrons. Two of these electrons are used to covalently bond with nearest-neighbour carbon atoms. The third electron is used to bond with its corresponding hydrogen neighbour All other electrons in the inner orbitals are tightly bound to the carbon nuclei. Thus, one valence electron is free to move along the chain per carbon atom.\bigskip
+
+If all the bonds between the carbons were the same, we would obtain our previous model. However, due to \ul{Peierl's instability}, adjacent CH groups move toward each other. This leads to alternating single and double bonds. Note that the carbons of a double bond are closer together than those of a single bond. This can be represented in the following model\\
+\begin{tikzpicture}
+	\draw[double=none,double distance=3pt,thick] (2,0) -- node[below,yshift=-0.3cm] {$t_{1}$} (4,0);
+	\draw[double=none,double distance=3pt,thick] (6,0) -- (8,0);
+	\draw[double=none,double distance=3pt,thick] (10,0) -- (12,0);
+	\draw[dotted] (0,0) -- (2,0);
+	\fill (2,0) circle (3pt) node[below,yshift=-0.1cm] {$1$};
+	\fill (4,0) circle (3pt) node[below,yshift=-0.1cm] {$2$};
+	\fill (6,0) circle (3pt) node[below,yshift=-0.1cm] {$1$};
+	\fill (8,0) circle (3pt) node[below,yshift=-0.1cm] {$2$};
+	\fill (10,0) circle (3pt) node[below,yshift=-0.1cm] {$1$};
+	\fill (12,0) circle (3pt) node[below,yshift=-0.1cm] {$2$};
+	\draw[dotted] (12,0) -- (14,0);
+	\draw (4,0) -- node[below,yshift=-0.3cm] {$t_{2}$} (6,0);
+	\draw (8,0) -- (10,0);
+	\draw[|-|] (2,0.5) -- node[above] {$2a$} (6,0.5);
+	\draw[dashed] (11,0) circle[x radius=1.6cm,y radius=0.8cm] node[yshift=0.5cm] {basis};
+\end{tikzpicture}\\
+The primitive unit cell has now doubled in size and now contains atoms 1 and 2. As an aside, the number of bands in a solid is equal to the number of atoms in the basis of a primitive unit cell.\\
+
+The double and single bonds have different tunneling amplitudes, namely $t_{1}$ and $t_{2}$ respectively, with $t_{1}>t_{2}$. The lattice points of this model are collectively known as the \ul{Bravais lattice}. However, in this case, the Bravais lattice points are associated with two physical atoms composing the \ul{basis}. One can describe any \ul{crystal} with a basis and a Bravais lattice.\\
+
+Let $\ket{n,\alpha}$, $\alpha\in\{1,2\}$ describe the electron localized to the $n^{\trm{th}}$ unit cell at atom $\alpha$. The Hamiltonian characterizing the possible transitions is described by
+\begin{equation}\label{eq:19}
+H=\sum_{n}\bigg[-t_{1}\big(\ketbra{n,2}{n,1}+\ketbra{n,1}{n,2}\big)-t_{2}\big(\ketbra{n-1,2}{n,1}+\ketbra{n,1}{n-1,2}\big)\bigg]
+\end{equation}
+Note in this case, $n$ labels the unit cell. This recurring motif of tunneling only to the nearest-neighbour atoms is known as the \ul{tight-binding model}.\\
+
+As before, let us transform $\ket{n,\alpha}$ into momentum space
+\begin{equation}
+\ket{n,\alpha}=\sum_{k}\ket{k,\alpha}\braket{k,\alpha}{n,\alpha}
+\end{equation}
+Again, $\braket{x,k}\sim e^{ikx}$. Thus, by analogy $\braket{n,\alpha}{k,\alpha}\sim e^{2ikna}$. Using the same argument as before, the normalization constant is $C=\frac{1}{\sqrt{N}}$ Note that $N$ is the number of unit cells and not simply the number of atoms. Thus
+\begin{equation}
+\ket{n,\alpha}=\frac{1}{\sqrt{N}}\sum_{k}e^{-2ikna}\ket{k,\alpha}
+\end{equation}
+
+Using the periodic boundary conditions $\ket{n,\alpha}=\ket{n+N,\alpha}$, one obtains $e^{2ikna}=1$. Thus, $k$ is quantized as
+\begin{equation}
+k=\frac{\pi m}{Na}, m\in\mathbb{Z}
+\end{equation}
+If one transforms $k$ into $k+\frac{\pi m}{a}$, $m\in\mathbb{Z}$, one sees again that the Bloch states do not change. This implies the physically distanct values of $k$ are restricted to a finite interval of $\frac{\pi}{a}$ in $k$-space. Taken symmetrically around $k=0$
+\begin{equation}
+-\frac{\pi}{2a}\leq k<\frac{\pi}{2a}
+\end{equation}
+The Brillouin zone for polyacetylene is half the width of the Brillouin zone for the original toy model, since the unit cell is now twice the size.\\
+
+Since the deviation between tunneling amplitudes is slight, let $2\delta t=t_{1}-t_{2}$ be a small perturbation such that
+\begin{equation}
+t_{1}=t+\delta t, \quad t_{2}=t-\delta t
+\end{equation}
+
+Therefore, substituting into equation \eqref{eq:19}
+\begin{equation}
+\begin{aligned}
+H=&-(t+\delta t)\frac{1}{N}\sum_{n}\sum_{k_{1}k_{2}}\big(\ketbra{k_{1},2}{k_{2},1}e^{-2ik_{1}na}e^{2ik_{2}na}+\ketbra{k_{1},1}{k_{2},2}e^{-2ik_{1}na}e^{2ik_{2}na}\big)\\
+&-(t-\delta t)\frac{1}{N}\sum_{n}\sum_{k_{1}k_{2}}\big(\ketbra{k_{1},2}{k_{2},1}e^{-2ik_{1}(n-1)a}e^{2ik_{2}na}+\ketbra{k_{1},1}{k_{2},2}e^{-2ik_{1}na}e^{2ik_{2}(n-1)a}\big)\\
+=&-(t+\delta t)\sum_{k}\big(\ketbra{k,1}{k,2}+\ketbra{k,2}{k,1}\big)-(t-\delta t)\sum_{k}\big(\ketbra{k,1}{k,2}e^{-2ika}+\ketbra{k,2}{k,1}e^{2ika}\big)\\
+&\explain\trm{ Since } \frac{1}{N}\sum_{n}e^{-2i(k-k')na}=\delta_{kk'}\\
+=&-t\sum_{k}(1+e^{-2ika})\ketbra{k,1}{k,2}-\delta t\sum_{k}(1-e^{-2ika})\ketbra{k,1}{k,2}\\
+&-t\sum_{k}(1+e^{2ika})\ketbra{k,2}{k,1}-\delta t\sum_{k}(1-e^{2ika})\ketbra{k,2}{k,1}
+\end{aligned}
+\end{equation}
+
+At fixed $k$, this resembles the Hamiltonian of a spin in a magnetic field
+\begin{equation}
+H(k)=-t(1+e^{-2ika})\ketbra{1}{2}-\delta t(1-e^{-2ika})\ketbra{1}{2}+\trm{h.c.}
+\end{equation}
+where
+\begin{equation}
+H=\sum_{k}H(k)
+\end{equation}\\
+
+Here we denote $\ket{k,1}$ as $\ket{1}$ and $\ket{k,2}$ as $\ket{2}$. Recall from quantum mechanics that for a spin in a magnetic field
+\begin{equation}
+H=\vec{B}\cdot\vec{S}=\frac{\hbar}{2}\vec{B}\cdot\vec{\sigma}
+\end{equation}
+where $\vec{\sigma}=\{\sigma_{x},\sigma_{y},\sigma_{z}\}$ are the \ul{Pauli matrices}.
+\begin{equation}
+\begin{aligned}
+\sigma_{x}&=\ketbra{\up}{\dn}+\ketbra{\dn}{\up}=\ketbra{1}{2}+\ketbra{2}{1}\\
+&=\begin{bmatrix}
+0 & 1\\
+1 & 0
+\end{bmatrix}\\
+\sigma_{y}&=-i(\ketbra{\up}{\dn}-\ketbra{\dn}{\up})=-i(\ketbra{1}{2}-\ketbra{2}{1})\\
+&=\begin{bmatrix}
+0 & -i\\
+i & 0
+\end{bmatrix}\\
+\sigma_{z}&=\ketbra{\up}{\up}-\ketbra{\dn}{\dn}=\ketbra{1}{1}-\ketbra{2}{2}\\
+&=\begin{bmatrix}
+1 & 0\\
+0 & -1
+\end{bmatrix}
+\end{aligned}
+\end{equation}
+
+In terms of sinusoidal functions ($e^{2ika}=\cos(2ka)+i\sin(2ka)$)
+\begin{equation}
+\begin{aligned}
+H(k)=&-\big[(t+\delta t)+(t-\delta t)\cos(2ka)\big]\ketbra{1}{2}\\
+&\quad+i(t-\delta t)\sin(2ka)\ketbra{1}{2}\\
+&\quad-\big[(t+\delta t)+(t-\delta t)\cos(2ka)\big]\ketbra{2}{1}\\
+&\quad-i(t-\delta t)\sin(2ka)\ketbra{2}{1}
+\end{aligned}
+\end{equation}
+
+Let us introduce $\vec{d}(k)=\{d_{x}(k),d_{y}(k),d_{z}(k)\}$, such that
+\begin{equation}
+\begin{aligned}
+d_{x}(k)&=-(t+\delta t)-(t-\delta t)\cos(2ka)\\
+d_{y}(k)&=-(t-\delta t)\sin(2ka)\\
+d_{z}(k)&=0
+\end{aligned}
+\end{equation}
+
+Thus
+\begin{equation}
+H(k)=\vec{d}(k)\cdot\vec{\sigma}=\begin{bmatrix}
+0 & d_{x}-id_{y}\\
+d_{x}+id_{y} & 0
+\end{bmatrix}
+\end{equation}
+
+As has been found previously in quantum mechanics (PHYS 434), the eigenvalues $\varepsilon(k)$ of $H(k)$ correspond to spin $\vec{\sigma}$ aligning or anti-aligning to $\vec{d}(k)$.
+\begin{equation}
+\begin{aligned}
+0=\det(H(k)-\varepsilon\mathbb{I})=\varepsilon^{2}-(d_{x}^{2}+d_{y}^{2})\\
+\implies\varepsilon(k)=\pm\sqrt{d_{x}^{2}(k)+d_{y}^{2}(k)}=\pm\abs*{\vec{d}(k)}
+\end{aligned}
+\end{equation}
+
+\aside{The spin correspondence $\ket{1}=\ket{\up}$ and $\ket{2}=\ket{\dn}$ is referred to as a \ul{pseudospin}. $\vec{d}(k)$ is an \ul{effective magnetic field}.}
+
+Note that in contrast to the single energy band in the previous model, there are now two energy bands, since there are two valence orbitals per unit cell. In general, each distinct state (atom) in the unit cell gives rise to a band.
+\begin{equation}
+\begin{aligned}
+\abs*{\vec{d}(k)}^{2}&=d_{x}^{2}(k)+d_{y}^{2}(k)+d_{z}^{2}(k)\\
+&=\big[-(t+\delta t)-(t-\delta t)\cos(2ka)\big]^{2}+\big[-(t-\delta t)\sin(2ka)\big]^{2}+0^{2}\\
+&=(t+\delta t)^{2}+2(t^{2}-\delta t^{2})\cos(2ka)+(t-\delta t)^{2}\cos^{2}(2ka)+(t-\delta t)^{2}\sin^{2}(2ka)\\
+&=t^{2}+2t\delta t+\delta t^{2}+2(t^{2}-\delta t^{2})\cos(2ka)+t^{2}-2t\delta t+\delta t^{2}\\
+&=2t^{2}\big(1+\cos(2ka)\big)+2\delta t^{2}\big(1-\cos(2ka)\big)\\
+&=2t^{2}\big(2\cos^{2}(ka)\big)+2\delta t^{2}\big(2\sin^{2}(ka)\big)\\
+&=4t^{2}\cos^{2}(ka)+4\delta t^{2}\sin^{2}(ka)\\
+\end{aligned}
+\end{equation}
+
+Thus
+\begin{equation}
+\varepsilon(k)=\pm\abs*{\vec{d}(k)}=\pm\sqrt{4t^{2}\cos^{2}(ka)+4\delta t^{2}\sin^{2}(ka)}
+\end{equation}
+
+\begin{tikzpicture}
+	\fill[red, fill opacity=0.2, text opacity=1] (pi,2) rectangle (-pi,0.3);
+	\fill[red, fill opacity=0.2, text opacity=1] (pi,-2) rectangle (-pi,-0.3);
+	\draw[line width=0.05mm, red, text=black] (-pi,2) -- (pi,2) node[right] {$2t$};
+	\draw[line width=0.05mm, red, text=black] (-pi,-2) -- (pi,-2) node[right] {$-2t$};
+	\draw[line width=0.05mm, red, text=black] (-pi,0.3) -- (pi,0.3) node[right] {$2\delta t$};
+	\draw[line width=0.05mm, red, text=black] (-pi,-0.3) -- (pi,-0.3) node[right] {$-2\delta t$};
+	\draw[<->] (-5,0) -- (5,0) node[right] {$k$};
+	\draw[<->] (0,-2.5) -- (0,2.5) node[above] {$\varepsilon(k)$};
+	\draw[thick,domain=-pi:pi,samples=200] plot (\x, {sqrt(4*cos(deg(\x/2))^2+0.09*sin(deg(\x/2))^2});
+	\draw[thick,domain=-pi:pi,samples=200] plot (\x, {-sqrt(4*cos(deg(\x/2))^2+0.09*sin(deg(\x/2))^2});
+	\draw[dashed] (-pi,2.5) -- (-pi,-2.5) node[below] {$-\frac{\pi}{2a}$}; 
+	\draw[dashed] (pi,2.5) -- (pi,-2.5) node[below] {$\frac{\pi}{2a}$};
+	\draw[|-|] (-3.3,0.3) --node[left,fill=white,xshift=-0.1cm] {$4\delta t$} (-3.3,-0.3);
+	\draw[red] (-3.3,1.5) node[left] {energy bands};
+	\draw[red,->] (-3.3,1.5) -- (-3*pi/4,1.5);
+	\draw[red,->] (-5.6,1.3) .. controls(-5.6,-1.5) .. (-3*pi/4,-1.5);
+	\node[anchor=north west,right,text width=4cm] at (4,1.5)
+		{Note the gap between energy bands.};
+\end{tikzpicture}
+
+As we increased the size of our unit cell from $a$ to $2a$, the Brillouin zone went from $k\in\left[-\frac{\pi}{a},\frac{\pi}{a}\right)$ to $k\in\left[-\frac{\pi}{2a},\frac{\pi}{2a}\right)$. In this model, since there is one free valence electron per carbon, there are two free valence electrons per unit cell. Recall that in the previous model, there were $2N$ states available in the band. Following the same arguments, the Brillouin zone decreases by a factor of 2 in this model. However, the amount between successive discrete values of $k$ also decreases by the same amount. Thus, there are still $2N$ states available per band. For $N$ unit cells, there are $2N$ electrons. By Pauli exclusion principle, the lowere band is completely filled, leaving the upper band empty. Since an energy of at least $4\delta t$ is required for an electron to transition across the Fermi surface, polyacetylene is an insulator (when $\delta t>0$).
+\begin{center}
+\begin{tikzpicture}
+	\fill [gray,domain=-pi:pi,fill opacity=0.2] (-pi,0.3) -- plot (\x, {sqrt(4*cos(deg(\x/2))^2+0.09*sin(deg(\x/2))^2}) -- (pi,0.3) -- cycle;
+	\fill [red,domain=-pi:pi,fill opacity=0.2] (-pi,-0.3) -- plot (\x, {-sqrt(4*cos(deg(\x/2))^2+0.09*sin(deg(\x/2))^2}) -- (pi,-0.3) -- cycle;
+	\draw[gray] (-pi,0.3) -- (pi,0.3);
+	\draw[red] (-pi,-0.3) -- (pi,-0.3);
+	\draw[<->] (-5,0) -- (5,0) node[right] {$k$};
+	\draw[<->] (0,-2.5) -- (0,2.5) node[above] {$\varepsilon(k)$};
+	\draw[thick,domain=-pi:pi,samples=200] plot (\x, {sqrt(4*cos(deg(\x/2))^2+0.09*sin(deg(\x/2))^2});
+	\draw[thick,domain=-pi:pi,samples=200] plot (\x, {-sqrt(4*cos(deg(\x/2))^2+0.09*sin(deg(\x/2))^2});
+	\draw[dashed] (-pi,2.5) -- node[above left] {$-\frac{\pi}{2a}$} (-pi,-2.5) ; 
+	\draw[dashed] (pi,2.5) -- node[above right] {$\frac{\pi}{2a}$} (pi,-2.5);
+	\draw[red] (-0.5,-2.5) node[left] {occupied};
+	\draw[red,->] (-0.75,-2.25) -- (-0.5,-1);
+	\draw (0.5,2.5) node[right] {empty};
+	\draw[->] (0.75,2.25) -- (0.5,1);
+\end{tikzpicture}
+\end{center}
+
+Consider the limit when $\delta t\rightarrow0$. One should expect our first model, which is a metal.
+\begin{equation}
+\varepsilon(k)=\pm\sqrt{4t^{2}\cos^{2}(ka)}=\pm2t\cos(ka)
+\end{equation}
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-5,0) -- (5,0) node[right] {$k$};
+	\draw[<->] (0,-2.5) -- (0,2.5) node[above] {$\varepsilon(k)$};
+	\draw[thick,domain=-pi:pi,samples=200] plot (\x, {2*cos(deg(\x/2))});
+	\draw[thick,domain=-pi:pi,samples=200] plot (\x, {-2*cos(deg(\x/2))});
+	\draw[dashed] (-pi,2.5) -- node[above left] {$-\frac{\pi}{2a}$} (-pi,-2.5);
+	\draw[dashed] (pi,2.5) -- node[above right] {$\frac{\pi}{2a}$} (pi,-2.5);
+\end{tikzpicture}
+\end{center}
+This is simply the single band dispersion in the $-\frac{\pi}{a}$ to $\frac{\pi}{a}$ Brillouin zone folded into the halved $-\frac{\pi}{2a}$ to $\frac{\pi}{2a}$ Brillouin zone.\bigskip
+
+Suppose the sign of $\delta t$ is flipped from $\delta t$ to $-\delta t$. Thus, one transitions from $t_{1}>t_{2}$ to $t_{2}>t_{1}$. Since a sign flip corresponds to the same pattern, but with a shift by $a$
+\begin{center}
+\begin{tikzpicture}
+	\draw[double=none,double distance=3pt,thick] (2,0) -- node[below,yshift=-0.3cm] {$t+\delta t$} (4,0);
+	\draw[double=none,double distance=3pt,thick] (6,0) -- (8,0);
+	\draw[dotted] (0,0) -- (2,0);
+	\fill (2,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\fill (4,0) circle (3pt) node[above,yshift=0.1cm] {$2$};
+	\fill (6,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\fill (8,0) circle (3pt) node[above,yshift=0.1cm] {$2$};
+	\fill (10,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\draw[dotted] (10,0) -- (12,0) node[right,xshift=0.5cm] {$\delta t>0$};
+	\draw (4,0) -- node[below,yshift=-0.3cm] {$t-\delta t$} (6,0);
+	\draw (8,0) -- (10,0);
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\begin{tikzpicture}
+	\draw[double=none,double distance=3pt,thick] (4,0) -- node[below,yshift=-0.3cm] {$t-\delta t$} (6,0);
+	\draw[double=none,double distance=3pt,thick] (8,0) -- (10,0);
+	\draw[dotted] (0,0) -- (2,0);
+	\fill (2,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\fill (4,0) circle (3pt) node[above,yshift=0.1cm] {$2$};
+	\fill (6,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\fill (8,0) circle (3pt) node[above,yshift=0.1cm] {$2$};
+	\fill (10,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\draw[dotted] (10,0) -- (12,0) node[right,xshift=0.5cm] {$\delta t<0$};
+	\draw (2,0) -- node[below,yshift=-0.3cm] {$t+\delta t$} (4,0);
+	\draw (6,0) -- (8,0);
+\end{tikzpicture}
+\end{center}
+
+This is a different state, although it has the same energy (degenerate) with the original state. Thus, polyacetylene has a doubly degenerate ground state. This degeneracy is related to the inversion symmetry with respect to any carbon atom. This degeneracy is spontaneously broken when one of the states is chosen.\\
+
+The band dispersion depends only on $\delta t^{2}$ and does not change when $\delta t$ changes sign. However, $\vec{d}(k)$ is sensitive to the sign of $\delta t$. Let us see how $\vec{d}(k)$ changes as $k$ goes from $-\frac{\pi}{2a}$ to $\frac{\pi}{2a}$.
+\[
+\begin{aligned}
+d_{x}(-\frac{\pi}{2a})&=-2\delta t,\quad & d_{y}(-\frac{\pi}{2a})&=0\\
+d_{x}(0)&=-2t,\quad & d_{y}(0)&=0\\
+\end{aligned}
+\]
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-2.5,0) -- (2.5,0) node[right] {$d_{x}$};
+	\draw[<->] (0,-2.5) node[below] {$\delta t>0$} -- (0,2.5) node[above] {$d_{y}$};
+	\draw (-1.15,0) circle[x radius=0.85cm,y radius=0.5cm];
+\end{tikzpicture}\hfill
+\begin{tikzpicture}
+	\draw[<->] (-2.5,0) -- (2.5,0) node[right] {$d_{x}$};
+	\draw[<->] (0,-2.5) node[below] {$\delta t<0$} -- (0,2.5) node[above] {$d_{y}$};
+	\draw (-0.85,0) circle[x radius=1.15cm,y radius=0.5cm];
+\end{tikzpicture}
+\end{center}
+Note that for $\delta t<0$, the origin is enclosed. Recall that $\varepsilon(k)=\pm\abs*{\vec{d}(k)}$. If $\abs*{\vec{d}(k)}\neq0$, there exists an energy gap between energy bands. Thus for $\delta t>0$, polyacetylene is a normal insulator, as found before. However, when $\delta t<0$, $\abs*{\vec{d}(k)}=0$ is enclosed, which leads us to refer to polyacetylene as a \ul{topological insulator} when $\delta t<0$. Effectively, there is no method to continuously deform the Hamiltonian (i.e. changing sign of $\delta t$) without merging the two energy bands. The transition from $\delta t>0$ to $\delta t<0$ permits the band gap to close temporarily.\\
+
+\hspace{-1.1cm}
+\mbox{
+\begin{tikzpicture}[baseline=(current bounding box.center)]
+	\draw[<->] (-2,0) -- (2,0) node[right] {$ka$};
+	\draw[<->] (0,-1.5) node[below] {$\delta t>0$} -- (0,1.5) node[above] {$\frac{\varepsilon(k)}{t}$};
+	\draw[dashed] (-pi/2,1.5) -- (-pi/2,-1.5) node[below] {$-\frac{\pi}{2}$};
+	\draw[dashed] (pi/2,1.5) -- (pi/2,-1.5) node[below] {$\frac{\pi}{2}$};
+	\draw[thick,domain=-pi/2:pi/2,samples=200,red] plot (\x, {sqrt(cos(deg(\x))^2+0.045*sin(deg(\x))^2});
+	\draw[thick,domain=-pi/2:pi/2,samples=200,red] plot (\x, {-sqrt(cos(deg(\x))^2+0.045*sin(deg(\x))^2});
+\end{tikzpicture}$\implies$
+\begin{tikzpicture}[baseline=(current bounding box.center)]
+	\draw[<->] (-2,0) -- (2,0) node[right] {$ka$};
+	\draw[<->] (0,-1.5) node[below] {$\delta t=0$} -- (0,1.5) node[above] {$\frac{\varepsilon(k)}{t}$};
+	\draw[dashed] (-pi/2,1.5) -- (-pi/2,-1.5) node[below] {$-\frac{\pi}{2}$};
+	\draw[dashed] (pi/2,1.5) -- (pi/2,-1.5) node[below] {$\frac{\pi}{2}$};
+	\draw[thick,domain=-pi/2:pi/2,samples=200,red] plot (\x, {cos(deg(\x))});
+	\draw[thick,domain=-pi/2:pi/2,samples=200,red] plot (\x, {-cos(deg(\x))});
+\end{tikzpicture}$\implies$
+\begin{tikzpicture}[baseline=(current bounding box.center)]
+	\draw[<->] (-2,0) -- (2,0) node[right] {$ka$};
+	\draw[<->] (0,-1.5) node[below] {$\delta t<0$} -- (0,1.5) node[above] {$\frac{\varepsilon(k)}{t}$};
+	\draw[dashed] (-pi/2,1.5) -- (-pi/2,-1.5) node[below] {$-\frac{\pi}{2}$};
+	\draw[dashed] (pi/2,1.5) -- (pi/2,-1.5) node[below] {$\frac{\pi}{2}$};
+	\draw[thick,domain=-pi/2:pi/2,samples=200,red] plot (\x, {sqrt(cos(deg(\x))^2+0.045*sin(deg(\x))^2});
+	\draw[thick,domain=-pi/2:pi/2,samples=200,red] plot (\x, {-sqrt(cos(deg(\x))^2+0.045*sin(deg(\x))^2});
+\end{tikzpicture}
+}\\
+
+There are observable consequences through the presence of \ul{edge states}, localized at the interface between ordinary and topological insulators (i.e. interface between two pieces of acetylene with different signs of $\delta t$). Since vacuum is also an insulator, these states also occur on the interface between a topological insulator and vacuum.\\
+
+To demonstrate this, let $\abs{\delta t}$ be small ($\abs{\delta t}\ll t$). Thus, the gap between bands (conduction and valence) at $k=\pm\frac{\pi}{2a}$ is small. One can thus focus on the Brillouin zone boundaries close to $k=\pm\frac{\pi}{2a}$, as we expect the important states to lie there. Let us expand the Hamiltonian near $k=\frac{\pi}{2a}$. We ignore $k=-\frac{\pi}{2a}$ since the Brillouin zone is topologically a circle.
+\begin{equation}
+\begin{aligned}
+k&=\frac{\pi}{2a}+\delta k\\
+d_{x}(k)&=-(t+\delta t)-(t-\delta t)\cos(2ka)\\
+d_{y}(k)&=-(t-\delta t)\sin(2ka)
+\end{aligned}
+\end{equation}
+Inputting the value of $k$
+\begin{equation}
+\begin{aligned}
+\cos(\pi+2\delta ka)&=\cos(\pi)\cos(2\delta ka)-\sin(\pi)\sin(2\delta ka)\\
+&=-\cos(2\delta ka)\\
+&\approx-1\\
+\sin(\pi+2\delta ka)&=\sin(\pi)\cos(2\delta ka)+\sin(2\delta ka)\cos(\pi)\\
+&=-\sin(2\delta ka)\\
+&\approx-2\delta ka\\
+\implies d_{x}(k)&\approx-(t+\delta t)+(t-\delta t)=-2\delta t\\
+d_{y}(k)&\approx2(t-\delta t)\delta ka\approx 2t\delta ka
+\end{aligned}
+\end{equation}
+
+Thus
+\begin{equation}
+H(k)=\vec{d}(k)\cdot\vec{\sigma}\approx-2\delta t\sigma_{x}+2ta\delta k\sigma_{y}\quad\trm{near $k=\frac{\pi}{2a}$}
+\end{equation}
+
+Let $2\delta t=m$, which has units of energy, and $2ta=\hbar v_{F}$, where $v_{F}$ has units of velocity. $v_{F}$ is the \ul{Fermi velocity}. Thus
+\begin{equation}
+H=-m\sigma_{x}+\hbar v_{F}\delta k\sigma_{y}
+\end{equation}
+Since $\hbar\delta k$ has units of momentum, let us label this quantity $p$
+\begin{equation}
+H=v_{F}p\sigma_{y}-m\sigma_{x}
+\end{equation}
+This looks like the Dirac Hamiltonian of a relativistic fermion in $1+1$ dimensions. However, the speed of light $c$ has been replaced by the Fermi velocity $v_{F}$. In this case, $m$ is the ``mass" of this ``relativistic" particle. Thus, the Dirac equations shows up even in a non-relativistic context. This form of the Hamiltonian is a common feature of topological insulators.\\
+
+In $\gamma$ matrix notation
+\begin{equation}
+\begin{aligned}
+& &\beta&=\gamma^{0}=-\sigma_{x}\\
+& &\alpha&=\gamma^{0}\gamma^{1}=\sigma_{y}\\
+&\implies &-\sigma_{x}\gamma^{1}&=\sigma_{y}\\
+&\implies &\gamma^{1}&=-\sigma_{x}\sigma_{y}=-i\sigma_{z}
+\end{aligned}
+\end{equation}
+
+The Dirac dispersion is
+\begin{equation}
+\varepsilon(p)=\pm\sqrt{v_{F}^{2}p^{2}+m^{2}}
+\end{equation}
+Positive energy states correspond to the conduction band, while negative energy states correspond to the valence band. The Dirac sea in this case is simply the filled valence band.\\
+
+Consider the Dirac Hamiltonian in real space ($p\rightarrow -i\hbar\dv{x}$).
+\begin{equation}
+H=-i\hbar v_{F}\sigma_{y}\dv{x}-m\sigma_{x}
+\end{equation}
+
+Suppose we have an interface between the topological insulator phase ($\delta t<0$) of polyacetylene and the normal insulator phase ($\delta t>0$). One can take the ``Dirac mass" $m$ to be $x$-dependent by letting $m(x\rightarrow-\infty)$ be negative (topological insulator phase) and $m(x\rightarrow\infty)$ be positive (normal insulator phase).\\
+
+Let us show that in this case, there exists a zero energy solution of the Dirac equation localized at $x=0$. Thus, solve
+\begin{equation}
+\begin{aligned}
+H\Psi(x)&=0\\
+\left(-i\hbar v_{F}\sigma_{y}\dv{x}-m\sigma_{x}\right)\Psi(x)&=0
+\end{aligned}
+\end{equation}
+ 
+Assume the ansatz solution of the form
+\begin{equation}
+\Psi(x)=e^{f(x)}\sigma_{y}\ket{z}
+\end{equation}
+where $f(x)$ is a scalar function and $\ket{z}$ is the two-component spinor
+\begin{equation}
+\ket{z}=z_{\up}\ket{\up}+z_{\dn}\ket{\dn}
+\end{equation}
+
+Thus, after multiplying the Pauli matrices
+\begin{equation}
+\begin{aligned}
+\left(i\hbar v_{F}\dv{f}{x}+im\sigma_{z}\right)\ket{z}&=0\\
+\left(\dv{f}{x}+\frac{m}{\hbar v_{F}}\sigma_{z}\right)\ket{z}&=0
+\end{aligned}
+\end{equation}
+Take $\ket{z}=\ket{\up}$. Thus, $\sigma_{z}\ket{\up}=\ket{\up}$. Therefore
+\begin{equation}
+\begin{aligned}
+\dv{f}{x}&=-\frac{1}{\hbar v_{F}}m(x)\\
+f(x)&=-\frac{1}{\hbar v_{F}}\int_{0}^{x}m(x')\dd{x'}
+\end{aligned}
+\end{equation}
+
+Thus
+\begin{equation}
+\begin{aligned}
+\Psi(x)&=e^{-\frac{1}{\hbar v_{F}}\int_{0}^{x}m(x')\dd{x'}}\sigma_{y}\ket{\up}\\
+&=ie^{-\frac{1}{\hbar v_{F}}\int_{0}^{x}m(x')\dd{x'}}\ket{\dn}\\
+\end{aligned}
+\end{equation}
+
+Indeed this function is exponentially localized and describes an edge state between the topological insulator and normal insulator.
+\begin{center}
+\begin{tikzpicture}
+	\draw[double=none,double distance=3pt,thick] (2,0) -- (4,0);
+	\draw[double=none,double distance=3pt,thick] (6,0) -- (8,0);
+	\fill (2,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\fill (4,0) circle (3pt) node[above,yshift=0.1cm] {$2$};
+	\fill (6,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\fill (8,0) circle (3pt) node[above,yshift=0.1cm] {$2$};
+	\fill (10,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\draw (4,0) -- (6,0);
+	\draw (8,0) -- (10,0) node[right,xshift=0.5cm] {$m>0$};
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\begin{tikzpicture}
+	\draw[double=none,double distance=3pt,thick] (4,0) -- (6,0);
+	\draw[double=none,double distance=3pt,thick] (8,0) -- (10,0) node[right,xshift=0.5cm] {$m<0$};
+	\fill (2,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\fill (4,0) circle (3pt) node[above,yshift=0.1cm] {$2$};
+	\fill (6,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\fill (8,0) circle (3pt) node[above,yshift=0.1cm] {$2$};
+	\fill (10,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\draw (2,0) -- (4,0);
+	\draw (6,0) -- (8,0);
+\end{tikzpicture}
+\end{center}
+
+Joining the two states together
+\begin{center}
+\begin{tikzpicture}
+	\draw[double=none,double distance=3pt,thick] (2,0) -- (4,0);
+	\draw[double=none,double distance=3pt,thick] (8,0) -- (10,0);
+	\fill (0,0) circle (3pt) node[above,yshift=0.1cm] {$1$} node[below,yshift=-0.3cm] {Topological};
+	\fill (2,0) circle (3pt) node[above,yshift=0.1cm] {$2$};
+	\fill (4,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\fill (6,0) circle (3pt) node[above,yshift=0.1cm] {$2$};
+	\fill (8,0) circle (3pt) node[above,yshift=0.1cm] {$1$};
+	\fill (10,0) circle (3pt) node[above,yshift=0.1cm] {$2$};
+	\fill (12,0) circle (3pt) node[above,yshift=0.1cm] {$1$} node[below,yshift=-0.3cm] {Non-topological};
+	\draw (0,0) -- (2,0);
+	\draw (4,0) -- (6,0);
+	\draw (6,0) -- (8,0);
+	\draw (10,0) -- (12,0);
+	\draw[<->] (4,-2.5) -- (8,-2.5) node[right] {$x$};
+	\draw[<-] (6,-1) node[right] {$\Psi(x)$} -- (6,-2.5) node[below] {$x=0$};
+	\draw[thick,domain=4:8,samples=200,red,<->] plot (\x, {e^(-(\x-6)^2)-2.4});
+\end{tikzpicture}
+\end{center}
+
+$\Psi(x)$ describes an electron localized on this atom 2. If we had chosen $\ket{z}=\ket{\dn}$, one would have obtaine the solution for atom 1. In this case, $\ket{\up}\equiv\ket{1}$ and $\ket{\dn}\equiv\ket{2}$. The transition between the topological and ordinary insulator may be described in terms of change of sign of the mass of a Dirac fermion. This is true for any dimension.
+
+\subsection{Higher Dimensions}
+
+\definition{A \ul{crystal} is an infinite periodic array of identical groups of atoms. The group of atoms being repeated is called a \ul{basis}, while the regular array of points in space to which the basis is attached to is called the \ul{Bravais lattice}.\\
+
+Crystal = (Basis, Bravais lattice)
+\begin{center}
+\begin{tikzpicture}
+	\foreach \i in {0,2,4}{
+		\foreach \j in {2,4}{
+			\fill (\i+0.2*\j,\j) circle (3pt);
+		}
+	}
+	\foreach \i in{2,4}{
+		\fill (\i,0) circle (3pt);
+	}
+	\node[right,xshift=0.5cm] at (4.8,4)
+		{Bravais lattice};
+	\draw[thick,->,shorten >=1mm] (2.4,2) -- node[left] {$\vec{a}_{2}$} (2.8,4);
+	\draw[thick,->,shorten >=1mm] (2.4,2) -- node[below] {$\vec{a}_{1}$} (4.4,2);
+	\draw (0,0) node[below left,yshift=-0.7cm,xshift=-0.7cm] {Basis} circle (25 pt);
+	\fill[red] (0.5,0) circle (3pt);
+	\fill[blue] (-0.25,0.433) circle (3pt);
+	\fill[green] (-0.25,-0.433) circle (3pt);
+\end{tikzpicture}
+\end{center}
+}\\
+A Bravais lattice in 3D consists of all points of the form
+\begin{equation}
+\vec{R}=n_{1}\vec{a}_{1}+n_{2}\vec{a}_{2}+n_{3}\vec{a}_{3},\quad n_{i}\in\mathbb{Z}\quad\forall i\in\{1,2,3\}
+\end{equation}
+$\vec{R}$ are called \ul{lattice vectors}. $\vec{a}_{1}$, $\vec{a}_{2}$, and $\vec{a}_{3}$ are the \ul{primitive translation vectors}. The choice of primitive translation vectors is not unique. Usually, one chooses the primitive translation vectors that express the most symmetry.\\
+
+The parallelepiped defined by the primitive translation vectors is the \ul{primitive unit cell}. It always contains exactly one Bravais lattice point. When translated by all lattice vectors, the primitive unit cell completely fills all space. Since primitive translation vectors are not unique, the primitive unit cell is not unique.\\
+
+One special type of unit cell is the \ul{Wigner-Seitz unit cell}. The Wigner-Seitz unit cell about a Bravais lattice point is the region of space that is closer to this Bravais lattice point than any other Bravais lattice point. One can construct the Wigner-Seitz unit cell by:
+\begin{enumerate}
+	\item From a given lattice point, draw lines connecting this point to all nearby lattice points.
+	\item Bisect each line orthogonally with a line (in 2D) or a plane (in 3D).
+	\item The smallest volume enclosed by these lines or planes is the Wigner-Seitz unit cell.
+\end{enumerate}
+\begin{center}
+\begin{tikzpicture}
+	\foreach \i in {0,2,4}{
+		\foreach \j in {0,2,4}{
+			\fill (\i,\j) circle (3pt);
+		}
+	}
+	\draw[ultra thick] (2,0) -- (2,4);
+	\draw[ultra thick] (0,2) -- (4,2);
+	\draw[dashed] (1,0) -- (1,4);
+	\draw[dashed] (3,0) -- (3,4);
+	\draw[dashed] (0,3) -- (4,3);
+	\draw[dashed] (0,1) -- (4,1);
+	\draw[thick,->,shorten >=1mm] (0,0) -- node[left] {$\vec{a}_{2}$} (0,2);
+	\draw[thick,->,shorten >=1mm] (0,0) -- node[below] {$\vec{a}_{1}$} (2,0);
+	\fill[gray,fill opacity=0.2] (1,1) rectangle (3,3);
+	\draw[->,shorten >=1mm] (5,3) node[right] {Wigner-Seitz unit cell} -- (3,2.5);
+\end{tikzpicture}
+\end{center}
+Symmetry of the Wigner-Seitz unit cell is always the same as the symmetry of the Bravais lattice. It is also clear that it only contains one Bravais lattice point. Thus, the Wigner-Seitz unit cell is also a primitive unit cell.\\
+
+\example{1}{When $\abs{\vec{a}_{1}}=\abs{\vec{a}_{2}}$ and the angle between $\vec{a}_{1}$ and $\vec{a}_{2}$ is $\frac{\pi}{2}$, the Bravais lattice is a square lattice.\\
+\begin{center}
+\begin{tikzpicture}
+	\foreach \i in {0,1,2}{
+		\foreach \j in {0,1,2}{
+			\fill (\i,\j) circle (3pt);
+		}
+	}
+	\draw[thick,->,shorten >=1mm] (0,0) -- node[left] {$\vec{a}_{2}$} (0,1);
+	\draw[thick,->,shorten >=1mm] (0,0) -- node[below] {$\vec{a}_{1}$} (1,0);
+	\draw (0,0.25) -- (0.25,0.25) -- (0.25,0);
+\end{tikzpicture}
+\end{center}
+}
+
+\example{2}{When $\abs{\vec{a}_{1}}=\abs{\vec{a}_{2}}$ and the angle between $\vec{a}_{1}$ and $\vec{a}_{2}$ is $\frac{\pi}{3}$, the Bravais lattice is a hexagonal (or triangular) lattice.\\
+\begin{center}
+\begin{tikzpicture}
+	\foreach \i in {0,1,2}{
+		\foreach \j in {0,1,2}{
+			\fill (\i+0.5*\j,0.866*\j) circle (3pt);
+		}
+	}
+	\draw[thick,->,shorten >=1mm] (0,0) -- node[left] {$\vec{a}_{2}$} (0.5,0.866);
+	\draw[thick,->,shorten >=1mm] (0,0) -- node[below] {$\vec{a}_{1}$} node[above,font=\footnotesize] {$\frac{\pi}{3}$} (1,0);
+	\draw (0.25,0) arc (0:60:0.25);
+\end{tikzpicture}
+\end{center}
+}
+
+Consider the 2D honeycomb lattice structure, as in graphene.\\
+\begin{center}
+\begin{tikzpicture}
+	\foreach \i in {0,1}{
+		\fill (0.866+1.732*\i,1.5) circle (3pt);
+	}
+	\foreach \i in {0,1,2}{
+		\foreach \j in {0,1}{
+			\fill (1.732*\i,\j) circle (3pt);
+		}
+	}
+	\foreach \i in {0,1,2}{
+		\foreach \j in {0,1}{
+			\fill (0.866+1.732*\i,-1.5+\j) circle (3pt);
+		}
+	}
+	\foreach \i in {1,2}{
+		\fill (1.732*\i,-2) circle (3pt);
+	}
+	\foreach \i in {0,1,2}{
+		\draw (1.732*\i,0) -- (1.732*\i,1);
+	}
+	\foreach \i in {0,1,2}{
+		\draw (0.866+1.732*\i,-1.5) -- (0.866+1.732*\i,-0.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (1.732*\i,1) -- (0.866+1.732*\i,1.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (0.866+1.732*\i,1.5) -- (1.732+1.732*\i,1);
+	}
+	\foreach \i in {0,1,2}{
+		\draw (1.732*\i,0) -- (0.866+1.732*\i,-0.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (0.866+1.732*\i,-0.5) -- (1.732+1.732*\i,0);
+	}
+	\foreach \i in {0,1}{
+		\draw (0.866+1.732*\i,-1.5) -- (1.732+1.732*\i,-2);
+	}
+	\foreach \i in {1,2}{
+		\draw (1.732*\i,-2) -- (0.866+1.732*\i,-1.5);
+	}
+	\draw[thick,->,shorten >=1mm] (1.732,0) -- node[left] {$\vec{a}_{2}$} (0.866,1.5);
+	\draw[thick,->,shorten >=1mm] (1.732,0) -- node[right] {$\vec{a}_{1}$} (2.598,1.5);
+	\draw[|-|] (-0.2,0) -- node[left] {$a$} (-0.2,1);
+	\foreach \i in {0,1}{
+		\node[above,font=\footnotesize] at (0.866+1.732*\i,1.5) {1};
+	}
+	\foreach \i in {0,1,2}{
+		\node[above,font=\footnotesize] at (1.732*\i,1) {2};
+	}
+	\foreach \i in {0,1,2}{
+		\node[below,font=\footnotesize,yshift=-0.05cm] at (1.732*\i,0) {1};
+	}
+	\foreach \i in {0,1,2}{
+		\node[above,font=\footnotesize] at (0.866+1.732*\i,-0.5) {2};
+	}
+	\foreach \i in {0,1,2}{
+		\node[below,font=\footnotesize,yshift=-0.05cm] at (0.866+1.732*\i,-1.5) {1};
+	}
+	\foreach \i in {1,2}{
+		\node[above,font=\footnotesize] at (1.732*\i,-2) {2};
+	}
+	\draw[->] (-3,0) -- (-2,0) node[right] {$\hat{x}$};
+	\draw[->] (-3,0) -- (-3,1) node[above] {$\hat{y}$};
+\end{tikzpicture}
+\end{center}
+Note that the points on this lattice do not form a Bravais lattice. However, if grouping atoms 1 and 2, the Bravais lattice is hexagonal. Thus, this honeycomb lattice is a hexagonal Bravais lattice with a two-atom basis. Let $a$ be the lattice constant of the hexagonal Bravais lattice. The primitive translation vectors are
+\begin{equation}
+\vec{a}_{1}=\frac{a}{2}(\hat{x}+\sqrt{3}\hat{y})\quad\trm{and}\quad\vec{a}_{2}=\frac{a}{2}(-\hat{x}+\sqrt{3}\hat{y})
+\end{equation}
+Another important concept to introduce is that of the \ul{reciprocal space} and \ul{reciprocal lattice}. In the 1D chain example, the Bloch states were introduced as
+\begin{equation}
+\ket{k}=\frac{1}{\sqrt{N}}\sum_{n}\ket{n}e^{ikna}
+\end{equation}
+An important property of the crystal momentum $k$ is that it is defined in the first Brillouin zone
+\begin{equation}
+\ket{k+\frac{2\pi}{a}m}=\ket{k}\quad\forall m\in\mathbb{Z},\quad\trm{since }e^{i\left(\frac{2\pi}{a}m\right)(na)}=1
+\end{equation}
+This can be generalized to higher dimensions.\\
+
+Let us introduce the \ul{reciprocal lattice vectors} $\vec{G}$ which are defined by
+\begin{equation}
+e^{i\vec{G}\cdot\vec{R}}=1
+\end{equation}
+where $\vec{R}=n_{1}\vec{a}_{1}+n_{2}\vec{a}_{2}+n_{3}\vec{a}_{3},\quad n_{i}\in\mathbb{Z}\quad\forall i\in\{1,2,3\}$ are the Bravais lattice vectors. In the 1D case, $\frac{2\pi}{a}m$ took on the role of $\vec{G}$ while $na$ took on the role of $\vec{R}$. In analogy to $\vec{R}$ which indexes lattice points in real space, one can define the reciprocal lattice to be indexed by $\vec{G}$, where $\vec{G}$ is written as
+\begin{equation}
+\vec{G}=m_{1}\vec{b}_{1}+m_{2}\vec{b}_{2}+m_{3}\vec{b}_{3},\quad m_{1},m_{2},m_{3}\in\mathbb{Z}
+\end{equation}
+where $\vec{b}_{1}$, $\vec{b}_{2}$, and $\vec{b}_{3}$ are the \ul{primitive translation vectors of the reciprocal lattice}. In order to have $e^{i\vec{G}\cdot\vec{R}}=1$, one requires that $\vec{G}\cdot\vec{R}$ is an integer multiple of $2\pi$ for any $\vec{G}$ and $\vec{R}$. This is satisfied if
+\begin{equation}
+\vec{b}_{i}\cdot\vec{a}_{j}=2\pi\delta_{ij}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\vec{G}\cdot\vec{R}&=(m_{1}\vec{b}_{1}+m_{2}\vec{b}_{2}+m_{3}\vec{b}_{3})\cdot(n_{1}\vec{a}_{1}+n_{2}\vec{a}_{2}+n_{3}\vec{a}_{3})\\
+&=2\pi(m_{1}n_{1}+m_{2}n_{2}+m_{3}n_{3})\\
+&=2\pi(\trm{integer})\\
+\implies e^{i\vec{G}\cdot\vec{R}}&=1
+\end{aligned}
+\end{equation}
+
+One can explicitly construct $\vec{b}_{i}$ as
+\begin{equation}
+\begin{aligned}
+\vec{b}_{1}&=\frac{2\pi}{V_{c}}(\vec{a}_{2}\times\vec{a}_{3})\\
+\vec{b}_{2}&=\frac{2\pi}{V_{c}}(\vec{a}_{3}\times\vec{a}_{1})\\
+\vec{b}_{3}&=\frac{2\pi}{V_{c}}(\vec{a}_{1}\times\vec{a}_{2})\\
+\end{aligned}
+\end{equation}
+where
+\begin{equation}
+V_{c}=\vec{a}_{1}\cdot(\vec{a}_{2}\times\vec{a}_{3})
+\end{equation}
+is the volume of the unit cell. In the 2D case, replace one of the $\vec{a}_{i}$ with the unit vector normal to the plane defined by the primitive translation vectors (e.g. $\vec{a}_{3}=\hat{z}$). Note in the 1D example, $b=\frac{2\pi}{a}$.\\
+
+The first Brillouin zone is the Wigner-Seitz unit cell of the reciprocal lattice. The crystal momentum $\vec{k}$ was defined only in the first Brillouin zone.
+\begin{equation}
+\vec{k}=k_{1}\vec{b}_{1}+k_{2}\vec{b}_{2}+k_{3}\vec{b}_{3}
+\end{equation}
+The Brillouin zone boundaries correspond to $k_{i}=\pm\frac{1}{2}$ given that the Brillouin zone about a reciprocal lattice point can be constructed by bisecting the primitive translation vectors of the reciprocal lattice.\\
+
+Let us find the first Brillouin zone of graphene.\\
+\begin{center}
+\begin{tikzpicture}
+	\foreach \i in {0,1}{
+		\fill (0.866+1.732*\i,1.5) circle (3pt);
+	}
+	\foreach \i in {0,1,2}{
+		\foreach \j in {0,1}{
+			\fill (1.732*\i,\j) circle (3pt);
+		}
+	}
+	\foreach \i in {0,1}{
+		\fill (0.866+1.732*\i,-0.5) circle (3pt);
+	}
+	\foreach \i in {0,1,2}{
+		\draw (1.732*\i,0) -- (1.732*\i,1);
+	}
+	\foreach \i in {0,1}{
+		\draw (1.732*\i,1) -- (0.866+1.732*\i,1.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (0.866+1.732*\i,1.5) -- (1.732+1.732*\i,1);
+	}
+	\foreach \i in {0,1}{
+		\draw (1.732*\i,0) -- (0.866+1.732*\i,-0.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (0.866+1.732*\i,-0.5) -- (1.732+1.732*\i,0);
+	}
+	\draw[thick,->,shorten >=1mm] (1.732,0) -- node[left] {$\vec{a}_{2}$} (0.866,1.5);
+	\draw[thick,->,shorten >=1mm] (1.732,0) -- node[right] {$\vec{a}_{1}$} (2.598,1.5);
+	\draw[|-|] (-0.2,0) -- node[left] {$a$} (-0.2,1);
+	\node[anchor=north west,right] at (4,0.65)
+		{\[
+			\begin{aligned}
+			\vec{a}_{1}&=\frac{a}{2}(\hat{x}+\sqrt{3}\hat{y})\\
+			\vec{a}_{2}&=\frac{a}{2}(-\hat{x}+\sqrt{3}\hat{y})\\
+			\vec{a}_{3}&=\hat{z}\\
+			\end{aligned}
+		\]};
+\end{tikzpicture}
+\end{center}
+\begin{equation}
+\begin{aligned}
+V_{c}&=\vec{a}_{1}\cdot(\vec{a}_{2}\times\vec{a}_{3})
+=\vec{a}_{3}\cdot(\vec{a}_{1}\times\vec{a}_{2})
+=\hat{z}\cdot\left[\frac{a^{2}\sqrt{3}}{4}(\hat{x}\times\hat{y}-\hat{y}\times\hat{x})\right]
+=\frac{a^{2}\sqrt{3}}{2}\\
+\vec{b}_{1}&=\frac{2\pi}{V_{c}}(\vec{a}_{2}\times\vec{a}_{3})=\left(\frac{4\pi}{a^{2}\sqrt{3}}\right)\left(\frac{a}{2}\right)(-\hat{x}\times\hat{z}+\sqrt{3}\hat{y}\times\hat{z})=\frac{2\pi}{a}\left(\hat{x}+\frac{1}{\sqrt{3}}\hat{y}\right)\\
+\vec{b}_{2}&=\frac{2\pi}{V_{c}}(\vec{a}_{2}\times\vec{a}_{3})=\left(\frac{4\pi}{a^{2}\sqrt{3}}\right)\left(\frac{a}{2}\right)(\hat{z}\times\hat{x}+\hat{z}\times\sqrt{3}\hat{y})=\frac{2\pi}{a}\left(-\hat{x}+\frac{1}{\sqrt{3}}\hat{y}\right)\\
+\end{aligned}
+\end{equation}
+Note that $\vec{b}_{1}$ and $\vec{b}_{2}$ satisfy $\vec{b}_{i}\cdot\vec{a}_{j}=2\pi\delta_{ij}$. Similarly, $\abs{\vec{b}_{1}}=\abs{\vec{b}_{2}}$ and the angle between them is $\frac{\pi}{3}$. Thus, the reciprocal lattice is also hexagonal and the first Brillouin zone is also a hexagon.
+
+\subsection{Electronic Structure}
+Before considering the electronic structure of graphene, let us consider the electronic structure of the square lattice as a warm-up example. Let there be one atom per unit cell.
+\begin{center}
+\begin{tikzpicture}
+	\foreach \i in {0,2,4}{
+		\foreach \j in {0,2,4}{
+			\fill (\i,\j) circle (3pt);
+		}
+	}
+	\draw[decorate,decoration={coil,aspect=0}] (2,0) -- node[right] {$t$} (2,2);
+	\draw[decorate,decoration={coil,aspect=0}] (2,2) -- node[right] {$t$} (2,4);
+	\draw[decorate,decoration={coil,aspect=0}] (0,2) -- node[above] {$t$} (2,2);
+	\draw[decorate,decoration={coil,aspect=0}] (2,2) -- node[above] {$t$} (4,2);
+	\draw[thick,->,shorten >=1mm] (0,0) -- node[left] {$\vec{a}_{2}$} (0,2);
+	\draw[thick,->,shorten >=1mm] (0,0) -- node[below] {$\vec{a}_{1}$} (2,0);
+	\draw[|-|] (2,-0.3) -- node[below] {$a$} (4,-0.3);
+	\node[anchor=north west,right] at (4,3.5)
+		{\[
+			\begin{aligned}
+			\vec{a}_{1}&=a\hat{x},&\quad\vec{a}_{2}&=a\vec{y}\\
+			\vec{b}_{1}&=\frac{2\pi}{a}\hat{x},&\quad\vec{b}_{2}&=\frac{2\pi}{a}\vec{y}\\
+			\end{aligned}
+		\]};
+	\draw[->] (5,0) -- (5,1) node[above] {$\hat{y}$};
+	\draw[->] (5,0) -- (6,0) node[right] {$\hat{x}$};
+\end{tikzpicture}
+\end{center}
+Assuming the tight-binding model, the Hamiltonian is written as
+\begin{equation}
+H=-t\sum_{\vec{R},\vec{a}}\left(\ketbra*{\vec{R}+\vec{a}}{\vec{R}}+\ketbra*{\vec{R}}{\vec{R}+\vec{a}}\right)
+\end{equation}
+where $\vec{a}\in\{\vec{a}_{1},\vec{a}_{2}\}$. One sums over $\vec{R}+\vec{a}$ and not $\vec{R}-\vec{a}$ to avoid double-counting of possible transitions. To diagonalize this Hamiltonian, let us use the inverse lattice Fourier transform.
+\begin{equation}
+\begin{aligned}
+\ket*{\vec{R}}&=\sum_{\vec{k}}\ket*{\vec{k}}\braket*{\vec{k}}{\vec{R}}\\
+&=\frac{1}{\sqrt{N}}\sum_{\vec{k}}e^{-i\vec{k}\cdot\vec{R}}\ket*{\vec{k}}
+\end{aligned}
+\end{equation}
+where $\vec{k}=k_{1}\vec{b}_{1}+k_{2}\vec{b}_{2}$ is restricted to the first Brillouin zone $(-\frac{1}{2}\leq k_{1},k_{2}<\frac{1}{2})$. The Hamiltonian can now be written as
+\begin{equation}
+\begin{aligned}
+H&=-t\left(\frac{1}{N}\right)\sum_{\vec{R},\vec{a}}\sum_{\vec{k},\vec{k}'}\left(\ketbra*{\vec{k}}{\vec{k}'}e^{-i\vec{k}\cdot\left(\vec{R}+\vec{a}\right)}e^{i\vec{k}'\cdot\vec{R}}+\ketbra*{\vec{k}}{\vec{k}'}e^{-i\vec{k}\cdot\vec{R}}e^{i\vec{k}'\cdot\left(\vec{R}+\vec{a}\right)}\right)\\
+&=-t\sum_{\vec{k},\vec{a}}\ketbra*{\vec{k}}{\vec{k}}\left(e^{-i\vec{k}\cdot\vec{a}}+e^{i\vec{k}\cdot\vec{a}}\right)\\
+&\quad\explain\trm{ Since }\frac{1}{N}\sum_{\vec{R}}e^{-i\left(\vec{k}-\vec{k}'\right)\cdot\vec{R}}=\delta_{\vec{k}\vec{k}'}\\
+&=-2t\sum_{\vec{k},\vec{a}}\cos\left(\vec{k}\cdot\vec{a}\right)\ketbra*{\vec{k}}{\vec{k}}\\
+&=\sum_{\vec{k}}H(\vec{k})\ketbra*{\vec{k}}{\vec{k}}
+\end{aligned}
+\end{equation}
+
+Thus, the band dispersion is
+\begin{equation}
+\varepsilon(\vec{k})=-2t\sum_{\vec{a}}\cos\left(\vec{k}\cdot\vec{a}\right)=-2t\left[\cos(k_{x}a)+\cos(k_{y}a)\right]
+\end{equation}
+
+Thus, there is a minimum of $\varepsilon_{\trm{min}}=-4t$ at $k_{x}=k_{y}=0$ (or $\vec{k}=\vec{0}$). Likewise, there is a maximum of $\varepsilon_{\trm{max}}=4t$ at the Brillouin zone corners $k_{x},k_{y}=\pm\frac{\pi}{a}$. The bandwidth is $\varepsilon_{\trm{max}}-\varepsilon_{\trm{min}}=8t$.\\
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-4,0) -- (4,0) node[right] {$k_{x}$};
+	\draw[<->] (0,-4) -- (0,4) node[above] {$k_{y}$};
+	\draw (-3,3) node[above left] {$\varepsilon_{\trm{max}}$} -- node[above left] {$\frac{\pi}{a}$} (3,3) node[above right] {$\varepsilon_{\trm{max}}$} -- node[above right] {$\frac{\pi}{a}$} (3,-3) node[below right] {$\varepsilon_{\trm{max}}$} -- node[below left] {$-\frac{\pi}{a}$}(-3,-3) node[below left] {$\varepsilon_{\trm{max}}$} -- node[above left] {$-\frac{\pi}{a}$} cycle;
+	\draw[red,thick] (-3,0) -- (0,3) -- (3,0) -- (0,-3) -- cycle;
+	\draw[red,thick] (0,0) circle (1cm);
+	\draw[red,thick,domain=0:90,samples=200] plot ({cos(\x)-3},{sin(\x)-3});
+	\draw[red,thick,domain=90:180,samples=200] plot ({cos(\x)+3},{sin(\x)-3});
+	\draw[red,thick,domain=180:270,samples=200] plot ({cos(\x)+3},{sin(\x)+3});
+	\draw[red,thick,domain=270:360,samples=200] plot ({cos(\x)-3},{sin(\x)+3});
+	\draw[->,shorten >=1mm] (1,1) node[yshift=0.2cm,xshift=0.2cm] {$\varepsilon_{\trm{min}}$} -- (0,0);
+	\draw[->,shorten >=1mm] (4,-2) node[below right] {Fermi surface for $\varepsilon_{F}=0$} -- (1.5,-1.5);
+\end{tikzpicture}
+\end{center}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Images/2/square_lattice_band.png}
+	\caption{Energy band of square lattice}
+\end{figure}
+
+Expand $\varepsilon(\vec{k})$ in terms of $\vec{k}$ near the minimum to second order.
+\begin{equation}
+\begin{aligned}
+\varepsilon(\vec{k})&\approx-2t\left[1-\frac{1}{2}(k_{x}a)^{2}+1-\frac{1}{2}(k_{y}a)^{2}\right]\\
+&=-4t+ta^{2}(k_{x}^{2}+k_{y}^{2})\\
+&=-4t+ta^{2}k^{2}
+\end{aligned}
+\end{equation}
+
+This resembles the dispersion relation for a free electron $\varepsilon(\vec{k})=\frac{\hbar^{2}k^{2}}{2m}$. One can define an effective mass $m^{*}$ as follows
+\begin{equation}
+\varepsilon(\vec{k})-\varepsilon_{\trm{min}}=ta^{2}k^{2}=\frac{\hbar^{2}k^{2}}{2m^{*}}
+\end{equation}
+such that
+\begin{equation}
+m^{*}=\frac{\hbar^{2}}{2ta^{2}}
+\end{equation}
+The Fermi surface be found as a solution to
+\begin{equation}
+\varepsilon(\vec{k})=\varepsilon_{F},\quad -4t\leq\varepsilon_{F}\leq4t
+\end{equation}
+When $\varepsilon_{F}$ is near the bottom of the band, one has
+\begin{equation}
+\begin{aligned}
+-4t+\frac{\hbar^{2}k^{2}}{2m^{*}}&=\varepsilon_{F}
+k_{x}^{2}+k_{y}^{2}=\frac{2m^{*}}{\hbar^{2}}(\varepsilon_{F}+4t)
+\end{aligned}
+\end{equation}
+This is the equation of a circle with radius $k_{F}=\sqrt{\frac{2m^{*}}{\hbar^{2}}(\varepsilon_{F}+4t)}$. Note this only applies near the minimum energy level.\\
+
+The number of possible states per band is $2N$. When it is half-filled, there is one free electron per atom. Since $\varepsilon(\vec{k})$ is symmetric around zero energy, it is clear $\varepsilon_{F}=0$ when the band is half-filled.\\
+
+Let us now consider the electronic structure of graphene.
+\begin{center}
+\begin{tikzpicture}
+	\foreach \i in {0,1}{
+		\fill (0.866+1.732*\i,1.5) circle (3pt);
+	}
+	\foreach \i in {0,1,2}{
+		\foreach \j in {0,1}{
+			\fill (1.732*\i,\j) circle (3pt);
+		}
+	}
+	\foreach \i in {0,1}{
+		\foreach \j in{0,1}{
+			\fill (0.866+1.732*\i,-1.5+\j) circle (3pt);
+		}
+	}
+	\fill (1.732,-2) circle (3pt);
+	\foreach \i in {0,1,2}{
+		\draw (1.732*\i,0) -- (1.732*\i,1);
+	}
+	\foreach \i in {0,1}{
+		\draw (1.732*\i,1) -- (0.866+1.732*\i,1.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (0.866+1.732*\i,1.5) -- (1.732+1.732*\i,1);
+	}
+	\foreach \i in {0,1}{
+		\draw (1.732*\i,0) -- (0.866+1.732*\i,-0.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (0.866+1.732*\i,-0.5) -- (1.732+1.732*\i,0);
+	}
+	\foreach \i in {0,1}{
+		\draw (0.866+1.732*\i,-1.5) -- (0.866+1.732*\i,-0.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (1.732,-2) -- (0.866+1.732*\i,-1.5);
+	}
+	\node[above] at (1.732,1) {2};
+	\node[below] at (1.732,0) {1};
+	\foreach \i in {0,1}{
+		\node[above] at (0.866+1.732*\i,-0.5) {2};
+	}
+	\draw[thick,->,shorten >=1mm] (1.732,0) -- node[left] {$\vec{a}_{2}$} (0.866,1.5);
+	\draw[thick,->,shorten >=1mm] (1.732,0) -- node[right] {$\vec{a}_{1}$} (2.598,1.5);
+	\draw[|-|] (-0.2,0) -- node[left] {$a$} (-0.2,1);
+	\node[anchor=north west,right] at (4,0.65)
+		{\[
+			\begin{aligned}
+			\vec{a}_{1}&=\frac{a}{2}(\hat{x}+\sqrt{3}\hat{y}),&\quad\vec{a}_{2}&=\frac{a}{2}(-\hat{x}+\sqrt{3}\hat{y})\\
+			\vec{b}_{1}&=\frac{2\pi}{a}\left(\hat{x}+\frac{1}{\sqrt{3}}\hat{y}\right),&\quad\vec{b}_{2}&=\frac{2\pi}{a}\left(-\hat{x}+\frac{1}{\sqrt{3}}\hat{y}\right)\\
+			\end{aligned}
+		\]};
+\end{tikzpicture}
+\end{center}
+
+Assuming the tight-binding approximation
+\begin{equation}
+H=-t\sum_{\vec{k}}\left(\ketbra*{\vec{R},2}{\vec{R},1}+\ketbra*{\vec{R}-\vec{a}_{1},2}{\vec{R},1}+\ketbra*{\vec{R}-\vec{a}_{2},2}{\vec{R},1}+\tikzmarknode{HC}{\trm{h.c.}}\right)
+\end{equation}
+\begin{tikzpicture}[overlay,remember picture,shorten <=1mm,font=\footnotesize]
+	\draw[red,<-] (HC.south) -- ++ (0,-0.5) node[below,yshift=0.1cm] {Hermitian conjugate};
+\end{tikzpicture}
+The inverse lattice Fourier transform gives in reciprocal space
+\begin{equation}
+\ket*{\vec{R},\alpha}=\frac{1}{\sqrt{N}}\sum_{\vec{R}}\ket*{\vec{k},\alpha}e^{-i\vec{k}\cdot\vec{R}},\quad\alpha\in\{1,2\}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+H&=-t\left(\frac{1}{N}\right)\sum_{\vec{R}}\sum_{\vec{k},\vec{k}'}\bigg[\ketbra*{\vec{k},2}{\vec{k}',1}e^{-i\left(\vec{k}-\vec{k}'\right)\cdot\vec{R}}+\ketbra*{\vec{k},2}{\vec{k}',1}e^{-i\vec{k}\cdot\left(\vec{R}-\vec{a}_{1}\right)}e^{i\vec{k}'\cdot\vec{R}}\\
+&\qquad\qquad\qquad\qquad\qquad+\ketbra*{\vec{k},2}{\vec{k}',1}e^{-i\vec{k}\cdot\left(\vec{R}-\vec{a}_{2}\right)}e^{i\vec{k}'\cdot\vec{R}}+\trm{h.c.}\bigg]\\
+&=-t\sum_{\vec{k}}\left[\ketbra*{\vec{k},2}{\vec{k},1}\left(1+e^{i\vec{k}\cdot\vec{a}_{1}}+e^{i\vec{k}\cdot\vec{a}_{2}}\right)+\ketbra*{\vec{k},1}{\vec{k},2}\left(1+e^{-i\vec{k}\cdot\vec{a}_{1}}+e^{-i\vec{k}\cdot\vec{a}_{2}}\right)\right]\\
+&\quad\explain\trm{ Since }\frac{1}{N}\sum_{\vec{R}}e^{-i\left(\vec{k}-\vec{k}'\right)\cdot\vec{R}}=\delta_{\vec{k}\vec{k}'}\\
+&=\sum_{\vec{k}}H(\vec{k})
+\end{aligned}
+\end{equation}
+Invoking pseudospin states $\ket*{\vec{k},1}\equiv\ket{1}$ as $\ket{\up}$ and $\ket*{\vec{k},2}\equiv\ket{2}$ as $\ket{\dn}$, one can write
+\begin{equation}
+H(\vec{k})=\vec{d}(\vec{k})\cdot\vec{\sigma}
+\end{equation}
+where $\vec{d}(\vec{k})$ is described by
+\begin{equation}
+\begin{aligned}
+d_{x}(\vec{k})&=-t\left[1+\cos(\vec{k}\cdot\vec{a}_{1})+\cos(\vec{k}\cdot\vec{a}_{2})\right]\\
+d_{y}(\vec{k})&=-t\left[\sin(\vec{k}\cdot\vec{a}_{1})+\sin(\vec{k}\cdot\vec{a}_{2})\right]\\
+d_{z}(\vec{k})&=0
+\end{aligned}
+\end{equation}
+This gives eigenvalues $\varepsilon_{\pm}(\vec{k})=\pm\abs*{\vec{d}(\vec{k})}$.\\
+
+In undoped graphene, there is one valence electron per carbon atom. Given that there are two carbon atoms per basis and there are $N$ primitive unit cells, there are $2N$ valence electrons available. Since there are $2N$ possible states per band, the lower band is completely filled while the upper band is empty. This wuld suggest that graphene is an insulator. In reality, the situation is more complicated.\\
+
+In order to analyze the band dispersion, let us rewrite $\vec{k}$, which is currently expressed in terms of $\vec{b}_{1}$ and $\vec{b}_{2}$, in terms of $\hat{x}$ and $\hat{y}$.
+\begin{equation}
+\begin{aligned}
+\vec{k}&=k_{1}\vec{b}_{1}+k_{2}\vec{b}_{2}\\
+\vec{k}\cdot\vec{a}_{1}&=(k_{1}\vec{b}_{1}+k_{2}\vec{b}_{2})\cdot\vec{a}_{1}=2\pi k_{1}\\
+&=(k_{x}\hat{x}+k_{y}\hat{y})\cdot\frac{a}{2}(\hat{x}+\sqrt{3}\hat{y})=\frac{a}{2}(k_{x}+\sqrt{3}k_{y})\\
+\vec{k}\cdot\vec{a}_{2}&=(k_{1}\vec{b}_{1}+k_{2}\vec{b}_{2})\cdot\vec{a}_{2}=2\pi k_{2}\\
+&=(k_{x}\hat{x}+k_{y}\hat{y})\cdot\frac{a}{2}(-\hat{x}+\sqrt{3}\hat{y})=\frac{a}{2}(-k_{x}+\sqrt{3}k_{y})\\
+\end{aligned}
+\end{equation}
+Therefore
+\begin{equation}
+k_{1}=\frac{a}{4\pi}(k_{x}+\sqrt{3}k_{y})\quad\trm{and}\quad k_{2}=\frac{a}{4\pi}(-k_{x}+\sqrt{3}k_{y})
+\end{equation}
+
+Thus, $\vec{d}(\vec{k})$ becomes
+\begin{equation}
+\begin{aligned}
+d_{x}(\vec{k})&=-t\left[1+2\cos\left(\frac{k_{x}a}{2}\right)\cos\left(\frac{\sqrt{3}k_{y}a}{2}\right)\right]\\
+d_{y}(\vec{k})&=-2t\cos\left(\frac{k_{x}a}{2}\right)\sin\left(\frac{\sqrt{3}k_{y}a}{2}\right)\\
+d_{z}(\vec{k})&=0
+\end{aligned}
+\end{equation}
+
+By inspection, there are two points (and only two points) in the first Brillouin zone such that $\abs*{\vec{d}(\vec{k})}=0$. Labeling these points as $\vec{k}_{\pm}$
+\begin{equation}
+\begin{aligned}
+\vec{k}_{+}&=\left(\frac{4\pi}{3a},0\right)\\
+\vec{k}_{-}&=\left(-\frac{4\pi}{3a},0\right)
+\end{aligned}
+\end{equation}
+Let us construct the first Brillouin zone.
+\begin{equation}
+\vec{b}_{1}=\frac{2\pi}{a}\left(\hat{x}+\frac{1}{\sqrt{3}}\hat{y}\right)\quad\trm{and}\quad\vec{b}_{2}=\frac{2\pi}{a}\left(-\hat{x}+\frac{1}{\sqrt{3}}\hat{y}\right)
+\end{equation}
+Note that $\abs*{\vec{b}_{1}}=\abs*{\vec{b}_{2}}=\frac{2\pi}{a}\sqrt{1+\frac{1}{3}}=\frac{4\pi}{a\sqrt{3}}$ and $\cos\theta=\frac{\vec{b}_{1}\cdot\hat{x}}{\abs*{\vec{b}_{1}}}=\frac{\sqrt{3}}{2}$. Thus, $\vec{b}_{1}$ makes an angle of $\frac{\pi}{6}$ with the $x$-axis. Similarly, $\vec{b}_{2}$ makes an angle $\frac{5\pi}{6}$ with the $x$-axis. Note also that $\abs*{\vec{b}_{1}+\vec{b}_{2}}=\frac{4\pi}{a\sqrt{3}}$.
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-4,0) -- (4,0) node[right] {$k_{x}$};
+	\draw[<->] (0,-4) -- (0,4) node[above] {$k_{y}$};
+	\node[regular polygon,regular polygon sides=6,minimum size=3.464cm,draw] at (0,0) {};
+	\draw[ultra thick,->] (0,0) -- (90:3cm) node[right] {$\vec{b}_{1}+\vec{b}_{2}$};
+	\draw[ultra thick,->] (0,0) -- (30:3cm) node[right] {$\vec{b}_{1}$};
+	\draw[ultra thick,->] (0,0) -- (150:3cm) node[left] {$\vec{b}_{2}$};
+	\draw[ultra thick,->] (0,0) -- (270:3cm) node[right] {$-\vec{b}_{1}-\vec{b}_{2}$};
+	\draw[ultra thick,->] (0,0) -- (210:3cm) node[left] {$-\vec{b}_{1}$};
+	\draw[ultra thick,->] (0,0) -- (330:3cm) node[right] {$-\vec{b}_{2}$};
+	\fill (0,0) circle (4pt);
+	\node[anchor=north west,right] at (4,0)
+		{\[\ket*{\vec{k}+\vec{b}_{i}}=\ket*{\vec{k}}\]};
+\end{tikzpicture}
+\end{center}
+Note that the corners of the Brillouin zone lying on the $x$-axis can be found through $\frac{\abs*{\vec{b}_{1}}}{2}\frac{1}{\cos\left(\frac{\pi}{6}\right)}=\frac{4\pi}{3a}$. Thus, $\vec{k}_{+}$ and $\vec{k}_{-}$ correspond to these two Brillouin zone corners. The other corners can be obtained from these two by adding reciprocal lattice vectors. Thus, $d_{x}(\vec{k})=d_{y}(\vec{k})=0$ at these corners and $\varepsilon_{+}=\varepsilon_{-}$ (i.e. conduction and valence bands touch at these points).
+\begin{center}
+\begin{tikzpicture}
+	\draw[dashed,<->] (-2*pi,0) -- (2*pi,0) node[right] {$\varepsilon_{F}=0$};
+	\draw[thick,<->,domain=-1.6*pi:1.6*pi,samples=200] node[above,yshift=1.4cm] {$\varepsilon_{+}$} plot (\x, {0.5*abs(1+2*cos(deg(\x/2)))});
+	\draw[thick,<->,domain=-1.6*pi:1.6*pi,samples=200] node[below,yshift=-1.5cm] {$\varepsilon_{-}$} plot (\x, {-0.5*abs(1+2*cos(deg(\x/2)))});
+	\fill[red] (-4*pi/3,0) circle (3pt) node[above] {$\vec{k}_{-}$};
+	\fill[red] (4*pi/3,0) circle (3pt) node[above] {$\vec{k}_{+}$};
+\end{tikzpicture}
+\end{center}
+Thus, graphene is known as a zero-gap insulator or a \ul{semimetal}. It is not simply a metal, since the Fermi surface is shrunk to a point. Similarly, it is not simply an insulator because there is no gap between the conduction and valence band. We shall characterize semimetals as the limit of metals as its Fermi surface is shrunk to a point. Similarly, we shall also characterize semimetals in the limit fo the band gap going to zero.\\
+
+Note that the states most important at describing the electronic structure are the ones near the Fermi energy $\varepsilon_{F}$, as they are the states most strongly affected by perturbations. Let us expand near the points where the bands touch.
+\begin{equation}
+k_{x}\approx k_{\pm,x}+\delta k_{x}\quad\trm{and}\quad k_{y}\approx\delta k_{y},\trm{ where } k_{\pm,x}=\pm\frac{4\pi}{3a}
+\end{equation}
+Taking $\delta k_{x}$ and $\delta k_{y}$ to be small
+\begin{equation}
+\begin{aligned}
+d_{\pm}^{x}(\vec{k})&\approx\pm\frac{\sqrt{3}}{2}ta\delta k_{x}\\
+d_{\pm}^{y}(\vec{k})&\approx\frac{\sqrt{3}}{2}ta\delta k_{y}
+\end{aligned}
+\end{equation}
+
+Let the Fermi velocity $v_{F}$ be defined as $\frac{\sqrt{3}ta}{2\hbar}$. The Hamiltonian then takes on the form
+\begin{equation}
+H_{\pm}(\vec{k})=\hbar v_{F}(\pm k_{x}\sigma^{x}+k_{y}\sigma^{y})
+\end{equation}
+where $\delta k_{x}$ and $\delta k_{y}$ have been replaced by $k_{x}$ and $k_{y}$ as it is understood that we are describing states near $\varepsilon_{F}=0$. We can also shift coordinates such that $k_{\pm,x}=0$ for each of the + and -- cases. The Hamiltonian now takes on the form of a Dirac Hamiltonian for a massless relativistic particle in 2D.\\
+
+Diagonalizing the Hamiltonian to get the band dispersions
+\begin{equation}
+\varepsilon_{\pm}(\vec{k})=\pm\hbar v_{F}k=\pm\hbar v_{F}\sqrt{k_{x}^{2}+k_{y}^{2}}
+\end{equation}
+This dispersion resembles that of a massless particle with energy $E=\sqrt{p^{2}c^{2}+m^{2}c^{4}}=\approx pc$ (ultrarelativistic limit) in that both are linear in $k$.
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-2*pi,0) -- (2*pi,0) node[right] {$k_{x}$};
+	\draw[<->] (0,-1) -- (0,1) node[above] {$\varepsilon(\vec{k})$};
+	\draw[thick,<->] (-5.189,-0.433) -- (-3.189,0.433);
+	\draw[thick,<->] (-3.189,-0.433) -- (-5.189,0.433);
+	\draw[thick,<->] (3.189,0.433) -- (5.189,-0.433);
+	\draw[thick,<->] (5.189,0.433) -- (3.189,-0.433);
+	\fill[red] (-4*pi/3,0) circle (3pt) node[above,yshift=0.2cm] {$\vec{k}_{-}$};
+	\fill[red] (4*pi/3,0) circle (3pt) node[above,yshift=0.2cm] {$\vec{k}_{+}$};
+\end{tikzpicture}
+\end{center}
+Can we open a gap at the band-touching points (i.e. can we make these ``massless" particles ``massive")? Let us add a potential $+m$ on sites 1 and $-m$ on sites 2 in order to make the atoms inequivalent (e.g. as in boron nitrate).
+\begin{center}
+\begin{tikzpicture}
+	\foreach \i in {0,1}{
+		\fill (0.866+1.732*\i,1.5) circle (3pt) node[above] {1};
+	}
+	\foreach \i in {0,1,2}{
+		\foreach \j in {0,1}{
+			\fill (1.732*\i,\j) circle (3pt);
+		}
+	}
+	\foreach \i in {0,1}{
+		\foreach \j in{0,1}{
+			\fill (0.866+1.732*\i,-1.5+\j) circle (3pt);
+		}
+	}
+	\fill (1.732,-2) circle (3pt);
+	\foreach \i in {0,1,2}{
+		\draw (1.732*\i,0) -- (1.732*\i,1);
+	}
+	\foreach \i in {0,1}{
+		\draw (1.732*\i,1) -- (0.866+1.732*\i,1.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (0.866+1.732*\i,1.5) -- (1.732+1.732*\i,1);
+	}
+	\foreach \i in {0,1}{
+		\draw (1.732*\i,0) -- (0.866+1.732*\i,-0.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (0.866+1.732*\i,-0.5) -- (1.732+1.732*\i,0);
+	}
+	\foreach \i in {0,1}{
+		\draw (0.866+1.732*\i,-1.5) -- (0.866+1.732*\i,-0.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (1.732,-2) -- (0.866+1.732*\i,-1.5);
+	}
+	\node[left,xshift=-0.2cm] at (1.732,1) {2};
+	\node[left,xshift=-0.2cm] at (1.732,0) {1};
+	\node[right,xshift=0.2cm] at (1.732,1) {$-m$};
+	\node[right,xshift=0.2cm] at (1.732,0) {$+m$};
+\end{tikzpicture}
+\end{center}
+This adds the following term to the Hamiltonian
+\begin{equation}
+H'(\vec{R})=m\sum_{R}\big(\ketbra*{\vec{R},1}{\vec{R},1}-\ketbra*{\vec{R},2}{\vec{R},2}\big)
+\end{equation}
+Upon Fourier transformation
+\begin{equation}
+\begin{aligned}
+H'(\vec{k})&=m\big(\ketbra{\vec{k},1}{\vec{k},1}-\ketbra*{\vec{k},2}{\vec{k},2}\big)\\
+&=m\sigma^{z}
+\end{aligned}
+\end{equation}
+Thus, the Hamiltonian becomes
+\begin{equation}
+H_{\pm}(\vec{k})=\hbar v_{F}(\pm k_{x}\sigma^{x}+k_{y}\sigma^{y})+m\sigma^{z}
+\end{equation}
+This yields the dispersion relations
+\begin{equation}
+\varepsilon_{\pm}(\vec{k})=\pm\sqrt{\hbar^{2}v_{F}^{2}k^{2}+m^{2}}
+\end{equation}
+which resembles that of massive relativistic fermions
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-2*pi,0) -- (2*pi,0) node[right] {$k_{x}$};
+	\draw[<->] (0,-1) -- (0,1) node[above] {$\varepsilon(\vec{k})$};
+	\draw[thick,<->,domain=-5.189:-3.189,samples=200] plot (\x, {0.5*sqrt(3/4*(\x+4.189)^2+0.49)});
+	\draw[thick,<->,domain=-5.189:-3.189,samples=200] plot (\x, {-0.5*sqrt(3/4*(\x+4.189)^2+0.49)});
+	\draw[thick,<->,domain=3.189:5.189,samples=200] plot (\x, {0.5*sqrt(3/4*(\x-4.189)^2+0.49)});
+	\draw[thick,<->,domain=3.189:5.189,samples=200] plot (\x, {-0.5*sqrt(3/4*(\x-4.189)^2+0.49)});
+	\fill[red] (-4*pi/3,0) circle (3pt) node[above,yshift=0.3cm] {$\vec{k}_{-}$};
+	\fill[red] (4*pi/3,0) circle (3pt) node[above,yshift=0.3cm] {$\vec{k}_{+}$};
+	\draw[<->] (-4.189,-0.35) -- node[below,yshift=-0.4cm,font=\footnotesize] {$2m$} (-4.189,0.35);
+	\draw[<->] (4.189,-0.35) -- node[below,yshift=-0.4cm,font=\footnotesize] {$2m$} (4.189,0.35);
+\end{tikzpicture}
+\end{center}
+
+With this ``mass" term, graphene now appears as a ``regular" insulator. 
+\begin{center}
+\begin{tikzpicture}
+	\draw[dashed,<->] (-2*pi,0) -- (2*pi,0) node[right] {$\varepsilon_{F}$};
+	\draw[thick,<->,domain=-1.6*pi:1.6*pi,samples=200] plot (\x, {0.5*sqrt((1+2*cos(deg(\x/2)))^2+0.49)}) node[above right] {regular insulator};
+	\draw[thick,<->,domain=-1.6*pi:1.6*pi,samples=200] plot (\x,{-0.5*sqrt((1+2*cos(deg(\x/2)))^2+0.49)});
+	\draw[<->] (-4.189,-0.35) -- node[below,yshift=-0.4cm,font=\footnotesize] {$2m$} (-4.189,0.35);
+	\draw[<->] (4.189,-0.35) -- node[below,yshift=-0.4cm,font=\footnotesize] {$2m$} (4.189,0.35);
+	\fill[red] (-4*pi/3,0) circle (3pt) node[above,yshift=0.3cm] {$\vec{k}_{-}$};
+	\fill[red] (4*pi/3,0) circle (3pt) node[above,yshift=0.3cm] {$\vec{k}_{+}$};
+\end{tikzpicture}
+\end{center}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Images/2/graphene_band.png}
+	\caption{Energy bands of graphene with mass term}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Images/2/graphene_BZ.png}
+	\caption{Lower energy band in first Brillouin zone of graphene with mass term}
+\end{figure}
+Clean graphene ($m=0$) is thus a semimetal due to inversion symmetry, but becomes an insulator when $m>0$. Returning back to the $m=0$ case
+\begin{equation}
+H_{\pm}(\vec{k})=\hbar v_{F}(\pm k_{x}\sigma^{x}+k_{y}\sigma^{y})
+\end{equation}
+The ``$\pm$" can be thought of as a two-component degree of freedom, which can be thought of as a pseudospin $\tau$ describing the $k_{+}$ or $k_{-}$ band-touching points.
+\begin{equation}
+\begin{aligned}
+\tau^{x}&=\ketbra{+}{-}+\ketbra{-}{+}\\
+\tau^{y}&=-i(\ketbra{+}{-}-\ketbra{-}{+})\\
+\tau^{z}&=\ketbra{+}{+}-\ketbra{-}{-}
+\end{aligned}
+\end{equation}
+Thus, $H(\vec{k})$ can be written as a single matrix
+\begin{equation}
+H(\vec{k})=\hbar v_{F}(k_{x}\tau^{z}\sigma^{x}+k_{y}\sigma^{y})+m\sigma^{z}
+\end{equation}
+including the ``mass" term.
+
+\subsection{Spin-Orbit Interactions}
+Let us analyze the symmetryies of $H(\vec{k})$. We shall set $m=0$. The Hamiltonian must be invariant under both time-reversal (as there is no magnetization) and inversion symmetry (i.e. parity symmetry). Thus
+\begin{equation}
+\Pi^{\dagger}H(\vec{k})\Pi=H(-\vec{k})\qquad\trm{and}\qquad\Theta H(\vec{k})\Theta^{-1}=H(-\vec{k})
+\end{equation}
+where $\Pi$ is the parity operator and $\Theta$ is the time-reversal operator.\\
+
+Since $\tau^{z}$ refers to the two band-touching points, which are coordinates in momentum space, $\tau^{z}$ changes sign under both symmetries.
+\begin{equation}
+\Pi^{\dagger}\tau^{z}\Pi=-\tau^{z}\qquad\trm{and}\qquad\Theta\tau^{z}\Theta^{-1}=-\tau^{z}
+\end{equation}
+
+Furthermore, $k_{x,y,z}$ represent momentum and are thus odd under these symmetries
+\begin{equation}
+\Pi^{\dagger}k_{x,y,z}\Pi=-k_{x,y,z}\qquad\trm{and}\qquad\Theta k_{x,y,z}\Theta^{-1}=-k_{x,y,z}
+\end{equation}
+
+Thus, to keep $H(\vec{k})$ even under these symmetries
+\begin{equation}
+\begin{aligned}
+\Pi^{\dagger}\sigma^{x}\Pi&=\Theta\sigma^{x}\Theta^{-1}=\sigma^{x}\\
+\Pi^{\dagger}\sigma^{y}\Pi&=\Theta\sigma^{y}\Theta^{-1}=-\sigma^{y}
+\end{aligned}
+\end{equation}
+This is intuitive as $\sigma^{x}$ and $\sigma^{y}$ refer to the spatial location of atoms 1 and 2 oriented in the $y$-direction. Based off the equations above, this implies that $\Pi=\sigma^{z}$. Thus, including the ``mass" term is prohibited as it breaks inversion symmetry. Namely
+\begin{equation}
+\Pi^{\dagger}\sigma^{z}\Pi=-\sigma^{z}\qquad\trm{and}\qquad\Theta\sigma^{z}\Theta^{-1}=\sigma^{z}
+\end{equation}
+This is also intuitive since $m\sigma^{z}$ adds a spatial discrepancy between atoms 1 and 2.\\
+
+What other $k$-independent terms can be added to $H(\vec{k})$ that do not violate these symmetries, such that there is still a gap in graphene? In reality, the violation of symmetry is an artifact of our nearest-neighbour model. If the next-nearest neighbours are included, it is possible to recover these symmetries. This was realized by Charles Kane.\\
+
+Note that under inversion
+\begin{equation}
+\Pi^{\dagger}\tau^{z}\sigma^{z}\Pi=\tau^{z}\sigma^{z}
+\end{equation}
+However, under time-reversal
+\begin{equation}
+\Theta\tau^{z}\sigma^{z}\Theta^{-1}=-\tau^{z}\sigma^{z}
+\end{equation}
+
+We resolve this by accounting for the real spin (not pseudospins) of electrons $S$. Spin $S$ is parity even and time-reversal odd. Thus
+\begin{equation}
+\Pi^{\dagger}S\Pi=S\qquad\trm{and}\qquad\Theta S\Theta^{-1}=-S
+\end{equation}
+where
+\begin{equation}
+\begin{aligned}
+S^{x}&=\ketbra{\up}{\dn}+\ketbra{\dn}{\up}\\
+S^{y}&=-i\big(\ketbra{\up}{\dn}-\ketbra{\dn}{\up}\big)\\
+S^{z}&=\ketbra{\up}{\up}-\ketbra{\dn}{\dn}
+\end{aligned}
+\end{equation}
+
+Thus, the term $\sigma^{z}\tau^{z}S^{z}$ satisfies these symmetries
+\begin{equation}
+\Pi^{\dagger}\sigma^{z}\tau^{z}S^{z}\Pi=\Theta\sigma^{z}\tau^{z}S^{z}\Theta^{-1}=\sigma^{z}\tau^{z}S^{z}
+\end{equation}
+
+Thus, the real Hamiltonian of graphene is
+\begin{equation}
+H(\vec{k})=\hbar v_{F}(k_{x}\tau^{z}\sigma^{x}+k_{y}\sigma^{y})+\Delta_{\trm{SO}}\sigma^{z}\tau^{z}S^{z}
+\end{equation}
+$\Delta_{\trm{SO}}$ refers to \ul{spin-orbit interactions}. This term was discovered by Kane and Mele (2005) and their paper gave rise to the field of topological insulators.\\
+
+The spin-orbit interaction is a relativistic effect. An electron moves in the electric field of ionized atoms in the crystal lattice. The electric field $\vec{E}$ in the rest frame of an electron will be transferred to a magnetic field
+\begin{equation}
+\vec{B}=\frac{\vec{v}}{c}\times\vec{E}=\frac{\vec{p}}{mc}\times\vec{E}
+\end{equation}
+This electric field is felt as a magnetic field by the electron in its rest frame which acts on electron spin (i.e. $\vec{B}\cdot\vec{S}=\frac{\vec{p}\times\vec{E}}{mc}\cdot\vec{S}$). This couples spin with momentum in a spin-orbit interaction. This is encapsulated as $\tau^{z}\sigma^{z}$ couples with $S^{z}$. Recall that $\tau^{z}$ refers to momentum (namely $\vec{k}_{+}$ and $\vec{k}_{-}$).\\
+
+Within the tight-binding approximation of graphene, the $\Delta_{\trm{SO}}$ term arises from second-nearest neighbour spin-dependent hopping.
+\begin{center}
+\begin{tikzpicture}
+	\foreach \i in {0,1}{
+		\fill (0.866+1.732*\i,1.5) circle (3pt);
+	}
+	\foreach \i in {0,1,2}{
+		\foreach \j in {0,1}{
+			\fill (1.732*\i,\j) circle (3pt);
+		}
+	}
+	\foreach \i in {0,1,2}{
+		\foreach \j in{0,1}{
+			\fill (0.866+1.732*\i,-1.5+\j) circle (3pt);
+		}
+	}
+	\foreach \i in {1,2}{
+		\fill (1.732*\i,-2) circle (3pt);
+	}
+	\foreach \i in {0,1,2}{
+		\draw (1.732*\i,0) -- (1.732*\i,1);
+	}
+	\foreach \i in {0,1}{
+		\draw (1.732*\i,1) -- (0.866+1.732*\i,1.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (0.866+1.732*\i,1.5) -- (1.732+1.732*\i,1);
+	}
+	\foreach \i in {0,1,2}{
+		\draw (1.732*\i,0) -- (0.866+1.732*\i,-0.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (0.866+1.732*\i,-0.5) -- (1.732+1.732*\i,0);
+	}
+	\foreach \i in {0,1,2}{
+		\draw (0.866+1.732*\i,-1.5) -- (0.866+1.732*\i,-0.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (1.732,-2) -- (0.866+1.732*\i,-1.5);
+	}
+	\foreach \i in {0,1}{
+		\draw (3.464,-2) -- (2.598+1.732*\i,-1.5);
+	}
+	\foreach \i in {0,1}{
+		\node[above] at (1.732+1.732*\i,1) {2};
+	}
+	\foreach \i in {0,1}{
+		\node[below,yshift=-0.1cm] at (1.732+1.732*\i,0) {1};
+	}
+	\node[above] at (2.598,1.5) {1};
+	\node[below right] at (2.598,-0.5) {2};
+	
+	\draw[red,thick,->-=0.5] (1.732,1) -- (2.598,-0.5);
+	\draw[red,thick,->-=0.5] (2.598,-0.5) -- (3.464,1);
+	\draw[red,thick,->-=0.5] (3.464,1) -- (1.732,1);
+	\draw[blue,thick,-<-=0.5] (1.732,0) -- (2.598,1.5);
+	\draw[blue,thick,-<-=0.5] (2.598,1.5) -- (3.464,0);
+	\draw[blue,thick,-<-=0.5] (3.464,0) -- (1.732,0);
+	\node[anchor=north west,right,text width=8cm] at (5.5,0)
+		{The arrows indicate the tunneling matrix element contains a phase factor $i$.};
+\end{tikzpicture}
+\end{center}
+\begin{equation}
+\begin{aligned}
+H'=-it'\big(&\ketbra*{\vec{R}+\vec{a}_{1}-\vec{a}_{2},1}{\vec{R},1}+\ketbra*{\vec{R}+\vec{a}_{1},1}{\vec{R}+\vec{a}_{1}-\vec{a}_{2},1}+\ketbra*{\vec{R},1}{\vec{R}+\vec{a}_{1},1}\\
+&-\ketbra*{\vec{R},2}{\vec{R}+\vec{a}_{1}-\vec{a}_{2},2}-\ketbra*{\vec{R}+\vec{a}_{1}-\vec{a}_{@},2}{\vec{R}+\vec{a}_{1},2}-\ketbra*{\vec{R}+\vec{a}_{1},2}{\vec{R},2}\big)+\trm{h.c.}
+\end{aligned}
+\end{equation}
+The negative sign occurs over due to the opposing directions of the tunneling amplitudes. After performing a Fourier transform and evaluating the resulting $\vec{k}$-dependent coefficient at $\vec{k}_{\pm}$, one finds
+\begin{equation}
+\Delta_{\trm{SO}}=3\sqrt{3}t'
+\end{equation}
+Refer to assignment 3 for more details on the derivation.\\
+
+In order to study the effects of the $\Delta_{\trm{SO}}$ term, let us add back the $m\sigma^{z}$ term in the Hamiltonian.
+\begin{equation}
+H(\vec{k})=\hbar v_{F}(k_{x}\tau^{z}\sigma^{x}+k_{y}\sigma^{y})+\Delta_{\trm{SO}}\tau^{z}\sigma^{z}S^{z}+m\sigma^{z}
+\end{equation}
+
+Consider spin up electrons ($S^{z}=1$)
+\begin{equation}
+\begin{aligned}
+H_{+}(\vec{k})&=\hbar v_{F}(k_{x}\sigma^{x}+k_{y}\sigma^{y})+(m+\Delta_{\trm{SO}})\sigma^{z}\\
+H_{-}(\vec{k})&=\hbar v_{F}(-k_{x}\sigma^{x}+k_{y}\sigma^{y})+(m-\Delta_{\trm{SO}})\sigma^{z}
+\end{aligned}
+\end{equation}
+
+The eigenvalues for the Hamiltonians are
+\begin{equation}
+\begin{aligned}
+\varepsilon_{+}(\vec{k})&=\pm\sqrt{\hbar^{2}v_{F}^{2}k^{2}+(m+\Delta_{\trm{SO}})^{2}}\\
+\varepsilon_{-}(\vec{k})&=\pm\sqrt{\hbar^{2}v_{F}^{2}k^{2}+(m-\Delta_{\trm{SO}})^{2}}
+\end{aligned}
+\end{equation}
+
+In the limit of large $m\gg\Delta_{\trm{SO}}$, all the electrons will localize to atoms of type 2 due to lower energy costs. Even with tunneling between atoms of type 2, the localization of electrons prevents it by the Pauli exclusion principle. Thus, we obtain an insulator. Moreover, this is a trivial (non-topological) insulator, as increasing $m$ to infinity simply corresponds to a gas of disconnected carbon atoms (i.e. an atomic insulator).
+\begin{center}
+\begin{tikzpicture}
+	\fill (0,1) circle (3pt) node[above left] {2} node[above right,xshift=0.2cm] {$-m$};
+	\fill (0,0) circle (3pt) node[below left] {1} node[below right,xshift=0.2cm] {$+m$};
+\end{tikzpicture}
+\end{center}
+
+Suppose we decrease $m$, while still letting it be positive.
+\begin{center}
+\begin{tikzpicture}
+	\draw[dashed,<->] (-2*pi,0) -- (2*pi,0) node[right] {$\varepsilon_{F}$};
+	\draw[dashed,<->] (0,-2) -- (0,2) node[above] {$\varepsilon(\vec{k})$};
+	\draw[thick,<-,domain=-2*pi:0,samples=200] plot (\x, {0.5*sqrt((1+2*cos(deg(\x/2)))^2+(0.7-0.1)^2)});
+	\draw[thick,<-,domain=-2*pi:0,samples=200] plot (\x,{-0.5*sqrt((1+2*cos(deg(\x/2)))^2+(0.7-0.1)^2)});
+	\draw[thick,->,domain=0:2*pi,samples=200] plot (\x, {0.5*sqrt((1+2*cos(deg(\x/2)))^2+(0.7+0.1)^2)});
+	\draw[thick,->,domain=0:2*pi,samples=200] plot (\x,{-0.5*sqrt((1+2*cos(deg(\x/2)))^2+(0.7+0.1)^2)});
+	\draw[<->] (-4.189,-0.3) -- node[below,yshift=-0.6cm,font=\footnotesize] {$2(m-\Delta_{\trm{SO}})$} (-4.189,0.3);
+	\draw[<->] (4.189,-0.4) -- node[below,yshift=-0.6cm,font=\footnotesize] {$2(m+\Delta_{\trm{SO}})$} (4.189,0.4);
+	\fill[red] (-4*pi/3,0) circle (3pt) node[above,yshift=0.3cm] {$\vec{k}_{-}$};
+	\fill[red] (4*pi/3,0) circle (3pt) node[above,yshift=0.3cm] {$\vec{k}_{+}$};
+\end{tikzpicture}
+\end{center}
+The ``mass" at the $\vec{k}_{+}$ remains positive, but the ``mass" at the $\vec{k}_{-}$ band-touching point vanishes and changes sign when $m=\Delta_{\trm{SO}}$. The gap is $2\abs{m-\Delta_{\trm{SO}}}$ and closes at this value of $m$. This signifies a transition between two different kinds of insulators.
+\begin{itemize}
+\item $m>\Delta_{\trm{SO}}$: Trivial insulator
+\item $m=\Delta_{\trm{SO}}$: Transition point / semimetal
+\item $m>\Delta_{\trm{SO}}$: Topological insulator
+\end{itemize}
+
+Recall $H(\vec{k})=\vec{d}(\vec{k})\cdot\vec{\sigma}$. Let us analyze $\hat{d}(\vec{k})=\frac{\vec{d}(\vec{k})}{\abs*{\vec{d}(\vec{k})}}$. $\hat{d}(\vec{k})$ can be thought of as a map from the first Brillouin zone to the surface of a unit sphere. This will allow us to interpret the topological differences between ordinary and topological insulators.\\
+
+Near the band-touching points
+\begin{equation}
+\begin{aligned}
+\hat{d}(\vec{k}_{+})&=\frac{1}{\sqrt{\hbar^{2}v_{F}^{2}k^{2}+(m+\Delta_{\trm{SO}})^{2}}}(\hbar v_{F}k_{x},\,\hbar v_{F}k_{y},\,m+\Delta_{\trm{SO}})\\
+\hat{d}(\vec{k}_{-})&=\frac{1}{\sqrt{\hbar^{2}v_{F}^{2}k^{2}+(m-\Delta_{\trm{SO}})^{2}}}(-\hbar v_{F}k_{x},\,\hbar v_{F}k_{y},\,m-\Delta_{\trm{SO}})
+\end{aligned}
+\end{equation}
+When $m>\Delta_{\trm{SO}}$, the $z$-component of both $\hat{d}(\vec{k}_{+})$ and $\hat{d}(\vec{k}_{-})$ are always positive. Thus, $\hat{d}(\vec{k})$ only covers the upper hemisphere of the unit sphere as $\vec{k}$ covers the whole Brillouin zone. When $m<\Delta_{\trm{SO}}$, the $z$-component of $\hat{d}(\vec{k}_{-})$ is always negative. As $\vec{k}$ covers the whole Brillouin zone, $\hat{d}(\vec{k})$ covers the entire unit sphere.
+\medskip
+\begin{center}
+\begin{tikzpicture}
+	\shade[ball color=white] (2,0) circle (2cm) node[below,yshift=-2.3cm] {$m>\Delta_{\trm{SO}}$} node[above right,xshift=2cm,yshift=0.5cm] {$\hat{d}(\vec{k})$}; 
+	\fill[color=black] (0,0) arc (180:360:2cm and 0.5cm);
+	\shade[ball color=black] (0,0) arc (180:0:2cm) ;
+	\shade[ball color=black] (8,0) circle (2cm) node[below,yshift=-2.3cm] {$m<\Delta_{\trm{SO}}$} node[above right,xshift=2cm,yshift=0.5cm] {$\hat{d}(\vec{k})$};
+\end{tikzpicture}
+\end{center}
+Given this observation, we can define a \ul{topological invariant} that characterizes the differences in these two topologically distinct situations corresponding to the two types of insulators. The quantity is $\eta\in\{0,1\}$ and is defined as
+\begin{equation}
+\eta=\frac{1}{4\pi}\int_{\trm{BZ}}\hat{d}\cdot(\partial_{k_{x}}\hat{d}\times\partial_{k_{y}}\hat{d})\dd[2]{k}=\begin{cases}
+1, & \trm{if topological}\\
+0, & \trm{if trivial}
+\end{cases}
+\end{equation}
+where $\int_{\trm{BZ}}$ indicates an integration over the entire Brillouin zone. The quantity $\eta$ is related to the \ul{Chern number}. In this particular case
+\begin{equation}
+\eta=\begin{cases}
+1, & m<\Delta_{\trm{SO}}\\
+0, & m>\Delta_{\trm{SO}}
+\end{cases}
+\end{equation}
+
+\subsection{Topological/Non-Topological Interfaces}
+Just as in polyacetylene, the topological distinction gives rise to edge states at the interface between topological and ordinary insulators. To describe this, let us consider $H(\vec{k})$.
+\begin{equation}
+H_{-}(\vec{k})=\hbar v_{F}(-k_{x}\sigma^{x}+k_{y}\sigma^{y})+(m-\Delta_{\trm{SO}})\sigma^{z}
+\end{equation}
+The coefficient in front of $\sigma^{z}$ differs in sign depending on the type of insulator. Assume the material transitions from a topological insulator to an ordinary insulator by letting $m(x)$ denote this coefficient as it varies along $x$. Note that this discussion implies that $\tau^{z}$ and $S^{z}$ must be of opposite signs, otherwise the interface would be between two trivial insulators.
+\begin{equation}
+m(x)=m-\Delta_{\trm{SO}}
+\end{equation}
+Since $k_{x}$ no longer corresponds with plane wave solutions to the Schr\"{o}dinger equation, replace $k_{x}$ with its representation in position space.
+\begin{equation}
+k_{x}\rightarrow-i\pdv{x}
+\end{equation}
+
+Thus
+\begin{equation}
+H_{-}(k_{y})=i\hbar v_{F}\pdv{x}\sigma^{x}+\hbar v_{F}k_{y}\sigma^{y}+m(x)\sigma^{z}
+\end{equation}
+
+Let us start with $k_{y}=0$ and find the zero energy eigenstate solution for the Schr\"{o}dinger equation. We let $m(x\rightarrow-\infty)$ be negative, corresponding to a topological insulator and $m(x\rightarrow\infty)$ be positive, corresponding to a trivial insulator. This is analogous to what we did for polyacetylene. Thus, we look for solutions of the form
+\begin{equation}
+\Psi(x)=e^{f(x)}\sigma^{x}\ket{z}
+\end{equation}
+where as before
+\begin{equation}
+\ket{z}=z_{1}\ket{1}+z_{2}\ket{2}
+\end{equation}
+Recall that $\sigma^{z}\sigma^{x}=i\sigma^{y}$. Thus
+\begin{equation}
+\begin{aligned}
+H_{-}(k_{y}=0)\Psi(x)&=0\\
+-\left[i\hbar v_{F}\dv{f}{x}+im(x)\sigma^{y}\right]e^{f(x)}\ket{z}&=0\\
+\left[\dv{f}{x}+\frac{m(x)}{\hbar v_{F}}\sigma^{y}\right]&=0
+\end{aligned}
+\end{equation}
+Taking $\ket{z}$ to be an eigenstate of $\sigma^{y}$ with eigenstate 1
+\begin{equation}
+\sigma^{y}\ket{z}=\ket{z}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\dv{f}{x}&=-\frac{1}{\hbar v_{F}}m(x)\\
+f(x)&=-\frac{1}{\hbar v_{F}}\int_{0}^{x}m(x')\dd{x'}
+\end{aligned}
+\end{equation}
+and therefore
+\begin{equation}
+\Psi(x)=e^{-\frac{1}{\hbar v_{F}}\int_{0}^{x}m(x')\dd{x'}}\sigma^{x}\ket{z}
+\end{equation}
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-4,0) -- (4,0) node[right] {$x$};
+	\draw[<->] (0,2.5) node[above] {$\Psi(x)$} -- (0,-0.5);
+	\draw[thick,domain=-4:4,samples=200,red,<->] plot (\x, {2*e^(-(\x)^2)+0.1});
+\end{tikzpicture}
+\end{center}
+
+Additionally
+\begin{equation}
+\sigma^{y}\sigma^{x}\ket{z}=-\sigma^{x}\sigma^{y}\ket{z}=-\sigma^{x}\ket{z}
+\end{equation}
+Thus, $\sigma^{x}\ket{z}$ is an eigenstate of $\sigma^{y}$ with eigenvalue -1 and the solution is of the form
+\begin{equation}
+\Psi(x)=e^{-\frac{1}{\hbar v_{F}}\int_{0}^{x}m(x')\dd{x'}}\ket{\sigma^{y}=-1}
+\end{equation}
+This is known as the Jackiw-Rebbi solution.\\
+
+Consider a non-zero $k_{y}$
+\begin{equation}
+\begin{aligned}
+H_{-}(k_{y})\Psi(x)&=\hbar v_{F}k_{y}\sigma^{y}e^{-\frac{1}{\hbar v_{F}}\int_{0}^{x}m(x')\dd{x'}}\ket{\sigma^{y}=-1}\\
+&\quad\explain\trm{ Since }H_{-}(k_{y}=0)\Psi(x)=0\\
+&=-\hbar v_{F}k_{y}e^{-\frac{1}{\hbar v_{F}}\int_{0}^{x}m(x')\dd{x'}}\ket{\sigma^{y}=-1}\\
+&=-\hbar v_{F}k_{y}\Psi(x)
+\end{aligned}
+\end{equation}
+
+Thus, $\Psi(x)$ is an eigenstate of $H_{-}(k_{y})$ with eigenvalue $-\hbar v_{F}k_{y}$. Plotting the dispersion relation
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-4,0) -- (4,0) node[right] {$k_{y}$};
+	\draw[<->] (0,4) node[above] {$\varepsilon(k_{y})$} -- (0,-4);
+	\draw[<->,ultra thick] (-1,4) -- (1,-4);
+	\draw[->,shorten >=1mm] (2,-2) node[right] {$\varepsilon(k_{y})=-\hbar v_{F}k_{y}$} -- (0.5,-2);
+\end{tikzpicture}
+\end{center}
+This kind of edge state is called a \ul{chiral edge state}. The dispersion is called a \ul{chiral dispersion}. This dispersion resembles that of a left-handed Weyl fermion in 1D.\\
+
+Recall that the formula for \ul{group velocity} is
+\begin{equation}
+\vec{v}=\frac{1}{\hbar}\vec{\nabla}_{k}\varepsilon(\vec{k})
+\end{equation}
+This can be seen knowing that $\vec{v}=\vec{\nabla}_{k}\omega(\vec{k})$ and $\varepsilon(\vec{k})=\hbar\omega(\vec{k})$. Thus, the group velocity is $\vec{v}=-v_{F}\hat{y}$ and all electrons in this state move in one direction.
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,2) -- (0,-2);
+	\draw[->,red,thick] (-0.3,1.5) -- (-0.3,-1.5);
+	\draw[<-,shorten >=1mm] (-0.5,-1) -- (-1,-2) node[left] {chiral pseudospin edge state};
+	\node at (-3,0) {Topological};
+	\node at (3,0) {Trivial};
+	\draw[->] (0.5,1) -- (0.5,2) node[above] {$\hat{y}$};
+	\draw[->] (0.5,1) -- (1.5,1) node[right] {$\hat{x}$};	
+\end{tikzpicture}
+\end{center}
+This was done for $S^{z}=1$ spin-up electrons. The same analysis can be done for $S^{z}=-1$ spin-down electrons (where $\ket{z}$ is instead an eigenstate of $\sigma^{y}$ with eigenvalue 1). This gives $\varepsilon(k_{y})=\hbar v_{F}k_{y}$ (i.e. they all move in the opposite direction). $\varepsilon(k_{y})=\pm\hbar v_{F}k_{y}$ is a band dispersion for a one-dimensional ``wire" located at the interface. Note this differs for a real 1D wire found earlier with $\varepsilon(k_{y})=-2t\cos(k_{y}a)$.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+	\draw[<->] (-4,0) -- (4,0) node[right] {$k$};
+	\draw[<->] (0,-2.5) -- (0,2.5) node[above] {$\varepsilon(k)$};
+	\draw[thick,domain=-pi:pi,samples=200] plot (\x, {-2*cos(deg(\x)});
+	\draw[dashed] (-pi,2.5) -- node[above left] {$-\frac{\pi}{a}$} (-pi,-2.5); 
+	\draw[dashed] (pi,2.5) -- node[above right] {$\frac{\pi}{a}$} (pi,-2.5);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Quantum Spin Hall Effect}
+For a finite 2D sample, spin up electrons orbit along the interface in one direction while the spin down electrons orbit in the opposite direction. This is the \ul{quantum spin Hall effect}.
+
+\begin{tikzpicture}
+	\draw (-4,2) rectangle (4,-2);
+	\coordinate (tl) at (-4,2);
+	\coordinate (tr) at (4,2);
+	\coordinate (bl) at (-4,-2);
+	\coordinate (br) at (4,-2);
+	\draw[->-=0.7,blue,thick] ([shift={(0.2,-0.2)}]tl) -- ([shift={(-0.2,-0.2)}]tr);
+	\draw[->-=0.7,blue,thick] ([shift={(-0.2,-0.2)}]tr) -- ([shift={(-0.2,0.2)}]br);
+	\draw[->-=0.7,blue,thick] ([shift={(-0.2,0.2)}]br) -- ([shift={(0.2,0.2)}]bl);
+	\draw[->-=0.7,blue,thick] ([shift={(0.2,0.2)}]bl) -- ([shift={(0.2,-0.2)}]tl);
+	\draw[-<-=0.3,red,thick] ([shift={(0.4,-0.4)}]tl) -- ([shift={(-0.4,-0.4)}]tr);
+	\draw[-<-=0.3,red,thick] ([shift={(-0.4,-0.4)}]tr) -- ([shift={(-0.4,0.4)}]br);
+	\draw[-<-=0.3,red,thick] ([shift={(-0.4,0.4)}]br) -- ([shift={(0.4,0.4)}]bl);
+	\draw[-<-=0.3,red,thick] ([shift={(0.4,0.4)}]bl) -- ([shift={(0.4,-0.4)}]tl);
+	\node[right] at (5,0) {Vacuum (trivial insulator)};
+	\node at (0,0) {Topological insulator};
+	\draw[<-,shorten <=1mm,blue] (3.8,1.6) -- (4.5,2) node[right] {Spin up};
+	\draw[<-,shorten <=1mm,red] (3.6,-1.4) -- (4.5,-2) node[right] {Spin down};
+\end{tikzpicture}
+There are two dispersion relations given by
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+	\draw[<->] (-4,0) -- (4,0) node[right] {$k_{y}$};
+	\draw[<->] (0,-4) -- (0,4) node[above] {$\varepsilon(k_{y})$};
+	\draw[<->,ultra thick,blue] (-2,4) -- (2,-4);
+	\draw[<->,ultra thick,red] (-2,-4) -- (2,4);
+\end{tikzpicture}
+\end{center}
+Using an external potential $V_{y}$, electrons pool on one side in the $y$-direction.
+\begin{center}
+\begin{tikzpicture}
+	\draw (-3,2) rectangle (3,-2);
+	\draw (2.8,2) -- (2.8,2.5) -- (4.5,2.5) -- (4.5,-2.5) -- (2.8,-2.5) -- (2.8,-2);
+	\draw[fill=white] (4.5,0) circle (25pt) node[font=\large] {$V_{y}$};
+	\draw[->] (3.2,-1) -- (3.2,1);
+	\foreach \i in {0,...,10}{
+		\node[red,thick] at (-2.5+0.5*\i,1.5) {$+$};
+		\node[red,thick] at (-2.5+0.5*\i,-1.5) {$-$};
+	}
+	\draw[->] (6,0) -- (6,1) node[above] {$\hat{y}$};
+	\draw[->] (6,0) -- (7,0) node[right] {$\hat{x}$};	
+\end{tikzpicture}
+\end{center}
+Consider a sample with two edges. In the absence of an external voltage across the $y$-direction, the net current is zero as the two edges cancel each other. However, after applying a voltage drop between the upper and lower edge, the occupation of electrons will differ between the sides and a net current flows in the $x$-direction due to the quantum spin Hall effect. Since $P=IV$ but the current flows orthogonally to the applied voltage, there is no dissipation of energy. This is the \ul{Hall effect}, where there is current flowing perpendicular to the applied voltage.
+
+\begin{center}
+\begin{tikzpicture}
+	\draw (-5,2) -- (5,2);
+	\draw (-5,-2) -- (5,-2);
+	\draw (6,1) -- (6,2) node[above] {$\hat{y}$};
+	\draw (6,1) -- (7,1) node[right] {$\hat{x}$};
+	\draw[->] (-4.5,1.5) -- (4.5,1.5);
+	\draw[<-] (-4.5,-1.5) -- (4.5,-1.5);
+\end{tikzpicture}
+\end{center}
+
+For a wire with electrons flowing through it
+\begin{center}
+\begin{tikzpicture}
+	\node[cylinder,shape border rotate=180,draw,minimum height=1.5cm,minimum width=1cm] at (0,0) {};
+	\draw (-3,0.5) -- (3,0.5);
+	\draw (-3,-0.5) -- (3,-0.5);
+	\draw[|-|] (-0.75,-0.8) -- node[below] {$v\dd{t}$} (0.55,-0.8);
+	\draw[->] (1,0) -- (1.5,0);
+	\draw[dashed] (0.5,0) circle[x radius=0.125cm,y radius=0.5cm];
+	\draw[<-] (-0.75,0) -- (-1,1) node[above] {$A$};
+\end{tikzpicture}
+\end{center}
+where $I=\dv{Q}{t}$ is the current, $n$ is the electron density, and $-e$ is the charge of the electron.\\
+
+The charge flowing through this cross-section per time $\dd{t}$ is
+\begin{equation}
+\begin{aligned}
+\dd{Q}&=-enAv\dd{t}\\
+\dv{Q}{t}&=-enAv
+\end{aligned}
+\end{equation}
+Thus, one defines the \ul{current density} $j$
+\begin{equation}
+I=ja
+\end{equation}
+where $j=-env$. More generally
+\begin{equation}
+\vec{j}=-en\vec{v}
+\end{equation}
+
+\begin{center}
+\begin{tikzpicture}
+	\draw (-5,2) -- (5,2);
+	\draw (-5,-2) -- (5,-2);
+	\draw[->] (-4.5,1.5) -- (4.5,1.5);
+	\draw[<-] (-4.5,-1.5) -- (4.5,-1.5);
+	\node at (2.5,1) {$I_{\trm{top}}\equiv I_{R}$};
+	\node at (-2.5,-1) {$I_{\trm{bottom}}\equiv I_{L}$};
+\end{tikzpicture}
+\end{center}
+
+\end{document}
