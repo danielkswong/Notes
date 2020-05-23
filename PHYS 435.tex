@@ -33,6 +33,29 @@
 \tikzset{->-/.style={decoration={markings,mark=at position #1 with {\arrow{>}}},postaction={decorate}}} 
 \tikzset{-<-/.style={decoration={markings,mark=at position #1 with {\arrow{<}}},postaction={decorate}}}% Defining lines with arrows in the middle
 
+\newcommand{\cube}[1]{
+\draw (0,0,0) -- (#1,0,0);
+\draw (0,0,0) -- (0,#1,0);
+\draw (0,0,0) -- (0,0,#1);
+\draw (#1,0,0) -- (#1,#1,0);
+\draw (#1,0,0) -- (#1,0,#1);
+\draw (0,#1,0) -- (#1,#1,0);
+\draw (0,#1,0) -- (0,#1,#1);
+\draw (0,0,#1) -- (#1,0,#1);
+\draw (0,0,#1) -- (0,#1,#1);
+\draw (#1,#1,0) -- (#1,#1,#1);
+\draw (#1,0,#1) -- (#1,#1,#1);
+\draw (0,#1,#1) -- (#1,#1,#1);
+\fill (0,0,0) circle (3pt);
+\fill (#1,0,0) circle (3pt);
+\fill (0,#1,0) circle (3pt);
+\fill (0,0,#1) circle (3pt);
+\fill (#1,#1,0) circle (3pt);
+\fill (#1,0,#1) circle (3pt);
+\fill (0,#1,#1) circle (3pt);
+\fill (#1,#1,#1) circle (3pt);
+} % Draws a cube in Tikz
+
 \usepackage{color} % To use different colours
 \usepackage[makeroom]{cancel} % To cancel terms in equations
 
@@ -595,7 +618,7 @@ This is a different state, although it has the same energy (degenerate) with the
 The band dispersion depends only on $\delta t^{2}$ and does not change when $\delta t$ changes sign. However, $\vec{d}(k)$ is sensitive to the sign of $\delta t$. Let us see how $\vec{d}(k)$ changes as $k$ goes from $-\frac{\pi}{2a}$ to $\frac{\pi}{2a}$.
 \[
 \begin{aligned}
-d_{x}(-\frac{\pi}{2a})&=-2\delta t,\quad & d_{y}(-\frac{\pi}{2a})&=0\\
+d_{x}\left(-\frac{\pi}{2a}\right)&=-2\delta t,\quad & d_{y}\left(-\frac{\pi}{2a}\right)&=0\\
 d_{x}(0)&=-2t,\quad & d_{y}(0)&=0\\
 \end{aligned}
 \]
@@ -1417,7 +1440,7 @@ H'(\vec{R})=m\sum_{R}\big(\ketbra*{\vec{R},1}{\vec{R},1}-\ketbra*{\vec{R},2}{\ve
 Upon Fourier transformation
 \begin{equation}
 \begin{aligned}
-H'(\vec{k})&=m\big(\ketbra{\vec{k},1}{\vec{k},1}-\ketbra*{\vec{k},2}{\vec{k},2}\big)\\
+H'(\vec{k})&=m\big(\ketbra*{\vec{k},1}{\vec{k},1}-\ketbra*{\vec{k},2}{\vec{k},2}\big)\\
 &=m\sigma^{z}
 \end{aligned}
 \end{equation}
@@ -1931,5 +1954,463 @@ where $j=-env$. More generally
 	\node at (-2.5,-1) {$I_{\trm{bottom}}\equiv I_{L}$};
 \end{tikzpicture}
 \end{center}
+
+The electron density $n$ can be written as an integral over momentum space. This gives $I_{R}$ as
+\begin{equation}
+I_{R}=-e\int v_{F}n_{F}(\varepsilon_{k}) \frac{\dd{k_{x}}}{2\pi}
+\end{equation}
+Since $k=2\pi n/L$, $\dd{k_{x}}/\left(\frac{2\pi}{L}\right)$ is the volume in momentum space corresponding to a single quantum state. To obtain an area
+\begin{equation}
+A=\frac{V}{L}=\frac{\dd{k_{x}}}{2\pi}
+\end{equation}
+Correspondingly
+\begin{equation}
+I_{L}=e\int v_{F}n_{F}(\varepsilon_{k}) \frac{\dd{k_{x}}}{2\pi}
+\end{equation}
+
+Since $\varepsilon=\hbar v_{F}k_{x}$, $\dd{\varepsilon}=\hbar v_{F}\dd{k_{x}}$. Thus
+\begin{equation}
+\begin{aligned}
+I_{R}&=-\frac{e}{2\pi n}\int_{-\infty}^{\varepsilon_{FR}}\dd{\varepsilon}n_{F}(\varepsilon)\\
+I_{L}&=\frac{e}{2\pi n}\int_{-\infty}^{\varepsilon_{FL}}\dd{\varepsilon}n_{F}(\varepsilon)\\
+\end{aligned}
+\end{equation}
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (4,0) node[right] {$\varepsilon$};
+	\draw[->] (0,0) -- (0,2) node[above] {$n_{F}$};
+	\draw (3,1.5) -- (0,1.5) node[left] {1};
+	\draw (3,1.5) -- (3,0) node[below] {$\varepsilon_{F}$};
+	\fill[fill opacity=0.2] (0,0) rectangle (3,1.5);
+\end{tikzpicture}
+\end{center}
+
+The net current is
+\begin{equation}
+\begin{aligned}
+I&=I_{L}+I_{R}\\
+&=-\frac{e}{2\pi n}\left(\int_{-\infty}^{\varepsilon_{FR}}\dd{\varepsilon}n_{F}(\varepsilon)-\int_{-\infty}^{\varepsilon_{FL}}\dd{\varepsilon}n_{F}(\varepsilon)\right)\\
+&=-\frac{e}{h}\left(\int_{\varepsilon_{FL}}^{\varepsilon_{FR}}\dd{\varepsilon}\right)\trm{, since $n_{F}(\varepsilon)=1$ in these bounds}\\
+&=-\frac{e}{h}(\varepsilon_{FR}-\varepsilon_{FL})
+\end{aligned}
+\end{equation}
+
+\newpage
+Moreover
+\begin{center}
+\begin{tikzpicture}
+	\draw (-5,2) -- (5,2);
+	\draw (-5,-2) -- (5,-2);
+	\draw[->] (-4.5,1.5) -- (4.5,1.5);
+	\draw[<-] (-4.5,-1.5) -- (4.5,-1.5);
+	\draw(2,2) -- (2,2.5) -- (3,2.5) -- (3,-2.5) -- (2,-2.5) -- (2,-2);
+	\draw[fill=white] (3,0) circle (25pt) node[font=\large] {$V_{y}$};
+	\node[above right] at (4,2) {spin up};
+	\node[right] at (5,0) {$\varepsilon_{FR}-\varepsilon_{FL}=eV_{y}$}; 
+\end{tikzpicture}
+\end{center}
+
+Thus
+\begin{equation}
+I_{x}=-\frac{e^{2}}{h}V_{y}=\sigma_{xy}V_{y}
+\end{equation}
+where $\sigma_{xy}=-\frac{e^{2}}{h}$ is the \ul{Hall conductivity}. The Hall conductivity $\sigma_{xy}$ is the off-diagonal component of the conductivity tensor. The fact that $\sigma_{xy}$ is perfectly universal and depends only on fundamental constants is the quantum Hall effect.\\
+
+However, spin up and spin down electrons move in different directions. Thus
+\begin{equation}
+\begin{aligned}
+\sigma_{xy}^{\up}&=-\frac{e^{2}}{h}\\
+\sigma_{xy}^{\dn}&=\frac{e^{2}}{h}\\
+\sigma_{xy}&=\sigma_{xy}^{\up}+\sigma_{xy}^{\dn}=0
+\end{aligned}
+\end{equation}
+
+Let us introduce a \ul{spin-current} with \ul{spin-hall conductivity}
+\begin{equation}
+\sigma_{xy}^{s}=\frac{1}{2}(\sigma_{xy}^{\up}-\sigma_{xy}^{\dn})=-\frac{e^{2}}{h}
+\end{equation}
+Effectively, there is an equal number of electrons moving in either direction, but each direction is biased to a spin. There is buildup of spin up electrons to the right and spin down electrons to the left. This is the analogue of \ul{spin voltage}. We see these in topological insulators such as HgTe and CdTe.
+
+\subsection{Bravais Lattices in 3D}
+Let us discuss 3D topological insulators. We will use a simplistic model called the Fu-Kane-Mele model that generalizes graphene to 3D. Note it does not represent any real material. The model involves electrons hopping on a diamond lattice. The diamond lattice has two atoms per unit cell, with the Bravais lattice being face-centred cubic.\\
+
+Recall 3D Bravais lattices. There are 14 different types but we shall only discuss the cubic family.
+\begin{enumerate}
+\item Simple cubic (SC)
+
+\begin{tikzpicture}
+	\cube{2};
+	\draw[->,red,thick,shorten >=1mm] (0,0,0) -- node[above] {$\vec{a}_{1}$} (2,0,0);
+	\draw[->,red,thick,shorten >=1mm] (0,0,0) -- (0,2,0) node[above] {$\vec{a}_{2}$};
+	\draw[->,red,thick,shorten >=1mm] (0,0,0) -- (0,0,2) node[below left] {$\vec{a}_{3}$};
+	\draw[->] (5,0,0) -- (6,0,0) node[right] {$\hat{x}$};
+	\draw[->] (5,0,0) -- (5,1,0) node[above] {$\hat{y}$};
+	\draw[->] (5,0,0) -- (5,0,1) node[below left] {$\hat{z}$};
+	\node[anchor=north west,right] at (7,1)
+		{\[
+			\begin{aligned}
+				\vec{a}_{1}&=a\hat{x}\\
+				\vec{a}_{2}&=a\hat{y}\\
+				\vec{a}_{3}&=a\hat{z}\\
+			\end{aligned}
+		\]};
+\end{tikzpicture}
+\item Body-centred cubic (BCC)
+
+\begin{tikzpicture}
+\cube{2};
+	\fill[red] (1,1,1) circle (3pt);
+	\draw[->,red,thick,shorten >=1mm] (0,0,0) -- node[below] {$\vec{a}_{1}$} (2,0,0);
+	\draw[->,red,thick,shorten >=1mm] (0,0,0) -- (0,2,0) node[above] {$\vec{a}_{2}$};
+	\draw[->,red,thick,shorten >=1mm] (0,0,0) -- (1,1,1) node[above] {$\vec{a}_{3}$};
+	\draw[->] (5,0,0) -- (6,0,0) node[right] {$\hat{x}$};
+	\draw[->] (5,0,0) -- (5,1,0) node[above] {$\hat{y}$};
+	\draw[->] (5,0,0) -- (5,0,1) node[below left] {$\hat{z}$};
+	\node[anchor=north west,right] at (7,1)
+		{\[
+			\begin{aligned}
+				\vec{a}_{1}&=a\hat{x}\\
+				\vec{a}_{2}&=a\hat{y}\\
+				\vec{a}_{3}&=\frac{a}{2}(\hat{x}+\hat{y}+\hat{z})\\
+			\end{aligned}
+		\]};
+\end{tikzpicture}
+\item Face-centred cubic (FCC)
+
+\begin{tikzpicture}
+	\cube{2};
+	\draw[->,red,thick,shorten >=1mm] (0,0,0) -- node[xshift=-0.2cm,yshift=0.2cm] {$\vec{a}_{1}$} (1,1,0);
+	\draw[->,red,thick,shorten >=1mm] (0,0,0) -- (1,0,1) node[yshift=-0.7cm] {$\vec{a}_{2}$};
+	\draw[->,red,thick,shorten >=1mm] (0,0,0) -- (0,1,1) node[xshift=-0.7cm] {$\vec{a}_{3}$};
+	\fill[red] (0,1,1) circle (3pt);
+	\fill[red] (2,1,1) circle (3pt);
+	\fill[red] (1,0,1) circle (3pt);
+	\fill[red] (1,2,1) circle (3pt);
+	\fill[red] (1,1,0) circle (3pt);
+	\fill[red] (1,1,2) circle (3pt);
+	\draw[->] (5,0,0) -- (6,0,0) node[right] {$\hat{x}$};
+	\draw[->] (5,0,0) -- (5,1,0) node[above] {$\hat{y}$};
+	\draw[->] (5,0,0) -- (5,0,1) node[below left] {$\hat{z}$};
+	\node[anchor=north west,right] at (7,1)
+		{\[
+			\begin{aligned}
+				\vec{a}_{1}&=\frac{a}{2}(\hat{y}+\hat{z})\\
+				\vec{a}_{2}&=\frac{a}{2}(\hat{x}+\hat{z})\\
+				\vec{a}_{3}&=\frac{a}{2}(\hat{x}+\hat{y})\\
+			\end{aligned}
+		\]};
+\end{tikzpicture}
+\end{enumerate}
+
+The diamond crystal lattice is an FCC lattice with a 2-atom basis, where $\vec{r}=\frac{a}{4}(\hat{x}+\hat{y}+\hat{z})$ along the main diagonal of the cube. Some materials that crystallize in this structure are C (in diamond), Si, Ge, and Sn. 
+\begin{center}
+\begin{tikzpicture}
+	\cube{2};
+	\fill[red] (0.5,0.5,0.5) circle (3pt) node[yshift=0.4cm] {2};
+	\fill[black] (0,1,1) circle (3pt) node[left] {1};
+	\fill[black] (1,0,1) circle (3pt) node[right] {1};
+	\fill[black] (1,1,0) circle (3pt) node[yshift=-0.4cm] {1};
+	\node[yshift=-0.4cm] at (0,0,0) {1};
+	\node[right] at (-2,1.5,1) {$\vec{a}_{1}-\vec{r}$};
+	\draw[->,red,thick,shorten >=1mm] (0,0,0) node[left] {$\vec{r}$} -- (0.5,0.5,0.5);
+	\draw[->,thick,shorten >=1mm] (0.5,0.5,0.5) -- (0,1,1);
+	\draw[->,thick,shorten >=1mm] (0.5,0.5,0.5) -- (1,0,1);
+	\draw[->,thick,shorten >=1mm] (0.5,0.5,0.5) -- (1,1,0);
+	\draw[->] (5,0,0) -- (6,0,0) node[right] {$\hat{x}$};
+	\draw[->] (5,0,0) -- (5,1,0) node[above] {$\hat{y}$};
+	\draw[->] (5,0,0) -- (5,0,1) node[below left] {$\hat{z}$};
+\end{tikzpicture}
+\end{center}
+
+Every atom of type 1 (or 2) has four nearest neighbours of type 2 (or 1). The diamond structure generalizes graphene to 3D. Its nearest-neighbour Hamiltonian is given by
+\begin{equation}
+\begin{aligned}
+H_{1}=-\sum_{\vec{R}}\big[&(t+\delta t)\ketbra*{\vec{R},1}{\vec{R},2}+t\ketbra*{\vec{R}+\vec{a}_{1},1}{\vec{R},2}+t\ketbra*{\vec{R}+\vec{a}_{2},1}{\vec{R},2}\\
+&\quad+t\ketbra*{\vec{R}+\vec{a}_{3},1}{\vec{R},2}+\trm{h.c.}\big]
+\end{aligned}
+\end{equation}
+
+To find the spin-orbit coupling term, the next-nearest-neighbour Hamiltonian is given by
+\begin{equation}
+\begin{aligned}
+H_{2}=i\frac{8\Delta_{\trm{SO}}}{a^{2}}\sum_{\alpha\in\{1,2\}}\sum_{\vec{R}}\bigg[&\ketbra*{\vec{R}+\vec{a}_{1},\alpha}{\vec{R},\alpha}\vec{S}\cdot(\vec{r}\times\vec{a}_{1})\\
+&\quad+\ketbra*{\vec{R}+\vec{a}_{2},\alpha}{\vec{R},\alpha}\vec{S}\cdot(\vec{r}\times\vec{a}_{2})\\
+&\quad+\ketbra*{\vec{R}+\vec{a}_{3},\alpha}{\vec{R},\alpha}\vec{S}\cdot(\vec{r}\times\vec{a}_{3})\\
+&\quad+\ketbra*{\vec{R}+\vec{a}_{2}-\vec{a}_{1},\alpha}{\vec{R},\alpha}\vec{S}\cdot\left[(\vec{r}-\vec{a}_{1})\times\left(\vec{r}-\frac{a}{2}\hat{y}\right)\right]\\
+&\quad+\ketbra*{\vec{R}+\vec{a}_{3}-\vec{a}_{1},\alpha}{\vec{R},\alpha}\vec{S}\cdot\left[(\vec{r}-\vec{a}_{1})\times\left(\vec{r}-\frac{a}{2}\hat{z}\right)\right]\\
+&\quad+\ketbra*{\vec{R}+\vec{a}_{2}-\vec{a}_{3},\alpha}{\vec{R},\alpha}\vec{S}\cdot\left[(\vec{r}-\vec{a}_{3})\times\left(\vec{r}-\frac{a}{2}\hat{y}\right)\right]\\
+&\quad+\trm{h.c.}\bigg]
+\end{aligned}
+\end{equation}
+
+The cross-products evaluate to
+\[
+\begin{aligned}
+&\vec{r}\times\vec{a}_{1}=\frac{a^{2}}{8}(\hat{z}-\hat{y})\\
+&\vec{r}\times\vec{a}_{2}=\frac{a^{2}}{8}(\hat{x}-\hat{z})\\
+&\vec{r}\times\vec{a}_{3}=\frac{a^{2}}{8}(\hat{y}-\hat{x})\\
+&(\vec{r}-\vec{a}_{1})\times\left(\vec{r}-\frac{a}{2}\hat{y}\right)=-\frac{a^{2}}{8}(\hat{x}+\hat{y})\\
+&(\vec{r}-\vec{a}_{1})\times\left(\vec{r}-\frac{a}{2}\hat{z}\right)=\frac{a^{2}}{8}(\hat{x}+\hat{y})\\
+&(\vec{r}-\vec{a}_{3})\times\left(\vec{r}-\frac{a}{2}\hat{y}\right)=\frac{a^{2}}{8}(\hat{y}+\hat{z})\\
+\end{aligned}
+\]
+
+Thus, the next-nearest-neighbour Hamiltonian is given by
+\begin{equation}
+\begin{aligned}
+H_{2}=i\Delta_{\trm{SO}}\sum_{\alpha\in\{1,2\}}\sum_{\vec{R}}\big[&\ketbra*{\vec{R}+\vec{a}_{1},\alpha}{\vec{R},\alpha}(S^{z}+S^{y})+\ketbra*{\vec{R}+\vec{a}_{2},\alpha}{\vec{R},\alpha}(S^{x}-S^{z})\\
+&\quad+\ketbra*{\vec{R}+\vec{a}_{3},\alpha}{\vec{R},\alpha}(S^{y}-S^{x})-\ketbra*{\vec{R}+\vec{a}_{2}-\vec{a}_{1},\alpha}{\vec{R},\alpha}(S^{x}+S^{y})\\
+&\quad+\ketbra*{\vec{R}+\vec{a}_{3}-\vec{a}_{1},\alpha}{\vec{R},\alpha}(S^{x}+S^{z})+\ketbra*{\vec{R}+\vec{a}_{2}-\vec{a}_{3},\alpha}{\vec{R},\alpha}(S^{y}+S^{z})\big]\\
+\end{aligned}
+\end{equation}
+
+\aside{
+For adding terms $\vec{S}\cdot(\vec{d}_{1}\times\vec{d}_{2})$
+\[
+\quad i\ketbra*{\vec{R}+\vec{a}_{1},1}{\vec{R},1}\vec{S}\cdot\big(\vec{r}\times(\vec{a}_{1}-\vec{r})\big)=i\ketbra*{\vec{R}+\vec{a}_{1},1}{\vec{R},1}\vec{S}\cdot(\vec{r}\times\vec{a}_{1})
+\]
+This is done six times for each atom 1 and 2.
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) -- (0,1) -- (0.866,1.5) -- (1.732,1) -- (1.732,0) -- (0.866,-0.5) -- (0,0) -- cycle;
+	\draw (1.732,1) -- (2.598,1.5) -- (3.464,1) -- (3.464,0);
+	\draw[->] (1.732,0) -- node[below] {$\vec{d}_{1}$} (2.598,-0.5);
+	\draw[->] (2.596,-0.5) -- node[below] {$\vec{d}_{2}$} (3.464,0);
+	\fill (1.732,0) circle (3pt) node[yshift=-0.3cm] {1};
+	\fill (1.732,1) circle (3pt) node[yshift=0.3cm] {2};
+	\fill (3.464,0) circle (3pt) node[yshift=-0.3cm] {1};
+	\draw[->,shorten >=2mm,shorten <=2mm] (1.732,0) -- (3.464,0); 
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+	\fill (0,0,0) circle (3pt) node[left] {1};
+	\fill (0,2,2) circle (3pt) node[left] {1};
+	\fill (2,0,2) circle (3pt) node[right] {1};
+	\fill (2,2,0) circle (3pt) node[below right] {1};
+	\fill[red] (1,1,1) circle (3pt) node[above] {2};
+	\draw[red,->,shorten >=2mm] (0,0,0) -- node[yshift=-0.4cm] {$\vec{r}$} (1,1,1);
+	\draw[->,shorten >=2mm] (1,1,1) -- node[yshift=0.4cm] {$\vec{a}_{1}-\vec{r}$} (0,2,2);
+	\draw[->,shorten >=2mm] (1,1,1) -- (2,0,2);
+	\draw[->,shorten >=2mm] (1,1,1) -- (2,2,0);
+\end{tikzpicture}
+\end{center}
+}
+
+Using the Fourier transform $\ket*{\vec{R},\alpha}=\frac{1}{\sqrt{N}}\sum_{\vec{k}}e^{-i\vec{k}\cdot\vec{R}}\ket*{\vec{k},\alpha}$, the Hamiltonians become
+\begin{equation}
+H_{1}=-\sum_{\vec{k}}\bigg[\ketbra*{\vec{k},1}{\vec{k},2}\big[(t+\delta t)+te^{-i\vec{k}\cdot\vec{a}_{1}}+te^{-i\vec{k}\cdot\vec{a}_{2}}+te^{-i\vec{K}\cdot\vec{a}_{3}}\big]+\trm{h.c.}\bigg]
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+H_{2}=i\Delta_{\trm{SO}}\sum_{\alpha\in\{1,2\}}\sum_{\vec{k}}&\bigg[e^{-i\vec{k}\cdot\vec{a}_{1}}(S^{z}-S^{y})+e^{-i\vec{k}\cdot\vec{a}_{2}}(S^{x}-S^{z})+e^{-i\vec{k}\cdot\vec{a}_{3}}(S^{y}-S^{x})\\
+&\quad-e^{-i\vec{k}\cdot(\vec{a}_{2}-\vec{a}_{1})}(S^{x}+S^{y})+e^{-i\vec{k}\cdot(\vec{a}_{3}-\vec{a}_{1})}(S^{x}+S^{z})\\
+&\quad+e^{-i\vec{k}\cdot(\vec{a}_{2}-\vec{a}_{3})}(S^{y}+S^{z})+\trm{h.c.}\bigg]
+\end{aligned}
+\end{equation}
+
+Introducing pseudospins $\vec{\sigma}=(\sigma_{x},\sigma_{y},\sigma_{z})$
+\begin{equation}
+\begin{aligned}
+\sigma_{x}&=\ketbra{1}{2}+\ketbra{2}{1}\\
+\sigma_{y}&=-i(\ketbra{1}{2}-\ketbra{2}{1})\\
+\sigma_{z}&=\ketbra{1}{1}-\ketbra{2}{2}
+\end{aligned}
+\end{equation}
+
+Thus
+\begin{equation}
+H_{1}(\vec{k})=\vec{d}(\vec{k})\cdot\vec{\sigma}{\trm{, where }}\vec{d}(\vec{k})=(d_{1}(\vec{k}),d_{2}(\vec{k}),0)
+\end{equation}
+where
+\begin{equation}
+\begin{aligned}
+d_{1}(\vec{k})&=-(t+\delta t)-t\left[\cos(\vec{k}\cdot\vec{a}_{1})+\cos(\vec{k}\cdot\vec{a}_{2})+\cos(\vec{k}\cdot\vec{a}_{3})\right]\\
+d_{2}(\vec{k})&=-t\left[\sin(\vec{k}\cdot\vec{a}_{1})+\sin(\vec{k}\cdot\vec{a}_{2})+\sin(\vec{k}\cdot\vec{a}_{3})\right]
+\end{aligned}
+\end{equation}
+and
+\begin{equation}
+H_{2}(\vec{k})=d_{3}(\vec{k})\sigma^{z}S^{x}+d_{4}(\vec{k})\sigma^{z}S^{y}+d_{5}(\vec{k})\sigma^{z}S^{z}
+\end{equation}
+where
+\begin{equation}
+\begin{aligned}
+d_{3}(\vec{k})&=\Delta_{\trm{SO}}\left[\sin(\vec{k}\cdot\vec{a}_{2})-\sin(\vec{k}\cdot\vec{a}_{3})-\sin(\vec{k}\cdot(\vec{a}_{2}-\vec{a}_{1}))+\sin(\vec{k}\cdot(\vec{a}_{3}-\vec{a}_{1}))\right]\\
+d_{4}(\vec{k})&=\Delta_{\trm{SO}}\left[\sin(\vec{k}\cdot\vec{a}_{3})-\sin(\vec{k}\cdot\vec{a}_{1})+\sin(\vec{k}\cdot(\vec{a}_{1}-\vec{a}_{2}))-\sin(\vec{k}\cdot(\vec{a}_{3}-\vec{a}_{2}))\right]\\
+d_{5}(\vec{k})&=\Delta_{\trm{SO}}\left[\sin(\vec{k}\cdot\vec{a}_{1})-\sin(\vec{k}\cdot\vec{a}_{2})-\sin(\vec{k}\cdot(\vec{a}_{1}-\vec{a}_{3}))-\sin(\vec{k}\cdot(\vec{a}_{2}-\vec{a}_{3}))\right]
+\end{aligned}
+\end{equation}
+
+Note that
+\begin{equation}
+\sigma^{z}=\begin{cases}
++1 & \trm{for atoms 1}\\
+-1 & \trm{for atoms 2}
+\end{cases}
+\end{equation}
+
+The total Hamiltonian is
+\begin{equation}
+\begin{aligned}
+H(\vec{k})&=H_{1}(\vec{k})+H_{2}(\vec{k})\\
+&=d_{1}(\vec{k})\sigma^{x}+d_{2}(\vec{k})\sigma^{y}+d_{3}(\vec{k})\sigma^{z}S^{x}+d_{4}(\vec{k})\sigma^{z}S^{y}+d_{5}(\vec{k})\sigma^{z}S^{z}
+\end{aligned}
+\end{equation}
+
+Note that diamond has inversion symmetry. Similarly, non magnetic field is applied, thus there is also time-reversal symmetry. The Hamiltonian must be even with respect to both these symmetries. Therefore
+\begin{equation}
+\Pi^{\dagger}H(-\vec{k})\Pi=\Theta H(-\vec{k})\Theta^{-1}=H(\vec{k})
+\end{equation}
+This is only possible if $\vec{d}(\vec{k})$ are odd or even functions of $\vec{k}$. Note that $d_{1}(\vec{k})$ is an even function while $d_{2}(\vec{k})$ to $d_{3}(\vec{k})$ are all odd functions. This implies that $\Pi=\sigma^{x}$ in order to retain even symmetry.\\
+
+The $\sigma^{z}$ matrix arises in the Hamiltonian because in tunneling between atoms of type 2, one obtains a phase factor opposite in sign to the case of tunneling between atoms of type 1.\\
+
+The five $4\times4$ matrices on the right of each $d_{i}(\vec{k})$ term are simple $\gamma$ matrices.
+\begin{equation}
+\begin{aligned}
+\gamma^{0}&=\sigma^{x}\\
+\gamma^{0}\gamma^{1}&=\sigma^{y}\\
+\gamma^{0}\gamma^{2}&=\sigma^{z}S^{x}\\
+\gamma^{0}\gamma^{3}&=\sigma^{z}S^{y}\\
+\gamma^{0}\gamma^{5}&=i\sigma^{z}S^{z}
+\end{aligned}
+\end{equation}
+Solving for $\gamma^{i}$ gives
+\begin{equation}
+\begin{aligned}
+\gamma^{1}&=\sigma^{x}\sigma^{y}=i\sigma^{z}\\
+\gamma^{2}&=\sigma^{x}\sigma^{z}\sigma^{x}=i\sigma^{y}S^{x}\\
+\gamma^{3}&=\sigma^{x}\sigma^{z}\sigma^{y}=i\sigma^{y}S^{y}\\
+\gamma^{5}&=i\sigma^{x}i\sigma^{z}i\sigma^{y}S^{x}i\sigma^{y}S^{y}=\sigma^{y}S^{z}
+\end{aligned}
+\end{equation}
+
+Let us rename these matrices
+\begin{equation}
+\begin{aligned}
+\Gamma^{1}&=\gamma^{0}=\sigma^{x}\quad\trm{(even under parity)}\\
+\Gamma^{2}&=\gamma^{0}\gamma^{1}=\sigma^{y}\quad\trm{(odd under parity)}\\
+\Gamma^{3}&=\gamma^{0}\gamma^{2}=\sigma^{z}S^{x}\quad\trm{(odd under parity)}\\
+\Gamma^{4}&=\gamma^{0}\gamma^{3}=\sigma^{z}S^{y}\quad\trm{(odd under parity)}\\
+\Gamma^{5}&=\gamma^{0}\gamma^{5}=\sigma^{z}S^{z}\quad\trm{(odd under parity)}
+\end{aligned}
+\end{equation}
+The parities were found by applying the parity transformation $\Pi=\sigma^{x}$ to $\Gamma^{a}$.\\
+
+Recall Clifford algebra
+\begin{equation}
+\begin{aligned}
+\{\gamma^{\mu},\gamma^{\nu}\}&=2\eta^{\mu\nu}\\
+\eta^{00}&=1,\quad\eta^{11}&=\eta^{22}=\eta^{33}=-1
+\end{aligned}
+\end{equation}
+
+The $\Gamma^{a}$ matrices obey Clifford algebra
+\begin{equation}
+\{\Gamma^{a},\Gamma^{b}\}=2\delta_{ab}
+\end{equation}
+
+Thus
+\begin{equation}
+H(\vec{k})=\sum_{a=1}^{5}d_{a}(\vec{k})\Gamma^{a}=d_{a}(\vec{k})\Gamma^{a}
+\end{equation}
+and
+\begin{equation}
+\begin{aligned}
+H^{2}(\vec{k})&=\sum_{a=1}^{5}\sum_{b=1}^{5}d_{a}(\vec{k})d_{b}(\vec{k})\Gamma^{a}\Gamma^{b}\\
+&=\sum_{a=1}^{5}d_{a}(\vec{k})d_{a}(\vec{k})\Gamma^{a}\Gamma^{a}\\
+&=\sum_{a=1}^{5}d_{a}(\vec{k})d_{a}(\vec{k})\\
+&=\vec{d}(\vec{k})\cdot\vec{d}(\vec{k})
+\end{aligned}
+\end{equation}
+
+Therefore the eigenvalues $\varepsilon_{\pm}(\vec{k})$ of $H(\vec{k})$ are $\pm\abs*{\vec{d}(\vec{k})}$ and we have doubly degenerate conduction and valence bands.\\
+
+Constructing the reciprocal lattice primitive translation vectors
+\begin{equation}
+\begin{aligned}
+\vec{a}_{1}&=\frac{a}{2}(\hat{y}+\hat{z}),\quad\vec{a}_{2}=\frac{a}{2}(\hat{z}+\hat{x}),\quad\vec{a}_{3}=\frac{a}{2}(\hat{x}+\hat{y})\\
+V_{c}&=\vec{a}_{1}\cdot(\vec{a}_{2}\times\vec{a}_{3})=\frac{a^{3}}{4}\\
+\vec{b}_{1}&=\frac{2\pi}{V_{c}}(\vec{a}_{2}\times\vec{a}_{3})=\frac{2\pi}{a}(\hat{y}-\hat{x}+\hat{z})\\
+\vec{b}_{2}&=\frac{2\pi}{V_{c}}(\vec{a}_{3}\times\vec{a}_{1})=\frac{2\pi}{a}(\hat{z}-\hat{y}+\hat{x})\\
+\vec{b}_{3}&=\frac{2\pi}{V_{c}}(\vec{a}_{1}\times\vec{a}_{2})=\frac{2\pi}{a}(\hat{x}-\hat{z}+\hat{y})
+\end{aligned}
+\end{equation}
+The reciprocal lattice is BCC.
+
+\begin{equation}
+\vec{k}=k_{1}\vec{b}_{1}+k_{2}\vec{b}_{2}+k_{3}\vec{b}_{3}=k_{x}\hat{x}+k_{y}\hat{y}+k_{z}\hat{z}
+\end{equation}
+Since $\vec{k}\cdot\vec{a}_{i}=2\pi k_{i}$
+\begin{equation}
+\begin{aligned}
+k_{1}&=\frac{a}{4\pi}(k_{y}+k_{z})\\
+k_{2}&=\frac{a}{4\pi}(k_{x}+k_{z})\\
+k_{3}&=\frac{a}{4\pi}(k_{x}+k_{y})
+\end{aligned}
+\end{equation}
+and rearranging gets
+\begin{equation}
+\begin{aligned}
+k_{x}&=\frac{2\pi}{a}(-k_{1}+k_{2}+k_{3})\\
+k_{y}&=\frac{2\pi}{a}(k_{1}-k_{2}+k_{3})\\
+k_{z}&=\frac{2\pi}{a}(k_{1}+k_{2}-k_{3})
+\end{aligned}
+\end{equation}
+with the first Brillouin zone defined by $-\frac{1}{2}\leq k_{i}<\frac{1}{2}, i\in\{1,2,3\}$.\\
+
+This allows us to find $\abs*{\vec{d}(\vec{k})}$. When $\delta t=0$, $\vec{d}(\vec{k})$ vanishes at three inequivalent points in the Brillouin zone.
+\begin{equation}
+\begin{aligned}
+X^{x}&=\frac{2\pi}{a}(1,0,0)\\
+X^{y}&=\frac{2\pi}{a}(0,1,0)\\
+X^{z}&=\frac{2\pi}{a}(0,0,1)
+\end{aligned}
+\end{equation}
+The Brillouin zone is a truncated octahedron. The conduction band and valence band touch at these three X-points. Assuming 1 valence electron per atom, there are 2 electrons per unit cell. Thus, the valence band is filled and conduction band is empty.\\
+
+Let us consider expanding near $X^{z}$. One has $k_{1}=k_{2}=\frac{1}{2}$ and $k_{3}=0$. Thus
+\begin{equation}
+\vec{k}=X^{z}+\vec{q}=\left(q_{x},q_{y},\frac{2\pi}{a}+q_{z}\right)
+\end{equation}
+One obtains
+\begin{equation}
+\begin{aligned}
+d_{1}(\vec{k})&\approx -(t+\delta t)-t(-1)=-\delta t\\
+d_{2}(\vec{k})&\approx t\,a\,q_{z}\\
+d_{3}(\vec{k})&\approx -2\Delta_{\trm{SO}}\,a\,q_{x}\\
+d_{4}(\vec{k})&\approx 2\Delta_{\trm{SO}}\,a\,q_{y}\\
+d_{5}(\vec{k})&\approx \frac{\Delta_{\trm{SO}}}{8}a^{3}(q_{y}^{2}-q_{x}^{2})q_{z}
+\end{aligned}
+\end{equation}
+and the Hamiltonian becomes
+\begin{equation}
+H_{X^{z}}=-\delta t \sigma^{x}+tak_{z}\sigma^{y}-2\Delta_{\trm{SO}}a\sigma^{z}S^{x}k_{x}+2\Delta_{\trm{SO}}a\sigma^{z}S^{y}k_{y}
+\end{equation}
+
+Expanding near $X^{x}$ and $X^{y}$
+\begin{equation}
+\begin{aligned}
+H_{X^{x}}&=-\delta t\sigma^{x}+tak_{x}\sigma^{y}-2\Delta_{\trm{SO}}a\sigma^{z}S^{y}k_{y}+2\Delta_{\trm{SO}}a\sigma^{z}S^{z}k_{z}\\
+H_{X^{y}}&=-\delta t\sigma^{x}+tak_{y}\sigma^{y}+2\Delta_{\trm{SO}}a\sigma^{z}S^{x}k_{x}-2\Delta_{\trm{SO}}a\sigma^{z}S^{z}k_{z}
+\end{aligned}
+\end{equation}
+
+$H_{X^{x,y,z}}$ look like the anisotropic Dirac Hamiltonians. It is the Hamiltonian of a Dirac fermion with Dirac mass $\delta t$.
+\begin{equation}
+\varepsilon_{\pm}(\vec{k})=\pm\sqrt{t^{2}a^{2}k_{z}^{2}+4\Delta_{\trm{SO}}^{2}a^{2}(k_{x}^{2}+k_{y}^{2})+\delta t^{2}}
+\end{equation}
+
+Changing the sign of $\delta t$ corresponds to a transition between topological and ordinary insulators.
+\begin{itemize}
+\item $\delta t>0$: Topological
+\item $\delta t=0$: Dirac semimetal
+\item $\delta t<0$: Ordinary
+\end{itemize}
+
+\subsection{Quantum Hall Effect}
+Similar physics to topological insulators occur in two dimensional electron gas (2DEG) in a strong perpendicular magnetic field. They arise, for example, at the interface of semiconductors with different band gaps.
 
 \end{document}
