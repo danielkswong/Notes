@@ -85,6 +85,7 @@
 }
 
 \newcommand{\angstrom}{\textup{\AA}} % Angstrom symbol
+\newcommand{\Chi}{\mathcal{X}} % Inline chi symbol
 \renewcommand{\Re}{\trm{Re}} % Real
 \renewcommand{\Im}{\trm{Im}} % Imaginary
 \renewcommand{\CancelColor}{\color{red}} % Changes the cancel colour to red
@@ -2412,5 +2413,312 @@ Changing the sign of $\delta t$ corresponds to a transition between topological 
 
 \subsection{Quantum Hall Effect}
 Similar physics to topological insulators occur in two dimensional electron gas (2DEG) in a strong perpendicular magnetic field. They arise, for example, at the interface of semiconductors with different band gaps.
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,4) -- (0,-2);
+	\draw[dashed] (-4,2) -- (4,2) node[right] {$\varepsilon_{F}$};
+	\draw plot [smooth, tension=1] coordinates {(-4,-2) (-1.5,-1.75) (0,-1)};
+	\draw plot [smooth, tension=1] coordinates {(-4,2.25) (-1.5,2.5) (0,3.25)};
+	\draw plot [smooth, tension=1] coordinates {(0,-0.5) (1.5,1) (4,1.5)};
+	\draw plot [smooth, tension=1] coordinates {(0,0.5) (1.5,2) (4,2.5)};
+	\node[left] at (-1.5,3) {Al$_{x}$Ga$_{1-x}$As};
+	\node[right] at (1.5,3) {GaAs};
+	\draw[->] (1,-1) node[below right] {2DEG} -- (0.3,1.55);
+\end{tikzpicture}
+\end{center}
+
+\ul{Semiconductors} are insulators with relatively small band gaps (typically less than 1 eV). This corresponds to temperature scales of about $10^{4}$ K.
+
+\subsubsection*{Semiconductor Heterostructures}
+\begin{center}
+\begin{tikzpicture}
+	\draw[dashed] (-1.5,0) -- (1.5,0);
+	\draw[thick,<->,domain=-1.5:1.5,samples=200] plot (\x, {-0.5*cos(deg(\x))+1});
+	\draw[thick,<->,domain=-1.5:1.5,samples=200] plot (\x, {0.5*cos(deg(\x))-1});
+	\node[above,text width=2cm,align=center] at (-3,0.5) {conduction band};
+	\node[below,text width=2cm,align=center] at (-3,-0.5) {valence band};
+	\node[above right] at (2,0.5) {$\varepsilon_{c}(\vec{k})=\varepsilon_{c}+\frac{\hbar^{2}k^{2}}{2m_{c}^{*}}$, $m_{c}^{*}\equiv$ effective mass in conduction band};
+	\node[below right] at (2,-0.5) {$\varepsilon_{v}(\vec{k})=\varepsilon_{v}-\frac{\hbar^{2}k^{2}}{2m_{v}^{*}}$, $m_{v}^{*}\equiv$ effective mass in valence band};
+	\fill (0,-0.5) circle (3pt) node[yshift=-0.3cm] {$\varepsilon_{v}$};
+	\fill (0,0.5) circle (3pt) node[yshift=0.3cm] {$\varepsilon_{c}$};
+\end{tikzpicture}
+\end{center}
+Typically, $m_{c}^{*},m_{v}^{*}\ll m_{e}$. This is counter-intuitive as that seems to imply electrons are lighter in a semiconductor. In actuality, it refers moreso to the curvature of the band.
+
+\subsubsection*{Doping Semiconductors}
+Si crystallizes in the diamond structure, in which every Si atom has four nearest-neighbours. Si has four electrons. All valence electrons are used in making chemical bonds with nearest-neighbours.\\
+
+As has five valence electrons. Four of them will form bonds while the fifth one is ``free" to move around. The fifth valence electron will interact with the ionized arsenic atom via Coulomb interaction. Since the valence band was filled, the fifth electron goes into the conduction band. This electron behaves as a free electron with mass $m_{c}^{*}\ll m_{e}$.
+\begin{center}
+\begin{tikzpicture}
+	\foreach \a in {1,2,3}{
+		\draw (0.5,\a) -- (4.5,\a);
+	}
+	\foreach \a in {1,2,...,4}{
+		\draw (\a,0.5) -- (\a,3.5);
+	}
+	\foreach \i in {1,2,...,4}{
+		\foreach \j in {1,2,3}{
+			\fill[white] (\i,\j) circle (5pt);
+			\draw (\i,\j) circle (5pt);
+		}
+	}
+	\fill (2,2) circle (5pt);
+	\draw (2.5,2.5) circle (7pt) node {\footnotesize $e^{-}$};
+	\draw[->,shorten >=3mm] (2.5,0) node[below] {fifth electron} -- (2.5,2.5);
+\end{tikzpicture}
+\end{center}
+\begin{equation}
+\vec{P}=\Chi\vec{E}
+\end{equation}
+where $\vec{P}$ is the polarization and $\Chi$ is the permittivity. The larger the gap, the smaller the value of $\Chi$. Additionally
+\begin{equation}
+\varepsilon = 1+4\pi\Chi
+\end{equation}
+where $\varepsilon$ is the dielectric constant.
+
+\begin{equation}
+\vec{F}=\frac{e^{2}}{r\varepsilon}\implies\trm{Binding energy }E_{0}=\frac{m_{e}e^{4}}{2\hbar^{2}}=13.6\trm{ eV}
+\end{equation}
+and
+\begin{equation}
+E=\frac{m_{c}^{*}e^{4}}{2\hbar^{2}\varepsilon^{2}}=\underbrace{\frac{m_{c}^{*}}{m_{e}}}_{\approx10^{-1}}\frac{1}{\varepsilon^{2}}E_{0}\approx 0.01\trm{ eV}
+\end{equation}
+Electrons from the impurity energy level are easily excited into the conduction band from the valence band and can move around.
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[dashed] (-1.5,0.4) -- (1.5,0.4);
+	\draw[thick,<->,domain=-1.5:1.5,samples=200] plot (\x, {-0.5*cos(deg(\x))+1});
+	\draw[thick,<->,domain=-1.5:1.5,samples=200] plot (\x, {0.5*cos(deg(\x))-1});
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+	\draw (-4,2) node[above left] {Si} -- (-2,2) -- (-2,-2) node[below] {$z=0$} -- (-4,-2) node[below left] {Al$_{x}$Ga$_{1-x}$As};
+	\draw (-2,1.75) -- (0,1.75) node[right] {$\varepsilon_{c}$};
+	\draw (-2,-1.75) -- (0,-1.75) node[right] {$\varepsilon_{v}$};
+	\node[below] at (0.5,-2) {GaAs};
+	\draw[<->] (-0.25,-1.75) -- (-0.25,1.75);
+	\foreach \i in {0,...,7}{
+		\draw (-4,-1.75+0.5*\i) circle (5pt) node[red,thick] {$+$};
+	}
+	\draw[->] (-2.5,2.25) .. controls (-2,2.25) and (-2,2) .. (-1.5,2);
+	\node[anchor=north west,right] at (0,1)
+		{\[
+			\begin{aligned}
+				&\trm{High electron mobility transistors (HEMT)}\\
+				&\quad\explain\trm{ Assuming electrons are free classical particles}
+			\end{aligned}
+		\]};
+\end{tikzpicture}
+\end{center}
+GaAs $\sim$ 1 eV, AlAs $\sim$ 2 eV
+
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,3.5) -- (0,-1) node[below] {$z=0$};
+	\draw plot [smooth, tension=1] coordinates {(-4,0) (-1.5,0.25) (0,1)};
+	\draw plot [smooth, tension=1] coordinates {(-4,2.5) (-1.5,2.75) (0,3.5)};
+	\draw plot [smooth, tension=1] coordinates {(0,-1) (1.5,-0.25) (4,0)} node[right] {$\varepsilon_{v}$};
+	\draw plot [smooth, tension=1] coordinates {(0,2) (1.5,2.75) (4,3)} node[right] {$\varepsilon_{c}$};
+	\draw[->] (-0.25,1.5) -- (0.25,1.5) node[right] {$\vec{B}$ (applied magnetic field)};
+	\foreach \i in {1,...,4}{
+		\draw (-3.5,0.5*\i) circle (5pt) node[red,thick] {$+$};
+	}
+\end{tikzpicture}
+\end{center}
+Assume we have a 2DEG in the $xy$-plane and a magnetic field is applied perpendicular to it.
+\begin{equation}
+\vec{B}=B\hat{z}
+\end{equation}
+Let us take electrons to be classical particles of charge $-e$ and mass $m$. The equation of motion for such a particle in a magnetic field is
+\begin{equation}
+\begin{aligned}
+\dv{\vec{p}}{t}&=\vec{F}_{L}=-\frac{e}{c}\vec{v}\times\vec{B}\trm{ (Lorentz force)}\\
+\vec{p}&=m\vec{v}=v\dv{\vec{r}}{t}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+m\dv[2]{\vec{r}}{t}=-\frac{e}{c}\dv{\vec{r}}{t}\times\vec{B}
+\end{equation}
+
+In components
+\begin{equation}
+\begin{aligned}
+m\dv[2]{x}{t}=-\frac{e}{c}\dv{y}{t}B\\
+m\dv[2]{y}{t}=\frac{e}{c}\dv{x}{t}B
+\end{aligned}
+\end{equation}
+
+Let us introduce the \ul{cyclotron frequency}
+\begin{equation}
+\omega_{c}=\frac{eB}{mc}
+\end{equation}
+
+Therefore, a coupled sstem of ODEs is obtained
+\begin{equation}
+\begin{aligned}
+\dv[2]{x}{t}&=-\omega_{c}\dv{y}{t}\\
+\dv[2]{y}{t}&=\omega_{c}\dv{x}{t}
+\end{aligned}
+\end{equation}
+
+To solve this, introduce a complex parameter $z=x+iy$
+\begin{equation}
+\begin{aligned}
+\dv[2]{z}{t}&=i\omega_{c}\dv{x}{t}-\omega_{c}\dv{y}{t}=i\omega_{c}\dv{t}(x+iy)=i\omega_{c}\dv{z}{t}\\
+\implies \dv{z}{t}&=v_{0}e^{i\omega_{c}t}\trm{, where $v_{0}=v_{0x}+iv_{0y}$ is the velocity at $t=0$}\\
+\implies z(t)&=z_{0}-\frac{iv_{0}}{\omega_{c}}e^{i\omega_{c}t}\trm{, where $z_{0}=x_{0}+iy_{0}$ is the position at $t=0$}
+\end{aligned}
+\end{equation}
+
+This corresponds to circular motion in the $xy$-plane with frequency $\omega_{c}$ about a point $(x_{0},y_{0})$.\\
+
+Let us add an electric field, as well as impurity scattering.
+\begin{equation}
+\dv{\vec{p}}{t}=-e\left(\vec{E}+\frac{1}{c}\vec{v}\times\vec{B}\right)\quad-\underbrace{\frac{\vec{p}}{\tau}}_{\trm{impurity term}}
+\end{equation}
+
+$\tau$ is the \ul{mean scattering time} (or relaxation time). It is the time between two collisions with an impurity. Without magnetic and electric fields
+\begin{equation}
+\vec{p}(t)=\vec{p}(0)e^{-\frac{t}{\tau}}
+\end{equation}
+Using $\vec{p}=m\vec{v}$ and solving for the stead-state solution ($\dv{\vec{v}}{t}=\vec{0}$)
+\begin{equation}
+\vec{v}=-\frac{e\tau}{m}\left(\vec{E}+\frac{1}{c}\vec{v}\times\vec{B}\right)
+\end{equation}
+
+Rewriting this in terms of current density $\vec{j}=-en\vec{v}$
+\begin{equation}
+\vec{j}=\frac{ne^{2}\tau}{m}\vec{E}-\frac{e\tau}{mc}\vec{j}\times\vec{B}
+\end{equation}
+
+We denote $\sigma=\frac{ne^{2}\tau}{m}$ as the \ul{conductivity}. Thus
+\begin{equation}
+\begin{aligned}
+\vec{j}&=\sigma\vec{E}-\frac{e\tau}{mc}\vec{j}\times\vec{B}\trm{ (compare with Ohm's law $\vec{j}=\sigma\vec{E}$)}\\
+\vec{E}&=\frac{\vec{j}}{\sigma}-\frac{1}{nec}\vec{B}\times\vec{j}
+\end{aligned}
+\end{equation}
+\newpage
+Consider the following experiment
+\begin{center}
+\begin{tikzpicture}
+	\draw[->-=0.5] (-5,0) node[left] {$j_{x}$} -- (-3,0);
+	\draw[->-=0.5] (3,0) -- (5,0) node[right] {$j_{x}$};
+	\draw (-5,-2) -- (-1,2) -- (5,2) --  (1,-2) -- cycle;
+	\draw[->] (3,1) -- node[xshift=-0.5cm] {$E_{y}$} (1,-1);
+	\foreach \i in {0,1,...,9}{
+		\node[red,thick] at (-0.75+0.5*\i,1.5) {$+$};
+		\node[red,thick] at (-3.75+0.5*\i,-1.5) {$-$};
+	}
+	\draw[->] (5.5,1) -- node[right] {$\vec{B}$} (5.5,2);
+\end{tikzpicture}
+\end{center}
+Suppose current flows in the x-direction as shown. The moving electrons experience a Lorentz force $\vec{F}_{L}=-\frac{e}{c}\vec{v}\times\vec{B}$, which deflects the electrons in the $-\hat{y}$ direction. Electrons accumulate on the lower edge of the sample, leaving positive charge from the ions of the crstal lattice on the opposite edge. This creates an electric field $E_{y}$ perpendicular to the current $j_{x}$. This is the \ul{Hall effect}.
+
+\begin{equation}
+\begin{aligned}
+E_{x}&=\frac{1}{\sigma}j_{x}+\frac{B}{nec}j_{y}\\
+E_{y}&=\frac{1}{\sigma}j_{y}-\frac{B}{nec}j_{x}
+\end{aligned}
+\end{equation}
+
+Since there are no leads connecting the sample in the $y$-direction, $j_{y}=0$. Thus, considering $E_{y}$
+\begin{equation}
+\begin{aligned}
+E_{y}&=-\frac{B}{nec}j_{x}\\
+\implies \frac{E_{y}}{Bj_{x}}&=-\frac{1}{nec}=-R_{H} \trm{ (\ul{Hall coefficient})}
+\end{aligned}
+\end{equation}
+Thus, in general
+\begin{equation}
+\begin{aligned}
+E_{x}&=\frac{1}{\sigma}j_{x}+BR_{H}j_{y}\\
+E_{y}&=\frac{1}{\sigma}j_{y}-BR_{H}j_{x}
+\end{aligned}
+\implies \vec{E}=\rho\vec{j}
+\end{equation}
+where 
+\begin{equation}
+\rho=\begin{bmatrix}
+\frac{1}{\sigma} & BR_{H}\\
+-BR_{H} & \frac{1}{\sigma}
+\end{bmatrix}
+\end{equation}
+is the \ul{resistivity tensor}.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (4,0) node[right] {$\vec{B}$};
+	\draw[->] (0,0) -- (0,3) node[above] {$\rho_{xy}$};
+	\draw[->] (0,0) -- (4,3);
+	\draw[->, shorten >= 0.2cm] (3,1) node[below right] {slope $R_{H}$} -- (2,1.5);
+\end{tikzpicture}
+\end{center}
+This is the classical Hall effect discovered by Edwin Hall.\\
+
+In reality, the classical Hall effect only corresponds to reality in weak magnetic fields or in dirty samples (i.e. when $\omega_{c}\tau\ll 1$). Note that $\tau$ is larger in cleaner samples. Assuming the magnetic field is fixed, this is a ``dirty" limit or a low magnetic field limit. When $\omega_{c}\tau\gg 1$, this is a ``clean" limit or high magnetic field limit. In this limit, we witness the quantum Hall effect.\\
+
+Physically, in the dirty limit, an electron cannot complete a full circular orbit before being deflected by collisions with impurities. Thus, quantum effects do no tmatter since there are no closed orbits. In the clean limit, an electron can complete multiple orbits and quantum effects become important. Think of these effects as being analogous to the quantum effects of an electron orbiting around a hydrogen atom.
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) circle (2cm);
+	\node at (2,0) {$\wedge$};
+	\node[xshift=0.5cm] at (2,0) {$e^{-}$};
+\end{tikzpicture}
+\end{center}
+
+Let us solve this problem quantum mechanically. Consider a free particle of charge $-e$ in the $xy$-plane with a magnetic field $\vec{B}=B\hat{z}$. In the absence of a magnetic field, with $\vec{p}=m\vec{v}$
+\begin{equation}
+H=-\frac{\hbar^{2}\nabla^{2}}{2m}
+\end{equation}
+However, in a magnetic field $\vec{B}=\vec{\nabla}\times\vec{A}$
+\begin{equation}
+m\vec{v}=\vec{p}+\frac{e}{c}\vec{A}
+\end{equation}
+where $m\vec{v}$ is the mechanical momentum and $\vec{p}$ is the canonical momentum. Thus
+\begin{equation}
+H=\frac{1}{2m}\left(-i\hbar\vec{\nabla}+\frac{e}{c}\vec{A}\right)^{2}-\vec{\mu}\cdot\vec{B}
+\end{equation}
+where $\vec{\mu}$ is the \ul{magnetic dipole moment}. Moreover
+\begin{equation}
+\vec{\mu}=-g\mu_{B}\vec{S}
+\end{equation}
+is the \ul{magnetic moment of the electron}. Let us ignore the term with the magnetic moment for now.\\
+
+The vector potential is defined up to a gauge transformation, given that $\vec{B}=\vec{\nabla}\times\vec{A}$.
+\begin{equation}
+\implies \vec{A}\rightarrow\vec{A}+\vec{\nabla}f \trm{ since } \vec{\nabla}\times(\vec{\nabla}f)=\vec{0}
+\end{equation}
+Several gauge choices are available. We will use the Landau gauge
+\begin{equation}
+\vec{A}=xB\hat{y} \implies \vec{\nabla}\times\vec{A}=B\hat{z}
+\end{equation}
+Thus, the Hamiltonian becomes
+\begin{equation}
+\begin{aligned}
+H&=\frac{1}{2m}\left(-i\hbar\vec{\nabla}+\frac{e}{c}\vec{A}\right)^{2}\\
+&=\frac{1}{2m}\left(-i\hbar\vec{\nabla}+\frac{eB}{c}x\hat{y}\right)^{2}\\
+&=-\frac{\hbar^{2}}{2m}\pdv[2]{x} +\frac{1}{2m}\left(-i\hbar\pdv{y}+\frac{eB}{c}x\right)^{2}
+\end{aligned}
+\end{equation}
+
+Solve the Schr\"{o}dinger equation $H\Psi=E\Psi$. Given translational symmetry along $y$ (but not $x$), let us look for solutions in the form $\Psi(x,y)=e^{iky}\phi(x)$. Thus
+\begin{equation}
+-\frac{\hbar^{2}}{2m}\dv[2]{\phi}{x}+\frac{1}{2m}\left(\hbar k+\frac{eB}{c}x\right)^{2}\phi=E\phi
+\end{equation}
+Rewriting in terms of $\omega_{c}=\frac{eB}{mc}$ and \ul{magnetic length} $\ell=\sqrt{\frac{\hbar c}{eB}}$
+\begin{equation}
+-\frac{\hbar^{2}}{2m}\dv[2]{\phi}{x}+\frac{m\omega_{c}^{2}}{2}(x+k\ell^{2})^{2}\phi=E\phi
+\end{equation}
+Note that $\ell$ is a purely quantum term, unlike $\omega_{c}$. This is the Hamiltonian of a 1D harmonic oscillator of frequency $\omega_{c}$, centred at $x=-k\ell^{2}$.\\
+
+The energy spectrum (\ul{Landau levels}) have the form
+\begin{equation}
+E_{nk}=\hbar\omega_{c}\left(n+\frac{1}{2}\right),\quad n\in\{0,1,2,\ldots\} \trm{ (Discrete Landau levels)}	
+\end{equation}
 
 \end{document}
