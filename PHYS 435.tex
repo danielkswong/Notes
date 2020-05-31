@@ -2720,5 +2720,79 @@ The energy spectrum (\ul{Landau levels}) have the form
 \begin{equation}
 E_{nk}=\hbar\omega_{c}\left(n+\frac{1}{2}\right),\quad n\in\{0,1,2,\ldots\} \trm{ (Discrete Landau levels)}	
 \end{equation}
+The energy eigenstates have the form
+\begin{equation}
+\Psi_{nk}(x)=\frac{e^{iky}}{\sqrt{\ell\sqrt{\pi}2^{n}n!}}e^{-\frac{1}{2\ell^{2}}(x+k\ell^{2})^{2}}H_{n}\left(\frac{x+k\ell^{2}}{\ell}\right)
+\end{equation}
+where the $H_{n}$ are the Hermite polynomials. Note that $\ell$ in the denominator of the exponential determines the spatial extent of the wave function. Contrast the spectrum against $\varepsilon_{k}=\frac{\hbar^{2}k^{2}}{2m}$. In this case, $E_{nk}$ are independent of $k$ and are degenerate. Assuming periodic boundary conditions in the $y$-direction
+\begin{equation}
+\begin{aligned}
+\Psi(x,y+L_{y})&=\Psi(x,y)\\
+\implies e^{ik(y+L_{y})}&=e^{iky}\\
+\implies kL_{y}&=2\pi n, n\in\mathbb{Z}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+k=\frac{2\pi n}{L_{y}}, n\in\mathbb{Z}
+\end{equation}
+
+However, $k$ also defines the centre-of-mass position of $\Psi_{nk}$ in the $x$-direction. Let us take the sample to be from $-L_{x}$ to 0.
+\begin{equation}
+-L_{x}\leq -k\ell^{2}\leq 0 \implies 0\leq k \leq \frac{L_{x}}{\ell^{2}}
+\end{equation}
+
+Let $N_{\phi}$ denote the total number of states per Landau level.
+\begin{equation}
+\begin{aligned}
+N_{\phi}&=\frac{L_{x}/\ell^{2}}{2\pi/L_{y}}=\frac{\tikzmarknode{A}{L_{x}L_{y}}}{\tikzmarknode{B}{2\pi\ell^{2}}}\\
+&=\frac{L_{x}L_{y}}{2\pi\frac{\hbar c}{eB}}=\frac{\tikzmarknode{C}{L_{x}L_{y}B}}{\tikzmarknode{D}{\frac{\hbar c}{\ell}}}
+\end{aligned}
+\end{equation}
+
+\begin{tikzpicture}[overlay,remember picture,shorten <=2mm,font=\footnotesize]
+	\draw[red,<-] (A.north) -- ++ (0.5,0.2) node[right] {area of sample};
+	\draw[red,<-] (B.east) -- ++ (0.5,0.1) node[right,text width=4.5cm] {area per single quantum state in each Landau level};
+	\draw[red,<-] (C.east) -- ++ (0.5,-0.15) node[right] {total magnetic flux $\phi$};
+	\draw[red,<-] (D.east) -- ++ (0.5,-0.3) node[below right] {magnetic flux quantum $\phi_{0}$};
+\end{tikzpicture}
+
+\subsubsection*{Density of States Function}
+A careful derivation of the 2DEG with periodic boundary conditions yeilds
+\begin{equation}
+\varepsilon(k)=\frac{\hbar^{2}k^{2}}{2m}\trm{, where }k_{x,y}=\frac{2\pi n_{x,y}}{L_{x,y}},\quad n_{x},n_{y}\in\mathbb{Z}
+\end{equation}
+The number of states in a volume element $\dd[2]{k}$ in momentum space is
+\begin{equation}
+\frac{\dd[2]{k}}{(2\pi)^{2}/L_{x}L_{y}}=\frac{L_{x}L_{y}\dd[2]{k}}{(2\pi)^{2}}
+\end{equation}
+Since each accessible $k$-state occupies area $\left(\frac{2\pi}{L_{x}}\right)\left(\frac{2\pi}{L_{y}}\right)$ in momentum space. Thus, the number of states per unit volume in volume element $\dd[2]{k}$ is
+\begin{equation}
+\frac{\dd[2]{k}}{(2\pi)^{2}}
+\end{equation}
+Rearranging $\varepsilon(k)$
+\begin{equation}
+k=\sqrt{\frac{2m\varepsilon}{\hbar^{2}}}\implies \dd{\varepsilon}=\frac{\hbar^{2}k\dd{k}}{m}\implies \frac{m\dd{\varepsilon}}{\hbar^{2}}=k\dd{k}
+\end{equation}
+In 2D, the volume element in spherical coordinates gives
+\begin{equation}
+\dd[2]{k}=k\dd{\varphi}\dd{k}
+\end{equation}
+
+Since $k$ is independent of angle $(k\neq k(\varphi))$, integrating over $\dd{\varphi}$ gives
+\begin{equation}
+\begin{aligned}
+\dd[2]{k}&=2\pi k\dd{k}\\
+\implies \frac{\dd[2]{k}}{(2\pi)^{2}}&=\frac{k\dd{k}}{2\pi}\\
+&=\frac{m\dd{\varepsilon}}{2\pi\hbar^{2}}\\
+&=g(\varepsilon)\dd{\varepsilon}\trm{ (number of states in energy interval $\varepsilon$ and $\varepsilon+\dd{\varepsilon})$}
+\end{aligned}
+\end{equation}
+In reality, each electron has two accessible spin states for each $k$-combination. There is truly twice as many states available. Thus
+\begin{equation}
+g(\varepsilon)=\frac{m}{\pi\hbar^{2}}
+\end{equation}
+$g(\varepsilon)$ is independent of $\varepsilon$ and is characteristic for free electrons.
+
 
 \end{document}
