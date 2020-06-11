@@ -2652,7 +2652,7 @@ where
 is the \ul{resistivity tensor}.
 \begin{center}
 \begin{tikzpicture}
-	\draw[->] (0,0) -- (4,0) node[right] {$\vec{B}$};
+	\draw[->] (0,0) -- (4,0) node[right] {$B$};
 	\draw[->] (0,0) -- (0,3) node[above] {$\rho_{xy}$};
 	\draw[->] (0,0) -- (4,3);
 	\draw[->, shorten >= 0.2cm] (3,1) node[below right] {slope $R_{H}$} -- (2,1.5);
@@ -2724,7 +2724,7 @@ The energy eigenstates have the form
 \begin{equation}
 \Psi_{nk}(x)=\frac{e^{iky}}{\sqrt{\ell\sqrt{\pi}2^{n}n!}}e^{-\frac{1}{2\ell^{2}}(x+k\ell^{2})^{2}}H_{n}\left(\frac{x+k\ell^{2}}{\ell}\right)
 \end{equation}
-where the $H_{n}$ are the Hermite polynomials. Note that $\ell$ in the denominator of the exponential determines the spatial extent of the wave function. Contrast the spectrum against $\varepsilon_{k}=\frac{\hbar^{2}k^{2}}{2m}$. In this case, $E_{nk}$ are independent of $k$ and are degenerate. Assuming periodic boundary conditions in the $y$-direction
+where the $H_{n}$ are the Hermite polynomials. Note that $\ell$ in the denominator of the exponential determines the spatial extent of the wavefunction. Contrast the spectrum against $\varepsilon_{k}=\frac{\hbar^{2}k^{2}}{2m}$. In this case, $E_{nk}$ are independent of $k$ and are degenerate. Assuming periodic boundary conditions in the $y$-direction
 \begin{equation}
 \begin{aligned}
 \Psi(x,y+L_{y})&=\Psi(x,y)\\
@@ -2792,7 +2792,387 @@ In reality, each electron has two accessible spin states for each $k$-combinatio
 \begin{equation}
 g(\varepsilon)=\frac{m}{\pi\hbar^{2}}
 \end{equation}
-$g(\varepsilon)$ is independent of $\varepsilon$ and is characteristic for free electrons.
+$g(\varepsilon)$ is independent of $\varepsilon$ and is characteristic for free electrons.\\
 
+Since the number of states per Landau level $N_{\phi}$ (i.e. number of electrons) is independent of $n$, they are the same for all Landau levels.
+\begin{equation}
+N_{\phi}=\frac{L_{x}L_{y}}{2\pi\ell^{2}}=\frac{\phi}{\phi_{0}}
+\end{equation}
+where $\phi_{0}$ is the magnetic flux quantum.\\
 
+The density of states in the absence of a magnetic field is given by $g(\varepsilon)=\frac{m}{\pi\hbar^{2}}$.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (3,0) node[right] {$\varepsilon$};
+	\draw[->] (0,0) -- (0,2) node[above] {$g(\varepsilon)$};
+	\draw (3,1.5) -- (0,1.5) node[left] {$\frac{m}{\pi\hbar^{2}}$};
+\end{tikzpicture}
+\end{center}
+The density of states is uniform.\\
+
+In the presence of a magnetic field, $E_{nk}=\hbar\omega{c}\left(n+\frac{1}{2}\right)$. Each Landau level contains an infinite (in the thermodynamic limit) number of degenerate states, corresponding to different values in $k$.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (5,0) node[right] {$\frac{\varepsilon}{\hbar\omega_{c}}$};
+	\draw[->] (0,0) -- (0,4.5) node[above] {$g(\varepsilon)$};
+	\draw (0.5,0) node[below] {$\frac{1}{2}$} -- (0.5,4.5);
+	\draw (1.5,0) node[below] {$\frac{3}{2}$} -- (1.5,4.5);
+	\draw (2.5,0) node[below] {$\frac{5}{2}$} -- (2.5,4.5);
+	\draw (3.5,0) node[below] {$\frac{7}{2}$} -- (3.5,4.5);
+	\draw (4.5,0) node[below] {$\frac{9}{2}$} -- (4.5,4.5);
+\end{tikzpicture}
+\end{center}
+
+The area under the curve is still the same in both cases (integrating under the curve yields the same result). These energy levels are the \ul{Landau levels}. The density of states form a Dirac comb structure. In reality, each Landau level is broadened by an amount $\frac{\hbar}{\tau}$ (which is analogous to the peak broadening in time-dependent perturbations from PHYS 434) due to impurity scattering.\\
+
+Consider low scatter rates as in pure material ($\omega_{c}\tau\gg1$).
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (5,0) node[right] {$\frac{\varepsilon}{\hbar\omega_{c}}$};
+	\draw[->] (0,0) -- (0,4.5) node[above] {$g(\varepsilon)$};
+	\node[below] at (0.5,0) {$\frac{1}{2}$};
+	\node[below] at (1.5,0) {$\frac{3}{2}$};
+	\node[below] at (2.5,0) {$\frac{5}{2}$};
+	\node[below] at (3.5,0) {$\frac{7}{2}$};
+	\node[below] at (4.5,0) {$\frac{9}{2}$};
+	\draw[domain=0:5,samples=200] plot (\x, {4*(cos(deg(pi*(\x-0.5))))^10});
+	\draw[->] (4,2) -- (4.383,2);
+	\draw[<-] (4.617,2) -- (5,2) node[right] {$\frac{\hbar}{\tau}$};
+	\draw[<->] (3.5,4.25) -- node[above] {$\hbar\omega_{c}$} (4.5,4.25);
+	\node[anchor=north west,right] at (5,3)
+		{\[
+			\begin{aligned}
+				\hbar\omega_{c}&\equiv\trm{ Distance in energy between Landau levels}\\
+				\frac{\hbar}{\tau}&\equiv\trm{ Width of peaks}
+			\end{aligned}
+		\]};
+\end{tikzpicture}
+\end{center}
+When $\hbar\omega_{c}>\frac{\hbar}{\tau}$, the peaks are well-resolved. Broadening can be understood as a consequence of the Heisenberg uncertainty principle. Electrons exist in a given quantum state for a time $\tau$ which corresponds to the mean free time between collisions. The uncertainty in energy-time is
+\begin{equation}
+\Delta\varepsilon\Delta\tau\sim\Delta\varepsilon\tau\sim\hbar\implies\Delta\varepsilon\sim\frac{\hbar}{\tau}
+\end{equation}
+This gives another interpretation to the applicability of the semiclassical transport theory condition.\\
+
+Consider when the sample is impure ($\omega_{c}\tau\ll1$).
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (5,0) node[right] {$\frac{\varepsilon}{\hbar\omega_{c}}$};
+	\draw[->] (0,0) -- (0,4.5) node[above] {$g(\varepsilon)$};
+	\node[below] at (0.5,0) {$\frac{1}{2}$};
+	\node[below] at (1.5,0) {$\frac{3}{2}$};
+	\node[below] at (2.5,0) {$\frac{5}{2}$};
+	\node[below] at (3.5,0) {$\frac{7}{2}$};
+	\node[below] at (4.5,0) {$\frac{9}{2}$};
+	\draw[domain=0:5,samples=200,blue] plot (\x, {1/(0.25*(cos(deg(pi*(\x))))^2+0.25)}) node[below right] {$\tau'\ll1$};
+	\draw[domain=0:5,samples=200,red] plot (\x, {1/(0.25*(cos(deg(pi*(\x))))^2+1)+3}) node[right] {$\tau''<\tau'$};
+	\draw[dashed] (0,4) -- (5,4) node[above right] {$\frac{m}{\pi\hbar^{2}}$};
+\end{tikzpicture}
+\end{center}
+This more closely approximates the classical regime when $\omega_{c}\tau\ll1$ and the density of states becomes more uniform and approximates the density of states without a magnetic field
+\begin{equation}
+g(\varepsilon)\approx g_{0}=\frac{m}{\pi\hbar^{2}}
+\end{equation}
+In this case, semiclassical transport theory works. The Landau levels are degenerate in $k$ and are analogous to bands in a crystal.\\
+
+The total magnetic flux through the sample area is $\phi=L_{x}L_{y}B$ while the magnetic flux quantum is $\phi_{0}=\frac{hc}{e}$. Thus, the Landau occupancy number can also be viewed as a flux ratio
+\begin{equation}
+N_{\phi}=\frac{\phi}{\phi_{0}}
+\end{equation}
+Combining the Landau level description at high magnetic fields gives a new description of resistivity $\rho_{xy}$ and $\rho_{xx}$.\\
+
+Recall that the Hall resistivity is given by $\rho_{xy}=R_{H}B=\frac{B}{nec}$.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (4,0) node[right] {$B$};
+	\draw[->] (0,0) -- (0,3) node[above] {$\rho_{xy}$};
+	\draw[->] (0,0) -- (4,3);
+	\draw[->, shorten >= 0.2cm] (3,1) node[right] {$R_{H}=\frac{1}{nec}$} -- (2,1.5);
+\end{tikzpicture}
+\end{center}
+When $\omega_{c}\tau>1$, $\hbar\omega_{c}>\frac{\hbar}{\tau}$ and Landau levels can be resolved. In this regime, measurement of the Hall effect gives a completely different result.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (5,0) node[right] {$B$};
+	\draw[->] (0,0) -- (0,4) node[above] {$\rho_{xy}$};
+	\draw (0,0) -- (1,1) -- (1.2,1) -- (1.25,1.25) -- (1.65,1.25) -- (1.75,1.7) -- (2.3,1.7) -- (2.5,2.5) -- (3.2,2.5) -- (3.5,4) -- (5,4);
+	\draw[->, shorten >= 0.1cm] (1.5,-0.5) node[below right] {For small fields, $\hbar\omega_{c}<\frac{\hbar}{\tau}$ regime. Thus, $\rho_{xy}$ is linear.} -- (0.5,0.5);
+	\draw[->, shorten >= 0.1cm] (4,1.5) node[right,text width=8cm] {Sharpness depends on temperature. It becomes a step function at $T=0$.} -- (2.35,1.8);
+\end{tikzpicture}
+\end{center}
+Plateaus in $\rho_{xy}$ correspond to $\frac{h}{\nu e^{2}}$. The precision of quantization in $\rho_{xy}$ is 1 in 10$^{10}$. $\nu$ is the \ul{Landau filling factor}. It is the number of Landau levels filled below the Fermi energy. $\nu$ can be integer (as in the integer quantum Hall effect) or some rational fraction (as in the fractional quantum Hall effect).
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (5.1,0) node[right] {$B$};
+	\draw[->] (0,0) -- (0,4) node[above] {$\rho_{xy}$};
+	\draw[text=red] (0,0) -- (1,1) -- (1.2,1) -- (1.25,1.25) -- (1.65,1.25) -- (1.75,1.7) -- (2.3,1.7) -- (2.5,2.5) -- (3.2,2.5) -- (3.5,4) -- (5,4) node[right] {$\rho_{xx}$};
+	\draw[red] (0,1) -- (1,1);
+	\draw[domain=1:1.125,samples=200,red] plot (\x, {0.05*cos(deg(2*pi/0.25*(\x-1)))+0.95});
+	\draw[domain=1.125:1.225,samples=200,red] plot (\x, {-0.1*cos(deg(2*pi/0.2*(\x-1.125)))+1});
+	\draw[domain=1.225:1.325,samples=200,red] plot (\x, {0.55*cos(deg(2*pi/0.2*(\x-1.225)))+0.55});
+	\draw[red] (1.325,0) -- (1.5,0);
+	\draw[domain=1.5:1.9,samples=200,red] plot (\x, {-0.8*cos(deg(2*pi/0.4*(\x-1.5)))+0.8});
+	\draw[red] (1.9,0) -- (2.1,0);
+	\draw[domain=2.1:2.7,samples=200,red] plot (\x,{-1.3*cos(deg(2*pi/0.6*(\x-2.1)))+1.3});
+	\draw[red] (2.7,0) -- (3,0);
+	\draw[domain=3:3.7,samples=200,red] plot (\x,{-2.1*cos(deg(2*pi/0.7*(\x-3)))+2.1});
+	\draw[red] (3.7,0) -- (5,0);
+\end{tikzpicture}
+\end{center}
+The states at the centre of each broadened Landau level remain unmodified by impurity scattering. They are delocalized and can contribute to transport. All other states are localized spatially
+\begin{equation}
+\Psi(\vec{r})\sim e^{-\frac{i(\vec{r}-\vec{r}_{0})}{\xi}}
+\end{equation}
+where $\vec{r}_{0}$ is the deep minimum of the impurity potential and $\xi$ is the localization length. The electrons are trapped and cannot contribute to electrical conduction.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (6,0) node[right] {$\frac{\varepsilon}{\hbar\omega_{c}}$};
+	\draw[->] (0,0) -- (0,4.5) node[above] {$g(\varepsilon)$};
+	\node[below] at (1,0) {$\frac{1}{2}$};
+	\node[below] at (3,0) {$\frac{3}{2}$};
+	\node[below] at (5,0) {$\frac{5}{2}$};
+	\draw[domain=0:6,samples=200] plot (\x, {4*cos(deg(pi*(\x/2+0.5)))^4)});
+	\fill [gray,domain=0:6,fill opacity=0.2,samples=200] (0,0) -- plot (\x, {4*cos(deg(pi*(\x/2+0.5)))^4)}) -- (6,0) -- cycle;
+	\draw[ultra thick] (1,0) -- (1,4);
+	\draw[ultra thick] (3,0) -- (3,4);
+	\draw[ultra thick] (5,0) -- (5,4);
+	\draw[<-,shorten >=5mm] (5,4) -- (6,5) node[above right] {delocalized};
+	\draw[<-, shorten >=5mm] (5.37,2) -- (6.37,2) node[right] {localized};	
+\end{tikzpicture}
+\end{center}
+As $B$ increases, $N_{\phi}\propto B$ also increases. Thus, $\varepsilon_{F}$ moves towards zero through the Landau levels. When $\varepsilon_{F}$ is in the mobility gap (which is almost always), it is an insulator. When it passes through the Landau level centres, it becomes metallic as the states are delocalized.\\
+
+\aside{There are two methods for insulation
+\begin{itemize}
+\item Band insulators
+\item Localization (which is purely quantum mechanical as described by Phil Anderson)
+\end{itemize}}
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (5.1,0) node[right] {$B$};
+	\draw[->] (0,0) -- (0,4) node[above] {$\rho_{xy}$};
+	\draw[text=red] (0,0) -- (1,1) -- (1.2,1) -- (1.25,1.25) -- (1.65,1.25) -- (1.75,1.7) -- (2.3,1.7) -- (2.5,2.5) -- (3.2,2.5) -- (3.5,4) -- (5,4);
+	\draw[dashed] (4.25,4) circle[x radius=0.8cm,y radius=0.2cm];
+	\draw[<-,shorten <=2mm] (4.25,4.2) -- (4.5,5) node[above right] {$\varepsilon_{F}$ is between Landau level centres};
+	\draw[dashed] (3.35,3.25) circle[x radius=0.2cm,y radius=0.75cm];
+	\draw[<-,shorten <=2mm] (3.55,3.25) -- (4,3) node[right] {$\varepsilon_{F}$ goes through the centre of Landau levels};
+\end{tikzpicture}
+\end{center}
+The steps are only infinitely sharp at $T=0$, because there is always some conduction at finite temperatures.\\
+
+This explains why nothing changes at the plateaus, but it fails to explain why $\rho_{xy}$ is quantized to precise values. This has to do with the existence of edge states. Consider a 2DEG sample that is finite in the $x$-direction. Let its potential be zero in regions between $\pm \frac{L_{x}}{2}$, but becomes infinite at the edges.
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-3,0) -- (3,0) node[right] {$x$};
+	\draw[<->] (0,-1) -- (0,4) node[above] {$V(x)$};
+	\draw[dashed] (2,-1) node[below] {$\frac{L_{x}}{2}$} -- (2,4);
+	\draw[dashed] (-2,-1) node[below] {$-\frac{L_{x}}{2}$} -- (-2,4);
+	\draw[domain=-1.982:1.982,samples=200] plot (\x, {(\x/1.85)^20});
+	\fill [gray,fill opacity=0.2] (5,0) rectangle (9,4);
+	\draw (5,0) node[below] {$-\frac{L_{x}}{2}$} -- (5,4);
+	\draw (9,0) node[below] {$\frac{L_{x}}{2}$} -- (9,4);
+	\draw[<->] (5,2) -- node[above] {$L_{x}$} (9,2);
+	\draw[->] (10,3) -- (10,4) node[above] {$\hat{y}$};
+	\draw[->] (10,3) -- (11,3) node[right] {$\hat{x}$};
+	\node[below] at (7,0) {sample};
+\end{tikzpicture}
+\end{center}
+The Schr\"{o}dinger equation is the familiar shifted harmonic oscillator with potential $V(x)$
+\begin{equation}
+-\frac{\hbar^{2}}{2m}\dv[2]{\phi}{x}+\frac{m\omega_{c}^{2}}{2}(x+k\ell^{2})^{2}\phi+V(x)\phi=E\phi
+\end{equation}
+In the absence of $V(x)$, $\phi(x)\sim e^{-\frac{1}{2\ell^{2}}(x+k\ell^{2})^{2}}$, which varies on the scale of $\ell$. Thus, electrons are localized on the scale of the magnetic length. Suppose $V(x)$ varies slowly on this scale. ne can replace $V(x)$ by its value a the centre of this $\phi(x)$. Thus, $V(x)\approx V(k\ell^{2})$ (since $V(x)$ is an even function). The presence of $V(x)$ was taken into account quasiclassically.\\
+
+On the scale of $\ell$ at $\vec{B}$ where quantum Hall is observed, $V(x)$ is replaced by $V(k\ell^{2})$. Thus
+\begin{equation}
+-\frac{\hbar^{2}}{2m}\dv[2]{\phi}{x}+\frac{m\omega_{c}^{2}}{2}(x+k\ell^{2})^{2}\phi+V(k\ell^{2})\phi=E\phi
+\end{equation}
+Thus, the eigenvalues are
+\begin{equation}
+E_{nk}=\hbar\omega_{c}\left(n+\frac{1}{2}\right)+V(k\ell^{2})
+\end{equation}
+The Landau levels now depend on $k$.
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-4.5,0) -- (4.5,0) node[right] {$k$};
+	\draw[->] (0,0) -- (0,4) node[above] {$E_{nk}$};
+	\draw[domain=-4.258:4.258,samples=200] plot (\x, {(\x/4)^20+0.5});
+	\draw[domain=-4.187:4.187,samples=200] plot (\x, {(\x/4)^20+1.5});
+	\draw[domain=-4.081:4.081,samples=200] plot (\x, {(\x/4)^20+2.5});
+	\node[above right] at (0.5,0.5) {$n=0$};
+	\node[above right] at (0.5,1.5) {$n=1$};
+	\node[above right] at (0.5,2.5) {$n=2$};
+	\draw[dashed] (-4.5,2) -- (4.5,2) node[right] {$\varepsilon_{F}$};
+	\draw[domain=3.982:4.182,thick,blue] plot (\x, {7.35*(\x-4.082)+2});
+	\draw[domain=-4.182:-3.982,thick,blue] plot (\x, {-7.35*(\x+4.082)+2});
+	\draw[dashed] (-4.082,4) -- (-4.082,0) node[below] {$-k_{n}$};
+	\draw[dashed] (4.082,4) -- (4.082,0) node[below] {$k_{n}$};
+	\fill[red] (-4.082,2) circle (3pt);
+	\fill[red] (4.082,2) circle (3pt);
+\end{tikzpicture}
+\end{center}
+When $\varepsilon_{F}$ is in between Landau levels in he bulk, there are still states at the Fermi energy at the edges of the system. The number of states equal to the number of filled Landau levels in the bulk. Note the edges are populated last for each Landau level. The dispersion near $k=\pm k_{n}$ has the same form as found in 2D topological insulators. Near the intersection with $\varepsilon_{F}$, the dispersion is chiral.
+\begin{equation}
+E_{nk}\approx \varepsilon_{F}\pm\hbar v_{F}(k\pm k_{n})
+\end{equation}
+\begin{tikzpicture}
+	\draw (0,0) -- (0,3);
+	\draw (4,0) -- (4,3);
+	\draw[red,->] (0.25,2.5) -- (0.25,0.5);
+	\draw[red,->] (3.75,0.5) -- (3.75,2.5);
+	\draw[->,shorten >=1mm] (-1,1.5) node[left] {chiral edge states} -- (0.25,1.5);
+	\draw[->] (5,2) -- (5,3) node[above] {$\hat{y}$};
+	\draw[->] (5,2) -- (6,2) node[right] {$\hat{x}$};
+\end{tikzpicture}
+
+As discussed before, the existence of chiral edge states implies the Hall effect.
+\begin{equation}
+\begin{aligned}
+I_{y}&=-e\int\frac{\dd{k}}{2\pi}v_{F}n_{F}(\varepsilon_{k}),\quad \dd{k}=\frac{1}{\hbar v_{F}}\dd{\varepsilon}\\
+\implies I_{R}&=-\frac{e}{2\pi\hbar}\int_{-\infty}^{\varepsilon_{FR}}\dd{\varepsilon}n_{F}(\varepsilon)\trm{ and }I_{L}=\frac{e}{2\pi\hbar}\int_{-\infty}^{\varepsilon_{FL}}\dd{\varepsilon}n_{F}(\varepsilon)\\
+\therefore I_{y}&=I_{R}+I_{L}=\frac{e}{h}(\varepsilon_{FR}-\varepsilon_{FL})=-\frac{e^{2}}{\hbar}V_{x}
+\end{aligned}
+\end{equation}
+Note $V_{x}$ was applied to otain a non-zero current in $\hat{y}$, which affects $\varepsilon_{FR}$ and $\varepsilon_{FL}$.\\
+
+Since each filled Landau level contributes $\sigma_{yx}=-\frac{e^{2}}{h}$ to the total Hall conductivity, using the Landau filling factor $\nu$
+\begin{equation}
+\begin{aligned}
+\sigma_{yx}&=-\nu\frac{e^{2}}{h} \trm{ (since number of edge states is number of filled Landau levels)}\\
+\sigma_{xy}&=\nu\frac{e^{2}}{h} \trm{ (Lorentz force depends on a cross product, thus switching coordinates flips signs)}
+\end{aligned}
+\end{equation}
+As long as $\varepsilon_{F}$ is in the mobility gap between Landau levels, $\sigma_{yx}$ stays pinned at this value as the number of edge states does not change and the bulk states do not contribute. Also, since there is no current in $x$ in the macroscopic sample, given that the edge states (on opposite sides) do not communicate with each other (i.e. there is no tunneling), $\sigma_{xx}=\sigma_{yy}=0$. Since there is no regular conductivity as well, this is also an insulator. Thus
+\begin{equation}
+\sigma=\begin{bmatrix}
+0 & \nu\frac{e^{2}}{h}\\
+-\nu\frac{e^{2}}{h} & 0
+\end{bmatrix}
+\end{equation}
+The resistivity tensor is given by $\rho=\sigma^{-1}$.
+\begin{equation}
+\begin{aligned}
+\det(\sigma)&=\sigma_{xx}\sigma_{yy}-\sigma_{xy}\sigma_{yx}=\sigma_{xy}^{2}\\
+\rho_{xx}&=\frac{\sigma_{xx}}{\det(\sigma)}=0=\rho_{yy}\\
+\rho_{xy}&=-\frac{\sigma_{xy}}{\sigma_{xy}^{2}}=-\frac{h}{e^{2}\nu}\\
+\rho_{yx}&=\frac{h}{e^{2}\nu}
+\end{aligned}
+\end{equation}
+
+\aside{Experimentally, one usually measure $\rho$, sends in a current, then measures $V$, rather than vice versa.}
+
+Since $\rho_{xx}$ and $\sigma_{xx}$ both vanish, a 2DEG in the quantum Hall regime acts as both a perfect conductor and perfect insulator. To understand this, consider the following thought experiment (Cabino ring).
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) node {$\phi(t)$} circle (1cm);
+	\draw (0,0) circle (2cm);
+	\draw (0,0) circle (3cm);
+	\foreach \a in {1,2,...,12}{
+		\node[red] at (\a*360/12: 1.5cm) {+};
+		\node at (\a*360/12: 2.5cm) {-};
+	}
+	\draw[->] (0,-3.5) node[below] {$\vec{E}$} -- (0,-2.9);
+\end{tikzpicture}
+\end{center}
+Consider a sample in the form of a disk with a hole in the centre. In the hole, a solenoid is inserted with a variable external magnetic field. Let $\phi(t)$ be the flux from this external magnetic field.
+\begin{equation}
+\begin{aligned}
+\vec{\nabla}\times\vec{E}&=-\frac{1}{c}\pdv{\vec{B}}{t}\trm{ (Maxwell's equation)}\\
+\oint\vec{E}\cdot\dd{\vec{\ell}}&=-\frac{1}{c}\pdv{\phi}{t}\trm{ (Faraday's law)}
+\end{aligned}
+\end{equation}
+Since $\sigma_{xx}=0$, the external magnetic field does not lead to an azimuthal current. However, since $\sigma_{xy}\neq 0$, the external magnetic field will lead to a radial current. If there are no leads attached, this leads to a buildup of charge on the inner and outer radius. This radial polarization leads to a radial electric field. Again, since $\sigma_{xy}\neq 0$, this leads to an azimuthal current. The azimuthal current flows without resistance since $\rho_{xx}=0$. Since $\sigma_{xx}=0$, the charge never relaxes (as would be expected of a conductor) since the radial electric field cannot decay through radial current. Thus, the azimuthal current flows forever once created.
+
+\newpage
+\section{Magnetism}
+Electronic structure topology leads to macroscopic quantum phenoma. Another source also comes from electron-electron interactions. Thus far, we have considered materials where electrons are modeled as moving in an atomic lattice in isolation. In essence, the electrons are treated as being non-interacting. In many cases, such electron interactions are negligible. However, in specific cases, electron interactions lead to interesting physics. This includes phenomena such as magnetism and superconductivity. Let us consider a type of magnetism: ferromagnetism.
+
+\subsection{Ferromagnetism}
+\ul{Ferromagnetism} is the appearance of spontaneous macroscopic magnetic moments in some metals below a sufficiently low temperature.
+\begin{equation}
+\vec{B}=\vec{H}+4\pi\vec{M}
+\end{equation}
+where $\vec{B}$ is the magnetic field in the substance, $\vec{H}$ is the external magnetic field, and $\vec{M}$ is the magnetization. For small $\vec{H}$
+\begin{equation}
+\vec{M}=\Chi\vec{H}
+\end{equation}
+where $\Chi$ is the magnetic susceptibility. If $\Chi>0$, the material is a paramagnet. If $\Chi<0$, the material is a diamagnet. Ferromagnets are distinct in that they possess magnetization $\vec{M}\neq\vec{0}$ even in the absence of $\vec{H}$. This is what is referred to when magnetic fields are produced spontaneously.\\
+
+In material with completely filled shells, they have zero spin and thus have zero magnetic moment. Contrast this with iron.
+\[\trm{Fe: 3d$^{6}$4s$^{2}$ valence shell}\]
+The d-shell can have a maximum of 10 electrons, thus the d-shell in iron is not completely filled. Iron is ferromagnetic. All ferromagnetic metals have one thing in common, in that they have incomplete d- or f-shells (incomplete d-shells are more conventional while more exotic ferromagnetic material have incomplete f-shells). By \ul{Hund's rule}, shells are filled in such a way to maximize the total spin. Ferromagnetism only occurs with incomplete d-shells (rather than s- or p-shells) since the electrons are space further apart and are ore tightly localized. These electrons interact more strongly with each other.\\
+
+There is a non-zero atomic magnetic moment $\vec{\mu}$
+\begin{equation}
+\vec{\mu}=g\mu_{B}\vec{S}
+\end{equation}
+where
+\begin{equation}
+\mu_{B}=\frac{eh}{2mc}
+\end{equation}
+is the Bohr magneton and $g\approx2$ is the Land\'{e} factor. Magnetism is associated with partially localized magnetic moments. However, d-electrons are delocalized partially and participate in conduction in ferromagnetic metals. This complicates the theory of ferromagnetism.\\
+
+Even if there are microscopic magnetic moments, without interaction there is no ferromagnetism, since each moment fluctuates randomly and independently, leading to a net zero macroscopic moment.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->,thick] (0,0) -- ++(105:1cm);
+	\draw[->,thick] (1,0) -- ++(60:1cm);
+	\draw[<-,thick] (3,0) -- ++(75:1cm);
+	\draw[->,thick] (4.5,0) -- ++(135:1cm);
+	\draw[->,thick] (0.5,-2) -- ++(105:1cm);
+	\draw[<-,thick] (2,-2) -- ++ (95:1cm);	
+	\draw[->,thick] (3.25,-2) -- ++(75:1cm);
+\end{tikzpicture}
+\end{center}
+To produce macroscopic magnetic moments, atomic moments must align.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->,thick] (0,0) -- ++(0,1);
+	\draw[->,thick] (1,0) -- ++(0,1);
+	\draw[->,thick] (2,0) -- ++(0,1);
+	\draw[->,thick] (3,0) -- ++(0,1);
+	\draw[->,thick] (0,-2) -- ++(0,1);
+	\draw[->,thick] (1,-2) -- ++(0,1);
+	\draw[->,thick] (2,-2) -- ++(0,1);
+	\draw[->,thick] (3,-2) -- ++(0,1);
+\end{tikzpicture}
+\end{center}
+This can only arise from interactions between moments. Suppose naively they interact directly through magnetic dipole interaction.
+\begin{equation}
+U_{\trm{dip}}=\frac{1}{r^{3}}\left[\vec{\mu}_{1}\cdot\vec{\mu}_{2}-3(\vec{\mu}_{1}\cdot\hat{r})(\vec{\mu}_{2}\cdot\hat{r})\right]
+\end{equation}
+Since $\mu\approx g\mu_{B}=\frac{eh}{mc}$ and the Bohr radius is $a_{0}=\frac{\hbar^{2}}{mc^{2}}$
+\begin{equation}
+U_{\trm{dip}}\sim\frac{(g\mu_{B})^{2}}{r^{3}}=\left(\frac{e^{2}}{\hbar c}\right)^{2}\frac{e^{2}}{a_{0}}\left(\frac{a_{0}}{r}\right)^{3}=\alpha^{2}\frac{e^{2}}{a_{0}}\left(\frac{a_{0}}{r}\right)^{3}
+\end{equation}
+where $\alpha=\frac{e^{2}}{\hbar c}\approx\frac{1}{137}$ is the \ul{fine structure constant}. The Bohr radius $a_{0}$ is approximately 0.5 \angstrom{} while typical interatomic separation in metals is $r\approx 1-2$ \angstrom{}. Thus
+\begin{equation}
+U_{\trm{dip}}\sim10^{-4}\trm{ eV}
+\end{equation}
+This corresponds to a temperature of about 1 K. However, iron remains a ferromagnet under critical temperature 1043 K, after which it becomes a paramagnet. Thus, magnetic dipole interaction is too weak to explain ferromagnetism ($k_{B}T_{c}\gg U_{\trm{dip}}$).\\
+
+In reality, the combination of the Puali principle and Coulomb interaction leads to sufficiently strong interactions between atomic magnetic moments, which leads to ferromagnetism.
+\begin{equation}
+U_{\trm{Coulomb}}\sim \frac{e^{2}}{r}=\frac{e^{2}}{a_{0}}\frac{a_{0}}{r}\sim 137^{2}U_{\trm{dip}}
+\end{equation}
+This is surprising since the Coulomb potential does not know anything about the magnetic fields. Instead, the effects of spin (in addition to $V(r)$) gives rise to ferromagnetism.\\
+
+Consider two electrons with wavefunctions $\varphi_{1}(\vec{r})$ and $\varphi_{2}(\vec{r})$. Assuming the two electrons interact via the Coulomb interaction
+\begin{equation}
+V(\vec{r}_{1}-\vec{r}_{2})=\frac{e^{2}}{\abs*{\vec{r}_{1}-\vec{r}_{2}}}
+\end{equation}
+The two electron wavefunctions will have the following general form
+\begin{equation}
+\Psi(\vec{r}_{1}\sigma_{1},\vec{r}_{2}\sigma_{2})=\underbrace{\psi(\vec{r}_{1},\vec{r}_{2})}_{\substack{\trm{orbital}\\\trm{momentum}}}\underbrace{\Chi(\sigma_{1},\sigma_{2})}_{\substack{\trm{spin}\\\trm{wavefunction}}},\quad\sigma\in\{\up,\dn\}
+\end{equation}
+Since electrons are fermions, $\Psi(\vec{r}_{1}\sigma_{1},\vec{r}_{2}\sigma_{2})$ must be antisymmetric under the interchange of the electrons.
+\begin{equation}
+\Psi(\vec{r}_{1}\sigma_{1},\vec{r}_{2}\sigma_{2})=-\Psi(\vec{r}_{2}\sigma_{2},\vec{r}_{1}\sigma_{1})
+\end{equation}
+Thus, there are two possibilities:
+\begin{enumerate}
+\item $\Psi$
+\item $\Psi$
+\end{enumerate}
 \end{document}
