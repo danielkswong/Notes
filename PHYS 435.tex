@@ -3172,7 +3172,88 @@ Since electrons are fermions, $\Psi(\vec{r}_{1}\sigma_{1},\vec{r}_{2}\sigma_{2})
 \end{equation}
 Thus, there are two possibilities:
 \begin{enumerate}
-\item $\Psi$
-\item $\Psi$
+\item $\Psi(\vec{r}_{1},\vec{r}_{2})$ is symmetric and $\Chi(\sigma_{1},\sigma_{2})$ is antisymmetric
+\item $\Psi(\vec{r}_{1},\vec{r}_{2})$ is antisymmetric and $\Chi(\sigma_{1},\sigma_{2})$ is symmetric
 \end{enumerate}
+Since $V(\vec{r}_{1}-\vec{r}_{2})$ (and hence the Hamiltonian) is independent of spin, the total spin of electrons is conserved. Thus, the Hamiltonian does not act on the spin state. Let us instead use the total spin $S$ and its projection onto the $z$-axis $M$ as quantum numbers labeling the spin states. Write the spin states as $\ket{S,M}$. There are four possible spin states:
+\begin{itemize}
+\item $\ket{0,0}=\frac{1}{\sqrt{2}}(\ket{\up\dn}-\ket{\dn\up})$
+\item $\ket{1,1}=\ket{\up\up}$
+\item $\ket{1,0}=\frac{1}{\sqrt{2}}(\ket{\up\dn}+\ket{\dn\up})$
+\item $\ket{1,-1}=\ket{\dn\dn}$
+\end{itemize}
+Thus, $\Chi$ is antisymmetric for $S=0$ and $S=1$. The overall wavefunction becomes
+\begin{equation}
+\begin{aligned}
+\Psi_{1,M}(\vec{r}_{1},\vec{r}_{2})&=\frac{1}{\sqrt{2}}[\varphi_{1}(\vec{r}_{1})\varphi_{2}(\vec{r}_{1})-\varphi_{1}(\vec{r}_{2})\varphi_{2}(\vec{r}_{1})]\ket{1,M}\\
+\Psi_{0,0}(\vec{r}_{1},\vec{r}_{2})&=\frac{1}{\sqrt{2}}[\varphi_{1}(\vec{r}_{1})\varphi_{2}(\vec{r}_{1})+\varphi_{1}(\vec{r}_{2})\varphi_{2}(\vec{r}_{1})]\ket{0,0}\\
+\end{aligned}
+\end{equation}
+Assuming the energy associated with $\varphi_{1}$ and $\varphi_{2}$ are the same, the total energy is the same and the states are degenerate (without taking into account Coulomb interaction). Adding Coulomb interaction lifts this degeneracy.\\
+
+Let us perform degenerate perturbation theory. The first step is to calculate the matrix elements of $V(\vec{r}_{1}-\vec{r}_{2})$ between the four degenerate states. Since $V(\vec{r}_{1}-\vec{r}_{2})$ is spin-independent, the matrix elements are proportional to the scalar products of the spin wavefunctions
+\begin{equation}
+\braket{S,M}{S',M'}=\delta_{SS'}\delta_{MM'}\implies V_{SM,S'M'}=V_{S}\delta_{SS'}\delta_{MM'}
+\end{equation}
+where $V_{S}$ is the matrix element of $V(\vec{r}_{1}-\vec{r}_{2})$ with respect to the coordinate part of the wavefunction only.
+
+\begin{equation}
+\begin{aligned}
+V_{1}&=\bra{1,M}V\ket{1,M}\\
+&=\int\dd[3]{r_{1}}\dd[3]{r_{2}}\Psi^{*}_{1,M}(\vec{r}_{1},\vec{r}_{2})V(\vec{r}_{1}-\vec{r}_{2})\Psi_{1,M}(\vec{r}_{1},\vec{r}_{2})\\
+&=\int\dd[3]{r_{1}}\dd[3]{r_{2}}\left(\frac{1}{\sqrt{2}}\right)[\varphi_{1}^{*}(\vec{r}_{1})\varphi_{2}^{*}(\vec{r}_{1})-\varphi_{1}^{*}(\vec{r}_{2})\varphi_{2}^{*}(\vec{r}_{1})]V(\vec{r}_{1}-\vec{r}_{2})\\
+&\qquad\left(\frac{1}{\sqrt{2}}\right)[\varphi_{1}(\vec{r}_{1})\varphi_{2}(\vec{r}_{1})+\varphi_{1}(\vec{r}_{2})\varphi_{2}(\vec{r}_{1})]\\
+&=\frac{1}{2}\int\dd[3]{r_{1}}\dd[3]{r_{2}}\abs{\varphi_{1}(\vec{r}_{1})}^{2}\abs{\varphi_{2}(\vec{r}_{2})}^{2}V(\vec{r}_{1}-\vec{r}_{2})\\
+&\qquad+\frac{1}{2}\int\dd[3]{r_{1}}\dd[3]{r_{2}}\abs{\varphi_{1}(\vec{r}_{2})}^{2}\abs{\varphi_{2}(\vec{r}_{1})}^{2}V(\vec{r}_{1}-\vec{r}_{2})\\
+&\qquad-\frac{1}{2}\int\dd[3]{r_{1}}\dd[3]{r_{2}}\varphi_{1}^{*}(\vec{r}_{1})\varphi_{2}^{*}(\vec{r}_{2})\varphi_{1}(\vec{r}_{2})\varphi_{2}(\vec{r}_{1})V(\vec{r}_{1}-\vec{r}_{2})\\
+&\qquad-\frac{1}{2}\int\dd[3]{r_{1}}\dd[3]{r_{2}}\varphi_{1}^{*}(\vec{r}_{2})\varphi_{2}^{*}(\vec{r}_{1})\varphi_{1}(\vec{r}_{1})\varphi_{2}(\vec{r}_{2})V(\vec{r}_{1}-\vec{r}_{2})\\
+&=\int\dd[3]{r_{1}}\dd[3]{r_{2}}\abs{\varphi_{1}(\vec{r}_{1})}^{2}\abs{\varphi_{2}(\vec{r}_{2})}^{2}V(\vec{r}_{1}-\vec{r}_{2})-\underbrace{\int\dd[3]{r_{1}}\dd[3]{r_{2}}\varphi_{1}^{*}(\vec{r}_{1})\varphi_{2}^{*}(\vec{r}_{2})\varphi_{1}(\vec{r}_{2})\varphi_{2}(\vec{r}_{1})V(\vec{r}_{1}-\vec{r}_{2})}_{\trm{off-diagonal term}}\\
+&\quad\explain\trm{Since $V$ depends only on $\abs*{\vec{r}_{1}-\vec{r}_{2}}$, one can simply switch the integrating variables.}
+\end{aligned}
+\end{equation}
+Similarly
+\begin{equation}
+\begin{aligned}
+V_{0}&=\int\dd[3]{r}_{1}\dd[3]{r}_{2}\abs{\varphi_{1}(\vec{r}_{1})}^{2}\abs{\varphi_{2}(\vec{r}_{2})}^{2}V(\vec{r}_{1}-\vec{r}_{2})\\
+&\qquad+\int\dd[3]{r}_{1}\dd[3]{r}_{2}\varphi_{1}^{*}(\vec{r}_{2})\varphi_{2}^{*}(\vec{r}_{1})\varphi_{1}(\vec{r}_{1})\varphi_{2}(\vec{r}_{2})V(\vec{r}_{1}-\vec{r}_{2})
+\end{aligned}
+\end{equation}
+Let us define the \ul{Coulomb integral} $C$ as
+\begin{equation}
+C=\int\dd[3]{r_{1}}\dd[3]{r_{2}}\abs{\varphi_{1}(\vec{r}_{1})}^{2}\abs{\varphi_{2}(\vec{r}_{2})}^{2}\frac{e^{2}}{\abs{\vec{r}_{1}-\vec{r}_{2}}}
+\end{equation}
+which is the average Coulomb repulsion between two electrons. $\abs{\varphi_{1}(\vec{r}_{1})}^{2}$ resembles a density $\rho_{1}$ and $\abs{\varphi_{2}(\vec{r}_{2})}^{2}$ resembles a density $\rho_{2}$. This appears like a classical interaction.\\
+
+Let us define the differing integral as the \ul{exchange integral} $J$
+\begin{equation}
+J=\int\dd[3]{r_{1}}\dd[3]{r_{2}}\varphi_{1}^{*}(\vec{r}_{1})\varphi_{2}^{*}(\vec{r}_{2})\varphi_{1}(\vec{r}_{2})\varphi_{2}(\vec{r}_{1})\frac{e^{2}}{\abs{\vec{r}_{1}-\vec{r}_{2}}}
+\end{equation}
+This is purely quantum and has no classical analogues. It is the exchange interaction that appears due to Pauli exclusion principle. Thus
+\begin{equation}
+\begin{aligned}
+V_{1}&=C-J\\
+V_{0}&=C+J
+\end{aligned}
+\end{equation}
+Energies of states with total spin $S=1$ is different than the energy of state with total spin $S=0$ in the presence of the Coulomb interaction. The state which will have lower energy will depend on the sign of $J$. In ferromagnets, $J>0$, thus $S=1$ states have a lower energy. This leads to alignment of atomic moments. Recall that the orbital wavefunction for $S=1$ is antisymmetric.
+\begin{equation}
+\Psi_{1,M}(\vec{r}_{1},\vec{r}_{2})=\frac{1}{\sqrt{2}}[\varphi_{1}(\vec{r}_{1})\varphi_{2}(\vec{r}_{1})-\varphi_{1}(\vec{r}_{2})\varphi_{2}(\vec{r}_{1})]\ket{1,M}
+\end{equation}
+If we let $\vec{r}_{1}=\vec{r}_{2}$, $\Phi_{1,M}(\vec{r}_{1},\vec{r}_{1})=0$. Thus, the probability of both elecrons being found in the same place is zero and the Coulomb interaction is minimized by alignment (when normally it tends to infinity when $\vec{r}_{1}\rightarrow\vec{r}_{2}$). Note also that when $\vec{r}_{1}=\vec{r}_{2}$, $J$ tends towards $C$, which is positive. Alignment minimizes spin through Pauli exclusion.\\
+
+One can express this result in terms of the spin operators.
+\begin{equation}
+\begin{aligned}
+\vec{S}&=\vec{S}_{1}+\vec{S}_{2}\implies \vec{S}^{2}=(\vec{S}_{1}+\vec{S}_{2})^{2}=\vec{S}_{1}^{2}+\vec{S}_{2}^{2}+2\vec{S}_{1}\cdot\vec{S}_{2}=2\vec{S}_{1}\cdot\vec{S}_{2}+\trm{constant}\\
+\therefore H&=-J\vec{S}^{2}=-2J\vec{S}_{1}\cdot\vec{S}_{2}+\trm{constant}
+\end{aligned}
+\end{equation}
+When $J>0$, $H$ is minimized when $\vec{S}_{1}$ and $\vec{S}_{2}$ are aligned. When $J<0$, $H$ is minimized when $\vec{S}_{1}$ and $\vec{S}_{2}$ are anti-aligned.\\
+
+Generalizing to many interacting spins as in the \ul{Heisenberg model}
+\begin{equation}
+H=-\frac{1}{2}\sum_{i,j}J_{ij}\vec{S}_{i}\cdot\vec{S}_{j}
+\end{equation}
+The model is oversimplified since it ignores the fact that the spin is carried by mobile d-electrons. However, it captures the basics of magnetism. The typical siize of $J$ is $J\sim\frac{e^{2}}{r}\gg U_{\trm{dip}}$.
+
 \end{document}
