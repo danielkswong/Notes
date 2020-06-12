@@ -3273,7 +3273,165 @@ This is one of the simplest quantum many-body problem. Let us assume that $J_{ij
 \end{center}
 Let us also add a term due to an external magnetic field $\vec{B}$. Thus
 \begin{equation}
-H=-\frac{J}{2}\sum_{\langle i,j\rangle}\vec{S}_{i}\cdot\vec{S}_{j}-g\mu_{B}\vec{B}\cdot\sum_{i}\vec{S}_{i}
+H=-\tikzmarknode{A}{\frac{J}{2}}\sum_{\tikzmarknode{B}{\langle i,j\rangle}}\vec{S}_{i}\cdot\vec{S}_{j}-\underbrace{g\mu_{B}\vec{B}}_{\trm{redefine as $\vec{B}$}}\cdot\sum_{i}\vec{S}_{i}
 \end{equation}
+\begin{tikzpicture}[overlay,remember picture,shorten <=1mm,font=\footnotesize]
+	\draw[<-] (A.south) -- ++ (-0.3,-0.3) node[below] {avoids double counting};
+	\draw[<-] (B.south) -- ++ (0.3,-0.3) node[below] {nearest neighbours};
+\end{tikzpicture}
+$\vec{S}_{i}$ are the quantum mechanical spin operators
+\begin{equation}
+[S_{i}^{\alpha},S_{i}^{\beta}]=i\varepsilon_{\alpha\beta\gamma}S_{i}^{\gamma}
+\end{equation}
+At $T=0$, the lowest energy state corresponds to all spins having maximal projection $\frac{\hbar}{2}$ along an arbitrary axis $\hat{z}$ (in the absence of $\vec{B}$). If a magnetic field exists, the axis is along $\vec{B}$. Let us find the critical temperature $T_{c}$ at which transitions from ferromagnetic to paramagnetic state occur.
+
+\subsection{Mean-Field Theory}
+Write the spin operators as
+\begin{equation}
+\begin{aligned}
+\vec{S}_{i}&=\vec{S}_{i}-\langle \vec{S}_{i}\rangle+\langle \vec{S}_{i}\rangle\\
+\vec{S}_{i}\cdot\vec{S}_{j}&=\left(\vec{S}_{i}-\langle\vec{S}_{i}\rangle+\langle\vec{S}_{i}\rangle\right)\cdot\left(\vec{S}_{j}-\langle\vec{S}_{j}\rangle+\langle\vec{S}_{j}\rangle\right)\\
+&=\left(\vec{S}_{i}-\langle\vec{S}_{i}\rangle\right)\cdot\left(\vec{S}_{j}-\langle\vec{S}_{j}\rangle\right)+\vec{S}_{i}\cdot\langle\vec{S}_{j}\rangle+\vec{S}_{j}\cdot\langle\vec{S}_{i}\rangle-\underbrace{\langle\vec{S}_{i}\rangle\cdot\langle\vec{S}_{j}\rangle}_{\trm{constant}}
+\end{aligned}
+\end{equation}
+
+Let us assume the fluctuations of the spins from their expectation values are small. Note this assumption is not rigorously justified in most cases. Thus
+\begin{equation}
+(\vec{S}_{i}-\langle\vec{S}_{i}\rangle)\cdot(\vec{S}_{j}-\langle\vec{S}_{j}\rangle)\approx0
+\end{equation}
+Ignoring the constant term
+\begin{equation}
+H=-\frac{J}{2}\sum_{\langle i,j\rangle}\left[\vec{S}_{i}\cdot\langle\vec{S}_{j}\rangle+\vec{S}_{j}\cdot\langle\vec{S}_{i}\rangle\right]-\vec{B}\cdot\sum_{i}\vec{S}_{i}
+\end{equation}
+Note the $\langle \vec{S}_{i}\rangle\cdot\langle\vec{S}_{j}\rangle$ still needs to be accounted for when calculating quantities such as free energy.\\
+
+Assuming $J>0$, one expects ferromagnetic ordering of spins.
+\begin{center}
+\begin{tikzpicture}
+	\foreach \a in {1,2,...,5}{
+		\draw[->,thick] (\a,0) -- (\a,1);
+	}
+\end{tikzpicture}
+\end{center}
+Thus, we expect $\langle\vec{S}_{i}\rangle$ to be  independent of the site index $i$.
+\begin{equation}
+\therefore H=-\frac{J}{2}\sum_{\langle i,j\rangle}\left[\vec{S}_{i}\cdot\langle\vec{S}\rangle+\vec{S}_{j}\cdot\langle\vec{S}\rangle\right]-\vec{B}\cdot\sum_{i}\vec{S}_{i}
+\end{equation}
+
+Summing over all spins $i$ and $j$
+\begin{equation}
+\begin{aligned}
+H&=-J\sum_{\langle i,j\rangle}\vec{S}_{i}\cdot\langle\vec{S}\rangle\\
+&=-Jz\langle\vec{S}_{i}\rangle\cdot\sum_{i}\vec{S}_{i}-\vec{B}\cdot\sum_{i}\vec{S}_{i}
+\end{aligned}
+\end{equation}
+where $z$ is the \ul{coordinate number} which defines the number of nearest neighbours of any lattice site in a given lattice. For example, the cubic lattice has $z=6$. Thus
+\begin{equation}
+H=-\left(\vec{B}+Jz\langle\vec{S}\rangle\right)\cdot\sum_{i}\vec{S}_{i}
+\end{equation}
+
+Let us introduce the \ul{molecular field}.
+\begin{equation}
+\vec{B}_{m}=Jz\langle\vec{S}\rangle
+\end{equation}
+Thus
+\begin{equation}
+H=-\left(\vec{B}+\vec{B}_{m}\right)\cdot\sum_{i}\vec{S}_{i}
+\end{equation}
+
+$\vec{B}_{m}$ physically corresponds to an effective mean magnetic field acting on a given spin, in addition to an external magnetic field, due to its interaction with other spins.\\
+
+Thus, we have converted a many-interacting spins problem into a single spin in a field problem. Ultimately, this is a common approach for many approximation methods in many-body theory. The molecular field $\vec{B}_{m}$ is however still unknown and must be determined self-sufficiently. Note minimizing $-\sum_{\langle i,j\rangle}\vec{S}_{i}\cdot\vec{S}_{j}$ aligns all spins.\\
+
+Without loss of generality, take $\vec{B}=B\hat{z}$. $\vec{B}_{m}$ will also point in the $\hat{z}$ direction (spins align in the $\hat{z}$ direction), since $\vec{B}$ is the only thing that chooses out a particular direction. The spins align in $\hat{z}$ to minimize $\vec{B}\cdot\vec{S}_{i}$, while the spin-spin interaction part is rotationally invariant. This is an example of \ul{spontaneously broken symmetry}.
+\begin{equation}
+\therefore H=-(B+B_{m})\sum_{i}S_{i}^{z}
+\end{equation}
+Let us calculate $\langle S_{i}^{z}\rangle$ for a given $T$. Assume the particles are spin-$\frac{1}{2}$. Using the partition function gives
+\begin{equation}
+\langle S^{z}\rangle=\frac{\sum\limits_{S^{z}=\pm\frac{\hbar}{2}}e^{\frac{1}{k_{B}T}(B+B_{m})S^{z}}S^{z}}{\underbrace{\sum_{S^{z}=\pm\frac{\hbar}{2}}e^{\frac{1}{k_{B}T}(B+B_{m})S^{z}}}_{Z\trm{ (partition function)}}}
+\end{equation}
+Measuring spin in units of $\hbar$
+\begin{equation}
+\begin{aligned}
+\langle S^{z}\rangle&=\frac{\frac{1}{2}e^{\frac{1}{2k_{B}T}(B+B_{m})}-\frac{1}{2}e^{-\frac{1}{2k_{B}T}(B+B_{m})}}{e^{\frac{1}{2k_{B}T}(B+B_{m})}-e^{-\frac{1}{2k_{B}T}(B+B_{m})}}\\
+&=\frac{1}{2}\tanh\left(\frac{B+B_{m}}{2k_{B}T}\right)
+\end{aligned}
+\end{equation}
+
+The macroscopic magnetization per spin is given by
+\begin{equation}
+M=\frac{1}{N}\sum_{i}\langle S_{i}^{z}\rangle=\langle S^{z}\rangle
+\end{equation}
+Since $B_{m}=Jz\langle S^{z}\rangle$, one can rewrite the equation as
+\begin{equation}
+M=\frac{1}{2}\tanh\left(\frac{B+JzM}{2k_{B}T}\right)
+\end{equation}
+For spontaneous magnetization, one sets $\vec{B}=\vec{0}$.
+\begin{equation}
+M=\frac{1}{2}\tanh\left(\frac{JzM}{2k_{B}T}\right)
+\end{equation}
+Note that this equation is a transcendental equation.
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-5,0) -- (5,0) node[right] {$M$};
+	\draw[<->] (0,-5) -- (0,5) node[above] {$\frac{1}{2}\tanh\left(\frac{M}{T}\right)$};
+	\draw[dashed] (-5,-4) node[left] {$-\frac{1}{2}$} -- (5,-4);
+	\draw[dashed] (-5,4) node[left] {$\frac{1}{2}$} -- (5,4);
+	\draw (-5,-5) -- (5,5) node[above right] {$M$};
+	\draw[<->,domain=-5:5,red,samples=200] plot (\x,{4*tanh(\x/2)}) node[right] {$T=0$};
+	\draw[<->,domain=-5:5,green,samples=200] plot (\x,{4*tanh(\x/4)}) node[right] {$T=T_{c}$};
+	\draw[<->,domain=-5:5,blue,samples=200] plot (\x,{4*tanh(\x/15)}) node[right] {$T\rightarrow\infty$};
+	\fill[red] (3.83,3.83) circle (3pt) node[yshift=0.7cm,text=black] {$M_{0}$};
+	\fill[red] (-3.83,-3.83) circle (3pt) node[yshift=-0.7cm,text=black] {$-M_{0}$};
+\end{tikzpicture}
+\end{center}
+Since $\tanh(0)=0$, there always exists the solution $M=0$ at all temperatures. If the slope of the right hand side is ever greater than 1, there are two non-trivial solutions at $M=\pm M_{0}$. This transition between magnetization and no magnetization is a \ul{phase transition}.\\
+
+To determine $T_{c}$ at which a non-trivial solution occurs, expanding in terms of small $M$ (since $M=0$ at $T=T_{c}$)
+\begin{equation}
+\begin{aligned}
+\tanh\left(\frac{JzM}{2k_{B}T}\right)&\approx\frac{JzM}{2k_{B}T}\\
+\implies M&=\frac{JzM}{4k_{B}T_{c}}
+\end{aligned}
+\end{equation}
+
+Thus
+\begin{equation}
+T_{c}=\frac{Jz}{4k_{B}}
+\end{equation}
+This is the \ul{Curie temperature}. Note $k_{B}T_{c}\sim J\sim\frac{e^{2}}{r}\sim$ 1 eV, which corresponds with $10^{4}$ K.\\
+
+\aside{There is always a paramagnetic state. We also found only two non-trivial solutions since we ignored the other components of $\vec{S}_{i}$. In reality, there are infinite solutions since there is no external field, which is disregarded due to spontaneous symmetry breaking.}
+
+Note that real $T_{c}$ in magnetic metals are on the order of $10^{3}$ K. Mean field theory overestimates $T_{c}$ because it neglects fluctuations in spin. Let us calculate $M(T)$ analytically in the limits of $T\approx T_{c}$ and $T\approx0$.\\
+
+\aside{We refer to $M$ as the \ul{M-order parameter} that allows us to distinguish between ferromagnets and paramagnets.\\
+
+Depending on the nature of the phase transition boundary, one can have two types of phase transitions: \ul{first-order phase transitions}, which are discontinuous in the first derivative of the free energy with respect to some thermodynamic quantity, and \ul{second-order phase transitions}, which are continuous.}
+
+Since $M$ vanishes continously and is small at $T=T_{c}$, taking the Taylor series expansion $\tanh(x)\approx x-\frac{1}{3}x^{3}$
+\begin{equation}
+\begin{aligned}
+M&=\frac{1}{2}\left[\frac{JzM}{2k_{B}T}-\frac{1}{3}\left(\frac{JzM}{2k_{B}T}\right)^{3}\right]\\
+1&=\frac{T_{c}}{T}-\frac{4}{3}\left(\frac{T_{c}}{T}\right)^{3}M^{2}\\
+M(T)&=\pm\frac{1}{2}\frac{T}{T_{c}}\sqrt{3\left(1-\frac{T}{T_{c}}\right)}
+\end{aligned}
+\end{equation}
+By symmetry of reflection, choosing positive sign
+\begin{equation}
+\begin{aligned}
+M(T)&=\frac{1}{2}\frac{T}{T_{c}}\sqrt{3\left(1-\frac{T}{T_{c}}\right)}\\
+&\approx \frac{1}{2}\sqrt{3\left(1-\frac{T}{T_{c}}\right)}\\
+&\quad\explain\trm{ Since $T\approx T_{c}$}
+\end{aligned}
+\end{equation}
+
+\begin{center}
+\begin{tikzpicture}
+\end{tikzpicture}
+\end{center}
+
 
 \end{document}
