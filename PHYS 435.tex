@@ -3208,7 +3208,7 @@ V_{1}&=\bra{1,M}V\ket{1,M}\\
 &\qquad-\frac{1}{2}\int\dd[3]{r_{1}}\dd[3]{r_{2}}\varphi_{1}^{*}(\vec{r}_{1})\varphi_{2}^{*}(\vec{r}_{2})\varphi_{1}(\vec{r}_{2})\varphi_{2}(\vec{r}_{1})V(\vec{r}_{1}-\vec{r}_{2})\\
 &\qquad-\frac{1}{2}\int\dd[3]{r_{1}}\dd[3]{r_{2}}\varphi_{1}^{*}(\vec{r}_{2})\varphi_{2}^{*}(\vec{r}_{1})\varphi_{1}(\vec{r}_{1})\varphi_{2}(\vec{r}_{2})V(\vec{r}_{1}-\vec{r}_{2})\\
 &=\int\dd[3]{r_{1}}\dd[3]{r_{2}}\abs{\varphi_{1}(\vec{r}_{1})}^{2}\abs{\varphi_{2}(\vec{r}_{2})}^{2}V(\vec{r}_{1}-\vec{r}_{2})-\underbrace{\int\dd[3]{r_{1}}\dd[3]{r_{2}}\varphi_{1}^{*}(\vec{r}_{1})\varphi_{2}^{*}(\vec{r}_{2})\varphi_{1}(\vec{r}_{2})\varphi_{2}(\vec{r}_{1})V(\vec{r}_{1}-\vec{r}_{2})}_{\trm{off-diagonal term}}\\
-&\quad\explain\trm{Since $V$ depends only on $\abs*{\vec{r}_{1}-\vec{r}_{2}}$, one can simply switch the integrating variables.}
+&\quad\explain\trm{ Since $V$ depends only on $\abs*{\vec{r}_{1}-\vec{r}_{2}}$, one can simply switch the integrating variables.}
 \end{aligned}
 \end{equation}
 Similarly
@@ -3239,7 +3239,7 @@ Energies of states with total spin $S=1$ is different than the energy of state w
 \begin{equation}
 \Psi_{1,M}(\vec{r}_{1},\vec{r}_{2})=\frac{1}{\sqrt{2}}[\varphi_{1}(\vec{r}_{1})\varphi_{2}(\vec{r}_{1})-\varphi_{1}(\vec{r}_{2})\varphi_{2}(\vec{r}_{1})]\ket{1,M}
 \end{equation}
-If we let $\vec{r}_{1}=\vec{r}_{2}$, $\Phi_{1,M}(\vec{r}_{1},\vec{r}_{1})=0$. Thus, the probability of both elecrons being found in the same place is zero and the Coulomb interaction is minimized by alignment (when normally it tends to infinity when $\vec{r}_{1}\rightarrow\vec{r}_{2}$). Note also that when $\vec{r}_{1}=\vec{r}_{2}$, $J$ tends towards $C$, which is positive. Alignment minimizes spin through Pauli exclusion.\\
+If we let $\vec{r}_{1}=\vec{r}_{2}$, $\Psi_{1,M}(\vec{r}_{1},\vec{r}_{1})=0$. Thus, the probability of both elecrons being found in the same place is zero and the Coulomb interaction is minimized by alignment (when normally it tends to infinity when $\vec{r}_{1}\rightarrow\vec{r}_{2}$). Note also that when $\vec{r}_{1}=\vec{r}_{2}$, $J$ tends towards $C$, which is positive. Alignment minimizes spin through Pauli exclusion.\\
 
 One can express this result in terms of the spin operators.
 \begin{equation}
@@ -3254,6 +3254,26 @@ Generalizing to many interacting spins as in the \ul{Heisenberg model}
 \begin{equation}
 H=-\frac{1}{2}\sum_{i,j}J_{ij}\vec{S}_{i}\cdot\vec{S}_{j}
 \end{equation}
-The model is oversimplified since it ignores the fact that the spin is carried by mobile d-electrons. However, it captures the basics of magnetism. The typical siize of $J$ is $J\sim\frac{e^{2}}{r}\gg U_{\trm{dip}}$.
+The model is oversimplified since it ignores the fact that the spin is carried by mobile d-electrons. However, it captures the basics of magnetism. The typical siize of $J$ is $J\sim\frac{e^{2}}{r}\gg U_{\trm{dip}}$.\\
+
+This is one of the simplest quantum many-body problem. Let us assume that $J_{ij}=0$ for spins when the are not nearest-neighbours and that $J_{ij}=J$ for spins when they are nearest-neighbours. 
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) -- (3,0);
+	\draw (0,1) -- (3,1);
+	\draw (0.5,-1) -- (0.5,2);
+	\draw (1.5,-1) -- (1.5,2);
+	\draw (2.5,-1) -- (2.5,2);
+	\fill (0.5,0) circle (3pt);
+	\fill (1.5,0) circle (3pt);
+	\fill (2.5,1) circle (3pt);
+	\draw[<->,shorten >=3pt,shorten <=3pt,yshift=-1mm] (0.5,0) to [out=330,in=210] node[below] {$J$} (1.5,0);
+	\draw[<->,shorten >=5pt,shorten <=5pt] (0.5,0) to [out=45,in=195] node[left,yshift=1mm] {0} (2.5,1);
+\end{tikzpicture}
+\end{center}
+Let us also add a term due to an external magnetic field $\vec{B}$. Thus
+\begin{equation}
+H=-\frac{J}{2}\sum_{\langle i,j\rangle}\vec{S}_{i}\cdot\vec{S}_{j}-g\mu_{B}\vec{B}\cdot\sum_{i}\vec{S}_{i}
+\end{equation}
 
 \end{document}
