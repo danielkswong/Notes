@@ -294,7 +294,7 @@ The accessible energy levels are confined to the finite interval between $\varep
 
 \begin{align*}
 \trm{\ul{Aside}:}\quad\ket{k}&=\frac{1}{\sqrt{N}}\sum_{n}e^{ikna}\ket{n}\trm{ is the \ul{lattice Fourier transform}}.\\
- \ket{n}&=\frac{1}{\sqrt{N}}\sum_{k}e^{-ikna}\ket{k}\trm{ is the \ul{inverse lattice Fourier transform}}.
+\ket{n}&=\frac{1}{\sqrt{N}}\sum_{k}e^{-ikna}\ket{k}\trm{ is the \ul{inverse lattice Fourier transform}}.
 \end{align*}
 
 In general, the energy spectrum of electrons in a solid takes the form of several bands separated by \ul{band gaps} (intervals of forbidden values).\\
@@ -3430,8 +3430,203 @@ M(T)&=\frac{1}{2}\frac{T}{T_{c}}\sqrt{3\left(1-\frac{T}{T_{c}}\right)}\\
 
 \begin{center}
 \begin{tikzpicture}
+	\draw[->] (0,0) -- (3.5,0) node[right] {$T$};
+	\draw[->] (0,0) -- (0,2.5) node[above] {$M$};
+	\draw[domain=0:3,samples=200] plot (\x,{2*tanh(-2*\x+6)}) node[below] {$T_{c}$};
+	\node[left] at (0,2) {$\frac{g\mu_{B}}{2}$};
+	\node[right,yshift=0.5cm] at (3,0) {$\sim\sqrt{T_{c}-T}$};
+	\node[above right] at (2,2) {PM};
+	\node at (1.5,1) {FM};
 \end{tikzpicture}
 \end{center}
+Mean field theory correctly captures the basic fact that there is a transition at some finite $T_{c}$. It also captures the fact that $M$ vanishes at $T_{c}$ as a power law.
+\begin{equation}
+M(T)\sim(T_{c}-T)^{\beta},\quad\beta=\frac{1}{2}
+\end{equation}
+where $\beta$ is the \ul{magnetization critical exponent}.\\
+
+$M$ is not analytic \textemdash{} it sharply transitions to zero magnetization. This is an example of a \ul{phase transition}. Since $M$ vanishes continuously, this is a \ul{continuous} or \ul{second-order phase transition}. It is possilbe to a have a \ul{discontinuous phase transition} or \ul{first-order phase transition} (e.g. liquid or solid).
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (3.5,0) node[right] {$T$};
+	\draw[->] (0,0) -- (0,2.5) node[above] {$M$};
+	\draw[domain=0:3,samples=200] plot (\x,{2*tanh(-2*\x+6)}) node[below] {$T_{c}$};
+	\draw[red] (3,0) circle (3pt);
+	\draw[<-,shorten <=2mm] (3,0) -- (3.5,1) node[above right,text width=3cm] {second-order phase transition};
+	\draw[->] (8,0) -- (11.5,0) node[right] {$T$};
+	\draw[->] (8,0) -- (8,2.5) node[above] {$M$};
+	\draw[domain=8:11,samples=200] plot (\x,{2*tanh(-2*(\x-8)+7)});
+	\draw (11,1.523) -- (11,0) node[below] {$T_{c}$};
+	\draw[red] (11,1.523) circle (3pt);
+	\draw[<-,shorten <=2mm] (11,1.523) -- (11.75,1.623) node[right,text width=2.9cm] {first-order phase transition};
+\end{tikzpicture}
+\end{center}
+One can not assume $M$ is small for first-order phase transitions. The ferromagnet to paramagnet phase transition is an example of a second-order phase transition (in mean field theory). The order parameter $M$ characterizes transitions. In general, second-order phase transitions are characterized by universal, non-analytic behaviour of the order parameter and other quantities near $T_{c}$. They can be characterized with \ul{critical exponents}, with $\beta$ being one of them. In general, the critical exponent is some real number that is independent of the microscopic details of the material. Since $\beta$ entirely determines the nature of the phase transition, we consider $\beta$ to be a universal behaviour. Note that the mean-field value of $\beta=\frac{1}{2}$ is incorrect and does not truly describe the phase transition for this model.\\
+
+Let us add back in the external magnetic field.
+\begin{equation}
+M=\frac{1}{2}\tanh\left(\frac{B+JzM}{2k_{B}T}\right)
+\end{equation}
+Let us calculate \ul{magnetic susceptibility} $\Chi=\pdv{M}{B}$ for $T>T_{c}$. In this case, $M=0$ when $B=0$. Assume $B$ is small. Thus, $M$ is small. Taking the Taylor series expansion to leading order in $M$ and $B$
+\begin{equation}
+\begin{aligned}
+M&=\frac{1}{2}\left(\frac{B+JzM}{2k_{B}T}\right)\implies M\left(1-\frac{Jz}{4k_{B}T}\right)&=\frac{B}{4k_{B}T}\trm{ ($M\propto B$ above $T_{c}$)}\\
+\implies\Chi&=\pdv{M}{B}=\left(\frac{1}{4k_{B}}\right)\left(\frac{1}{T-T_{c}}\right)
+\end{aligned}
+\end{equation}
+This is the \ul{Curie-Weiss law}. This is consistent with our classification for paramgnets ($\Chi>0$) when $T>T_{c}$. Notice that $\Chi$ diverges when $T$ approaches $T_{c}$.
+\begin{equation}
+\Chi\sim(T-T_{c})^{-\gamma},\quad\gamma=1
+\end{equation}
+where $\gamma$ is the \ul{susceptibility critical exponent}.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (3.5,0) node[right] {$T$};
+	\draw[->] (0,0) -- (0,2.5) node[above] {$\Chi$};
+	\draw[domain=1.7:3.5,samples=200] plot (\x,{0.5/(\x-1.5)});
+	\draw[dashed] (1.5,2.5) -- (1.5,0) node[below] {$T_{c}$};
+	\node[above right] at (2.5,1) {$\sim\frac{1}{T-T_{c}}$};
+\end{tikzpicture}
+\end{center}
+Note that $\gamma=1$ obtained from mean-field theory is also incorrect.\\
+
+Physically, the susceptibility diverges because the system wants to magnetize below $T_{c}$, even without an external field.\\
+
+\subsection{Mean-Field Theory (Including Constant Term)}
+Consider another way of devising mean-field theory. The Heisenberg model is
+\begin{equation}
+H=-\frac{J}{2}\sum_{\langle i,j\rangle}\vec{S}_{i}\cdot\vec{S}_{j}-\vec{B}\cdot\sum_{i}\vec{S}_{i}
+\end{equation}
+
+Let us again write
+\begin{equation}
+\begin{aligned}
+\vec{S}_{i}\cdot\vec{S}_{j}&=\left(\vec{S}_{i}-\langle\vec{S}_{i}\rangle+\langle\vec{S}_{i}\rangle\right)\cdot\left(\vec{S}_{j}-\langle\vec{S}_{j}\rangle+\langle\vec{S}_{j}\rangle\right)\\
+&=\cancelto{0}{\left(\vec{S}_{i}-\langle\vec{S}_{j}\rangle\right)\cdot\left(\vec{S}_{j}-\langle\vec{S}_{j}\rangle\right)}+\vec{S}_{j}\cdot\langle\vec{S}_{i}\rangle-\langle\vec{S}_{i}\rangle\cdot\langle\vec{S}_{j}\rangle
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+ H=-\frac{J}{2}\sum_{\langle i,j\rangle}\left[\vec{S}_{i}\cdot\langle\vec{S}_{j}\rangle+\vec{S}_{j}\cdot\langle\vec{S}_{i}\rangle-\langle\vec{S}_{i}\rangle\cdot\langle\vec{S}_{j}\rangle\right]-\vec{B}\cdot\sum_{i}\vec{S}_{i}
+\end{equation}
+In this case, we no longer ignore the constant. Let $\vec{B}=B\hat{z}$ and assume that the expectation of each $\vec{S}_{i}$ is magnetized as
+\begin{equation}
+\begin{aligned}
+-\langle\vec{S}_{i}\rangle&=M\hat{z}\trm{ for all site index $i$}\\
+\therefore H&=\frac{JzNM^{2}}{2}-(JzM+B)\sum_{i}\vec{S}_{i}^{z}
+\end{aligned}
+\end{equation}
+
+Recall from statistical mechanics that if we want to obtain the equilibrium state at $T\neq0$, we minimize the free energy. If we want the equilibrium state at $T=0$, we minimize the energy.\\
+
+The free energy is given by
+\begin{equation}
+F=-k_{B}T\ln{Z}
+\end{equation}
+In general, the partition function $Z$ is given by
+\begin{equation}
+\begin{aligned}
+Z&=\Tr(e^{-\frac{H}{k_{B}T}})\trm{ (sum over eigenspace $S^{z}=\pm\frac{1}{2}$)}\\
+&=\left[\sum_{S^{z}=\pm\frac{1}{2}}e^{-\frac{JzM^{2}}{2k_{B}T}+\frac{(JzM+B)S^{z}}{k_{B}T}}\right]^{N}\\
+&=\left(e^{\frac{-JzM^{2}N}{2k_{B}T}}\right)\left(e^{\frac{JzM+B}{2k_{B}T}}+e^{-\frac{JzM+B}{2k_{B}T}}\right)^{N}\\
+\therefore F&=\frac{JzNM^{2}}{2}-k_{B}TN\ln{\left(e^{\frac{JzM+B}{2k_{B}T}}+e^{-\frac{JzM+B}{2k_{B}T}}\right)}\\
+&=\frac{JzNM^{2}}{2}-k_{B}TN\ln{\left[2\cosh\left(\frac{JzM+B}{2k_{B}T}\right)\right]}
+\end{aligned}
+\end{equation}
+The free energy is proportional to the total number of atoms and is affected by temperature and magnetization. The total free energy is an extensive quantity that will depend on the volume or size of a system.\\
+
+To find the equilibrium state for $M$, minimize $F$ with respect to $M$.
+\begin{equation}
+\begin{aligned}
+\pdv{F}{M}=0&=JzNM-Nk_{B}T\left[\frac{2\sinh\left(\frac{B+JzM}{2k_{B}T}\right)}{2\cosh\left(\frac{B+JzM}{2k_{B}T}\right)}\right]\left(\frac{Jz}{2k_{B}T}\right)\\
+&=JzNM-\frac{JzN}{2}\tanh\left[\frac{B+JzM}{2k_{B}T}\right]\\
+\implies M&=\frac{1}{2}\tanh\left[\frac{B+JzM}{2k_{B}T}\right]\trm{, as before}
+\end{aligned}
+\end{equation}
+$M(T)$ vanishes at $T=T_{c}$ when $B=0$. Thus, $M$ is small near $T_{c}$. One can expand the free energy as a function of $M$. Define the free energy per atom $f=\frac{F}{N}$.
+\begin{equation}
+f=\frac{JzM^{2}}{2}-k_{B}T\ln{\left[2\cosh\left(\frac{JzM+B}{2k_{B}T}\right)\right]}
+\end{equation}
+$f(M)$ is an even function of $M$ (which is a consequence of symmetry). Note this is not true for non-zero external magnetic field. Let us expand $f$ to $\mathcal{O}(M^{4})$.
+\newpage
+\begin{equation}
+f=\cancelto{0}{\tikzmarknode{FF}{f_{0}}}+\frac{JzM^{2}}{2}-\frac{1}{2}k_{B}T\left(\frac{JzM}{2k_{B}T}\right)^{2}+\frac{1}{2}k_{B}T\left(\frac{JzM}{2k_{B}T}\right)^{4}+\mathcal{O}(M^{6})
+\end{equation}
+\begin{tikzpicture}[overlay,remember picture,shorten <=1mm,font=\footnotesize]
+	\draw[<-] (FF.south) -- ++ (0,-0.5) node[below] {$f(M=0)$, set to zero};
+\end{tikzpicture}
+
+\vspace{1cm}
+
+From the fact that $T_{c}=\frac{Jz}{4k_{B}}$
+\begin{equation}
+\begin{aligned}
+f&=2k_{B}T_{c}M^{2}\left(1-\frac{T_{c}}{T}\right)+\frac{4}{3}k_{B}\frac{T_{c}^{4}}{T^{4}}M^{4}\\
+&\approx2k_{B}T_{c}M^{2}\left(1-\frac{T_{c}}{T}\right)+\frac{4}{3}k_{B}T_{c}M^{4}\trm{, since $T\approx T_{c}$}
+\end{aligned}
+\end{equation}
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-3,0) -- (3,0) node[right] {$M$};
+	\draw[<->] (0,-1) node[below] {$T>T_{c}$ (Paramagnetic)} -- (0,4) node[above] {$f$};
+	\draw[domain=-1.54:1.54,samples=200] plot (\x,{0.5*(\x)^2+0.5*(\x)^4});
+	\draw[<->] (5,0) -- (11,0) node[right] {$M$};
+	\draw[<->] (8,-1) node[below] {$T<T_{c}$ (Ferromagnetic)} -- (8,4) node[above] {$f$};
+	\draw[domain=6.164:9.836,samples=200] plot (\x,{-0.5*(\x-8)^2+0.5*(\x-8)^4});
+	\fill (8.707,-0.125) circle (3pt) node[yshift=-0.5cm] {$M_{0}$};
+	\fill (7.293,-0.125) circle (3pt) node[yshift=-0.5cm] {$-M_{0}$};
+\end{tikzpicture}
+\end{center}
+In paramagnetic phase, $M=0$ minimizes the free energy. In the ferromagnetic phase, the curve goes from curve up to curve down at $M=0$. However, $f$ goes to infinity for large $M$ (due to the $M^{4}$ term). Thus, there must exist two local minima at $M=\pm M_{0}$. This corresponds with spontaneous magnetization.\\
+
+Minimizing $f$ to find $\pm M_{0}$
+\begin{equation}
+0=\pdv{f}{M}=4k_{B}T_{c}M\left(1-\frac{T_{c}}{T}\right)+\frac{16}{3}k_{B}T_{c}M^{3}
+\end{equation}
+
+Ignoring the local maximum at $M=0$
+\begin{equation}
+M_{\trm{min}}(T)=\pm M_{0}=\pm\frac{1}{2}\frac{T}{T_{c}}\sqrt{3\left(1-\frac{T_{c}}{T}\right)}\approx\pm\sqrt{\frac{3}{4}\left(1-\frac{T_{c}}{T}\right)}
+\end{equation}
+Define \ul{reduced temperature}
+\begin{equation}
+t=\frac{T-T_{c}}{T_{c}}
+\end{equation}
+which is a measure of how close the temperature is to $T_{c}$.
+\begin{equation}
+\therefore M\sim(-t)^{\beta},\quad\beta=\frac{1}{2}\trm{, as before}
+\end{equation}
+This is the same critical exponent as in Ginzburg-Landau theory of superconductivity.
+
+\subsection{Landau Theory of Phase Transitions}
+The Heisenberg model
+\begin{equation}
+H=-\frac{J}{2}\sum_{\langle i,j\rangle}\vec{S}_{i}\cdot\vec{S}_{j}
+\end{equation}
+is invariant with respect to arbitrary rotation of all spins since $\vec{S}_{i}\cdot\vec{S}_{j}$ is preserved under rotation globally. Define $\vec{M}$ to be a multi-component vector instead of a scalar corresponding to the mean spin $\vec{M}=\langle\vec{S}_{i}\rangle$. Let the free-energy density $f(\vec{M})$ depend on each of the independent spins. Since $f(\vec{M})$ has the same global symmetry of rotations, $f(\vec{M})$ can only depend on $\vec{M}\cdot\vec{M}=\abs*{\vec{M}}^{2}$ and not specifically $\vec{M}$.
+\begin{equation}
+\therefore f(\vec{M})=f_{0}+a\vec{M}\cdot\vec{M}+\frac{b}{2}(\vec{M}\cdot\vec{M})^{2}+\ldots
+\end{equation}
+$a=a(t), b=b(t) \in\mathbb{R}$  are unknown coefficients parametrized by $t=\frac{T-T_{c}}{T_{c}}$. This result arises purely from symmetry arguments.\\
+
+Take $\abs{t}\ll1$. Thus, expanding $a(t)$ and $b(t)$
+\begin{equation}
+\begin{aligned}
+a(t)&=a_{0}+a_{1}t+\ldots\\
+b(t)&=b_{0}+b_{1}t+\ldots
+\end{aligned}
+\end{equation}
+$a_{0}$, $a_{1}$, $b_{0}$, and $b_{1}$ can be determined from the requirement that there is a phase transition (i.e. $\abs*{\vec{M}}\neq0$ when $t<0$ and $\abs*{\vec{M}}=0$ when $t>0$). Setting the constant $f_{0}$ to zero and ignoring higher order terms
+\begin{equation}
+f=a\abs*{\vec{M}}^{2}+\frac{b}{2}\abs*{\vec{M}}^{4}
+\end{equation}
+
+The value of $f$ is minimized at thermal equilibrium
+\begin{equation}
+0=\pdv{f}{\abs*{\vec{M}}}=2a\abs*{\vec{M}}+2b\abs*{\vec{M}}^{3}\implies\abs*{\vec{M}}=\sqrt{-\frac{a}{b}}\trm{ or }0
+\end{equation}
+
+
 
 
 \end{document}
