@@ -15,6 +15,7 @@
 \usepackage[toc,page]{appendix} % To add table of contents
 \usepackage{physics} % To use supported physics notation
 \usepackage[none]{hyphenat} % To remove hyphenation
+\usepackage{mathtools}  % To use \mathclap which removes white space for subscripts
 
 \usepackage{fancyhdr} % To input custom headers
 \pagestyle{fancy} % Defines header for all pages other than plain-style pages
@@ -86,6 +87,7 @@
 
 \newcommand{\angstrom}{\textup{\AA}} % Angstrom symbol
 \newcommand{\Chi}{\mathcal{X}} % Inline chi symbol
+\newcommand{\sign}{\trm{sign}}
 \renewcommand{\Re}{\trm{Re}} % Real
 \renewcommand{\Im}{\trm{Im}} % Imaginary
 \renewcommand{\CancelColor}{\color{red}} % Changes the cancel colour to red
@@ -3573,8 +3575,8 @@ f&=2k_{B}T_{c}M^{2}\left(1-\frac{T_{c}}{T}\right)+\frac{4}{3}k_{B}\frac{T_{c}^{4
 	\draw[<->] (5,0) -- (11,0) node[right] {$M$};
 	\draw[<->] (8,-1) node[below] {$T<T_{c}$ (Ferromagnetic)} -- (8,4) node[above] {$f$};
 	\draw[domain=6.164:9.836,samples=200] plot (\x,{-0.5*(\x-8)^2+0.5*(\x-8)^4});
-	\fill (8.707,-0.125) circle (3pt) node[yshift=-0.5cm] {$M_{0}$};
-	\fill (7.293,-0.125) circle (3pt) node[yshift=-0.5cm] {$-M_{0}$};
+	\fill (8.707,-0.125) circle (2pt) node[yshift=-0.5cm] {$M_{0}$};
+	\fill (7.293,-0.125) circle (2pt) node[yshift=-0.5cm] {$-M_{0}$};
 \end{tikzpicture}
 \end{center}
 In paramagnetic phase, $M=0$ minimizes the free energy. In the ferromagnetic phase, the curve goes from curve up to curve down at $M=0$. However, $f$ goes to infinity for large $M$ (due to the $M^{4}$ term). Thus, there must exist two local minima at $M=\pm M_{0}$. This corresponds with spontaneous magnetization.\\
@@ -3625,8 +3627,233 @@ The value of $f$ is minimized at thermal equilibrium
 \begin{equation}
 0=\pdv{f}{\abs*{\vec{M}}}=2a\abs*{\vec{M}}+2b\abs*{\vec{M}}^{3}\implies\abs*{\vec{M}}=\sqrt{-\frac{a}{b}}\trm{ or }0
 \end{equation}
+If $b<0$, then $f$ is always minimized at large $\abs*{\vec{M}}$, regardless of the value of $a$. Let us ignore the $b_{1}t$ term since it will be small next to $b_{0}$ since it will be small next to $b_{0}$ at $T\approx T_{c}$. Thus, $b=b_{0}>0$. Since this always holds, to get a real solutions when $t<0$, $a(t)<0$. Thus, $a_{0}=0$ and $a(t)=a_{1}t$, where $a_{1}>0$. Note this also matches the expectation that $\abs*{\vec{M}}=0$ when $t>0$, as $\sqrt{-\frac{a}{b}}$ becomes complex.\\
 
+Thus
+\begin{equation}
+\abs*{\vec{M}}=\sqrt{-\frac{a_{1}t}{b}}\sim\sqrt{T_{c}-T}\trm{ when $T<T_{c}$ as before}
+\end{equation}
+Remarkably, this comes purely from symmetry arguments. This can be generalized to second-order phase transitions and the general theory is known as the \ul{Landau Theory of Continuous Phase Transitions}. Substituting $\abs*{\vec{M}}$ back into $f$
+\begin{equation}
+\begin{aligned}
+f&=f_{0}-\frac{a^{2}}{b}+\frac{a^{2}}{2b}=f_{0}-\underbrace{\frac{a^{2}}{2b}}_{\mathclap{\substack{\trm{condensation}\\\trm{energy}}}}&&,\quad T<T_{c}\\
+f&=f_{0}&&,\quad T>T_{c}
+\end{aligned}
+\end{equation}
+where $f_{0}$ is the free energy of the ``normal state" with $\abs*{\vec{M}}=0$.\\
 
+Calculating entropy
+\begin{equation}
+S=-\pdv{F}{T}=S_{0}+\frac{a_{1}^{2}}{2b}\pdv{T}(T-T_{c})^{2}=S_{0}+\frac{a_{1}^{2}}{b}(T-T_{c})
+\end{equation}
+This is less than $S_{0}$ when $T<T_{c}$, which is consistent with the idea that below $T_{c}$, the system becomes more ordered.\\
 
+Calculating specific heat
+\begin{equation}
+C_{v}=T\dv{S}{T}=T\frac{a_{1}^{2}}{b}+C_{0}
+\end{equation}
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (3,0) node[right] {$T$};
+	\draw[->] (0,0) -- (0,2) node[above] {$C_{v}-C_{0}$};
+	\draw (0,0) -- (1.5,1) -- (1.5,0) node[below] {$T_{c}$};
+	\draw[<-,shorten <=2mm] (1.5,0.5) -- (2,1) node[right] {$T_{c}\frac{a_{1}^{2}}{b}$ jump in specific heat};
+\end{tikzpicture}
+\end{center}
+Adding an external field
+\begin{equation}
+f=aM^{2}+\frac{b}{2}M^{4}-BM
+\end{equation}
+where $M$ is the component of $\vec{M}$ along $\vec{B}$ ($M=\vec{M}\cdot\hat{B}$). The minimum energy configuration occurs at $\pdv{f}{M}=0$.
+\begin{equation}
+\begin{aligned}
+0&=\pdv{f}{M}=2aM+2bM^{3}-B\implies B=2aM+2bM^{3}\\
+\therefore1&=2a\dv{M}{B}+6bM^{2}\dv{M}{B}
+\end{aligned}
+\end{equation}
+
+Reintroducing magnetic susceptibility $\Chi$ as $\Chi=\dv{M}{B}|_{B=0}$
+\begin{equation}
+\begin{aligned}
+1&=(2a+6bM^{2})\Chi\\
+\Chi&=\frac{1}{(2a+6bM^{2})}\\
+\end{aligned}
+\end{equation}
+For $T>T_{c} (t>0)$, $M=0$ for $B=0$. Thus
+\begin{equation}
+\Chi=\frac{1}{2a}=\frac{1}{2a_{1}t}\sim\abs{T-T_{c}}^{-\gamma},\quad\gamma=1
+\end{equation}
+For $T<T_{c} (t<0)$, $M^{2}=-\frac{a}{b}$ for $B=0$. Thus
+\begin{equation}
+\Chi=\frac{1}{2a-ba}=-\frac{1}{4a_{1}t}\sim\abs{T-T_{c}}^{-\gamma},\quad\gamma=1
+\end{equation}
+Thus, $\Chi\sim\abs{T-T_{c}}^{-\gamma},\quad\gamma=1$ overall.
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) -- (4,0) node[right] {$T$};
+	\draw (0,0) -- (0,3) node[above] {$\Chi$};
+	\draw[dashed] (2,3) -- (2,0) node[below] {$T_{c}$};
+	\draw[domain=0:1.916,samples=200] plot (\x,{-1/(4*\x-8)});
+	\draw[domain=2.167:4,samples=200] plot (\x,{1/(2*\x-4)});
+	\node[anchor=north west,right,text width=6cm] at (5,3)
+		{Susceptibility can be thought of in terms of the ability of the magnetic field to reduce $M$ in the regime $T<T_{c}$};
+\end{tikzpicture}
+\end{center}
+Since $M=\left(\frac{a_{1}}{b_{0}}\right)^{\frac{1}{2}}\abs{t}^{\frac{1}{2}}$
+\begin{equation}
+\begin{aligned}
+B&=2aM+2bM^{3}\\
+&=2a_{1}tM+2b_{0}M^{3}\\
+&=2\frac{a_{1}^{\frac{3}{2}}}{b_{0}^{\frac{1}{2}}}\abs{t}^{\frac{3}{2}}\left[\sign(t)\frac{M}{\abs{t}^{\frac{1}{2}}}\frac{b_{0}^{\frac{1}{2}}}{a_{1}^{\frac{1}{2}}}+\left(\frac{M}{\abs{t}^{\frac{1}{2}}}\frac{b_{0}^{\frac{1}{2}}}{a_{1}^{\frac{1}{2}}}\right)^{3}\right]\\
+\implies M(t,B)&=\abs{t}^{\frac{1}{2}}\Phi\left(\frac{B}{\abs{t}^{\frac{3}{2}}}\right)\trm{, where $\Phi(x)$ is some universal function}
+\end{aligned}
+\end{equation}
+Similarly for free energy
+\begin{equation}
+\begin{aligned}
+f&=aM^{2}+\frac{b}{2}M^{4}-BM\\
+&=\frac{a_{1}^{2}}{b_{0}}\abs{t}^{2}\left[\sign(t)\left(\frac{M}{\abs{t}^{\frac{1}{2}}}\frac{b_{0}^{\frac{1}{2}}}{a_{1}^{\frac{1}{2}}}\right)^{2}+\frac{1}{2}\left(\frac{M}{\abs{t}^{\frac{1}{2}}}\frac{b_{0}^{\frac{1}{2}}}{a_{1}^{\frac{1}{2}}}\right)^{4}-\frac{B}{\abs{t}^{\frac{3}{2}}}\frac{b_{0}^{\frac{1}{2}}}{a_{1}^{\frac{3}{2}}}\left(\frac{M}{\abs{t}^{\frac{1}{2}}}\frac{b_{0}^{\frac{1}{2}}}{a_{1}^{\frac{3}{2}}}\right)\right]\\
+&=\abs{t}^{2}F\left(\frac{B}{\abs{t}^{\frac{3}{2}}}\right)\trm{, where $F(x)$ is some other universal function}
+\end{aligned}
+\end{equation}
+
+Generalizing the scaling form
+\begin{equation}
+f=\abs{t}^{2-\alpha}F\left(\frac{B}{\abs{t}^{\Delta}}\right)
+\end{equation}
+All other critical exponents can be expressed through $\alpha$ and $\Delta$ starting from this scaling law.
+\begin{equation}
+M=-\pdv{f}{B}=\abs{t}^{2-\alpha-\Delta}F^{\prime}\left(\frac{B}{\abs{t}^{\Delta}}\right)
+\end{equation}
+Setting $B=0$
+\begin{equation}
+M=\abs{t}^{2-\alpha-\Delta}F^{\prime}(0)\implies\beta=2-\alpha-\Delta
+\end{equation}
+Similarly
+\begin{equation}
+\Chi=\pdv{M}{B}=\abs{t}^{2-\alpha-2\Delta}F^{\prime\prime}\left(\frac{B}{\abs{t}^{\Delta}}\right)
+\end{equation}
+Setting $B=0$
+\begin{equation}
+\Chi=\abs{t}^{2-\alpha-2\Delta}F^{\prime\prime}(0)\implies\delta=2\Delta+\alpha-2
+\end{equation}
+
+A continuous phase transition is fully characterized by its critical exponents. Two transitions are said to belong to the same universality class if they have identical critical exponents. While it may appear they are independent of the system, they depend on a few general properties, such as symmetry, dimensionality of space, number of components in the order parameter, but not on the details of the microscopic properties.\\
+
+For symmetry, $f\sim c(M_{x}^{2}+M_{y}^{2}+M_{z}^{2})$. This is minimized when $M_{x}$, $M_{y}$, and $M_{z}$ are maximized $c<0$. While we said that $f$ does not depend on the direction of $\vec{M}$, crystals have a preferred direction (e.g. primitive translation vectors). Thus, interactions will select a particular direction on the crystal.\\
+
+For dimensionality of space, in our example, we have treated the order parameter as just a number that characterizes the whole magnet. In reality, $\vec{M}$ fluctuates from point to point (i.e. $\vec{M}=\vec{M}(\vec{r})$).\\
+
+Accounting for both factors yields the correct critical exponents. However, this model is still flawed in that it does not take into account that the d-electrons are not localized and assumes that all material with incompletely filled atomic shells are ferromagnetic below some $T_{c}$. Let us take into account that electrons are not localized.
+
+\subsection{Hubbard Model}
+Assume tunneling of electrons. The Hubbard model is given by
+\begin{equation}
+H=-t\sum_{\langle i,j\rangle\sigma}\left(\ketbra{i\sigma}{j\sigma}+\ketbra{j\sigma}{i\sigma}\right)+U\sum_{i}n_{i\up}n_{i\dn}
+\end{equation}
+where $\ket{i\sigma}$ is the electron state with spin $\sigma$ localized at atom $i$ and $n_{i\sigma}\in\{0,1\}$ is the number of electrons with spin $\sigma$ at atom $i$. Note we have assumed electrons only interact when they are on the same atom (with long range Coulomb effects ignored).\\
+
+Let us perform the mean-field theory approximation in $n_{i\sigma}$
+\begin{equation}
+n_{i\sigma}=n_{i\sigma}-\expval{n_{i\sigma}}+\expval{n_{i\sigma}}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+n_{i\up}n_{i\dn}&=\left(n_{i\up}-\expval{n_{i\up}}+\expval{n_{i\up}}\right)\left(n_{i\dn}-\expval{n_{i\dn}}+\expval{n_{i\dn}}\right)\\
+&=\cancel{\left(n_{i\up}-\expval{n_{i\up}}\right)\left(n_{i\dn}-\expval{n_{i\dn}}\right)}+\left(n_{i\up}-\expval{n_{i\up}}\right)\expval{n_{i\dn}}+\left(n_{i\dn}-\expval{n_{i\dn}}\right)\expval{n_{i\up}}+\expval{n_{i\up}}\expval{n_{i\dn}}\\
+&=n_{i\up}\expval{n_{i\dn}}+n_{i\dn}\expval{n_{i\up}}-\expval{n_{i\up}}\expval{n_{i\dn}}\\
+&\quad\explain\trm{ Assuming fluctuations are small}
+\end{aligned}
+\end{equation}
+
+Let $n$ denote the average number of electrons on a given atom. Take this to be independent of site index $i$ (i.e. $n=n_{i}$). Thus
+\begin{equation}
+n=\expval{n_{i\up}}+\expval{n_{i\dn}}
+\end{equation}
+
+Define $\xi$ as the \ul{average spin degree of polarization}, with
+\begin{equation}
+\xi=\frac{\expval{n_{i\up}}-\expval{n_{i\dn}}}{\expval{n_{i\up}}+\expval{n_{i\dn}}}=\frac{\expval{n_{i\up}}-\expval{n_{i\dn}}}{n}
+\end{equation}
+One can also think of $\xi$ as a magnetization per atom. Thus
+\begin{equation}
+\expval{n_{i\up}}=n\left(\frac{1+\xi}{2}\right),\quad\expval{n_{i\dn}}=n\left(\frac{1-\xi}{2}\right)
+\end{equation}
+The Hamiltonian becomes
+\begin{equation}
+\begin{aligned}
+H&=-t\sum_{\langle i,j\rangle\sigma}\left(\ketbra{i\sigma}{j\sigma}+\ketbra{j\sigma}{i\sigma}\right)+U\sum_{i}\left[n_{i\up}n\left(\frac{1-\xi}{2}\right)+n_{i\dn}n\left(\frac{1+\xi}{2}\right)-\frac{n^{2}}{4}(1-\xi^{2})\right]\\
+&=-t\sum_{\langle i,j\rangle\sigma}\left(\ketbra{i\sigma}{j\sigma}+\ketbra{j\sigma}{i\sigma}\right)+\frac{Un}{2}\underbrace{\sum_{i}(n_{i\up}+n_{i\dn})}_{N}-\frac{Un\xi}{2}\sum_{i}(n_{i\up}-n_{i\dn})-\frac{Un^{2}}{4}(1-\xi^{2})\underbrace{\sum_{i}1}_{N}\\
+&=-t\sum_{\langle i,j\rangle\sigma}\left(\ketbra{i\sigma}{j\sigma}+\ketbra{j\sigma}{i\sigma}\right)+\frac{UnN}{2}-\frac{Un\xi}{2}\sum_{i}(n_{i\up}-n_{i\dn})-\frac{Un^{2}}{4}(1-\xi^{2})N
+\end{aligned}
+\end{equation}
+
+Let us ignore the second term since it is constant. Performing a lattice Fourier transform
+\begin{equation}
+\ket{i\sigma}=\sum_{k}\braket{k\sigma}{i\sigma}\ket{k\sigma}=\frac{1}{\sqrt{N}}\sum_{k}\ket{k\sigma}e^{-i\vec{k}\cdot\vec{R}}
+\end{equation}
+Thus
+\begin{equation}
+H=\sum_{k\sigma}\varepsilon_{k}\ketbra{k\sigma}{k\sigma}-\frac{Un\xi}{2}\sum_{i}(n_{i\up}-n_{i\dn})-\frac{Un^{2}}{4}(1-\xi^{2})N
+\end{equation}
+where $\varepsilon_{k}=-2t\sum_{\vec{a}}\cos(\vec{k}\cdot\vec{a})$.\\
+
+Since $n_{i\sigma}\in\{0,1\}$, one can write
+\begin{equation}
+\begin{aligned}
+n_{i\sigma}&=\ketbra{i\sigma}{i\sigma}\trm{, which only includes occupied states}\\
+&=\frac{1}{N}\sum_{k}\ketbra{k\sigma}{k\sigma}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+H=\sum_{k}\left(\varepsilon_{k}-\frac{Un\xi}{2}\right)\ketbra{k\up}{k\up}+\sum_{k}\left(\varepsilon_{k}+\frac{Un\xi}{2}\right)\ketbra{k\dn}{k\dn}-\frac{Un^{2}}{4}(1-\xi^{2})N
+\end{equation}
+The physics behind the appearance (or lack) of magnetism in this model depends on the competition between the kinetic energy cost of polarization and interaction energy gain.\\
+
+Let us find the interaction energy gain.
+\begin{equation}
+\begin{aligned}
+\frac{\expval{H_{\trm{int}}}}{N}&=-\frac{Un\xi}{2}\frac{1}{N}\sum_{i}(\expval{n_{i\up}}-\expval{n_{i\dn}})+\frac{Un^{2}\xi^{2}}{4}\trm{, ignoring a constant term $\frac{Un^{2}}{4}$}\\
+&=-\frac{Un\xi}{2}\frac{1}{N}n\xi\sum_{i}1+\frac{Un^{2}\xi^{2}}{4}\\
+&=-\frac{Un^{2}\xi^{2}}{2}+\frac{Un^{2}\xi^{2}}{4}\\
+&=-\frac{Un^{2}\xi^{2}}{4}
+\end{aligned}
+\end{equation}
+Since interaction gain is negative, spin polarization lowers the energy of the system. Let us now calculate the kinetic energy cost. This occurs because we fill the $\up$ and $\dn$ states to two different energies.\\
+
+Let us define
+\begin{equation}
+\begin{aligned}
+\varepsilon_{k\up}&=\varepsilon_{k}-\frac{Un\xi}{2},\quad\varepsilon_{k\dn}=\varepsilon_{k}+\frac{Un\xi}{2}\\
+\implies\varepsilon_{k\up}-\varepsilon_{F}&=\varepsilon_{k}-\frac{Un\xi}{2}-\varepsilon_{F}=\varepsilon_{k}-\varepsilon_{F\up}\\
+\implies\varepsilon_{k\dn}-\varepsilon_{F}&=\varepsilon_{k}+\frac{Un\xi}{2}-\varepsilon_{F}=\varepsilon_{k}-\varepsilon_{F\dn}
+\end{aligned}
+\end{equation}
+where
+\begin{equation}
+\varepsilon_{F\up}=\varepsilon_{F}+\frac{Un\xi}{2},\quad\varepsilon_{F\dn}=\varepsilon_{F}-\frac{Un\xi}{2}
+\end{equation}
+The Fermi energy has increased when electrons become polarized in the spin up ($\up$) direction. There are now more spin up electrons. Similarly, the Fermi energy has decreased when electrons become polarized in the spin down ($\dn$) direction. There are less spin down electrons.
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-4,0) -- (4,0) node[right] {$g(\varepsilon)$};
+	\draw[<->] (0,-1) -- (0,4.5) node[above] {$\varepsilon$};
+	\draw[domain=-3:3,samples=200] plot (\x,{1/2*(\x)^2});
+	\draw[dashed] (-2.5,3.125) -- (2.5,3.125) node[right] {$\varepsilon_{F}$};
+	\draw[dashed,blue] (-2.693,3.625) node[left] {$\varepsilon_{F\up}$} -- (0,3.625);
+	\draw[dashed,red] (0,2.625) -- (2.291,2.625) node[right] {$\varepsilon_{F\dn}$};
+	\node[anchor=north west,right] at (4,3.5)
+		{\[
+			\begin{aligned}
+				\expval{n_{\up}}&=n\left(\frac{1+\xi}{2}\right)=\frac{n}{2}+\frac{n\xi}{2}\\
+				\expval{n_{\dn}}&=n\left(\frac{1-\xi}{2}\right)=\frac{n}{2}-\frac{n\xi}{2}\\
+			\end{aligned}
+		\]};
+\end{tikzpicture}
+\end{center}
+The expected occupation for spin up states is equal to half the average number of electrons $n$ plus an amount given in terms of the density of states.
 
 \end{document}
