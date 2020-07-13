@@ -3855,5 +3855,78 @@ The Fermi energy has increased when electrons become polarized in the spin up ($
 \end{tikzpicture}
 \end{center}
 The expected occupation for spin up states is equal to half the average number of electrons $n$ plus an amount given in terms of the density of states.
+\begin{equation}
+\begin{aligned}
+\expval{n_{\up}}&=\underbrace{\frac{n}{2}}_{\mathclap{\hspace{2cm}\trm{density with no polarization}}}+\int_{\varepsilon_{F}}^{\varepsilon_{F\up}}\dd{\varepsilon}g(\varepsilon)\\
+&\approx\frac{n}{2}+g(\varepsilon_{F})(\varepsilon_{F\up}-\varepsilon_{F})\trm{, taking $\varepsilon_{F\up}\approx\varepsilon_{F}$}
+\end{aligned}
+\end{equation}
+Similarly
+\begin{equation}
+\begin{aligned}
+\expval{n_{\dn}}&=\frac{n}{2}-\int_{\varepsilon_{F\dn}}^{\varepsilon_{F}}\dd{\varepsilon}g(\varepsilon)\\
+&\approx\frac{n}{2}-g(\varepsilon_{F})(\varepsilon_{F}-\varepsilon_{F\dn})\trm{, taking $\varepsilon_{F\dn}\approx\varepsilon_{F}$}
+\end{aligned}
+\end{equation}
 
+Note the second term in each counts the abundance of spin up electrons or lack of spin down electrons compared to the situation with no polarization.
+\begin{equation}
+\begin{aligned}
+\implies\expval{n_{\up}}-\expval{n_{\dn}}&=g(\varepsilon_{F})(\varepsilon_{F\up}-\varepsilon_{F})+g(\varepsilon_{F})(\varepsilon_{F}-\varepsilon_{F\dn})\\
+&=2g(\varepsilon_{F})(\varepsilon_{F\up}-\varepsilon_{F\dn})\\
+&=n\xi\\
+\implies\varepsilon_{F\up}-\varepsilon_{F\dn}&=\frac{n\xi}{2g(\varepsilon_{F})}
+\end{aligned}
+\end{equation}
+The kinetic energy cost is
+\begin{equation}
+\begin{aligned}
+\frac{\expval{H_{\trm{kin}}}}{N}&=\underbrace{\int_{\varepsilon_{F}}^{\varepsilon_{F\up}}\dd{\varepsilon}\varepsilon g(\varepsilon)}_{\mathclap{\substack{\trm{energy gain due to}\\\trm{extra spin up}\\\trm{electrons}}}}-\underbrace{\int_{\varepsilon_{F\dn}}^{\varepsilon_{F}}\dd{\varepsilon}\varepsilon g(\varepsilon)}_{\mathclap{\substack{\trm{energy loss due to}\\\trm{extra spin down}\\\trm{electrons}}}}\\
+&\approx \frac{g(\varepsilon_{F})}{2}\left[\varepsilon_{F\up}^{2}-\varepsilon_{F}^{2}-\varepsilon_{F}^{2}+\varepsilon_{F\dn}^{2}\right]\\
+&=\frac{g(\varepsilon_{F})}{2}\left[(\varepsilon_{F\up}-\varepsilon_{F})(\varepsilon_{F\up}+\varepsilon_{F})-(\varepsilon_{F}+\varepsilon_{F\dn})(\varepsilon_{F}-\varepsilon_{F\dn})\right]\\
+&=\frac{g(\varepsilon_{F})}{2}(\varepsilon_{F\up}-\varepsilon_{F})\left[\varepsilon_{F\up}+\varepsilon_{F}-\varepsilon_{F}-\varepsilon_{F\dn}\right]\\
+&=\frac{g(\varepsilon_{F})}{2}(\varepsilon_{F\up}-\varepsilon_{F})(\varepsilon_{F\up}-\varepsilon_{F\dn})\\
+&=g(\varepsilon_{F})(\varepsilon_{F\up}-\varepsilon_{F})^{2}\\
+&=g(\varepsilon_{F})\frac{n^{2}\xi^{2}}{4g^{2}(\varepsilon_{F})}\\
+&=\frac{n^{2}\xi^{2}}{4g(\varepsilon_{F})}
+\end{aligned}
+\end{equation}
+Thus, the kinetic energy cost is positive. This is the gain due to filling different spin electrons to different Fermi levels. Thus, the total energy per atom is
+\begin{equation}
+\begin{aligned}
+\frac{E_{\trm{tot}}}{N}&=\frac{\expval{H_{\trm{int}}}}{N}+\frac{\expval{H_{\trm{kin}}}}{N}\\
+&=-\frac{Un^{2}\xi^{2}}{4}+\frac{n^{2}\xi^{2}}{4g(\varepsilon_{F})}\\
+&=\frac{n^{2}\xi^{2}}{4g(\varepsilon_{F})}(1-Ug(\varepsilon_{F}))
+\end{aligned}
+\end{equation}
+The interaction energy is dominant when $E_{\trm{tot}}$ is negative and $Ug(\varepsilon_{F})>1$. This is \ul{Stoner's criteria}. It is simply stated as
+\begin{equation}
+\begin{aligned}
+Ug(\varepsilon_{F})>1:&\trm{ Ferromagnet at }T=0\\
+Ug(\varepsilon_{F})<1:&\trm{ Paramagnet at }T=0
+\end{aligned}
+\end{equation}
+Note that $g(\varepsilon)\dd{\varepsilon}$ is the number of states in a small energy interval $\dd{\varepsilon}$. The total number of states in a band is always $2N$. Thus, squeezing the states in the band into a smaller interval increases $g(\varepsilon)$. Therefore, $g(\varepsilon_{F})$ is larger in a narrower band.\\
+
+In this case, $\varepsilon(\vec{k})=-2t\sum_{\vec{a}}\cos(\vec{k}\cdot\vec{a})$. The width of the band depends on $t$. The tunneling amplitude (and hence $t$) is smaller for bands originating from d- or f-orbitals compared to s- or p-orbitals. This is because the wavefunctions are more localized. Furthermore, since the wavefunction is more strongly localized, the Coulomb interaction increases as electrons spend more time closer together. Thus, $U$ is also larger for d- and f-orbitals. This explains why metals with incomplete d- or f-orbitals are ferromagnetic, while those with incomplete s- or p-orbitals are not ferromagnetic.
+
+\subsection{Mott Insulators and Antiferromagnetism}
+Consider again the Hubbard model.
+\begin{equation}
+H=-t\sum_{\langle i,j\rangle\sigma}\left(\ketbra{i\sigma}{j\sigma}+\ketbra{j\sigma}{i\sigma}\right)+U\sum_{i}n_{i\up}n_{i\dn}
+\end{equation}
+
+Suppose we have a half-filled band, with one electron per site.
+\begin{center}
+\begin{tikzpicture}
+	\draw[domain=0:2*pi,samples=200] plot (\x,{cos(deg(\x))}) node[right] {$\varepsilon(k)$};
+	\draw[dashed] (0,0) -- (2*pi,0) node[right] {$\varepsilon_{F}$};
+\end{tikzpicture}
+\end{center}
+According to band energy theory, this is a metal. However, at large enough $U$ it becomes energetically unvaourable for electrons to move.
+
+\begin{center}
+\begin{tikzpicture}
+\end{tikzpicture}
+\end{center}
 \end{document}
