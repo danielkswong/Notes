@@ -3263,9 +3263,9 @@ This is one of the simplest quantum many-body problem. Let us assume that $J_{ij
 \begin{tikzpicture}
 	\draw (0,0) -- (3,0);
 	\draw (0,1) -- (3,1);
-	\draw (0.5,-1) -- (0.5,2);
-	\draw (1.5,-1) -- (1.5,2);
-	\draw (2.5,-1) -- (2.5,2);
+	\draw (0.5,-0.5) -- (0.5,1.5);
+	\draw (1.5,-0.5) -- (1.5,1.5);
+	\draw (2.5,-0.5) -- (2.5,1.5);
 	\fill (0.5,0) circle (3pt);
 	\fill (1.5,0) circle (3pt);
 	\fill (2.5,1) circle (3pt);
@@ -3923,10 +3923,224 @@ Suppose we have a half-filled band, with one electron per site.
 	\draw[dashed] (0,0) -- (2*pi,0) node[right] {$\varepsilon_{F}$};
 \end{tikzpicture}
 \end{center}
-According to band energy theory, this is a metal. However, at large enough $U$ it becomes energetically unvaourable for electrons to move.
-
+According to band energy theory, this is a metal. However, at large enough $U$ it becomes energetically unfavourable for electrons to move, since moving electrons from a half-filled state always involves doubly occupying the same sites, which will cost energy $U$.
 \begin{center}
 \begin{tikzpicture}
+	\draw (0,0) -- (4,0);
+	\draw (0,1) -- (4,1);
+	\draw (0,2) -- (4,2);
+	\draw (0.5,-0.5) -- (0.5,2.5);
+	\draw (1.5,-0.5) -- (1.5,2.5);
+	\draw (2.5,-0.5) -- (2.5,2.5);
+	\draw (3.5,-0.5) -- (3.5,2.5);
+	\foreach \i in {0,1,2}{
+		\foreach \j in {0,1,2,3}{
+			\fill (0.5+\j,\i) circle (3pt);
+		}
+	}
+	\draw[->,shorten >=3pt,shorten <=3pt,yshift=-1mm] (0.5,0) to [out=330,in=210] (1.5,0);
+	\node[above right] at (0.5,0) {$e^{-}$};
+	\node[above right] at (1.5,0) {$e^{-}$};
 \end{tikzpicture}
 \end{center}
+When $\frac{U}{2t}\sim1$, electrons stop moving and the metal becomes a \ul{Mott insulator}. Let us consider the spins of the localized electrons in a Mott insulator.\\
+
+Take $U\gg t$. Thus, the Hubbard model simplifies to
+\begin{equation}
+H=U\sum_{i}n_{i\up}n_{i\dn}
+\end{equation}
+The ground state of the Mott insulator occurs when there is exactly one electron at every site. Since the electrons can be spin up or down, the ground state is $2^{N}$-fold degenerate. This degeneracy is lifted when $t\neq0$. To see how this lifting occurs, consider a 2-site problem, where $N=2$ electrons.
+\begin{equation}
+H=-t\sum_{\sigma}(\ketbra{1\sigma}{2\sigma}+\ketbra{2\sigma}{1\sigma})+U\sum_{i=1}^{2}n_{i\up}n_{i\dn}
+\end{equation}
+There are two electrons, one for each site. Thus, in total there are four single-electron states.
+\[
+\ket{1\up},\quad\ket{1\dn},\quad\ket{2\up},\quad\ket{2\dn}
+\]
+As discussed before, the wavefunction for 2 electron-states must be antisymmetric under exchange. Thus
+\begin{equation}
+\begin{aligned}
+\ket{1\up,1\dn}&=-\ket{1\dn,1\up}\\
+\ket{1\up,2\up}&=-\ket{2\up,1\up}\\
+\ket{1\up,2\dn}&=-\ket{2\dn,1\up}\\
+\ket{1\dn,2\up}&=-\ket{2\up,1\dn}\\
+\ket{1\dn,2\dn}&=-\ket{2\dn,1\dn}\\
+\ket{2\up,2\dn}&=-\ket{2\dn,2\up}
+\end{aligned}
+\end{equation}
+Let us find the matrix representation of $H_{\trm{int}}$ in this basis. The matrix element is only non-zero when there are two electrons on either site 1 or site 2. Thus
+\begin{equation}
+\mel{1\up,1\dn}{H_{\trm{int}}}{1\up,1\dn}=\mel{2\up,2\dn}{H_{\trm{int}}}{2\up,2\dn}=U
+\end{equation}
+All other entries are zero.\\
+
+The kinetic energy terms turns $\ket{1\sigma}$ into $\ket{2\sigma}$ and vice versa. Thus
+\begin{equation}
+\begin{aligned}
+\mel{1\dn,2\up}{H_{\trm{kin}}}{1\dn,1\up}&=-t\\
+\implies\mel{1\dn,2\up}{H_{\trm{kin}}}{1\up,1\dn}&=t
+\end{aligned}
+\end{equation}
+Note that acting on $\ket{1\up,2\up}$ into $\ket{2\up,2\up}$ is not allowed by Pauli exclusion principle. Summing $H_{\trm{int}}$ and $H_{\trm{kin}}$ gives the $6\times6$ matrix representation of $H$.
+\begin{equation}
+H=\begin{bmatrix}
+U & 0 & -t & t & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0\\
+-t & 0 & 0 & 0 & 0 & -t\\
+t & 0 & 0 & 0 & 0 & t\\
+0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & -t & t & 0 & 0
+\end{bmatrix}
+\end{equation}
+where the row order is
+\[
+\ket{1\up,1\dn},\quad\ket{1\up,2\up},\quad\ket{1\up,2\dn},\quad\ket{1\dn,2\up},\quad\ket{1\dn,2\dn},\quad\ket{2\up,2\dn}
+\]
+Clearly the states $\ket{1\up,2\up}$ and $\ket{1\dn,2\dn}$ correspond to the second and fifth row and column, which are decoupled from the other states and have eigenenergy of zero. The Hamiltonian acting on the remaining states is given by the following $4\times4$ matrix representation.
+\begin{equation}
+H=\begin{bmatrix}
+U & -t & t & 0\\
+-t & 0 & 0 & -t\\
+t & 0 & 0 & t\\
+0 & -t & t & U
+\end{bmatrix}
+\end{equation}
+where the row order is
+\[
+\ket{1\up,1\dn},\quad\ket{1\up,2\dn},\quad\ket{1\dn,2\up},\quad\ket{2\up,2\dn}
+\]
+Its eigenvalues are
+\begin{equation}
+\begin{aligned}
+E_{1}&=0\\
+E_{2}&=U\\
+E_{3}&=\frac{1}{2}\left(U+\sqrt{U^{2}+16t^{2}}\right)\\
+E_{4}&=\frac{1}{2}\left(U-\sqrt{U^{2}+16t^{2}}\right)
+\end{aligned}
+\end{equation}
+The ground state corresponds with the lowest energy eigenvalue, which is
+\begin{equation}
+E_{g}=E_{4}=\frac{1}{2}\left(U-\sqrt{U^{2}+16t^{2}}\right)
+\end{equation}
+The corresponding (unnormalized) eigenvector is
+\begin{equation}
+\ket{\Psi}=\left(1,\quad\frac{U+\sqrt{U^{2}+16t^{2}}}{4t},\quad-\frac{U+\sqrt{U^{2}+16t^{2}}}{4t},\quad1\right)
+\end{equation}
+
+For Mott insulators, $U\gg t$. Thus
+\begin{equation}
+\ket{\Psi}=\left(0,\quad\frac{U}{2t},\quad-\frac{U}{2t},\quad 0\right)
+\end{equation}
+After normalization
+\begin{equation}
+\ket{\Psi}=\frac{1}{\sqrt{2}}\left(\ket{1\up,2\dn}-\ket{1\dn,2\up}\right)
+\end{equation}
+Thus, the ground state has a total spin of $\vec{S}=\vec{0}$. Similarly, the energy in the same limit $U\gg t$ is
+\begin{equation}
+\begin{aligned}
+E_{g}&=\frac{1}{2}U-\frac{1}{2}U\sqrt{1+\frac{16t^{2}}{U^{2}}}\\
+&\approx\frac{1}{2}U-\frac{1}{2}U\left(1+\frac{8t^{2}}{U^{2}}\right)\\
+&=-\frac{4t^{2}}{U^{2}}
+\end{aligned}
+\end{equation}
+Thus, let us use the two-spin model
+\begin{equation}
+H=J\vec{S}_{1}\cdot\vec{S}_{2}
+\end{equation}
+where $J\sim\frac{t^{2}}{U}>0$. Generalizing to $N$ interacting spin systems, where spin terms are restricted to nearest-neighbour interactions
+\begin{equation}
+H=\frac{J}{2}\sum_{\langle i,j\rangle}\vec{S}_{i}\cdot\vec{S}_{j}\quad\trm{(Heisenberg model with opposite sign)}
+\end{equation}
+In this case, this model is in fact a good description of antigerromagnetism, since antiferromagnets are typically Mott insulators.
+\begin{center}
+\begin{tikzpicture}
+	\foreach \y in {0,1,2,3}{
+		\draw (0,\y) -- (5,\y);
+	}
+	\foreach \x in {0,1,...,4}{
+		\draw (0.5+\x,-0.5) -- (0.5+\x,3.5);
+	}
+	\foreach \y in {0,1,2,3}{
+		\foreach \x in {0,1,...,4}{
+			\fill (0.5+\x,\y) circle (3pt);
+		}
+	}
+	\foreach \x in {0,2,4}{
+		\foreach \y in {0,2}{
+			\draw[->,red] (\x+0.25,\y-0.25) -- (\x+0.75,\y+0.25);
+			\draw[->,blue] (\x+0.75,\y+1.25) -- (\x+0.25,\y+0.75);
+		}
+	}
+	\foreach \x in {1,3}{
+		\foreach \y in {0,2}{
+			\draw[->,red] (\x+0.75,\y+1.25) -- (\x+0.25,\y+0.75);
+			\draw[->,blue] (\x+0.25,\y-0.25) -- (\x+0.75,\y+0.25);
+		}
+	}
+	\node[right] at (5.5,2) {N\'{e}el state};
+	\node[right] at (5.5,1) {$p\sim\frac{\hbar}{\Delta x}\implies E_{\trm{kin}}\sim\frac{\Delta p^{2}}{2m}=\frac{\hbar^{2}}{2m\Delta x^{2}}$};
+\end{tikzpicture}
+\end{center}
+In terms of physics, electrons on neighbouring sites in a Mott insulator want their spins anti-aligned because this allows them to lower their kinetic energy by partially delocalizing (i.e. hopping to a neighbour site and back). This is impossible if spins are aligned by Pauli exclusion principle.\\
+
+Consider the simple two-spin model for ferromagnetism
+\begin{equation}
+H=-J\vec{S}_{1}\cdot\vec{S}_{2}
+\end{equation}
+where $J>0$. The spins can be aligned in either direction in the ground state for ferromagnets.
+\begin{equation}
+\ket{\psi}\in\{\ket{\up\up},\ket{\dn\dn}\}
+\end{equation}
+The components of spin $\vec{S}=\frac{\hbar}{2}\vec{\sigma}$ can be written such that
+\begin{equation}
+\begin{aligned}
+\vec{S}_{1}\cdot\vec{S}_{2}&=S_{1}^{x}S_{2}^{x}+S_{1}^{y}S_{2}^{y}+S_{1}^{z}S_{2}^{z}\\
+&=\frac{1}{2}\left(S_{1}^{+}S_{2}^{-}+S_{1}^{-}S_{2}^{+}\right)+S_{1}^{z}S_{2}^{z}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+S^{z}\ket{\up}&=\frac{\hbar}{2}\sigma^{z}\ket{\up}=\frac{\hbar}{2}\ket{\up}\\
+S^{z}\ket{\dn}&=\frac{\hbar}{2}\sigma^{z}\ket{\dn}=-\frac{\hbar}{2}\ket{\dn}\\
+S^{+}\ket{\up}&=\frac{\hbar}{2}\sigma^{+}\ket{\up}=0\\
+S^{-}\ket{\up}&=\frac{\hbar}{2}\sigma^{-}\ket{\up}=\hbar\ket{\dn}\\
+S^{+}\ket{\dn}&=\frac{\hbar}{2}\sigma^{+}\ket{\dn}=\hbar\ket{\up}\\
+S^{-}\ket{\dn}&=\frac{\hbar}{2}\sigma^{-}\ket{\dn}=0
+\end{aligned}
+\end{equation}
+where $\sigma^{\pm}=\sigma^{x}\pm i\sigma^{y}$. Thus, $\ket{\up\up}$ is an eigenstate of $H$ with eigenvalue $-\frac{J\hbar^{2}}{4}$.
+\begin{equation}
+H\ket{\up\up}=-\frac{J\hbar^{2}}{4}\ket{\up\up}
+\end{equation}
+
+For antiferromagnets
+\begin{equation}
+H=J\vec{S}_{1}\cdot\vec{S}_{2}
+\end{equation}
+where $J>0$. However, $\ket{\up\dn}$ and $\ket{\dn\up}$ are not eigenstates.
+\begin{equation}
+\begin{aligned}
+H\ket{\up\dn}&=\frac{J\hbar^{2}}{4}\left[\sigma_{1}^{z}\sigma_{2}^{z}+\frac{1}{2}(\sigma_{1}^{+}\sigma_{2}^{-}+\sigma_{1}^{-}\sigma_{2}^{+})\right]\ket{\up\dn}\\
+&=-\frac{J\hbar^{2}}{4}\ket{\up\dn}+\frac{J\hbar^{2}}{4}\ket{\dn\up}\\
+&\neq \lambda\ket{\up\dn}
+\end{aligned}
+\end{equation}
+where $\lambda$ is some constant. Thus, $\ket{\up\dn}$ is not a ground state for antiferromagnets. We refer to this state and analogous multi-spin states, with neighbouring spin states being anti-aligned, as \ul{N\'{e}el states}. Landau proposed that the ground state of $H$ is a spin liquid.\\
+
+Summarizing magnetism:
+\begin{enumerate}
+\item Ferromagnetism occurs mostly in metals where electron-electron interaction energy is lowered by spin alignment.
+\item Antiferromagnetism occurs mostly in Mott insulators where kinetic energy is lowered by spin anti-alignment.
+\end{enumerate}
+Some examples include:
+\begin{itemize}
+\item[] Ferromagnets: Fe, Co, Ni, Mn, transition metals
+\item[] Antiferromagnets: MnO, NiO, La$_{2}$CuO$_{4}$, Mott insulating oxides
+\end{itemize}
+
+\section{Superconductivity}
+\subsection{Ginzburg-Landau Free Energy}
+
+
 \end{document}
