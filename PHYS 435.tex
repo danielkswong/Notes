@@ -100,6 +100,7 @@
 
 \setlength\parindent{0pt}
 \pagenumbering{roman}
+\numberwithin{equation}{section}
 
 \section*{Disclaimer}
 These notes may be freely used by anyone who comes across them. If any errors are found within these notes, please email me at \ul{temp@temp.com}. If you are the previous instructor of this course (Dr. Anton Burkov) and have concerns about keeping these notes on my website, please contact me at the email provided.\\
@@ -2448,9 +2449,9 @@ Similar physics to topological insulators occur in two dimensional electron gas 
 Typically, $m_{c}^{*},m_{v}^{*}\ll m_{e}$. This is counter-intuitive as that seems to imply electrons are lighter in a semiconductor. In actuality, it refers moreso to the curvature of the band.
 
 \subsubsection*{Doping Semiconductors}
-Si crystallizes in the diamond structure, in which every Si atom has four nearest-neighbours. Si has four electrons. All valence electrons are used in making chemical bonds with nearest-neighbours.\\
+Silicon (Si) crystallizes in the diamond structure, in which every Si atom has four nearest-neighbours. Si has four electrons. All valence electrons are used in making chemical bonds with nearest-neighbours.\\
 
-As has five valence electrons. Four of them will form bonds while the fifth one is ``free" to move around. The fifth valence electron will interact with the ionized arsenic atom via Coulomb interaction. Since the valence band was filled, the fifth electron goes into the conduction band. This electron behaves as a free electron with mass $m_{c}^{*}\ll m_{e}$.
+Arsenic (As) has five valence electrons. Four of them will form bonds while the fifth one is ``free" to move around. The fifth valence electron will interact with the ionized arsenic atom via Coulomb interaction. Since the valence band was filled, the fifth electron goes into the conduction band. This electron behaves as a free electron with mass $m_{c}^{*}\ll m_{e}$.
 \begin{center}
 \begin{tikzpicture}
 	\foreach \a in {1,2,3}{
@@ -4139,8 +4140,234 @@ Some examples include:
 \item[] Antiferromagnets: MnO, NiO, La$_{2}$CuO$_{4}$, Mott insulating oxides
 \end{itemize}
 
+\newpage
 \section{Superconductivity}
 \subsection{Ginzburg-Landau Free Energy}
+Most metallic elements (excluding ferromagnets) and even some non-metals undergo a transition into a superconducting state as the temperature is lowered. This was discovered in 1911 by Kamerlingh Onnes.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (4,0) node[right] {$T$};
+	\draw[->] (0,0) -- (0,3) node[above] {$\rho$};
+	\draw (1.5,0) node[below] {$T_{c}$} -- (1.5,0.5);
+	\draw[domain=1.5:4,samples=200] plot (\x,{0.4*(\x-1.5)^2+0.5});
+	\draw[<-,shorten <=1mm] (1.5,0.25) -- (3,0.5) node[right] {electrical resistivity vanishes below $T_{c}$};
+	\draw[<-,shorten <=2mm] (3.75,2.525) -- (4.5,2.5) node[right,text width=6cm] {crystal lattice vibrations lead to more scattering of electrons};
+\end{tikzpicture}
+\end{center}
+Similarly, specific heat $C_{V}$ jumps at critical temperature $T_{c}$. The temperature dependence changes from $C_{V}\sim T$ to $C_{V}\sim e^{-\frac{\Delta}{k_{B}T}}$.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (4,0) node[right] {$T$};
+	\draw[->] (0,0) -- (0,3) node[above] {$C_{V}$};
+	\draw[domain=0.01:1.5,samples=200] plot (\x,{20*exp(-1/(0.3*\x))});
+	\draw[domain=1.5:4,samples=200] plot (\x, {0.75*\x});
+	\draw (1.5,2.167) -- (1.5,1.125);
+	\draw[dashed] (1.5,0) node[below] {$T_{c}$} -- (1.5,3);
+\end{tikzpicture}
+\end{center}
+Note that this superconducting state is a new state of matter. It can not be thought of as a metallic state with zero resistance. This is clearly demonstrated in the Meissner effect.
 
+\subsubsection*{Meissner Effect}
+Let us assume superconductors are simply an ideal conductor (i.e. a metal with zero resistance). Suppose we cooled the sample below $T_{c}$, where $\rho=0$. Afterwards, we apply an external magnetic field.\\
 
+The field inside a conductor with $\rho=0$ is zero.
+\begin{equation}
+\begin{aligned}
+\vec{\nabla}\times\vec{E}&=-\frac{1}{c}\pdv{\vec{B}}{t}\trm{ (Maxwell's equation)}\\
+\vec{E}=\rho\vec{j}&=\vec{0}\implies\pdv{\vec{B}}{t}=\vec{0}\implies\vec{B}\trm{ is constant}
+\end{aligned}
+\end{equation}
+Thus, $\vec{B}=\vec{0}$ inside the sample since $\vec{B}=\vec{0}$ before applying the field.
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) circle (7.5mm);
+	\draw[thick,->] (-2.5,2) -- (-2.5,0.667);
+	\draw[thick,->] (-2.5,0.667) -- (-2.5,-0.667);
+	\draw[thick] (-2.5,-0.667) -- (-2.5,-2);
+	\draw[thick,->] (2.5,2) -- (2.5,0.667);
+	\draw[thick,->] (2.5,0.667) -- (2.5,-0.667);
+	\draw[thick] (2.5,-0.667) -- (2.5,-2);
+	\draw[thick,->,domain=1.99:0.667,samples=200] plot ({-0.2/(tan(deg(pi*\x/4))^2+1)-1.5},{\x});
+	\draw[thick,->,domain=0.667:-0.667,samples=200] plot ({-0.2/(tan(deg(pi*\x/4))^2+1)-1.5},{\x});
+	\draw[thick,domain=-0.667:-1.99,samples=200] plot ({-0.2/(tan(deg(pi*\x/4))^2+1)-1.5},{\x});
+	\draw[thick,->,domain=1.99:0.667,samples=200] plot ({0.2/(tan(deg(pi*\x/4))^2+1)+1.5},{\x});
+	\draw[thick,->,domain=0.667:-0.667,samples=200] plot ({0.2/(tan(deg(pi*\x/4))^2+1)+1.5},{\x});
+	\draw[thick,domain=-0.667:-1.99,samples=200] plot ({0.2/(tan(deg(pi*\x/4))^2+1)+1.5},{\x});
+	\draw[thick,->,domain=1.99:0.667,samples=200] plot ({-0.6/(tan(deg(pi*\x/4))^2+1.2)-0.5},{\x});
+	\draw[thick,->,domain=0.667:-0.667,samples=200] plot ({-0.6/(tan(deg(pi*\x/4))^2+1.2)-0.5},{\x});
+	\draw[thick,domain=-0.667:-1.99,samples=200] plot ({-0.6/(tan(deg(pi*\x/4))^2+1.2)-0.5},{\x});
+	\draw[thick,->,domain=1.99:0.667,samples=200] plot ({0.6/(tan(deg(pi*\x/4))^2+1.2)+0.5},{\x});
+	\draw[thick,->,domain=0.667:-0.667,samples=200] plot ({0.6/(tan(deg(pi*\x/4))^2+1.2)+0.5},{\x});
+	\draw[thick,domain=-0.667:-1.99,samples=200] plot ({0.6/(tan(deg(pi*\x/4))^2+1.2)+0.5},{\x});
+\end{tikzpicture}
+\end{center}
+Suppose instead one applies the field at $T>T_{c}$ and cools the sample afterwards below $T_{c}$. Again,$\pdv{\vec{B}}{t}=\vec{0}$ and $\vec{B}$ is cnstant. The field inside an ideal conductor will remain the same as before cooling below $T_{c}$. Thus, $\vec{B}\neq\vec{0}$.\\
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) circle (7.5mm);
+	\draw[thick,->] (-2.5,2) -- (-2.5,0.667);
+	\draw[thick,->] (-2.5,0.667) -- (-2.5,-0.667);
+	\draw[thick] (-2.5,-0.667) -- (-2.5,-2);
+	\draw[thick,->] (2.5,2) -- (2.5,0.667);
+	\draw[thick,->] (2.5,0.667) -- (2.5,-0.667);
+	\draw[thick] (2.5,-0.667) -- (2.5,-2);
+	\draw[thick,->] (-1.5,2) -- (-1.5,0.667);
+	\draw[thick,->] (-1.5,0.667) -- (-1.5,-0.667);
+	\draw[thick] (-1.5,-0.667) -- (-1.5,-2);
+	\draw[thick,->] (1.5,2) -- (1.5,0.667);
+	\draw[thick,->] (1.5,0.667) -- (1.5,-0.667);
+	\draw[thick] (1.5,-0.667) -- (1.5,-2);
+	\draw[thick,->] (-0.5,2) -- (-0.5,0.667);
+	\draw[thick,->] (-0.5,0.667) -- (-0.5,-0.667);
+	\draw[thick] (-0.5,-0.667) -- (-0.5,-2);
+	\draw[thick,->] (0.5,2) -- (0.5,0.667);
+	\draw[thick,->] (0.5,0.667) -- (0.5,-0.667);
+	\draw[thick] (0.5,-0.667) -- (0.5,-2);
+\end{tikzpicture}
+\end{center}
+This is fundamentally different from superconductors. The magnetic field inside a superconductor below $T_{c}$ is always zero. This is the \ul{Meissner effect}. Below $T_{c}$ for field cooled samples
+\begin{itemize}
+\item[] Ideal conductor: $\rho=0$, $\vec{B}$ is constant
+\item[] Superconductor: $\rho=0$, $\vec{B}=\vec{0}$
+\end{itemize}
+Thus, superconductors are clearly a different state of matter. In superconductors based on elemental metals (e.g. Al, Sn, Hg), the critical temperatures are $T_{c}\sim$1\textendash10 K, which requires temperatures on the order of liquid helium temperatures.\\
+
+Some high-temperature superconductors are
+\begin{itemize}
+\item[] La$_{2-x}$Sr$_{x}$Cu$_{4}$: $T_{c}=34$ K
+\item[] YBa$_{2}$Cu$_{3}$O$_{6+x}$: $T_{c}=95$ K
+\item[] MgBa$_{2}$Ca$_{2}$Cu$_{3}$O$_{8}$: $T_{c}=133$ K
+\end{itemize}
+
+\aside{
+$\vec{B}=\vec{H}+4\pi\vec{M}=\vec{0}\implies\vec{M}=-\frac{1}{4\pi}\vec{H}\implies\Chi=-\frac{1}{4\pi}$.\\
+This is the largest possible value for $\Chi$ for a diamagnet. Thus, a superconductor is both an ideal conductor and an ideal diamagnet.
+}
+
+Superconductivity has its microscopic origins from the pairing of electrons into Cooper pairs. In metallic substances, this occurs due to exchange of phonons. There is pairing of electrons in the crystal lattice as an electron polarizes the lattice locally as it moves through the lattice, which in turn attracts another electron.
+\begin{center}
+\begin{tikzpicture}
+	\draw (-0.5,0) -- (3.5,0);
+	\draw (-0.5,1) -- (3.5,1);
+	\draw (-0.5,2) -- (3.5,2);
+	\draw (0,-0.5) -- (0,2.5);
+	\draw (1,-0.5) -- (1,2.5);
+	\draw (2,-0.5) -- (2,2.5);
+	\draw (3,-0.5) -- (3,2.5);
+	\foreach \x in {1,2,3}{
+		\fill (\x,1) circle (3pt) node[below right] {$+$};
+		\fill (\x,2) circle (3pt) node[above right] {$+$};
+	}
+	\fill (0,1) circle (3pt) node[below left] {$+$};
+	\fill (0,2) circle (3pt) node[above left] {$+$};
+	\draw (0.5,1.5) circle (8pt) node {$e^{-}$};
+	\draw[->,shorten <=4mm] (0.5,1.5) -- (1.5,1.5);
+	\draw[->] (0,1) -- (0.25,1.25);
+	\draw[->] (1,1) -- (0.75,1.25);
+	\draw[->] (0,2) -- (0.25,1.75);
+	\draw[->] (1,2) -- (0.75,1.75);
+	\node at (4,1) {$\implies$};
+	\draw (4.5,0) -- (8.5,0);
+	\draw (4.5,1.125) -- (5.25,1.25) -- (5.75,1.25) -- (7,1) -- (8.5,1);
+	\draw (4.5,1.875) -- (5.25,1.75) -- (5.75,1.75) -- (7,2) -- (8.5,2);
+	\draw (5,-0.5) -- (5,0) -- (5.25,1.25) -- (5.25,1.75) -- (5.125,2.5);
+	\draw (6,-0.5) -- (6,0) -- (5.75,1.25) -- (5.75,1.75) -- (5.875,2.5);
+	\draw (7,-0.5) -- (7,2.5);
+	\draw (8,-0.5) -- (8,2.5);
+	\foreach \x in {5,6,7,8}{
+		\fill (\x,0) circle (3pt);
+	}
+	\fill (5.25,1.25) circle (3pt) node[below left] {$+$};
+	\fill (5.75,1.25) circle (3pt) node[below right] {$+$};
+	\fill (7,1) circle (3pt);
+	\fill (8,1) circle (3pt);
+	\fill (5.25,1.75) circle (3pt) node[above left] {$+$};
+	\fill (5.75,1.75) circle (3pt) node[above right] {$+$};
+	\fill (7,2) circle (3pt);
+	\fill (8,2) circle (3pt);
+	\draw (7.5,1.5) circle (8pt) node {$e^{-}$};
+	\draw[->,shorten <=4mm] (7.5,1.5) -- (8.5,1.5);
+\end{tikzpicture}
+\end{center}
+Since $m_{e}\ll m_{p}$, the electron is long gone but the distortion remains. For the next electron, this looks like an extra dense positive charge, which leads to the pairing of electrons. This effect is super weak and is on the scale of $T_{c}\sim$1\textendash10 K.\\
+
+In cuprate high-temperature superconductors, pairing is though to be due to the antiferromagnetic spin-spin interaction of the parent (undoped) Mott insulator.\\
+
+The most important qualitative properties of superconductors can be describe using semi-phenomenological \ul{Landau Ginzburg theory}.\\
+
+Pairs of electrons are bosons, which are not constrained by Pauli principle. Any number of bosons may occupy the same state. All Cooper pairs will start to ``condense" into the lowest energy state as $T$ approaches zero. This state has zero momentum and is essentially described by a single wavefunction $\phi(\vec{r})$. note it only depends on $\vec{r}$ since all pairs are in the same ``macroscopic wavefunction". Landau and Ginzburg realized that one way to think of $\phi(\vec{r})$ as an order parameter, similar to magnetization in a ferromagnet. Near $T_{c}$, one can write down the Taylor expansion of the free energy in powers of $\phi$. Since the free energy should not depend on hte pahse of $\phi(\vec{r})$, the free energy depends only on even powers of $\abs{\phi}$ (i.e. $\abs{\phi}^{2}$, $\abs{\phi}^{4}$, and so on). Thus
+\begin{equation}
+F=\tikzmarknode{A}{F_{0}}+\tikzmarknode{B}{V}a\abs{\phi}^{2}+V\frac{b}{2}\abs{\phi}^{4},\quad a=a(T),\quad b=b(T)
+\end{equation}
+\begin{tikzpicture}[overlay,remember picture,shorten <=1mm,font=\footnotesize]
+	\draw[<-,red,shorten <=2mm] (A.south) -- ++ (0,-1) node[below] {free energy of normal metallic state};
+	\draw[<-,red,shorten <=2mm] (B.south) -- ++ (0.3,-0.6) node[below] {volume};
+\end{tikzpicture}
+\vspace{1cm}
+
+Omitting $F_{0}$ and minimizing $F$
+\begin{equation}
+\frac{1}{V}\pdv{F}{\abs{\phi}}=2a\abs{\phi}+2b\abs{\phi}^{3}=0\implies\abs{\phi}=\sqrt{-\frac{a}{b}}
+\end{equation}
+By a similar analysis to ferromagnetism
+\begin{equation}
+b(T)=b>0,\quad a(T)=a_{1}T\sim\frac{1}{T_{c}}(T-T_{c})
+\end{equation}
+Thus
+\begin{equation}
+\abs{\phi}\sim\sqrt{T_{c}-T}\sim(-t)^{\beta},\quad\beta=\frac{1}{2}
+\end{equation}
+In actuality, to describe the properties of superconductors, it becomes important to describe situations when $\phi(\vec{r})$ is not uniform. In this case, we add extra terms to the free energy which depend on $\vec{\nabla}\phi(\vec{r})$. Naively, by symmetry
+\begin{equation}
+F=\mathcal{H}\int\dd[3]{r}\abs{\vec{\nabla}\phi}^{2}\trm{, where $\mathcal{H}>0$}
+\end{equation}
+This penalizes spatial non-uniformity.\\
+
+However, this violates gauge invariance. When talking about electrons in a magnetic field, we saw that the momentum operator in a magnetic field is $\vec{p}=-i\hbar\vec{\nabla}+\frac{e}{c}\vec{A}$. This arose as a result of demanding gauge invariance. Consider wavefunction $\Phi(\vec{r})$ and multiply it by an arbitrary phase factor.
+\begin{equation}
+\Phi(\vec{r})\rightarrow\Phi(\vec{r})e^{i\Chi(\vec{r})}
+\end{equation}
+Acting the momentum operator on this new wavefunction
+\begin{equation}
+\begin{aligned}
+\left(-i\hbar\vec{\nabla}+\frac{e}{c}\vec{A}\right)e^{i\Chi(\vec{r})}\Psi(\vec{r})&=e^{i\Chi(\vec{r})}\left[-i\hbar\vec{\nabla}\Psi+\frac{e}{c}\vec{A}\Psi+\hbar\Psi\vec{\nabla}\Chi\right]\\
+&=e^{i\Chi(\vec{r})}\left(-i\hbar\vec{\nabla}+\frac{e}{c}\vec{A}+\hbar\vec{\nabla}\Chi\right)\Psi
+\end{aligned}
+\end{equation}
+Since $\vec{A}$ is defined up to a gradient
+\begin{equation}
+\vec{A}\rightarrow\vec{A}+\vec{\nabla}f\trm{ does not change }\vec{B}=\vec{\nabla}\times{\vec{A}}
+\end{equation}
+Making the gauge transformation
+\begin{equation}
+\vec{A}\rightarrow\vec{A}-\frac{\hbar c}{e}\vec{\nabla}\Chi
+\end{equation}
+
+One obtains
+\begin{equation}
+\left(-i\hbar\vec{\nabla}+\frac{e}{c}\vec{A}\right)\Psi(\vec{r})e^{i\Chi(\vec{r})}=e^{i\Chi(\vec{r})}\left(-i\hbar\vec{\nabla}+\frac{e}{c}\vec{A}\right)\Psi(\vec{r})
+\end{equation}
+This means that the Schr\"{o}dinger equation for a particle of charge $-e$ in an electromagnetic field is invariant under the following gauge transformation:
+\begin{itemize}
+\item[] $\Psi\rightarrow e^{i\Chi}\Psi$
+\item[] $\vec{A}\rightarrow\vec{A}-\frac{\hbar c}{e}\vec{\nabla}\Chi$
+\end{itemize}
+In our case, $\phi(\vec{r})$ is a wavefunction of particles of charge $-2e$. Thus, the free energy must be invariant under:
+\begin{itemize}
+\item[] $\phi\rightarrow e^{i\Chi}\phi$
+\item[] $\vec{A}\rightarrow\vec{A}-\frac{\hbar c}{2e}\vec{\nabla}\Chi$
+\end{itemize}
+Thus, the free energy has the follwoing form
+\begin{equation}
+F=\int\dd[3]{r}\left[\frac{1}{2m^{*}}\abs{\left(-i\hbar\vec{\nabla}+\frac{e^{*}}{c}\vec{A}\right)\phi}^{2}+a\abs{\phi}^{2}+\frac{b}{2}\abs{\phi}^{4}+\frac{\tikzmarknode{frac1}{\abs{\vec{B}}^{2}}}{8\pi}-\frac{\tikzmarknode{frac2}{\vec{B}\cdot\vec{H}}}{4\pi}\right]
+\end{equation}
+\begin{tikzpicture}[overlay,remember picture,shorten <=1mm,font=\footnotesize]
+	\draw[<-,red,shorten <=2mm] (frac1.north) -- ++ (-0.1,0.7) node[above,text width=2.5cm] {energy of $\vec{B}$ field in vacuum};
+	\draw[<-,red,shorten <=2mm] (frac2.north) -- ++ (0.3,0.7) node[above right,text width=4cm] {energy from interaction with external field};
+\end{tikzpicture}
+where $e^{*}=2e$, $m^{*}=2m$, and $\vec{H}$ is the external magnetic field. This is the \ul{Ginzburg-Landau free energy}. The thermodynamic equilibrium state of a superconductor is determined by minimizing $F$. This requires a functional minimization, as was done for the Euler-Lagrange equations.\\
+
+Since $\phi$ has both real and complex components, one needs to split the minimization into a minimization for both. Alternatively, one can minimize with respect to $\phi$ and $\phi^{*}$.
+\begin{equation}
+\end{equation}
 \end{document}
