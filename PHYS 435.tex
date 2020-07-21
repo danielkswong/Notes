@@ -4319,7 +4319,7 @@ Thus
 \end{equation}
 In actuality, to describe the properties of superconductors, it becomes important to describe situations when $\phi(\vec{r})$ is not uniform. In this case, we add extra terms to the free energy which depend on $\vec{\nabla}\phi(\vec{r})$. Naively, by symmetry
 \begin{equation}
-F=\mathcal{H}\int\dd[3]{r}\abs{\vec{\nabla}\phi}^{2}\trm{, where $\mathcal{H}>0$}
+F=\Chi\int\dd[3]{r}\abs{\vec{\nabla}\phi}^{2}\trm{, where $\Chi>0$}
 \end{equation}
 This penalizes spatial non-uniformity.\\
 
@@ -4367,7 +4367,244 @@ F=\int\dd[3]{r}\left[\frac{1}{2m^{*}}\abs{\left(-i\hbar\vec{\nabla}+\frac{e^{*}}
 \end{tikzpicture}
 where $e^{*}=2e$, $m^{*}=2m$, and $\vec{H}$ is the external magnetic field. This is the \ul{Ginzburg-Landau free energy}. The thermodynamic equilibrium state of a superconductor is determined by minimizing $F$. This requires a functional minimization, as was done for the Euler-Lagrange equations.\\
 
-Since $\phi$ has both real and complex components, one needs to split the minimization into a minimization for both. Alternatively, one can minimize with respect to $\phi$ and $\phi^{*}$.
+Since $\phi$ has both real and complex components, one needs to split the minimization into a minimization for both. Alternatively, one can minimize with respect to $\phi$ and $\phi^{*}$. Varying $F$ with respect to $\phi^{*}$
 \begin{equation}
+\delta_{\phi^{*}}F=\int\dd[3]{r}\left[a\delta\phi^{*}\phi+b\delta^{*}\phi\abs{\phi}^{2}+\frac{1}{2m^{*}}\left(i\hbar\vec{\nabla}\delta\phi^{*}+\frac{e^{*}}{c}\vec{A}\delta\phi^{*}\right)\cdot\left(-i\hbar\vec{\nabla}\phi+\frac{e^{*}}{c}\vec{A}\phi\right)\right]
 \end{equation}
+The first term after expanding the brackets simplifies to
+\begin{equation}
+\begin{aligned}
+\hspace{-2cm}\int\dd[3]{r}\vec{\nabla}\delta\phi^{*}\cdot\left(-i\hbar\vec{\nabla}+\frac{e^{*}}{c}\vec{A}\right)\phi&=-\int\dd[3]{r}\delta\phi^{*}\vec{\nabla}\cdot\left(-i\hbar\vec{\nabla}+\frac{e^{*}}{c}\vec{A}\right)\phi+\int\dd[3]{r}\vec{\nabla}\cdot\left[\delta\phi^{*}\left(-i\hbar\vec{\nabla}+\frac{e^{*}}{c}\vec{A}\right)\phi\right]\\
+&\quad\explain\trm{ By integration by parts}\\
+&=-\int\dd[3]{r}\delta\phi^{*}\vec{\nabla}\cdot\left(-i\hbar\vec{\nabla}+\frac{e^{*}}{c}\vec{A}\right)\phi+\cancelto{0}{\oint_{S}\delta\phi^{*}\left(-i\hbar\vec{\nabla}\phi+\frac{e^{*}}{c}\vec{A}\phi\right)\cdot\dd{\vec{S}}}
+\end{aligned}
+\end{equation}
+Here $S$ is the surface of the sample. One can neglect the surface term either by arguing periodic boundary conditions (with no surface) or stating that it gives a boundary condition that states current can not flow perpendicular to the surface. Thus
+\begin{equation}
+\delta_{\phi^{*}}F=\int\dd[3]{r}\left[a\phi+b\phi\abs{\phi}^{2}+\frac{1}{2m^{*}}\left(-i\hbar\vec{\nabla}+\frac{e^{*}}{c}\vec{A}\right)^{2}\phi\right]=0
+\end{equation}
+By the du Bois-Reymond lemma, the integrand must equal to zero at all points. Thus, one obtains the \ul{first Ginzburg-Landau equation}.
+\begin{equation}
+\frac{1}{2m^{*}}\left(-i\hbar\vec{\nabla}+\frac{e^{*}}{c}\vec{A}\right)^{2}\phi+a\phi+b\phi\abs{\phi}^{2}=0
+\end{equation}
+This looks like the Schr\"{o}dinger equation, but with a non-linear term.\\
+
+The magnetic field $\vec{B}=\vec{\nabla}\times\vec{A}$ is also a thermodynamic variable. Varying $F$ with respect to $\vec{A}$
+\begin{equation}
+\begin{aligned}
+\delta_{\vec{A}}F&=\int\dd[3]{r}\bigg[\frac{1}{2m^{*}}\frac{e^{*}}{c}\delta\vec{A}\phi^{*}\cdot\left(-i\hbar\vec{\nabla}+\frac{e^{*}}{c}\vec{A}\right)\phi+\frac{1}{2m^{*}}\left(i\hbar\vec{\nabla}+\frac{e^{*}}{c}\vec{A}\right)\phi^{*}\cdot\frac{e^{*}}{c}\delta\vec{A}\phi\\
+&\qquad+\frac{1}{4\pi}\left(\vec{\nabla}\times\vec{A}\right)\cdot\left(\vec{\nabla}\times\delta\vec{A}\right)-\frac{\vec{H}}{4\pi}\cdot\left(\vec{\nabla}\times\delta\vec{A}\right)\bigg]
+\end{aligned}
+\end{equation}
+Consider the last two terms
+\begin{equation}
+\begin{aligned}
+&\frac{1}{4\pi}\int\dd[3]{r}\left[\left(\vec{\nabla}\times\vec{A}\right)-\vec{H}\right]\cdot\left(\vec{\nabla}\times\delta\vec{A}\right)\\
+&=\frac{1}{4\pi}\int\dd[3]{r}\delta\vec{A}\cdot\vec{\nabla}\times\left(\vec{\nabla}\times\vec{A}\right)-\frac{1}{4\pi}\oint\dd{\vec{S}}\cdot\left[\delta\vec{A}\times\left(\vec{\nabla}\times\vec{A}-\vec{H}\right)\right]\\
+&\quad\explain\trm{ Using the identity $\vec{a}\cdot\left(\vec{\nabla}\times\vec{b}\right)=\vec{b}\cdot\left(\vec{\nabla}\times\vec{A}\right)-\vec{\nabla}\cdot\left(\vec{a}\times\vec{b}\right)$}\\
+&\quad\explain\vec{\nabla}\times\vec{H}=\vec{0}\trm{ since $\vec{H}$ is constant}\\
+&\quad\explain\trm{ Obtaining the surface term using Gauss's theorem}\\
+&=\frac{1}{4\pi}\int\dd[3]{r}\delta\vec{A}\cdot\left(\vec{\nabla}\times\vec{B}\right)\\
+&\quad\explain\trm{ Magnetic field is fixed by boundary condition at the surface of the superconductor.}\\
+&\hphantom{\quad\explain}\trm{ Thus, we set the second term to zero $\left(\delta\vec{A}|_{S}=\vec{0}\right)$.}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\delta\vec{A}F&=\int\dd[3]{r}\left[-\frac{i\hbar e^{*}}{2m^{*}c}\left(\phi^{*}\vec{\nabla}\phi-\phi\vec{\nabla}\phi^{*}\right)+\frac{{e^{*}}^{2}}{m^{*}c^{2}}\abs{\phi}^{2}\vec{A}+\frac{1}{4\pi}\left(\vec{\nabla}\times\vec{B}\right)\right]\cdot\delta\vec{A}=0\\
+&=\int\dd[3]{r}\left[-\frac{i\hbar e^{*}}{2m^{*}c}\left(\phi^{*}\vec{\nabla}\phi-\phi\vec{\nabla}\phi^{*}\right)+\frac{{e^{*}}^{2}}{m^{*}c^{2}}\abs{\phi}^{2}\vec{A}+\frac{1}{c}\vec{j}\right]\cdot\delta\vec{A}=0\\
+&\quad\explain\trm{ By Maxwell's equations $\frac{4\pi}{c}\vec{j}=\vec{\nabla}\times\vec{B}$}
+\end{aligned}
+\end{equation}
+Again, by du Bois-Reymond lemma, one obtains the \ul{second Ginzburg-Landau equation} (for currents)
+\begin{equation}
+\vec{j}=\frac{i\hbar e^{*}}{2m^{*}}\big(\underbrace{\phi^{*}\vec{\nabla}\phi-\phi\vec{\nabla}\phi^{*}}_{\mathclap{\trm{probability current}}}\big)-\frac{{e^{*}}^{2}}{m^{*}c}\abs{\phi}^{2}\vec{A}
+\end{equation}
+Let us assume $T<T_{c}$ so that we are in a superconducting state. Assuming that $\phi$ is uniform throughout the material, the first Ginzburg-Landau equation becomes
+\begin{equation}
+a\phi+b\phi\abs{\phi}^{2}=0
+\end{equation}
+The non-trivial solution is $\abs{\phi}=\sqrt{\frac{\abs{a}}{b}}$. If $\phi(\vec{r})$ is the wavefunction of the pair condensate, then $\abs{\phi}^{2}$ has the meaning of the ``density of pairs".
+\begin{equation}
+\begin{aligned}
+\abs{\phi}^{2}&=n_{s}^{*}=\frac{\abs{a}}{b}\\
+\therefore \phi(\vec{r})&=\sqrt{n_{s}^{*}(\vec{r})}e^{i\theta(\vec{r})}=\sqrt{n_{s}^{*}}e^{i\theta(\vec{r})}\trm{, assuming uniformity}
+\end{aligned}
+\end{equation}
+Calculating the current density
+\begin{equation}
+\begin{aligned}
+\vec{j}&=\frac{i\hbar e^{*}}{2m^{*}}\left(\phi^{*}\vec{\nabla}\phi-\phi^{*}\vec{\nabla}\phi^{*}\right)-\frac{{e^{*}}^{2}}{m^{*}c}\abs{\phi}^{2}\vec{A}\\
+&=\frac{i\hbar e^{*}}{2m^{*}}\left(in_{s}^{*}\vec{\nabla}\theta-in_{s}^{*}\vec{\nabla}\theta\right)-\frac{{e^{*}}^{2}}{m^{*}c}n_{s}^{*}\vec{A}\\
+&=-\frac{\hbar e^{*}n_{s}^{*}}{m^{*}}\left(\vec{\nabla}\theta-\frac{e^{*}}{\hbar c}\vec{A}\right)
+\end{aligned}
+\end{equation}
+This is the \ul{London equation}. Thus, the superconducting current is directly related to the gradient of the phase of the macroscopic condensate wavefunction. This explains both the Meissner effect and zero resistance.\\
+
+To remove the phase from the London equation, take the gauge transformation
+\begin{equation}
+\vec{A}\rightarrow\vec{A}-\frac{\hbar c}{e^{*}}\vec{\nabla}\theta
+\end{equation}
+Thus
+\begin{equation}
+\vec{j}=-\frac{{e^{*}}^{2}n_{s}^{*}}{m^{*}c}\vec{A}
+\end{equation}
+Taking the curl of both sides
+\begin{equation}
+\begin{aligned}
+\left(\frac{c}{4\pi}\right)\vec{\nabla}\times\left(\vec{\nabla}\times\vec{B}\right)&=-\frac{{e^{*}}^{2}n_{s}^{*}}{m^{*}c}\left(\vec{\nabla}\times\vec{A}\right)\\
+\left(\frac{c}{4\pi}\right)\vec{\nabla}\left(\vec{\nabla}\cdot\vec{B}\right)-\nabla^{2}\vec{B}&=-\frac{{e^{*}}^{2}n_{s}^{*}}{m^{*}c}\vec{B}\\
+\end{aligned}
+\end{equation}
+Since $\vec{\nabla}\cdot\vec{B}=0$
+\begin{equation}
+\nabla^{2}\vec{B}=\frac{1}{\lambda^{2}}\vec{B}
+\end{equation}
+where
+\begin{equation}
+\lambda=\sqrt{\frac{m^{*}c^{2}}{4\pi{e^{*}}^{2}n_{s}^{*}}}
+\end{equation}
+is the \ul{penetration depth}.\\
+
+Consider the external magnetic field near the surface of the superconductor
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- node[left] {$\vec{H}$} (0,3);
+	\draw (1,3) -- (1,0) node[below] {$x=0$};
+	\foreach \x in {0,1,...,5}{
+		\draw (1,0.5*\x) -- (1+0.5,0.5*\x+0.5);
+	}
+	\draw[->] (3,1.5) -- (5,1.5) node[right] {$x$};
+\end{tikzpicture}
+\end{center}
+
+\begin{equation}
+\dv[2]{\tikzmarknode{b}{B}}{x}=\frac{1}{\lambda^{2}}B\implies B(x)=B(0)e^{-\frac{x}{\lambda}}=He^{-\frac{x}{\lambda}}
+\end{equation}
+\begin{tikzpicture}[overlay,remember picture,shorten <=1mm,font=\footnotesize]
+	\draw[<-,red,shorten <=2mm] (b.north) -- ++ (-0.2,0.7) node[above] {three components};
+\end{tikzpicture}
+Thus, the field only penetrates a distance $\lambda$ into the superconductor. For simple metallic superconductors, $\lambda\sim 100$ \angstrom.
+
+\subsection{Persistent Currents}
+Let us create gradients of the phase $\theta(r)$ inside a superconducting ring.
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) circle (2cm);
+	\draw (0,0) circle (1cm);
+	\foreach \i in {0,1,...,7}{
+		\draw[->] (\i*360/8: 1.25cm) -- (\i*360/8: 1.75cm);
+	}
+	\draw[->,shorten >=2mm] (2,-2) node[below right] {$S$} -- (1.414,-1.414);
+\end{tikzpicture}
+\end{center}
+The free energy is
+\begin{equation}
+F=\int\dd[3]{r}\frac{\hbar^{2}n_{s}^{*}}{2m^{*}}\left(\vec{\nabla}\theta+\frac{e^{*}}{\hbar c}\vec{A}\right)^{2}+\ldots
+\end{equation}
+Minimizing $F$ one roughly obtains
+\begin{equation}
+\vec{\nabla}\theta=-\frac{e^{*}}{\hbar c}\vec{A}\quad\trm{inside the ring}
+\end{equation}
+
+Integrating the equation around the ring
+\begin{equation}
+\begin{aligned}
+\oint\vec{\nabla}\theta\cdot\dd{\vec{\ell}}&=2\pi n,\quad n\in\mathbb{Z}\quad\trm{($n=1$ in this particular diagram)}\\
+&\quad\explain\trm{ Since one integrates around the closed loop}\\
+\oint\vec{A}\cdot\dd{\vec{\ell}}&=-\frac{\hbar c}{e^{*}}\oint\vec{\nabla}\theta\cdot\dd{\vec{\ell}}\\
+&=-\frac{2\pi\hbar c}{e^{*}}\\
+&=-\frac{hc}{e^{*}}\\
+&=-\phi_{0}\trm{ for $n=1$}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\phi_{0}=\frac{hc}{e^{*}}=\frac{hc}{2e}
+\end{equation}
+is the \ul{superconducting magnetic flux quantum}. The magnetic flux is create by currents that flow on the surface of the ring
+\begin{equation}
+\vec{j}=\frac{c}{4\pi}\left(\vec{\nabla}\times\vec{B}\right)
+\end{equation}
+Taking again the loop integral
+\begin{equation}
+\begin{aligned}
+\oint_{\partial S}\vec{A}\cdot\dd{\vec{\ell}}&=\int_{S}\left(\vec{\nabla}\times\vec{A}\right)\cdot\dd{\vec{S}}=\int_{S}\vec{B}\cdot\dd{\vec{S}}=\phi\quad\trm{(\ul{magnetic flux})}\\
+\oint_{\partial S}\vec{\nabla}\theta\cdot\dd{\vec{\ell}}&=-\frac{e^{*}}{\hbar c}\oint_{\partial s}\vec{A}\cdot\dd{\vec{\ell}}=-\frac{e^{*}}{\hbar c}\phi\\
+\implies\phi&=n\phi_{0}
+\end{aligned}
+\end{equation}
+Thus, magnetic flux is also quantized in a  ring. Transitioning from $n=1$ to $n=0$ requires ``unwinding" the phase, which costs a huge amount of energy. The measurement of flux quanta proves electron pairing in superconductors. The current $\vec{j}$ is maintained in discrete increments.\\
+
+Note that
+\begin{equation}
+F=\frac{\hbar^{2}n_{s}^{*}}{2m^{*}}\int\dd[3]{r}\left(\vec{\nabla}\theta+\frac{e^{*}}{\hbar c}\vec{A}\right)^{2}+\ldots
+\end{equation}
+The unwinding cost of energy is proportional to sample volume. The ratio $\frac{n_{s}^{*}}{m^{*}}$ is known as the \ul{superfluid stiffness}.
+
+\subsection{Type I and Type II Superconductors}
+One important length scale in superconductors is the penetration depth
+\begin{equation}
+\lambda=\sqrt{\frac{m^{*}c^{2}}{4\pi{e^{*}}^{2}n_{s}^{*}}}
+\end{equation}
+Another length scale, coherence length $\xi$, has to do with how the superconducting order parameter $\phi(\vec{r})$ varies spatially.\\
+
+Consider the first Ginzburg-Lanbdau equation
+\begin{equation}
+\frac{1}{2m^{*}}\left(-i\hbar\vec{\nabla}+\frac{e^{*}}{c}\vec{A}\right)^{2}\phi+a\phi+b\phi\abs{\phi}^{2}=0
+\end{equation}
+Suppose there is no magnetic field $\left(\vec{A}=\vec{0}\right)$ and look for solutions where
+\begin{gather*}
+\hspace{2.1cm}\phi(x\rightarrow-\infty)=0\quad\trm{and}\quad\phi(x\rightarrow\infty)=\sqrt{-\frac{a}{b}}
+\end{gather*}
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,2) -- (0,-2) node[below] {$x=0$};
+	\node[below right] at (0,-2) {$\qquad\qquad\longrightarrow x$};
+	\node at (-3,0) {Normal material};
+	\node at (3,0) {Superconductor};
+\end{tikzpicture}
+\end{center}
+This solution represents a boundary between normal and superconducting material. Thus
+\begin{equation}
+-\frac{\hbar^{2}}{2m^{*}}\dv[2]{\phi}{x}+a\phi+b\phi\abs{\phi}^{2}=0
+\end{equation}
+The solution that satisfies the above boundary conditions is
+\begin{equation}
+\phi(x)=\frac{1}{2}\sqrt{-\frac{a}{b}}\left[\tanh\left(\frac{x}{\sqrt{2}\xi}\right)+1\right]
+\end{equation}
+where
+\begin{equation}
+\xi=\sqrt{-\frac{\hbar^{2}}{2m^{*}a}}
+\end{equation}
+is the \ul{coherence length}. The coherence length $\xi$ determines the extent to which the superconducting wavefunction will penetrate the normal region. The ratio $\Chi=\frac{\lambda}{\xi}$ is also an important parameter. For superconductors with $\Chi<\frac{1}{\sqrt{2}}$, they are called \ul{type I superconductors}. For superconductors with $\Chi>\frac{1}{\sqrt{2}}$, they are called \ul{type II superconductors}. Type II superconductors also contain high-temperature superconductors.\\
+
+Consider a superconductor in a magnetic field. When the field is expelled, the free energy density is given by
+\begin{equation}
+\begin{aligned}
+F&=\int\dd[3]{r}\left(a\abs{\phi}^{2}+\frac{b}{2}\abs{\phi}^{4}\right)\\
+&=V\left(a\abs{\phi}^{2}+\frac{b}{2}\abs{\phi}^{4}\right)\\
+\implies f&=\frac{F}{V}=a\abs{\phi}^{2}+\frac{b}{2}\abs{\phi}^{4}
+\end{aligned}
+\end{equation}
+Minimizing $f$ gives the non-trivial solution $\abs{\phi}^{2}=-\frac{a}{b}$. Thus
+\begin{equation}
+f=-\frac{a^{2}}{b}+\frac{a^{2}}{2b}=-\frac{a^{2}}{2b}
+\end{equation}
+This is the \ul{condensation energy}. The system gains condensation energy by transitioning into a superconducting state. However, magnetic field energy is lost when the field is expelled from the superconductor.
+\begin{equation}
+f_{m}=\frac{B^{2}}{8\pi}-\frac{BH}{4\pi}=-\frac{H^{2}}{8\pi}
+\end{equation}
+When the external magnetic field is sufficiently large, the loss of magnetic energy will become larger than the gain in condensation energy. The superconductor will be destroyed to allow the field to penetrate. This happens at the thermodynamic critical field $H_{c}$. To find $H_{c}$, set the condensation energy and magnetic field energy equal to each other
+\begin{equation}
+\begin{aligned}
+\frac{H_{c}^{2}}{8\pi}&=\frac{a^{2}}{2b}\\
+H_{c}&=\sqrt{\frac{4\pi a^{2}}{b}}\sim\abs{T-T_{c}}
+\end{aligned}
+\end{equation}
+
+
+
+
 \end{document}
