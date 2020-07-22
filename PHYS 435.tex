@@ -60,6 +60,8 @@
 \usepackage{color} % To use different colours
 \usepackage[makeroom]{cancel} % To cancel terms in equations
 
+\definecolor{lightGray}{gray}{0.8}
+
 \newcommand{\trm}[1]{\textrm{#1}} % Shorthand for \textrm command
 \newcommand{\up}{\uparrow} % Shorthand for \uparrow command
 \newcommand{\dn}{\downarrow} % Shorthand for \downarrow command
@@ -4607,12 +4609,228 @@ H_{c}&=\sqrt{\frac{4\pi a^{2}}{b}}\sim\abs{T-T_{c}}
 \begin{tikzpicture}
 	\draw[->] (0,0) -- (3.5,0) node[right] {$T$};
 	\draw[->] (0,0) -- (0,2.5) node[above] {$H$};
-	\draw[domain=0:3,samples=200] plot (\x,{sqrt(1.5*(3-\x))}) node[below,yshift=-0.1cm] {$T_{c}$};
+	\draw[domain=0:3,samples=500] plot (\x,{sqrt(1.5*(3-\x))}) node[below,yshift=-0.1cm] {$T_{c}$};
 	\node[left] at (0,2.121) {$H_{c}$};
 	\node[above right] at (2,2) {Normal metal};
 	\node at (1.5,0.75) {Meissner};
 \end{tikzpicture}
 \end{center}
+Similarly
+\begin{equation}
+\begin{aligned}
+B&=H+4\pi M\\
+B&=0\implies H=-4\pi M\implies\Chi=\pdv{M}{H}=-\frac{1}{4\pi}\trm{ (perfect diamagnet)}
+\end{aligned}
+\end{equation}
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (3.5,0) node[right] {$H$};
+	\draw[->] (0,0) -- (0,2.5) node[above] {$-M$};
+	\draw[domain=0:3,samples=200] plot (\x,{5/7*\x});
+	\draw[dashed] (3,0) node[below,yshift=-0.1cm] {$H_{c}$} -- (3,2.143);
+	\draw[<->] (1,0.7143) -- (2,0.7143) node[right] {$\frac{1}{4\pi}$};
+	\draw[<->] (2,0.7143) -- (2,1.429);
+\end{tikzpicture}
+\end{center}
+In reality, this only holds for type I superconductors.\\
 
+Suppose we start at a large field $H>H_{c}$ and start decreasing its strength. The superconducting state appears when the first Ginzburg-Landau equation has non-trivial solutions. The field at which this occurs is different from $H_{c}$. Let us call it $H_{c_{2}}$. Near $H_{c_{2}}$, one expects $\abs{\phi}$ to be small. Let us neglect the non-linear term in this equation. Thus, the first Ginzburg-Landau equation reads as
+\begin{equation}
+\frac{1}{2m^{*}}\left(-i\hbar\vec{\nabla}+\frac{e^{*}}{c}\vec{A}\right)^{2}\phi=-a\phi
+\end{equation}
+This is simply the Schr\"{o}dinger equation for a charged particle in a magnetic field with energy $-a$. Choosing the Landau gauge
+\begin{equation}
+\vec{A}=xB\hat{y}
+\end{equation}
+The equation becomes
+\begin{equation}
+-\frac{\hbar^{2}}{2m^{*}}\left(\pdv[2]{x}+\pdv[2]{z}\right)\phi+\frac{1}{2m^{*}}\left(-i\hbar\pdv{y}+\frac{e^{*}}{c}Bx\right)^{2}\phi=-a\phi
+\end{equation}
+Looking for an ansatz solution
+\begin{equation}
+\phi(\vec{r})=e^{i(k_{y}y+k_{z}z)}\varphi(x)
+\end{equation}
+Thus
+\begin{equation}
+-\frac{\hbar^{2}}{2m^{*}}\dv[2]{\varphi}{x}+\left(\frac{e^{*}Bx}{c}\right)^{2}\varphi+\frac{\hbar k_{y}e^{*}B}{c}x\varphi=\left(-a-\frac{\hbar^{2}k_{y}^{2}}{2m^{*}}-\frac{\hbar^{2}k_{z}^{2}}{2m^{*}}\right)\varphi
+\end{equation}
+This is simply the Schr\"{o}dinger equation for a harmonic oscillator with minimum shifted from $x=0$ to $x=x_{0}=-k_{y}\ell^{2}$, with
+\begin{equation}
+\ell=\sqrt{\frac{\hbar c}{e^{*}B}}
+\end{equation}
+again being the \ul{magnetic length}. Thus
+\begin{equation}
+-\frac{\hbar^{2}}{2m^{*}}\dv[2]{\varphi}{x}+\frac{m^{2}\omega_{c}^{2}}{2}(x-x_{0})^{2}\varphi=E\varphi
+\end{equation}
+where
+\begin{equation}
+E=-a-\frac{\hbar^{2}k_{z}^{2}}{2m^{*}}
+\end{equation}
+and
+\begin{equation}
+\omega_{c}=\frac{e^{*}B}{m^{*}c}
+\end{equation}
 
+The energies of this equation are given by
+\begin{equation}
+E_{n}=\hbar\omega_{c}\left(n+\frac{1}{2}\right),\quad n\in\mathbb{Z}
+\end{equation}
+For this equation to have a solution, we want $E=E_{n}$ for some $n$. Let us equate the maximal possible value of $E=-a$ to the smallest possible value of $E_{n}=\frac{\hbar\omega_{c}}{2}$. This gives the largest value of $B$ for which solutions exists.
+\begin{equation}
+\begin{aligned}
+E_{0}&=E(k_{z}=0)\\
+\frac{\hbar\omega_{c}}{2}&=-a\\
+\implies\frac{\hbar e^{*}B_{\trm{max}}}{2m^{*}c}&=-a\\
+\implies B_{\trm{max}}&=H_{c_{2}}=-\frac{2am^{*}c}{\hbar e^{*}}
+\end{aligned}
+\end{equation}
+In terms of $\Chi$ and $H_{c}$
+\begin{equation}
+\begin{aligned}
+H_{c_{2}}&=-\frac{2m^{*}ca}{\hbar e^{*}}\frac{H_{c}}{-a\sqrt{\frac{4\pi}{b}}}=\sqrt{2}\frac{m^{*}c}{\hbar e^{*}}\sqrt{\frac{b}{2\pi}}H_{c}\\
+\Chi&=\frac{\lambda}{\xi}\\
+&=\sqrt{\frac{m^{*}c^{2}}{4\pi{e^{*}}^{2}n_{s}^{*}}}\sqrt{-\frac{2m^{*}a}{\hbar^{2}}}\\
+&=\sqrt{\frac{m^{*}c^{2}b}{4\pi{e^{*}}^{2}(-a)}}\sqrt{-\frac{2m^{*}a}{\hbar^{2}}}\\
+&\quad\explain\trm{ Since $n_{s}^{*}=\abs{\phi}^{2}=-\frac{a}{b}$}\\
+&=\frac{m^{*}c}{\hbar e^{*}}\sqrt{\frac{b}{2\pi}}\\
+\implies H_{c_{2}}&=\sqrt{2}\Chi H_{c}
+\end{aligned}
+\end{equation}
+Thus, for $\Chi<\frac{1}{\sqrt{2}}$, $H_{c_{2}}<H_{c}$ and one has a type I superconductor. For $\Chi>\frac{1}{\sqrt{2}}$, $H_{c_{2}}>H_{c}$ and one has a type II superconductor.
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (3.5,0) node[right] {$T$};
+	\draw[->] (0,0) -- (0,4) node[above] {$H$};
+	\draw[domain=0:3,samples=500] plot (\x,{sqrt(1.5*(3-\x))}) node[below,yshift=-0.1cm] {$T_{c}$};
+	\draw[domain=0:3,samples=500] plot (\x,{sqrt(4*(3-\x))});
+	\node[left] at (0,2.121) {$H_{c}$};
+	\node[left] at (0,3.464) {$H_{c_{2}}$};
+	\node[above right] at (2.5,2.5) {Normal metal};
+	\node at (1,0.75) {Meissner};
+	\node at (1,2.2) {Vortex};
+\end{tikzpicture}
+\end{center}
+In type II superconductors, there exists a superconducting state at fields $H>H_{c}$. This state has the field penetrate inside the superconductor, yet $\abs{\phi}$ is still non-zero and the sample is superconducting. This is the \ul{Abrikosov vortex lattice}.
+\begin{equation}
+H_{c_{2}}=-\frac{2am^{*}c}{\hbar e^{*}}=-\frac{2m^{*}a}{\hbar^{2}}\frac{\hbar c}{e^{*}}=\frac{\phi_{0}}{2\pi\xi^{2}}
+\end{equation}
+where
+\begin{equation}
+\phi_{0}=\frac{hc}{e^{*}}
+\end{equation}
+is again the flux quantum. $H_{c_{2}}$ corresponds to one flux quantum per area $2\pi\xi^{2}$.
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,-1) circle[x radius=2cm,y radius=1cm];
+	\node[cylinder,shape border rotate=90,draw,minimum height=2cm,minimum width=0.25cm,fill=lightGray] at (-1,0) {};
+	\node[cylinder,shape border rotate=90,draw,minimum height=2cm,minimum width=0.25cm,fill=lightGray] at (0,0) {};
+	\node[cylinder,shape border rotate=90,draw,minimum height=2cm,minimum width=0.25cm,fill=lightGray] at (1,0) {};
+	\node[cylinder,shape border rotate=90,draw,minimum height=2cm,minimum width=0.25cm,fill=lightGray] at (-0.5,0.5) {};
+	\node[cylinder,shape border rotate=90,draw,minimum height=2cm,minimum width=0.25cm,fill=lightGray] at (0.5,0.5) {};
+	\node[cylinder,shape border rotate=90,draw,minimum height=2cm,minimum width=0.25cm,fill=lightGray] at (-0.5,-0.5) {};
+	\node[cylinder,shape border rotate=90,draw,minimum height=2cm,minimum width=0.25cm,fill=lightGray] at (0.5,-0.5) {};
+	\draw (0,1) circle[x radius=2cm,y radius=1cm];
+	\draw (2,1) -- (2,-1);
+	\draw (-2,1) -- (-2,-1);
+	\draw[->] (-2.5,0) -- (-2.5,1) node[above] {$z$};
+	\draw (6,0) circle (3pt);
+	\draw (7,0) circle (3pt);
+	\draw (8,0) circle (3pt);
+	\draw (6.5,0.866) circle (3pt);
+	\draw (7.5,0.866) circle (3pt);
+	\draw (6.5,-0.866) circle (3pt);
+	\draw (7.5,-0.866) circle (3pt);
+	\draw[->] (9,0) -- (10,0) node[right] {$x$};
+	\draw[->] (9,0) -- (9,1) node[above] {$y$};
+	\draw[->,shorten >=2mm] (5.5,1) node[above left] {$\abs{\phi}^{2}$} -- (6,0);
+	\draw[->,shorten >=1mm] (7,-0.866) -- (7.5,-0.866);
+	\draw[->,shorten >=1mm] (8,-0.866)  node[right] {$\xi$}-- (7.5,-0.866);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Josephson Effect}
+Imagine we have two pieces of the same superconducting material of the same temperature, but completely isolated from each other. Their macroscopic wavefunctions are $\phi_{1}(\vec{r})$ and $\phi_{2}(\vec{r})$.
+\begin{equation}
+\phi_{1}(\vec{r})=\sqrt{n_{s}^{*}}e^{i\theta_{1}(\vec{r})},\quad\phi_{2}(\vec{r})=\sqrt{n_{s}^{*}}e^{i\theta_{2}(\vec{r})}
+\end{equation}
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) rectangle (6.2,3);
+	\draw[fill=gray] (3,0) rectangle (3.2,3);
+	\node at (1.5,1.5) {1};
+	\node at (4.7,1.5) {2};
+	\node[above,xshift=0.2cm] at (3.1,3) {$\longrightarrow x$};
+	\node[below] at (1.5,0) {$\phi_{1}(x)=\braket{x}{\phi_{1}}$};
+	\node[below] at (4.7,0) {$\phi_{2}(x)=\braket{x}{\phi_{2}}$};
+\end{tikzpicture}
+\end{center}
+Note they in general have different phases. Suppose we now establish a weak contact between the two pieces through an insulating barrier that is thin enough for electrons to tunnel through. Electron pairs in the first material $\ket{1}$ can tunnel to the second material $\ket{2}$ with tunneling amplitude $t$. A new macroscopic wavefunction will be established, which describes the whole system. Solving the Schr\"{o}dinger equation
+\begin{equation}
+\begin{aligned}
+H\phi&=E\phi\\
+H&=-t\left(\ketbra{1}{2}+\ketbra{2}{1}\right)=\begin{bmatrix}
+0 & -t\\
+-t & 0
+\end{bmatrix}
+\end{aligned}
+\end{equation}
+The lowest energy eigenstate is
+\begin{equation}
+\begin{aligned}
+\ket{S}&=\frac{1}{\sqrt{2}}\left(\ket{1}+\ket{2}\right)\\
+\phi(x)&=\braket{x}{S}=\frac{1}{\sqrt{2}}(\phi_{1}(x)+\phi_{2}(x))
+\end{aligned}
+\end{equation}
+Taking $\vec{A}=\vec{0}$, the supercurrent density is
+\begin{equation}
+\vec{j}=\frac{i\hbar e^{*}}{2m^{*}}(\phi^{*}\vec{\nabla}\phi-\phi\vec{\nabla}\phi^{*})
+\end{equation}
+On the far left, the system is approximately in $\phi_{1}(\vec{r})$ while on the far right, the system is approximately in $\phi_{2}(\vec{r})$. $\vec{\nabla}phi$ is only non-negligible in the junction area, where one estimates
+\begin{equation}
+\vec{\nabla}\phi\approx\frac{\phi_{2}-\phi_{1}}{L}\hat{x}
+\end{equation}
+Therefore
+\begin{equation}
+\begin{aligned}
+\phi^{*}\vec{\nabla}\phi-\phi\vec{\nabla}\phi^{*}&\sim(\phi_{1}^{*}+\phi_{2}^{*})(\phi_{2}-\phi_{1})-(\phi_{1}+\phi_{2})(\phi_{2}^{*}-\phi_{1}^{*})\\
+&=\phi_{1}^{*}\phi_{2}-\abs{\phi_{1}}^{2}+\abs{\phi_{2}}^{2}-\phi_{2}^{*}\phi_{1}-\phi_{2}^{*}\phi_{1}+\abs{\phi_{1}}^{2}-\abs{\phi_{1}}^{2}+\phi_{1}^{*}\phi_{2}\\
+&=2(\phi_{1}^{*}\phi_{2}-\phi_{2}^{*}\phi_{1})\\
+&=-2n_{s}^{*}(e^{i\theta}-e^{-i\theta})\\
+&=-4in_{s}^{*}\sin\theta
+\end{aligned}
+\end{equation}
+where $\theta=\theta_{1}-\theta_{2}$ is the phase difference between the two sides. Thus, this gives rise to the \ul{DC Josephson effect}.
+\begin{equation}
+I=I_{c}\sin\theta
+\end{equation}
+This supercurrent is present even in the absence of an external electric field. If two adjacent material are superconductors, the current always flows across the junction in the absence of voltage. $I_{c}$ is the maximal supercurrent that can flow across the junction and depends on the specific parameters of that junction. The current is directly related to the phase difference across the junction and is a macroscopic quantum effect.
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) rectangle (6.2,3);
+	\draw[fill=gray] (3,0) rectangle (3.2,3);
+	\node at (1.5,1.5) {1};
+	\node at (4.7,1.5) {2};
+	\draw (0,1.5) -- (-1,1.5) -- (-1,4) -- (7.2,4) -- (7.2,1.5) -- (6.2,1.5);
+	\draw[fill=white] (3.1,4) circle (15pt) node[font=\large] {$V$};
+\end{tikzpicture}
+\end{center}
+When applying an external voltage across the junction, one needs to solve the time-dependent Schr\"{o}dinger equation.
+\begin{equation}
+\begin{aligned}
+i\hbar\pdv{\phi}{t}&=H\phi\quad\trm{, where }H=\begin{bmatrix}
+eV & -t\\
+-t & eV
+\end{bmatrix}\trm{ (Pairs drop 2 eV across junction)}\\
+\implies i\hbar\pdv{\phi_{1}}{t}&=eV\phi_{1}-t\phi_{2}\quad\trm{and}\quad -i\hbar\pdv{\phi_{1}^{*}}{t}=eV\phi_{1}^{*}-t\phi_{2}^{*}\\
+\implies i\hbar\pdv{\phi_{2}}{t}&=-t\phi_{1}+eV\phi_{2}\quad\trm{and}\quad -i\hbar\pdv{\phi_{2}^{*}}{t}=-t\phi_{1}^{*}+eV\phi_{2}^{*}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+i\hbar\pdv{t}(\phi_{2}^{*}\phi_{1}-\phi_{1}^{*}\phi_{2})&=i\hbar\left(\phi_{2}^{*}\pdv{\phi_{1}}{t}+\phi_{1}\pdv{\phi_{2}^{*}}{t}-\phi_{1}^{*}\pdv{\phi_{2}}{t}-\phi_{2}\pdv{\phi_{1}^{*}}{t}\right)\\
+&=eV\phi_{2}^{*}\phi_{1}-e\abs{\phi_{2}}^{2}+t\abs{\phi_{1}}^{2}+eV\phi_{2}^{*}\phi_{1}
+\end{aligned}
+\end{equation}
 \end{document}
