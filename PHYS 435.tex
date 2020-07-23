@@ -4661,7 +4661,7 @@ This is simply the Schr\"{o}dinger equation for a harmonic oscillator with minim
 \end{equation}
 again being the \ul{magnetic length}. Thus
 \begin{equation}
--\frac{\hbar^{2}}{2m^{*}}\dv[2]{\varphi}{x}+\frac{m^{2}\omega_{c}^{2}}{2}(x-x_{0})^{2}\varphi=E\varphi
+-\frac{\hbar^{2}}{2m^{*}}\dv[2]{\varphi}{x}+\frac{m^{*}\omega_{c}^{2}}{2}(x-x_{0})^{2}\varphi=E\varphi
 \end{equation}
 where
 \begin{equation}
@@ -5011,18 +5011,219 @@ The Josephson junctions may also be used as a qubit. Consider again the resistiv
 \begin{center}
 \begin{tikzpicture}
 	\draw[->-=0.5] (0,0) node[left] {$I$} -- (2,0);
-	\draw (2.5,-1) -- (2,-1) -- (2,1) -- (3.4,1) -- (3.6,1) -- (5,1) -- (5,-1) -- (4.5,-1);
+	\draw (2.5,-1) -- (2,-1) -- (2,1) -- (3.4,1);
+	\draw (3.6,1) -- (5,1) -- (5,-1) -- (4.5,-1);
 	\draw (2,0) -- (5,0);
 	\draw (3.5,0) node[cross=5pt] {};
-	\node at (3.5,0) node[above] {$I_{s}$};
+	\node[above,yshift=0.1cm] at (3.5,0) {$I_{s}$};
 	\draw[->-=0.5] (5,0) -- (7,0) node[right] {$I$};
 	\draw[snake=zigzag] (2.5,-1) -- node[below,yshift=-0.2cm] {$I_{n}$} node[above,yshift=0.2cm] {$R$} (4.5,-1);
+	\draw (3.4,0.75) -- (3.4,1.25);
+	\draw (3.6,0.75) -- (3.6,1.25);
+	\node[above] at (3.5,1.25) {$C$};
 \end{tikzpicture}
 \end{center}
+The circuit is described by
+\begin{equation}
+\begin{aligned}
+I&=I_{c}\sin\theta+\frac{V}{R}+C\dv{V}{t}\\
+V&=\frac{\hbar}{2e}\dv{\theta}{t}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\dv[2]{\theta}{t}+\frac{1}{RC}\dv{\theta}{t}+\frac{2eI_{c}}{\hbar c}\sin\theta=\frac{2eI}{\hbar c}
+\end{equation}
+Let us identify $\theta$ with a coordinate of a particle classically. The equation of motion is of a particle moving in a washboard potential.
+\begin{equation}
+U(\theta)\sim -(I_{\theta}+I_{c}\cos\theta)
+\end{equation}
 
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (0,-1.5	) -- (0,5.5) node[above] {$U(\theta)$};
+	\draw[<->] (-1,0) -- (6,0) node[right] {$\theta$};
+	\draw[domain=0:5.25,samples=200] plot (\x,{-(\x-0.063)+cos(deg(4*(\x-0.063)))+4});
+	\draw[red] (0.7991,2.2832) -- (1.0286,2.2832);
+	\draw[red] (0.7525,2.3832) -- (1.0804,2.3832);
+	\draw[red] (0.7163,2.4832) -- (1.1223,2.4832);
+	\draw[red] (2.3699,0.7124) -- (2.5994,0.7124);
+	\draw[red] (2.3233,0.8124) -- (2.6512,0.8124);
+	\draw[red] (2.2871,0.9124) -- (2.6931,0.9124);
+	\draw[red] (3.941,-0.8584) -- (4.17,-0.8584);
+	\draw[red] (3.894,-0.7584) -- (4.222,-0.7584);
+	\draw[red] (3.858,-0.6584) -- (4.264,-0.6584);
+\end{tikzpicture}
+\end{center}
+The particle's velocity $\dv{\theta}{t}$ is the voltage. This system can exist in two states.
+\begin{enumerate}
+\item The particle is trapped in one of the minima where $I<I_{c}$. This corresponds to a zero-voltage state (i.e. supercurrent).
+\item The particle is moving with non-zero velocity. This occurs when $I>I_{c}$ (i.e. finite voltage). It may ``slide" down the potential.
+\end{enumerate}
+The phase qubit is operated at low temperature in the zero-voltage state with $I<I_{c}$. In this case, the particle is trapped in one of the potentials and the quantized energy states in this potential are used as the zero and one states. The tilt, which is adjusted by the applied current, changes the energy difference between the ground and the first excited state.
 
+\subsection{Flux Qubits}
+The free energy of a superconducting ring is
+\begin{equation}
+F=\frac{\hbar^{2}n_{s}^{*}}{2m^{*}}\int\dd[3]{r}\left(\vec{\nabla}\theta+\frac{2e}{\hbar c}\vec{A}\right)^{2}
+\end{equation}
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) circle (2.449cm);
+	\node at (0,0) {$\bigotimes$};
+	\node[below right] at (0,0) {$\phi$};
+	\draw (0,0) -- node[below right] {$R$} (1.732,1.732);
+	\draw[->] (1.732,1.732) -- node[above right] {$\hat{\theta}$} (1.025,2.439);
+\end{tikzpicture}
+\end{center}
+If the ring has radius $R$, then
+\begin{equation}
+\vec{A}=\frac{\phi}{2\pi R}\hat{\theta}\quad\Leftrightarrow\quad\oint\vec{A}\cdot\dd{\vec{\ell}}=\phi\trm{ (magnetic flux)}
+\end{equation}
+Thus
+\begin{equation}
+F=\frac{\hbar^{2}n_{s}^{*}}{2m^{*}}\int\dd[3]{r}\left(\vec{\nabla}\theta+\frac{2e}{\hbar c}\frac{\phi}{2\pi R}\hat{\theta}\right)^{2}
+\end{equation}
+Since the superconducting ring has the same value around the ring ($2\pi$-periodic)
+\begin{equation}
+\begin{aligned}
+\oint\vec{\nabla}\theta\cdot\dd{\vec{\ell}}&=2\pi n,\quad n\in\mathbb{Z}\\
+\vec{\nabla}\theta&=\frac{n}{R}\hat{\theta}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+F&=\frac{\hbar^{2}n_{s}^{*}}{2m^{*}}V\left(\frac{n}{R}+\frac{2e}{\hbar c}\frac{\phi}{2\pi R}\right)^{2}\\
+&=\frac{\hbar^{2}n_{s}^{*}V}{2m^{*}R}\frac{e^{2}}{\pi^{2}\hbar^{2}c^{2}}(\phi+n\phi_{0}0^{2}\\
+&=\frac{V}{(2\pi)^{3}\lambda^{2}R^{2}}(\phi+n\phi_{0})^{2}
+\end{aligned}
+\end{equation}
 
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+	\draw[<->] (-3,0) -- (3,0) node[right] {$\phi$};
+	\draw[->] (0,0) -- (0,3.5) node[above] {$F(\phi)$};
+	\draw (-2,0.1) -- (-2,-0.1) node[below] {$-2\phi_{0}$};
+	\draw (-1,0.1) -- (-1,-0.1) node[below] {$-\phi_{0}$};
+	\draw (0,0.1) -- (0,-0.1) node[below] {$0$};
+	\draw (1,0.1) -- (1,-0.1) node[below] {$\phi_{0}$};
+	\draw (2,0.1) -- (2,-0.1) node[below] {$2\phi_{0}$};
+	\draw[domain=-3.25:-0.75,samples=200,red,<->] plot (\x,{2*(\x+2)^2});
+	\draw[domain=-2.25:0.25,samples=200,blue,<->] plot (\x,{2*(\x+1)^2});
+	\draw[domain=-1.25:1.25,samples=200,red,<->] plot (\x,{2*(\x)^2});
+	\draw[domain=-0.25:2.25,samples=200,blue,<->] plot (\x,{2*(\x-1)^2});
+	\draw[domain=0.75:3.25,samples=200,red,<->] plot (\x,{2*(\x-2)^2});
+\end{tikzpicture}
+\end{center}
+When $\phi$ is a half-integer of $\phi_{0}$, there are two degenerate states in the neighbouring wells. This leads to a qubit.
 
+\newpage
+\subsection{Abrikosov Vortex Lattice}
+Recall the phase diagram for type I and type II superconductors.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (3.5,0) node[right] {$T$};
+	\draw[->] (0,0) -- (0,4) node[above] {$H$};
+	\draw[domain=0:3,samples=500] plot (\x,{sqrt(1.5*(3-\x))}) node[below,yshift=-0.1cm] {$T_{c}$};
+	\draw[domain=0:3,samples=500] plot (\x,{sqrt(4*(3-\x))});
+	\node[left] at (0,2.121) {$H_{c}$};
+	\node[left] at (0,3.464) {$H_{c_{2}}$};
+	\node[above right] at (2.5,2.5) {Normal metal};
+	\node at (1,0.75) {Meissner};
+	\node at (1,2.2) {Vortex};
+\end{tikzpicture}
+\end{center}
+Consider the structure of the vortex state in type II superconductors. Suppose the external field is only slightly less than $H_{c_{2}}$, making $\abs{\phi}$ small.\\
 
+Following the same arguments as before
+\begin{equation}
+\begin{aligned}
+\frac{1}{2m^{*}}\left(-i\hbar\vec{\nabla}+\frac{e^{*}}{c}\vec{A}\right)^{2}\phi&=-a\phi\\
+\implies\phi(\vec{r})&=e^{ik_{y}y+ik_{z}z}\varphi(x)\\
+\implies E\varphi&=-\frac{\hbar^{2}}{2m^{*}}\dv[2]{\varphi}{x}+\frac{m^{*}\omega_{c}^{2}}{2}(x-x_{0})^{2}\varphi\\
+\implies E_{n}&=\hbar\omega_{c}\left(n+\frac{1}{2}\right),\quad n\in\mathbb{Z}\\
+\implies E&=-a=\frac{\hbar\omega_{c}}{2}\\
+\implies H&=H_{c_{2}}=-\frac{2am^{*}c}{\hbar e^{*}}
+\end{aligned}
+\end{equation}
+The magnetic length is
+\begin{equation}
+\begin{aligned}
+\ell^{2}&=\frac{\hbar c}{eH}\\
+&=\frac{\hbar c}{e^{*}H_{c}^{2}}\\
+&=\frac{\hbar c}{e^{*}}\left(-\frac{\hbar e^{*}}{2am^{*}c}\right)\\
+&=-\frac{\hbar^{2}}{2am^{*}}\\
+&=\xi^{2}
+\end{aligned}
+\end{equation}
+Thus, another way to view $H_{c_{2}}$ is the magnetic field at which the magnetic length is equal to the coherence length.\\
+
+The solutions of the linearized Ginzburg-Landau equation with $E=\frac{\hbar\omega_{c}}{2}$ are
+\begin{equation}
+\varphi_{k_{y}}=e^{-\frac{1}{2\ell^{2}}(x+k_{y}\ell^{2})^{2}}\trm{, up to a normalization constant}
+\end{equation}
+These are simply the lowest Landau level wavefunctions, as obtained in the quantum Hall effect. The true solution of the non-linear Ginzburg-Landau equation for $H$ slightly less than $H_{c_{2}}$ should be a linear combination of these wavefunctions, which is ``chosen" by $b\phi\abs{\phi}^{2}$ (i.e. has the lowest energy).\\
+
+Suppose we look for solutions uniform along the $z$-direction (i.e. the direction of the magnetic field). The lowest Landau level eigenstate has the form
+\begin{equation}
+\phi_{k_{y}}(\vec{r})=e^{ik_{y}y}e^{-\frac{1}{2\xi^{2}}(x+k_{y}\xi^{2})^{2}}
+\end{equation}
+Abrikosov's idea was to look for solutions periodic in space. Let $d$ be the spatial period in the $y$-direction. The reciprocal lattice vectors are
+\begin{equation}
+G_{n}=Gn=\frac{2\pi}{d}n,\quad n\in\mathbb{Z}
+\end{equation}
+Reducing the wavevector $k_{y}$ to the first Brillouin zone
+\begin{equation}
+k_{y}\rightarrow k_{y}+Gn
+\end{equation}
+Let us look for solutions in the form of Bloch functions.
+\begin{equation}
+\phi(x,y)=\sum_{n=-\infty}^{\infty}c_{n}e^{i(k_{y}y+Gn)y}e^{-\frac{1}{2\xi^{2}}(x+k_{y}\xi^{2}+Gn\xi^{2})^{2}}
+\end{equation}
+Note we take $c_{n}$ to be periodic in $n$. The solution will be automatically periodic in the $x$-direction.
+\begin{equation}
+\begin{aligned}
+\phi_{k}(x+Gm\xi^{2},y)&=\sum_{n=-\infty}^{\infty}c_{n}e{i(k_{y}y+Gn)y}e^{-\frac{1}{2\xi^{2}}(x+k_{y}\xi^{2}+Gm\xi^{2}+Gn\xi^{2})^{2}}\\
+&=\sum_{n=-\infty}^{\infty}c_{n-m}e^{i(k_{y}+Gn)y}e^{-iGmy}e^{-\frac{1}{2\xi^{2}}(x+k_{y}\xi^{2}+Gn\xi^{2})^{2}}\\
+&=e^{-iGmy}\phi_{k}(x,y)\trm{ (periodic up to a phase factor)}
+\end{aligned}
+\end{equation}
+Let us choose period $m=1$, as done by Abrikosov. Thus, $c_{m}=c$. Note that it was shown later that the lowest energy solution actually occurs with $m=2$.
+\begin{equation}
+\phi_{k}(\vec{r})=c\sum_{n=-\infty}^{\infty}e^{i(k_{y}+Gn)y}e^{-\frac{1}{2\xi^{2}}(x+k_{y}\xi^{2})^{2}}
+\end{equation}
+Since $G\xi^{2}$ is the period in the $x$-direction
+\begin{equation}
+\begin{aligned}
+G\xi^{2}&=\frac{2\pi}{G}\\
+\implies G^{2}=\frac{2\pi}{\xi^{2}}\\
+\implies d&=\sqrt{2\pi\xi}\quad\trm{and}\quad G=\frac{\sqrt{2\pi}}{\xi}
+\end{aligned}
+\end{equation}
+The functions $\phi_{k}(\vec{r})$ are the \ul{magnetic Bloch functions}.
+\begin{equation}
+\begin{aligned}
+\phi_{k}(x,y)&=c\sum_{n=-\infty}^{\infty}e^{i\left(k_{}+\frac{\sqrt{2\pi}}{\xi}n\right)y}e^{-\frac{1}{2\xi^{2}}(x+k_{y}y\xi^{2}+\sqrt{2\pi}\xi n)^{2}}\\
+&=ce^{ik_{y}y}e^{-\frac{1}{2\xi^{2}}(x+k_{y}\xi^{2})^{2}}\theta_{3}\left[\frac{1}{2}G\big(y+i(x+k_{y}y\xi^{2})\big),e^{-\frac{G^{2}\xi^{2}}{2}}\right]
+\end{aligned}
+\end{equation}
+where
+\begin{equation}
+\theta_{3}(z,q)=\sum_{n=-\infty}^{\infty}q^{n^{2}}e^{2niz}
+\end{equation}
+are the \ul{Jacobi $\theta$ functions}. In this case
+\begin{equation}
+z=\frac{iG}{2}(x+k_{y}\xi^{2}-iy)\quad\trm{and}\quad q=e^{-\frac{G^{2}\xi^{2}}{2}}=e^{-\pi}
+\end{equation}
+Interestingly, $\theta_{3}(z,q)$ has zeroes at
+\begin{equation}
+z=\left[m+\frac{1}{2}+\left(n+\frac{1}{2}\right)\tau\right],\quad q=e^{\pi i\tau},\quad n,m\in\mathbb{Z}
+\end{equation}
+In our case, $\tau=i$. thus the zeroes are at
+\begin{equation}
+z=\left[m+\frac{1}{2}+i\left(n+\frac{1}{2}\right)\right]\pi
+\end{equation}
+The zeroes form a square lattice, with $\phi(\vec{r})$ going to zero at $z_{\trm{min}}$ and $\theta(\vec{r})$ winding by $2\pi$ around each zero.
 
 \end{document}
