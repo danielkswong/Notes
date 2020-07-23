@@ -30,9 +30,12 @@
 \usetikzlibrary{decorations.pathreplacing,decorations.pathmorphing,decorations.markings} % For curly braces, wavy lines, and arrow markings
 \usetikzlibrary{tikzmark} % For adding annotations to equations
 \usetikzlibrary{shapes.geometric} % For drawing regular polygons
+\usetikzlibrary{shapes.misc} % For drawing crosses
+\usetikzlibrary{snakes} % For drawing zigzag lines
 
 \tikzset{->-/.style={decoration={markings,mark=at position #1 with {\arrow{>}}},postaction={decorate}}} 
-\tikzset{-<-/.style={decoration={markings,mark=at position #1 with {\arrow{<}}},postaction={decorate}}}% Defining lines with arrows in the middle
+\tikzset{-<-/.style={decoration={markings,mark=at position #1 with {\arrow{<}}},postaction={decorate}}} % Defining lines with arrows in the middle
+\tikzset{cross/.style={cross out,draw,minimum size=2*(#1-\pgflinewidth),inner sep=0pt,outer sep=0pt}} % Defining cross for a node
 
 \newcommand{\cube}[1]{
 \draw (0,0,0) -- (#1,0,0);
@@ -1150,7 +1153,7 @@ Thus, the band dispersion is
 
 Thus, there is a minimum of $\varepsilon_{\trm{min}}=-4t$ at $k_{x}=k_{y}=0$ (or $\vec{k}=\vec{0}$). Likewise, there is a maximum of $\varepsilon_{\trm{max}}=4t$ at the Brillouin zone corners $k_{x},k_{y}=\pm\frac{\pi}{a}$. The bandwidth is $\varepsilon_{\trm{max}}-\varepsilon_{\trm{min}}=8t$.\\
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.8]
 	\draw[<->] (-4,0) -- (4,0) node[right] {$k_{x}$};
 	\draw[<->] (0,-4) -- (0,4) node[above] {$k_{y}$};
 	\draw (-3,3) node[above left] {$\varepsilon_{\trm{max}}$} -- node[above left] {$\frac{\pi}{a}$} (3,3) node[above right] {$\varepsilon_{\trm{max}}$} -- node[above right] {$\frac{\pi}{a}$} (3,-3) node[below right] {$\varepsilon_{\trm{max}}$} -- node[below left] {$-\frac{\pi}{a}$}(-3,-3) node[below left] {$\varepsilon_{\trm{max}}$} -- node[above left] {$-\frac{\pi}{a}$} cycle;
@@ -1264,7 +1267,7 @@ Assuming the tight-binding approximation
 H=-t\sum_{\vec{k}}\left(\ketbra*{\vec{R},2}{\vec{R},1}+\ketbra*{\vec{R}-\vec{a}_{1},2}{\vec{R},1}+\ketbra*{\vec{R}-\vec{a}_{2},2}{\vec{R},1}+\tikzmarknode{HC}{\trm{h.c.}}\right)
 \end{equation}
 \begin{tikzpicture}[overlay,remember picture,shorten <=1mm,font=\footnotesize]
-	\draw[red,<-] (HC.south) -- ++ (0,-0.5) node[below,yshift=0.1cm] {Hermitian conjugate};
+	\draw[red,<-] (HC.north) -- ++ (0,0.5) node[above] {Hermitian conjugate};
 \end{tikzpicture}
 The inverse lattice Fourier transform gives in reciprocal space
 \begin{equation}
@@ -2002,7 +2005,6 @@ I&=I_{L}+I_{R}\\
 \end{aligned}
 \end{equation}
 
-\newpage
 Moreover
 \begin{center}
 \begin{tikzpicture}
@@ -2937,7 +2939,7 @@ where $\vec{r}_{0}$ is the deep minimum of the impurity potential and $\xi$ is t
 	\node[below] at (3,0) {$\frac{3}{2}$};
 	\node[below] at (5,0) {$\frac{5}{2}$};
 	\draw[domain=0:6,samples=200] plot (\x, {4*cos(deg(pi*(\x/2+0.5)))^4)});
-	\fill [gray,domain=0:6,fill opacity=0.2,samples=200] (0,0) -- plot (\x, {4*cos(deg(pi*(\x/2+0.5)))^4)}) -- (6,0) -- cycle;
+	\fill[gray,domain=0:6,fill opacity=0.2,samples=200] (0,0) -- plot (\x, {4*cos(deg(pi*(\x/2+0.5)))^4)}) -- (6,0) -- cycle;
 	\draw[ultra thick] (1,0) -- (1,4);
 	\draw[ultra thick] (3,0) -- (3,4);
 	\draw[ultra thick] (5,0) -- (5,4);
@@ -2974,7 +2976,7 @@ This explains why nothing changes at the plateaus, but it fails to explain why $
 	\draw[dashed] (2,-1) node[below] {$\frac{L_{x}}{2}$} -- (2,4);
 	\draw[dashed] (-2,-1) node[below] {$-\frac{L_{x}}{2}$} -- (-2,4);
 	\draw[domain=-1.982:1.982,samples=200] plot (\x, {(\x/1.85)^20});
-	\fill [gray,fill opacity=0.2] (5,0) rectangle (9,4);
+	\fill[gray,fill opacity=0.2] (5,0) rectangle (9,4);
 	\draw (5,0) node[below] {$-\frac{L_{x}}{2}$} -- (5,4);
 	\draw (9,0) node[below] {$\frac{L_{x}}{2}$} -- (9,4);
 	\draw[<->] (5,2) -- node[above] {$L_{x}$} (9,2);
@@ -3553,7 +3555,6 @@ $M(T)$ vanishes at $T=T_{c}$ when $B=0$. Thus, $M$ is small near $T_{c}$. One ca
 f=\frac{JzM^{2}}{2}-k_{B}T\ln{\left[2\cosh\left(\frac{JzM+B}{2k_{B}T}\right)\right]}
 \end{equation}
 $f(M)$ is an even function of $M$ (which is a consequence of symmetry). Note this is not true for non-zero external magnetic field. Let us expand $f$ to $\mathcal{O}(M^{4})$.
-\newpage
 \begin{equation}
 f=\cancelto{0}{\tikzmarknode{FF}{f_{0}}}+\frac{JzM^{2}}{2}-\frac{1}{2}k_{B}T\left(\frac{JzM}{2k_{B}T}\right)^{2}+\frac{1}{2}k_{B}T\left(\frac{JzM}{2k_{B}T}\right)^{4}+\mathcal{O}(M^{6})
 \end{equation}
@@ -4830,7 +4831,198 @@ Thus
 \begin{equation}
 \begin{aligned}
 i\hbar\pdv{t}(\phi_{2}^{*}\phi_{1}-\phi_{1}^{*}\phi_{2})&=i\hbar\left(\phi_{2}^{*}\pdv{\phi_{1}}{t}+\phi_{1}\pdv{\phi_{2}^{*}}{t}-\phi_{1}^{*}\pdv{\phi_{2}}{t}-\phi_{2}\pdv{\phi_{1}^{*}}{t}\right)\\
-&=eV\phi_{2}^{*}\phi_{1}-e\abs{\phi_{2}}^{2}+t\abs{\phi_{1}}^{2}+eV\phi_{2}^{*}\phi_{1}
+&=eV\phi_{2}^{*}\phi_{1}-t\abs{\phi_{2}}^{2}+t\abs{\phi_{1}}^{2}+eV\phi_{2}^{*}\phi_{1}+t\abs{\phi_{1}}^{2}+eV\phi_{1}^{*}\phi_{2}-t\abs{\phi_{2}}^{2}+eV\phi_{1}^{*}\phi_{2}\\
+&=2eV(\phi_{1}^{*}\phi_{2}+\phi_{2}^{*}\phi_{1})\\
+&=4eVn_{s}^{*}\cos\theta
 \end{aligned}
 \end{equation}
+On the other hand
+\begin{equation}
+\begin{aligned}
+i\hbar\pdv{t}(\phi_{2}^{*}\phi_{1}-\phi_{1}^{*}\phi_{2})&=2\hbar n_{s}^{*}\pdv{t}\sin\theta\\
+&=2\hbar n_{s}^{*}\pdv{\theta}{t}\cos\theta
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\pdv{\theta}{t}=\frac{2eV}{\hbar}
+\end{equation}
+This is known as the \ul{Josephson relation}.\\
+
+Assuming a DC voltage ($V\neq V(t)$)
+\begin{equation}
+\begin{aligned}
+\theta(t)&=\frac{2eV}{\hbar}t+\theta(0)\\
+I(t)&=I_{c}\sin\bigg[\theta(0)+\underbrace{\frac{2eV}{\hbar}}_{\mathclap{\trm{frequency $\omega$}}}t\bigg]
+\end{aligned}
+\end{equation}
+Thus, a DC voltage across the junction leads to an AC current. This is the \ul{AC Josephson effect}. Since both the frequency and voltage can be measured to a very high precision, the AC Josephson effect gives an extremely precise measurement of $\frac{e}{\hbar}$. The quantum Hall effect gives an extremely precis measurement of $\frac{e^{2}}{\hbar}$. These measurements together gives the most precise experimental values of $e$ and $\hbar$.\\
+
+Suppose instead we send current through the junction. If $I<I_{c}$, the current flows without resistance. If $I>I_{c}$, part of the current must become normal. This is a \ul{resistively shunted Josephson junction}.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->-=0.5] (0,0) node[left] {$I$} -- (2,0);
+	\draw (2.5,-1) -- (2,-1) -- (2,1) -- node[above,yshift=0.2cm] {$I_{s}$} (5,1) -- (5,-1) -- (4.5,-1);
+	\draw (3.5,1) node[cross=5pt] {}; 
+	\draw[->-=0.5] (5,0) -- (7,0) node[right] {$I$};
+	\draw[snake=zigzag] (2.5,-1) -- node[below,yshift=-0.2cm] {$I_{n}$} node[above,yshift=0.2cm] {$R$} (4.5,-1);
+\end{tikzpicture}
+\end{center}
+\begin{equation}
+I=I_{c}\sin\theta+\frac{V}{R}\\
+\end{equation}
+Isolating for the voltage $V$
+\begin{equation}
+\pdv{\theta}{t}=\frac{2eV}{\hbar}\implies V=\frac{\hbar}{2e}\pdv{\theta}{t}\\
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+I&=I_{c}\sin\theta+\frac{\hbar}{2eR}\pdv{\theta}{t}\\
+\implies\pdv{\theta}{t}&=\frac{2eR}{\hbar}I(1-\lambda\sin\theta),\quad\lambda=\frac{I_{c}}{I}<1
+\end{aligned}
+\end{equation}
+Letting $\omega_{0}=\frac{2eR}{\hbar}I$
+\begin{equation}
+\begin{aligned}
+\omega_{0}\dd{t}&=\frac{\dd{\theta}}{1-\lambda\sin\theta}\\
+\omega_{0}(t-t_{0})&=\int_{\theta_{0}}^{\theta}\frac{\dd{\theta^{\prime}}}{1-\lambda\sin\theta^{\prime}}
+\end{aligned}
+\end{equation}
+Since $\lambda<1$, this does not diverge. Thus
+\begin{equation}
+\begin{aligned}
+\tan\frac{\theta}{2}&=\lambda+\sqrt{1-\lambda^{2}}\tan\left[\frac{1}{2}\sqrt{1-\lambda^{2}}\omega_{0}(t-t_{0})\right]+\tan\frac{\theta_{0}}{2}\\
+\implies\theta&=2\tan^{-1}\left\{\lambda+\sqrt{1-\lambda^{2}}\tan\left[\frac{1}{2}\sqrt{1-\lambda^{2}}\omega_{0}(t-t_{0})\right]+\tan\frac{\theta_{0}}{2}\right\}
+\end{aligned}
+\end{equation}
+Substituting into $V=\frac{\hbar}{2e}\pdv{\theta}{t}$
+\begin{equation}
+V(t)=R\frac{I^{2}-I_{c}^{2}}{I-I_{c}\cos(\omega t)},\quad\omega=\frac{2e}{\hbar}R\sqrt{I^{2}-I_{c}^{2}}
+\end{equation}
+Thus, when the current exceeds the critical current, there appears an AC voltage across the junction. This is \ul{Josephson radiation}. Averaging over time gives
+\begin{equation}
+\begin{aligned}
+2e\expval{V}&=\hbar\omega\\
+\expval{V}&=\frac{\omega}{2\pi}\int_{0}^{\frac{2\pi}{\omega}}V(t)\dd{t}\\
+&=\frac{\hbar\omega}{2e}\\
+&=R\sqrt{I^{2}-I_{c}^{2}}
+\end{aligned}
+\end{equation}
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (6,0) node[right] {$I$};
+	\draw[->] (0,0) -- (0,6) node[above] {$\expval{V}$};
+	\draw[dashed] (0,0) -- (6,6);
+	\draw[domain=1:6,samples=500] plot (\x,{sqrt((\x)^2-1)});
+	\node[below] at (1,0) {$I_{c}$};
+\end{tikzpicture}
+\end{center}
+At high currents, the junction behaves classically.
+
+\subsection{SQUID \textemdash Superconducting Quantum Interference Device}
+There are two basic types of SQUID.
+\begin{itemize}
+\item Two-junction SQUID
+\item Single-junction RF SQUID
+\end{itemize}
+Consider the two-junction SQUID, with two Josephson junctions connected in parallel.
+\begin{center}
+\begin{tikzpicture}
+	\fill[fill opacity=0.2] (0,4) rectangle (1,5);
+	\fill[fill opacity=0.2] (6,4) rectangle (7,5);
+	\node[left] at (0,4.5) {$a$};
+	\node[right] at (7,4.5) {$b$};
+	\draw (3,9) -- (3,7) -- (0,7) -- (0,2) -- (3,2) -- (3,0);
+	\draw (4,9) -- (4,7) -- (7,7) -- (7,2) -- (4,2) -- (4,0);
+	\draw (1,3) rectangle (6,6);
+	\node at (3.5,4.5) {$\bigotimes \phi$};
+	\draw[->] (3.5,9) node[above] {$I$} -- (3.5,8);
+	\draw[->] (3.5,1) -- (3.5,0) node[below] {$I$};
+	\fill (3.5,7.5) circle (2pt);
+	\fill (3.5,1.5) circle (2pt);
+	\draw (3.5,7.5) -- (9,7.5) -- (9,1.5) -- (3.5,1.5);
+	\draw[fill=white] (9,4.5) circle (15pt) node[font=\large] {$V$};
+	\fill (0.5,5.5) circle (2pt) node[left,font=\small] {1};
+	\fill (0.5,3.5) circle (2pt) node[left,font=\small] {2};
+	\fill (6.5,5.5) circle (2pt) node[right,font=\small] {3};
+	\fill (6.5,3.5) circle (2pt) node[right,font=\small] {4};
+	\draw[dashed] (0.5,5.5) -- (0.5,6.5) -- (6.5,6.5) -- (6.5,5.5);
+	\draw[dashed] (0.5,3.5) -- (0.5,2.5) -- (6.5,2.5) -- (6.5,3.5);
+	\draw[dashed] (3.5,8) -- (3.5,6.5);
+	\draw[dashed] (3.5,1) -- (3.5,2.5);
+\end{tikzpicture}
+\end{center}
+
+Consider two pairs of points in the interior: (1,2) and (3,4), which are close to the junction. The expression for the current is
+\begin{equation}
+\vec{j}=-\frac{\hbar e^{*}n_{s}}{m^{*}}\left(\vec{\nabla}\theta+\frac{e^{*}}{\hbar c}\vec{A}\right)
+\end{equation}
+Inside the superconductor, the current is zero. Therefore
+\begin{equation}
+\vec{\nabla}\theta=-\frac{e^{*}}{\hbar c}\vec{A}
+\end{equation}
+Integrating from 1 to 3 and from 4 to 2
+\begin{equation}
+\theta_{3}-\theta_{1}+\theta_{2}-\theta_{4}=-\frac{2e}{\hbar c}\left(\int_{1}^{3}\vec{A}\cdot\dd{\vec{\ell}}+\int_{4}^{2}\vec{A}\cdot\dd{\vec{\ell}}\right)
+\end{equation}
+Taking the width of the junctions to be small
+\begin{equation}
+\varphi_{a}-\varphi_{b}=-\frac{2e}{\hbar c}\oint\vec{A}\cdot\dd{\vec{\ell}}
+\end{equation}
+where $\varphi_{a}=\theta_{2}-\theta_{1}$ and $\varphi_{b}=\theta_{4}-\theta_{3}$ are the phase differences across the junction. Since $\oint\vec{A}\cdot\dd{\vec{\ell}}$ is the total magnetic flux through the device
+\begin{equation}
+\varphi_{a}-\varphi_{b}=-\frac{2\pi\phi}{\phi_{0}}
+\end{equation}
+with $\phi_{0}=\frac{hc}{2e}$ being the flux quantum.
+
+Calculating the current through the junctions
+\begin{equation}
+\begin{aligned}
+I_{a}&=I_{c}\sin\varphi_{a},\quad I_{b}=I_{c}\sin\varphi_{b}\\
+I&=I_{a}+I_{b}\\
+&=I_{c}(\sin\varphi_{a}+\sin\varphi_{b})\\
+&=2I_{c}\sin\left(\frac{\varphi_{a}+\varphi_{b}}{2}\right)\cos\left(\frac{\varphi_{a}-\varphi_{b}}{2}\right)
+\end{aligned}
+\end{equation}
+Since $\varphi_{b}=\varphi_{a}+\frac{2\pi\phi}{\phi_{0}}$
+\begin{equation}
+I=2I_{c}\cos\left(\pi\frac{\phi}{\phi_{0}}\right)\sin\left(\varphi_{a}+\pi\frac{\phi}{\phi_{0}}\right)
+\end{equation}
+For a fixed $\phi$, $\varphi_{a}$ adjusts to a given applied current $I$. The maximal current $I_{\trm{max}}$ is obtained when $\sin\left(\varphi_{a}+\pi\frac{\phi}{\phi_{0}}\right)=1$. Thus
+\begin{equation}
+I_{\trm{max}}=2I_{c}\abs{\cos\left(\pi\frac{\phi}{\phi_{0}}\right)}
+\end{equation}
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (6,0) node[right] {$\frac{\phi}{\phi_{0}}$};
+	\draw[->] (0,0) -- (0,2.5) node[above] {$\frac{I_{\trm{max}}}{2I_{c}}$};
+	\node[left] at (0,2) {1};
+	\node[below] at (1,0) {$\frac{1}{2}$};
+	\node[below] at (3,0) {$\frac{3}{2}$};
+	\node[below] at (5,0) {$\frac{5}{2}$};
+	\draw[domain=0:6,samples=200] plot (\x,{2*abs(cos(deg(pi*\x/2)))});
+\end{tikzpicture}
+\end{center}
+Thus, SQUID may be used to measure magnetic flux. This is used in ultrasensitive magnetometry. The interference pattern is analogous to the double slit experiment.
+
+\subsection{Josephson-Junction Qubit}
+The Josephson junctions may also be used as a qubit. Consider again the resistively shunted Josephson junction model. To model it more accurately, include capacitive effects.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->-=0.5] (0,0) node[left] {$I$} -- (2,0);
+	\draw (2.5,-1) -- (2,-1) -- (2,1) -- (3.4,1) -- (3.6,1) -- (5,1) -- (5,-1) -- (4.5,-1);
+	\draw (2,0) -- (5,0);
+	\draw (3.5,0) node[cross=5pt] {};
+	\node at (3.5,0) node[above] {$I_{s}$};
+	\draw[->-=0.5] (5,0) -- (7,0) node[right] {$I$};
+	\draw[snake=zigzag] (2.5,-1) -- node[below,yshift=-0.2cm] {$I_{n}$} node[above,yshift=0.2cm] {$R$} (4.5,-1);
+\end{tikzpicture}
+\end{center}
+
+
+
+
+
+
 \end{document}
