@@ -1,0 +1,1861 @@
+\documentclass[12pt,a4paper,titlepage]{article}
+% Daniel Wong September 10, 2020
+
+\usepackage[fleqn]{amsmath} % To write aligned equations
+\usepackage{amssymb} % To write math symbols
+\usepackage{graphicx,float} % To add pictures
+\usepackage{caption} % To add captions
+\usepackage{subcaption} % To add subcaptions
+\usepackage{multirow} % To add multirow lines in tables
+\usepackage{multicol} % To add multicolumn lines in tables
+\usepackage{hyperref} % To add hyperlinks
+\usepackage[normalem]{ulem} % To underline
+\usepackage[backend=bibtex,citestyle=numeric,autocite=plain,sorting=none]{biblatex} % To add references
+\usepackage[english]{babel} % To write accented vowels
+\usepackage[toc,page]{appendix} % To add table of contents
+\usepackage{physics} % To use supported physics notation
+\usepackage[none]{hyphenat} % To remove hyphenation
+\usepackage{mathtools}  % To use \mathclap which removes white space for subscripts
+\usepackage{tensor} % For subscripts to the left
+
+\usepackage{fancyhdr} % To input custom headers
+\pagestyle{fancy} % Defines header for all pages other than plain-style pages
+\fancyhf{}
+\rhead{\nouppercase\leftmark}
+\lfoot{Daniel Wong}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt} % Defining width of header line
+\renewcommand{\footrulewidth}{0.4pt} % Defining width of footer line
+
+\usepackage{tikz} % To input mathematical plots and diagrams
+\usetikzlibrary{decorations.pathreplacing,decorations.pathmorphing,decorations.markings} % For curly braces, wavy lines, and arrow markings
+\usetikzlibrary{tikzmark} % For adding annotations to equations
+\usetikzlibrary{shapes.geometric} % For drawing regular polygons
+\usetikzlibrary{shapes.misc} % For drawing crosses
+\usetikzlibrary{snakes} % For drawing zigzag lines
+
+\tikzset{->-/.style={decoration={markings,mark=at position #1 with {\arrow{>}}},postaction={decorate}}} 
+\tikzset{-<-/.style={decoration={markings,mark=at position #1 with {\arrow{<}}},postaction={decorate}}} % Defining lines with arrows in the middle
+\tikzset{cross/.style={cross out,draw,minimum size=2*(#1-\pgflinewidth),inner sep=0pt,outer sep=0pt}} % Defining cross for a node
+
+\usepackage{color} % To use different colours
+\usepackage[makeroom]{cancel} % To cancel terms in equations
+
+\definecolor{lightGray}{gray}{0.8}
+
+\newcommand{\trm}[1]{\textrm{#1}} % Shorthand for \textrm command
+\newcommand{\up}{\uparrow} % Shorthand for \uparrow command
+\newcommand{\dn}{\downarrow} % Shorthand for \downarrow command
+\newcommand{\en}{\epsilon_{0}} % Shorthand for \epsilon_{0}
+\newcommand{\ul}[1]{\underline{\smash{#1}}} % Properly underlines words
+\newcommand{\explain}[1]{% Adds an arrow to allow for explanations in equations
+	\quad\rotatebox[origin=c]{180}{\enskip$\Lsh$}\hfill
+	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
+	#1
+	\end{minipage}\hspace{4em}\bigskip
+}
+
+\newcommand{\aside}[1]{% Aligns the environment for asides
+	\ul{Aside}:\hfill
+	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
+	#1
+	\end{minipage}\hspace{4em}\bigskip
+}
+\newcommand{\definition}[1]{% Aligns the environment for definitions
+	\ul{Definition}:\hfill
+	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
+	#1
+	\end{minipage}\hspace{4em}\bigskip
+}
+\newcommand{\example}[2]{% Aligns the environment for examples
+	\bigskip
+	\hrule
+	\bigskip
+	\ul{Ex #1}:\hfill
+	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
+	#2
+	\end{minipage}\hspace{4em}
+	\bigskip
+	\hrule
+	\bigskip
+}
+
+\newcommand{\angstrom}{\textup{\AA}} % Angstrom symbol
+\newcommand{\Chi}{\mathcal{X}} % Inline chi symbol
+\newcommand{\sign}{\trm{sign}}
+\renewcommand{\Re}{\trm{Re}} % Real
+\renewcommand{\Im}{\trm{Im}} % Imaginary
+\renewcommand{\CancelColor}{\color{red}} % Changes the cancel colour to red
+
+\begin{document}
+\title{PHYS 434: Quantum Physics III}
+\author{Daniel Wong\\University of Waterloo\\Instructor: Dr. Anton Burkov}
+\date{Fall 2017}
+\maketitle
+
+\setlength\parindent{0pt}
+\pagenumbering{roman}
+\numberwithin{equation}{section}
+
+\section*{Disclaimer}
+These notes may be freely used by anyone who comes across them. If any errors are found within these notes, please email me at \ul{temp@temp.com}. If you are the previous instructor of this course (Dr. Anton Burkov) and have concerns about keeping these notes on my website, please contact me at the email provided.\\
+
+Other course notes may be found on my website at \url{www.temp.com/notes}.
+
+\newpage
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section{Review of Quantum Mechanics}
+\subsection{Discrete Spectrum}
+States of the system in quantum mechanics are vectors in Hilbert space $\mathcal{H}$. The Hilbert space $\mathcal{H}$ is the space of all states of a given system. In Dirac notation, the states are called kets $\ket{\psi}$.\\
+
+Observables in quantum mechanics are operators $\vb{A}:\mathcal{H}\rightarrow\mathcal{H}$ acting on kets such that $\vb{A}\ket{\psi}=\ket{\varphi}$. Every operator $\vb{A}$ has a set of eigenstates (or eigenkets) $\{\ket*{a'}\}$ where
+\begin{equation}
+\begin{aligned}
+\vb{A}\ket*{a'}&=a'\ket*{a'}\\
+\vb{A}\ket*{a''}&=a''\ket*{a''}
+\end{aligned}
+\end{equation}
+The eigenvalue corresponding to the eigenket $\ket*{a'}$ is denoted $a'\in\mathbb{R}$.\\
+
+The dual Hilbert space to the ket space is the bra space. Elements of the bra space are bras and are denoted as $\bra{\varphi}$.\\
+
+One can now define an inner product (or scalar product) of a bra $\bra{\varphi}$ and ket $\ket{\psi}$ to be $\braket{\varphi}{\psi}$. By definition
+\begin{equation}
+\braket{\varphi}{\psi}=\braket{\psi}{\varphi}^{*}
+\end{equation}
+This implies that $\braket{\psi}{\psi}=\braket{\psi}{\psi}^{*}$ is real. We postulate that $\braket{\psi}{\psi}$ is non-negative, meaning
+\begin{equation}
+\norm{\psi}=\braket{\psi}{\psi}^{\frac{1}{2}}\geq0
+\end{equation}
+
+Thus, every state in the Hilbert space can be normalized.
+\begin{equation}
+\begin{aligned}
+\ket*{\tilde{\psi}}&=\frac{1}{\sqrt{\braket{\psi}{\psi}}}\ket{\psi}\\
+\implies \braket*{\tilde{\psi}}{\tilde{\psi}}&=\frac{\braket{\psi}{\psi}}{\braket{\psi}{\psi}}=1
+\end{aligned}
+\end{equation}
+If one has that $\braket{\varphi}{\psi}=0$, then $\ket{\psi}$ and $\ket{\varphi}$ are orthogonal.\\
+
+The dual of $\vb{A}\ket{\psi}$ is $\bra{\psi}\vb{A}^{\dagger}$, where $\vb{A}^{\dagger}$ is the Hermitian adjoint of $\vb{A}$. One can act on the ket $\vb{A}\ket{\psi}$ with the bra $\bra{\varphi}$ and obtain
+\begin{equation}
+\mel{\varphi}{\vb{A}}{\psi}=\mel{\psi}{\vb{A}^{\dagger}}{\varphi}^{*}
+\end{equation}
+
+The operator is Hermitian if $\vb{A}^{\dagger}=\vb{A}$. For $\vb{A}$ as a Hermitian operator, let $(a',\ket*{a'})$ and $(a'',\ket*{a''})$ be two eigenpairs. Thus
+\begin{equation}
+\begin{aligned}
+\vb{A}\ket*{a'}&=a'\ket*{a'}\\
+\vb{A}\ket*{a''}&=a''\ket*{a''}
+\end{aligned}
+\end{equation}
+
+Let $\bra{\varphi}$ be an arbitrary bra. Thus
+\begin{equation}
+\begin{aligned}
+\mel*{\varphi}{\vb{A}}{a''}&=\mel*{\varphi}{a''}{a''}=a''\braket*{\varphi}{a''}\\
+\mel*{a''}{\vb{A}}{\varphi}&=\mel*{\varphi}{\vb{A}}{a''}^{*}=a''^{*}\braket*{a''}{\varphi}
+\end{aligned}
+\end{equation}
+Since $\bra{\varphi}$ is arbitrary
+\begin{equation}
+\bra*{a''}\vb{A}=a''^{*}\bra*{a''}
+\end{equation}
+From $\vb{A}\ket*{a'}=a'\ket*{a'}$ and $\bra*{a''}\vb{A}=a''^{*}\bra*{a''}$
+\begin{equation}
+\begin{aligned}
+\mel*{a''}{\vb{A}}{a'}=a'\braket*{a''}{a'}=a''^{*}\braket*{a''}{a'}\\
+\implies (a'-a''^{*})\braket*{a''}{a'}=0
+\end{aligned}
+\end{equation}
+One can choose $\ket*{a''}=\ket*{a'}$ to show
+\begin{equation}
+(a'-a'^{*})\braket*{a'}{a'}=0 \implies a'=a'^{*}
+\end{equation}
+since $\braket*{a'}{a'}>0$ with $\ket*{a'}\neq\ket{0}$. Thus, all Hermitian operators have real eigenvalues. Since the spectrum of an operator correspond to physical observales, this is in agreement with the fact that all physical quantities are real-valued.\\
+
+Consider now $\ket*{a'}$ and $\ket*{a''}$ to be different and non-degenerate (different eigenvalues). Thus
+\begin{equation}
+\begin{aligned}
+(a'-a''^{*})\braket*{a''}{a'}&=0\\
+(a'-a'')\braket*{a''}{a'}&=0\trm{, since all eigenvalues are real}\\
+\braket*{a''}{a'}&=0\trm{, since $\ket*{a'}$ and $\ket*{a''}$ are non-degenerate}
+\end{aligned}
+\end{equation}
+Thus, eigenstates corresponding to different eigenvalues are orthogonal. We shall also assert all eigenstates are normalized, since their norm is arbitrary. Thus, these results can be represented as 
+\begin{equation}
+\braket*{a'}{a''}=\delta_{a'a''}
+\end{equation}
+
+Thus, the set of eigenkets of any Hermitian operator forms a complete orthonormal set of states and act as a basis for the Hilbert space. Thus, any ket $\ket{\psi}$ can be written as a linear combination of eigenkets for any Hermitian operator $\vb{A}$.
+\begin{equation}
+\ket{\psi}=\sum_{a'}c_{a'}\ket{a'}
+\end{equation}
+Using the orthonormality of eigenkets
+\begin{equation}
+\begin{aligned}
+\braket*{a''}{\psi}&=\sum_{a'}c_{a'}\braket*{a''}{a'}=\sum_{a'}c_{a'}\delta_{a''a'}=c_{a''}\\
+\implies c_{a'}&=\braket*{a'}{\psi}\in\mathbb{C}
+\end{aligned}
+\end{equation}
+Physically, $c_{a'}$ is the probability amplitude. For a sysem in state $\ket{\psi}$, the probability of measuring the value $a'$ when making measurement $\vb{A}$ is the square modulus of $c_{a'}$ (i.e. $\abs{c_{a'}}^{2}$). Equivalently, this is the same probability of finding state $\ket{\psi}$ in state $\ket*{a'}$ after measurement.\\
+
+Writing $\ket{\psi}$ as a spectral decomposition gives
+\begin{equation}
+\ket{\psi}=\sum_{a'}\ket*{a'}\ip*{a'}{\psi}\trm{, since $c_{a'}=\ip*{a'}{\psi}$}
+\end{equation}
+
+Since $\ket{\psi}$ is arbitrary, one now obtains the closure relation (or resolution of identity).
+\begin{equation}
+\sum_{a'}\op*{a'}{a'}=\mathbb{I}
+\end{equation}
+
+An individual term in this sum is called the projection operator.
+\begin{equation}
+\begin{aligned}
+\Lambda_{a'}&=\op*{a'}{a'}\\
+\Lambda_{a'}\ket{\psi}&=\ket*{a'}\ip*{a'}{\psi}&=c_{a'}\ket{a'}
+\end{aligned}
+\end{equation}
+As such, $\Lambda_{a'}$ projects $\ket{\psi}$ into the direction of eigenket $\ket{a'}$.\\
+
+Using the closure relation, one can obtain the spectral decomposition of operator $\vb{A}$.
+\begin{equation}
+\vb{A}\op*{a'}{a'}=a'\op*{a'}{a'}
+\end{equation}
+Taking the sum over all eigenkets
+\begin{equation}
+\vb{A}\sum_{a'}\op*{a'}{a'}=\vb{A}\mathbb{I}=\vb{A}=\sum_{a'}\op*{a'}{a'}
+\end{equation}
+
+Consider another operator $\vb{B}$.
+\begin{equation}
+\vb{B}=\mathbb{I}\vb{B}\mathbb{I}=\sum_{a'a''}\op*{a''}{a''}\vb{B}\op*{a'}{a'}
+\end{equation}
+$\mel*{a''}{\vb{B}}{a'}$ can be interpreted as a matrix indexed by $\ket*{a''}$ and $\ket*{a'}$.
+
+\begin{equation}
+\vb{B}=\mqty(\mel*{a^{(1)}}{\vb{B}}{a^{(1)}} & \ldots & \mel*{a^{(1)}}{\vb{B}}{a^{(n)}} \\ \vdots & \ddots & \vdots \\ \mel*{a^{(n)}}{\vb{B}}{a^{(1)}} & \ldots & \mel*{a^{(n)}}{\vb{B}}{a^{(n)}})
+\end{equation}
+The matrix that corresponds to $\vb{B}^{\dagger}$ is the complex conjugate transposed of the matrix corresponding to $\vb{B}$.
+
+\subsection{Continuous Spectrum}
+Let us now generalize to operators with continuous spectrum. For example, the position and momentum operators are two such operators. Let $\ket*{x'}$ be a position eigenket corresponding to the state of a particle at position $x'$ in space. Let $\vb{x}$ be the position operator defined as
+\begin{equation}
+\vb{x}\ket*{x'}=x'\ket*{x'}
+\end{equation}
+Define $\psi(x')$ as the probability amplitude to find a particle in a state $\ket{\psi}$ at position $x'$. It is given by
+\begin{equation}
+\psi(x')=\ip*{x'}{\psi}
+\end{equation}
+This is equal to the wavefunction.\\
+
+For the continuous spectra, instead of using sums, one uses integrals. Generalizing the Kronecker delta equation to the continuous spectra, one obtains the Dirac delta function $\delta(x)$
+\begin{equation}
+\ip*{x'}{x''}=\delta(x'-x'')
+\end{equation}
+where the Dirac delta is defined as
+\begin{equation}
+\int_{-\infty}^{\infty}\dd{x'}f(x')\delta(x')=f(0)
+\end{equation}
+
+\begin{tikzpicture}
+	\draw[<->] (-2,0) -- (2,0) node[right] {$x$};
+	\draw[->] (0,0) -- (0,2) node[above] {$y$};
+	\draw[red,thick,fill opacity=0.2,text opacity=1] (-2,0) -- (0,0) -- (0,2) -- (0,0) -- (2,0);
+	\node at (0.5,1.5) {$\delta(x)$};
+\end{tikzpicture}
+
+The closure relation then becomes
+\begin{equation}
+\mathbb{I}=\int_{-\infty}^{\infty}\dd{x'}\op*{x'}{x'}
+\end{equation}
+Thus
+\begin{equation}
+\ket{\psi}=\mathbb{I}\ket{\psi}=\int\dd{x'}\ket*{x'}\ip*{x'}{\psi}
+\end{equation}
+
+Let $\ket{\varphi}$ be another ket in the same Hilbert space as $\ket{\psi}$.
+\begin{equation}
+\begin{aligned}
+\ip{\varphi}{\psi}&=\int_{-\infty}^{\infty}\dd{x'}\ip*{\varphi}{x'}\ip*{x'}{\psi}\\
+&=\int_{-\infty}^{\infty}\dd{x'}\ip*{x'}{\varphi}^{*}\ip*{x'}{\psi}\\
+&=\int_{-\infty}^{\infty}\dd{x'}\varphi(x')^{*}\psi(x')
+\end{aligned}
+\end{equation}
+Compare this to $\ip{\varphi}{\psi}=\sum_{a'}\ip*{\varphi}{a'}\ip*{a'}{\psi}$ in the discrete case.
+
+\subsection{Infinitesimal Translations}
+Introduce the infinitesimal translation operator $\vb{T}$ as
+\begin{equation}
+\vb{T}(\dd{x'})\ket*{\vec{x}\,'}=\ket*{\vec{x}\,'+\dd{\vec{x}\,'}}
+\end{equation}
+where $\dd{\vec{x}\,'}$ is an infinitesimally small vector. Acting on an arbitrary $\ket{\psi}$ state
+\begin{equation}
+\begin{aligned}
+\vb{T}(\dd{\vec{x}\,'})\ket{\psi}&=\vb{T}(\dd{\vec{x}\,'})\underbrace{\int_{\mathbb{R}}\dd[3]{x'}\op*{\vec{x}\,'}{\vec{x}\,'}}_{\mathbb{I}}\ket*{\psi}\qq{(Note that $\dd{\vec{x}\,'}\neq\dd[3]x'$)}\\
+&=\int_{\mathbb{R}}\dd[3]{x'}\ket*{\vec{x}\,'+\dd{\vec{x}\,'}}\ip*{\vec{x}\,'}{\psi}\\
+&=\int_{\mathbb{R}}\dd[3]{x''}\ket*{\vec{x}\,''}\ip*{\vec{x}\,''-\dd{\vec{x}\,'}}{\psi},\qq{$\vec{x}\,''=\vec{x}\,'-\dd{\vec{x}\,'}$}
+\end{aligned}
+\end{equation}
+
+Without loss of generality, let $\ket{\psi}$ be normalized (i.e. $\ip{\psi}{\psi}=1$). It is useful to define $\vb{T}(\dd{\vec{x}\,'})$ such that $\vb{T}(\dd{\vec{x}\,'})\ket{\psi}$ is also normalized. Thus
+\begin{equation}
+\mel*{\psi}{\vb{T}^{\dagger}(\dd{\vec{x}\,'})\vb{T}(\dd{\vec{x}\,'})}{\psi}=1
+\end{equation}
+If this equation is to hold for arbitrary $\ket{\psi}$, then $\vb{T}(\dd{\vec{x}\,'})$ must be a unitary operator.
+\begin{equation}
+\begin{aligned}
+\vb{T}^{\dagger}(\dd{\vec{x}\,'})\vb{T}(\dd{\vec{x}\,'})&=\mathbb{I}\\
+\implies\vb{T}^{\dagger}(\dd{\vec{x}\,'})&=\vb{T}^{-1}(\dd{\vec{x}\,'})
+\end{aligned}
+\end{equation}
+
+Likewise, translations are additive.
+\begin{equation}
+\vb{T}(\dd{\vec{x}\,''})\vb{T}(\dd{\vec{x}\,'})=\vb{T}(\dd{\vec{x}\,'}+\dd{\vec{x}\,''})
+\end{equation}
+Letting $\dd{\vec{x}\,''}=-\dd{\vec{x}\,'}$
+\begin{equation}
+\begin{aligned}
+\vb{T}(-\dd{\vec{x}\,'})\vb{T}(\dd{\vec{x}\,'})&=T(\vec{0})=\mathbb{I}\\
+\vb{T}(-\dd{\vec{x}\,'})&=\vb{T}^{-1}(\dd{\vec{x}\,'})
+\end{aligned}
+\end{equation}
+
+All of these properties are satisfied if
+\begin{equation}
+\vb{T}(\dd{\vec{x}\,'})=\mathbb{I}-i\vec{\vb{K}}\cdot\dd{\vec{x}\,'},\qq{where $\vec{\vb{K}}=(\vb{K}_{x},\vb{K}_{y},\vb{K}_{z})$ is a Hermitian operator}
+\end{equation}
+
+Thus
+\begin{equation}
+\begin{aligned}
+\vb{T}^{\dagger}(\dd{\vec{x}\,'})\vb{T}(\dd{\vec{x}\,'})&=(\mathbb{I}+i\vec{\vb{K}}^{\dagger}\cdot\dd{\vec{x}\,'})(\mathbb{I}-i\vec{\vb{K}}\cdot\dd{\vec{x}\,'})\\
+&=(\mathbb{I}+i\vec{\vb{K}}\cdot\dd{\vec{x}\,'})(\mathbb{I}-i\vec{\vb{K}}\cdot\dd{\vec{x}\,'})\\
+&=\mathbb{I}+(\vec{\vb{K}}\cdot\dd{\vec{x}\,'})^{2}\\
+&=\mathbb{I}+\cancelto{0}{\order{\dd{\vec{x}\,'}^{2}}}\qq{where higher-order infinitesimals can be neglected}\\
+&\approx\mathbb{I}
+\end{aligned}
+\end{equation}
+
+Similarly
+\begin{equation}
+\begin{aligned}
+\vb{T}(\dd{\vec{x}\,''})\vb{T}(\dd{\vec{x}\,'})&=(\mathbb{I}-i\vec{\vb{K}}\cdot\dd{\vec{x}\,''})(\mathbb{I}-i\vec{\vb{K}}\cdot\dd{\vec{x}\,'})\\
+&=\mathbb{I}-i\vec{\vb{K}}\cdot\dd{\vec{x}\,''}-i\vec{\vb{K}}\cdot\dd{\vec{x}\,'}+\cancelto{0}{\order{\dd{\vec{x}\,'}^{2}}}\\
+&\approx\mathbb{I}-i\vec{\vb{K}}\cdot(\dd{\vec{x}\,''}+\dd{\vec{x}\,'})\\
+&=\vb{T}(\dd{\vec{x}\,''}+\dd{\vec{x}\,'})
+\end{aligned}
+\end{equation}
+
+Thus, this representation satisfies both the unitary and additive properties.\\
+
+To demonstrate the specific form of $\vec{\vb{K}}$, calculate the commutator $\comm{\vec{\vb{x}}}{\vb{T}(\dd{\vec{x}\,'})}$ between operators $\vec{\vb{x}}$ and $\vb{T}(\dd{\vec{x}\,'})$.
+\begin{equation}
+\begin{aligned}
+\comm{\vec{\vb{x}}}{\vb{T}(\dd{\vec{x}\,'})}\ket*{\vec{x}\,'}&=\vec{\vb{x}}\vb{T}(\dd{\vec{x}\,'})\ket*{\vec{x}\,'}-\vb{T}(\dd{\vec{x}\,'})\vec{x}\,'\ket*{\vec{x}\,'}\\
+&=\vec{\vb{x}}\ket*{\vec{x}\,'+\dd{\vec{x}\,'}}-\vb{T}(\dd{\vec{x}\,'})\vec{x}\,'\ket*{\vec{x}\,'}\\
+&=(\vec{x}\,'+\dd{\vec{x}\,'})\ket*{\vec{x}\,'+\dd{\vec{x}\,'}}-\vec{x}\,'\vb{T}(\dd{\vec{x}\,'})\ket*{\vec{x}\,'}\\
+&=(\vec{x}\,'+\dd{\vec{x}\,'})\ket*{\vec{x}\,'+\dd{\vec{x}\,'}}-\vec{x}\,'\ket*{\vec{x}\,'+\dd{\vec{x}\,'}}\\
+&=\dd\vec{x}\,'\ket*{\vec{x}\,'+\dd{\vec{x}\,'}}\\
+&\approx\dd\vec{x}\,'\ket*{\vec{x}\,'}\qq{given that $\dd\vec{x}\,'\ket*{\dd{\vec{x}\,'}}$ is $\order{\dd{\vec{x}\,'}^{2}}$}
+\end{aligned}
+\end{equation}
+
+Therefore
+\begin{equation}
+\comm{\vec{\vb{x}}}{\vb{T}(\dd{\vec{x}\,'})}=\dd{\vec{x}\,'}\implies -i\vec{\vb{x}}\vec{\vb{K}}\cdot\dd{\vec{x}\,'}+i\vec{\vb{K}}\cdot\dd{\vec{x}\,'}\vec{\vb{x}}=\dd{\vec{x}\,'}
+\end{equation}
+
+Choosing $\dd{\vec{x}\,'}=\dd{x'}\hat{x}_{j}$ where $\hat{x}_{j}$ is the unit vector in the $j$-th direction
+\begin{equation}
+\begin{aligned}
+\comm{\vec{\vb{x}}}{\vb{T}(\dd{\vec{x}\,'})}&=-i\vec{\vb{x}}\vb{K}_{j}\dd{x'}+i\vb{K}_{j}\dd{x'}\vec{\vb{x}}\\
+\implies\comm{\vec{\vb{x}}}{\vb{T}(\dd{\vec{x}\,'})}_{i}&=-i\vb{x}_{i}\vb{K}_{j}\dd{x'}+i\vb{K}_{j}\dd{x'}\vb{x}_{i}=\delta_{ij}\dd{x'}\\
+&\quad\explain{Since $\comm{\vec{\vb{x}}}{\vb{T}(\dd{\vec{x}\,'})}=\dd{\vec{x}\,'}=\dd{x'}\hat{x}_{j}$}\\
+\implies -i\comm{\vb{x}_{i}}{\vb{K}_{j}}&=\delta_{ij}\\
+\comm{\vb{x}_{i}}{\vb{K}_{j}}&=i\delta_{ij}\\
+\end{aligned}
+\end{equation}
+
+Thus, $\vec{\vb{K}}=\frac{1}{\hbar}\vec{\vb{p}}$, where $\vec{\vb{p}}$ is the generator of infinitesimal translations (or the momentum operator). This gives
+\begin{equation}
+\comm{\vb{x}_{i}}{vb{p}_{j}}=i\hbar\delta_{ij}
+\end{equation}
+and
+\begin{equation}
+\vb{T}(\dd{\vec{x}\,'})=\mathbb{I}-\frac{i}{\hbar}\vec{\vb{p}}\cdot\dd{\vec{x}\,'}
+\end{equation}
+
+Suppose $\vec{a}$ is finite. One finds the form of the translation operator $\vb{T}(\dd{\vec{x}\,'})$ as
+\begin{equation}
+\begin{aligned}
+\vb{T}(\vec{a})&=\lim_{N\rightarrow\infty}\vb{T}\qty(\frac{\vec{a}}{N})^{N}\\
+\implies\vb{T}(\dd{\vec{x}\,'})&=\lim_{N\rightarrow\infty}\qty(\mathbb{I}-\frac{i}{\hbar}\vec{\vb{p}}\cdot\frac{\vec{a}}{N})^{N}=e^{-\frac{i\vec{\vb{p}}\cdot\vec{a}}{\hbar}}
+\end{aligned}
+\end{equation}
+
+\subsection{Position and Momentum Representation Transformations}
+Let us consider a 1D system, where $\Delta x'$ is infinitesimally small
+\begin{equation}
+\begin{aligned}
+\vb{T}(\Delta x')\ket{\psi}&=\qty(1-\frac{i}{\hbar}\vb{p}\Delta x')\ket{\psi}\\
+&=\int_{-\infty}^{\infty}\dd{x'}\qty(1-\frac{i}{\hbar}\vb{p}\Delta x')\ket{x'}\ip{x'}{\psi}\\
+&=\int_{-\infty}^{\infty}\dd{x'}\vb{T}(\Delta x')\ket{x'}\ip{x'}{\psi}\\
+&=\int_{-\infty}^{\infty}\dd{x'}\ket{x'+\Delta x'}\ip{x'}{\psi}\\
+&=\int_{-\infty}^{\infty}\dd{x'}\ket{x'}\ip{x'-\Delta x'}{\psi}\\
+&\quad\explain{Redefining $x'+\Delta x'$ as $x'$}
+\end{aligned}
+\end{equation}
+Note that
+\begin{equation}
+\begin{aligned}
+\ip{x'-\Delta x'}{\psi}&=\psi(x'-\Delta x')\\
+&=\psi(x')-\Delta x'\pdv{x'}\psi(x')+\ldots\qq{by Taylor expansion}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\vb{T}(\Delta x')\ket{\psi}&=\int_{-\infty}^{\infty}\dd{x'}\ket{x'}\qty(\ip{x'}{\psi}-\Delta x'\pdv{x'}\ip{x'}{\psi})\\
+&=\qty(1-\Delta x'\pdv{x'})\ket{\psi}
+\end{aligned}
+\end{equation}
+Compare this with $\vb{T}(\Delta x')\ket{\psi}=\qty(1-\frac{i}{\hbar}\vb{p}\Delta x')\ket{\psi}$
+\begin{equation}
+\vb{p}\ket{\psi}=\int\dd{x'}\ket{x'}\qty(-i\hbar\pdv{x'}\ip{x'}{\psi})
+\end{equation}
+Equivalently, in 3D
+\begin{equation}
+\vec{\vb{p}}\ket{\psi}=-i\hbar\vec{\nabla}\ket{\psi}=-i\hbar\qty(\pdv{x}\hat{x}+\pdv{y}\hat{y}+\pdv{z}\hat{z})\ket{\psi}
+\end{equation}
+Therefore
+\begin{equation}
+\begin{aligned}
+\mel{x''}{\vb{p}}{\psi}&=\int\dd{x'}\ip{x''}{x'}\qty(-i\hbar\pdv{x'}\ip{x'}{\psi})\\
+&=\int\dd{x'}\delta(x''-x')\qty(-i\hbar\pdv{x'}\ip{x'}{\psi})\\
+&=-i\hbar\pdv{x''}\ip{x''}{\psi}\\
+\therefore \mel{x'}{\vb{p}}{\psi}&=-i\hbar\pdv{x'}\ip{x'}{\psi}
+\end{aligned}
+\end{equation}
+Since a given ket $\ket{\psi}$ can be written in any basis or representation, let us transform $\ket{\psi}$ in the momentum basis. Recall the momentum eigenkets form a complete orthonormal set of states
+\begin{equation}
+\vb{p}\ket{p'}=p'\ket{p'}\qq{with}\ip{p'}{p''}=\delta(p'-p'')
+\end{equation}
+Moreover, by resolution of identity
+\begin{equation}
+\mathbb{I}=\int\dd{p'}\op{p'}
+\end{equation}
+Therefore
+\begin{equation}
+\begin{aligned}
+\ket{\psi}&=\mathbb{I}\ket{\psi}\\
+&=\int\dd{p'}\ket{p'}\ip{p'}{\psi}
+\end{aligned}
+\end{equation}
+Thus, we define the wavefunction in momentum representation as
+\begin{equation}
+\ip{p'}{\psi}=\psi(p')
+\end{equation}
+To transform from $\psi(x')$ to $\psi(p')$, consider $\ket{\psi}=\ket{p'}$.
+\begin{equation}
+\begin{aligned}
+\mel{x'}{\vb{p}}{\psi}&=-i\hbar\pdv{x'}\ip{x'}{\psi}\\
+\mel{x'}{\vb{p}}{p'}&=-i\hbar\pdv{x'}\ip{x'}{p'}\\
+p'\ip{x'}{p'}&=-i\hbar\pdv{x'}\ip{x'}{p'}\\
+\implies\ip{x'}{p'}&=Ne^{\frac{i}{\hbar}p'x'}\qq{where $N$ is an arbitrary constant}
+\end{aligned}
+\end{equation}
+Let us calculate the normalization constant $N$. Note that
+\begin{equation}
+\begin{aligned}
+\ip{x'}{x''}=\delta(x'-x'')=\mel{x'}{\mathbb{I}}{x''}=\int_{-\infty}^{\infty}\ip{x'}{p'}\ip{p'}{x''}
+\end{aligned}
+\end{equation}
+Substituting $\ip{x'}{p'}=Ne^{\frac{i}{\hbar}p'x'}$
+\begin{equation}
+\begin{aligned}
+\delta(x'-x'')&=\int_{-\infty}^{\infty}Ne^{\frac{i}{\hbar}p'x'}Ne^{-\frac{i}{\hbar}p'x''}\\
+&=N^{2}\int_{-\infty}^{\infty}\dd{p'}e^{\frac{i}{\hbar}p'(x'-x'')}\\
+&\quad\explain{When $x'-x''=0$, the integrand equals to 1. When $x'\neq x''$, the integrand oscillates}\\
+&\quad\explain{$\delta(x)=\frac{1}{2\pi}\int_{-\infty}^{\infty}\dd{k}e^{ikx}$ is a known representation of the Dirac delta function}\\
+\therefore\delta(x'-x'')&=N^{2}2\pi\hbar\delta(x'-x'')\\
+\implies N&=\frac{1}{\sqrt{2\pi\hbar}}
+\end{aligned}
+\end{equation}
+Thus, the momentum eigenfunction in the position representation is
+\begin{equation}
+\psi_{p'}(x')=\ip{x'}{p'}=\frac{1}{\sqrt{2\pi\hbar}}e^{\frac{i}{\hbar}p'x'}
+\end{equation}
+This refers to the usual plane wave solution. One can also obtain this solution by solving the Schr\"{o}dinger equation $\vb{H}\psi=E\psi$ and using a free Hamiltonian $\vb{H}=\frac{\vb{p}^{2}}{2m}=-\frac{\hbar^{2}}{2m}\pdv[2]{x}$.\\
+
+Generalizing to 3D
+\begin{equation}
+\ip{\vec{x}\,'}{\vec{p}'}=\frac{1}{(2\pi\hbar)^{\frac{3}{2}}}e^{\frac{i}{\hbar}\vec{p}'\cdot\vec{x}\,'}
+\end{equation}
+Thus, we can convert between the momentum representation $\psi(p')$ and the position representation $\psi(x')$
+\begin{equation}
+\begin{aligned}
+\psi(x')&=\ip{x'}{\psi}\\
+&=\int_{-\infty}^{\infty}\dd{p'}\ip{x'}{p'}\ip{p'}{\psi}\\
+&=\frac{1}{\sqrt{2\pi\hbar}}\int_{-\infty}^{\infty}\dd{p'}e^{\frac{i}{\hbar}p'x'}\psi(p')\\
+\psi(p')&=\ip{p'}{\psi}\\
+&=\int_{-\infty}^{\infty}\dd{x'}\ip{p'}{x'}\ip{x'}{\psi}\\
+&=\frac{1}{\sqrt{2\pi\hbar}}\int_{-\infty}^{\infty}\dd{p'}e^{-\frac{i}{\hbar}p'x'}\psi(x')\\
+\end{aligned}
+\end{equation}
+This conversion is equivalent to the Fourier transform.
+
+\subsection{Time Dependence of Kets}
+Let $\ket{\psi,t_{0};t}$ be the state that was equal to $\ket{\psi,t_{0};t}$ be the state that was equal to $\ket{\psi,t_{0}}\equiv\ket{\psi}$ at time $t_{0}$ which becomes a different state $\ket{\psi,t_{0}=t}$ at a later time $t>t_{0}$. The two kets are related by the time evolution operator $U(t,t_{0})$.
+\begin{equation}
+\ket{\psi,t_{0};t}=U(t,t_{0})\ket{\psi,t_{0}}
+\end{equation}
+Let us expand $\ket{\psi,t_{0}}$ and $\ket{\psi,t_{0};t}$ in terms of the eigenkets $\ket{a'}$ of some observable $\vb{A}$.
+\begin{equation}
+\begin{aligned}
+\ket{\psi,t_{0}}&=\sum_{a'}c_{a'}(t_{0})\ket{a'}\\
+\ket{\psi,t_{0};t}&=\sum_{a'}c_{a'}(t)\ket{a'}
+\end{aligned}
+\end{equation}
+where $c_{a'}(t_{0})=\ip{a'}{\psi,t_{0}}$ and $c_{a'}(t)=\ip{a'}{\psi,t_{0};t}$. Thus
+\begin{equation}
+\begin{aligned}
+\ip{\psi,t_{0}}&=\sum_{a',a''}c_{a''}^{*}(t_{0})c_{a'}(t_{0})\ip{a''}{a'}\\
+&=\sum_{a',a''}c_{a''}^{*}(t_{0})c_{a'}(t_{0})\delta_{a''a'}\\
+&=\sum_{a'}\abs{c_{a'}(t_{0})}^{2}\\
+&=1\qq{by normalization}
+\end{aligned}
+\end{equation}
+Analogously, $\ip{\psi,t_{0};t}=\sum_{a'}\abs{c_{a'}(t)}^{2}=1$. We interpret $\abs{c_{a'}(t_{0})}^{2}$ as the probability that a measurement of a physical system $\vb{A}$ gives $a'$.
+\begin{equation}
+\begin{aligned}
+\ip{\psi,t_{0};t}&=\mel{\psi,t_{0}}{U^{\dagger}(t,t_{0})U(t,t_{0})}{\psi,t_{0}}\\
+&=\ip{\psi,t_{0}}\\
+\implies U^{\dagger}(t,t_{0})U(t,t_{0})&=\mathbb{I}\\
+\implies U^{\dagger}(t,t_{0})&=U^{-1}(t,t_{0})
+\end{aligned}
+\end{equation}
+Thus, $U(t,t_{0})$ is a unitary operator.\\
+
+Likewise, by the composition property, for $t_{2}>t_{1}>t_{0}$
+\begin{equation}
+U(t_{2},t_{0})=U(t_{2},t_{1})U(t_{1},t_{0})
+\end{equation}
+Consider an infinitesimal time evolution operator $U(t_{0}+\dd{t},t_{0})$. Just as with the translation case, the unitary and composition requirements are satisfied if
+\begin{equation}
+U(t_{0}+\dd{t},t_{0})=\mathbb{I}-i\vb{\Omega}\dd{t}
+\end{equation}
+where $\vb{\Omega}=\vb{\Omega}^{\dagger}$ is a Hermitian operator.\\
+
+Proving the unitary condition
+\begin{equation}
+\begin{aligned}
+U^{\dagger}(t_{0}+\dd{t},t_{0})U(t_{0}+\dd{t},t_{0})&=\qty(\mathbb{I}+i\vb{\Omega}^{\dagger}\dd{t})\qty(\mathbb{I}-i\vb{\Omega}\dd{t})\\
+&=\mathbb{I}+i\vb{\Omega}^{\dagger}\dd{t}-i\vb{\Omega}\dd{t}+\cancelto{0}{\order{\dd{t}^{2}}}\\
+&=\mathbb{I}
+\end{aligned}
+\end{equation}
+
+Proving the composition condition
+\begin{equation}
+\begin{aligned}
+U(t_{0}+\dd{t_{1}}+\dd{t_{2}},t_{0}+\dd{t_{1}})U(t_{0}+\dd{t_{1}},t_{0})&=\qty(\mathbb{I}-i\vb{\Omega}\dd{t_{2}})\qty(\mathbb{I}-i\vb{\Omega}\dd{t_{1}})\\
+&=\mathbb{I}-i\vb{\Omega}(\dd{t_{1}}+\dd{t_{2}})+\cancelto{0}{\order{\dd{t_{1}}\dd{t_{2}}}}\\
+&=U(t_{0}+\dd{t_{1}}+\dd{t_{2}},t_{0})
+\end{aligned}
+\end{equation}
+
+Since $\vb{\Omega}\dd{t}$ is dimensionless, by dimensional analysis, $\vb{\Omega}$ has dimensions of inverse time (or frequency). The energy and frequency of a system are related by $E=\hbar\omega$. Thus
+\begin{equation}
+\begin{aligned}
+\vb{\Omega}&=\frac{\vb{H}}{\hbar}\\
+\therefore U(t_{0}+\dd{t},t_{0})&=\mathbb{I}-\frac{i}{\hbar}\vb{H}\dd{t}
+\end{aligned}
+\end{equation}
+Using this result, one can recover the Schr\"{o}dinger equation. Consider the difference of two time-evolution operators
+\begin{equation}
+\begin{aligned}
+U(t+\dd{t},t_{0})-U(t,t_{0})&=U(t+\dd{t},t)U(t,t_{0})-U(t,t_{0})\\
+&=\qty(\mathbb{I}-\frac{i}{\hbar}\vb{H}\dd{t})U(t,t_{0})-\mathbb{I}U(t,t_{0})\\
+&=-\frac{i}{\hbar}\vb{H}\dd{t}U(t,t_{0})
+\end{aligned}
+\end{equation}
+Dividing both sides by $\dd{t}$ and taking the limit as $\dd{t}$ going to 0
+\begin{equation}
+\begin{aligned}
+\lim_{\dd{t}\rightarrow0}\frac{U(t+\dd{t},t_{0})-U(t,t_{0})}{\dd{t}}&=-\frac{i}{\hbar}\vb{H}U(t,t_{0})\\
+i\hbar\pdv{t}U(t,t_{0})&=\vb{H}U(t,t_{0})\qq{(Schr\"{o}dinger equation for operators)}\\
+i\hbar\pdv{t}U(t,t_{0})\ket{\psi,t_{0}}&=\vb{H}U(t,t_{0})\ket{\psi,t_{0}}\\
+i\hbar\pdv{t}\ket{\psi,t_{0};t}&=\vb{H}\ket{\psi,t_{0}\psi,t_{0};t}\qq{(Schr\"{o}dinger equation for states)}
+\end{aligned}
+\end{equation}
+Multiplying both sides on the left by $\bra{\vec{x}\,'}$
+\begin{equation}
+\begin{aligned}
+i\hbar\pdv{t}\ip{\vec{x}\,'}{\psi,t_{0};t}&=\mel{\vec{x}\,'}{\vb{H}}{\psi,t_{0};t}\\
+&=\int\dd[3]{x''}\mel{\vec{x}\,'}{\vb{H}}{\vec{x}\,''}\ip{\vec{x}\,''}{\psi,t_{0};t}\\
+&\quad\explain{By resolution of identity}
+\end{aligned}
+\end{equation}
+$\mel{\vec{x}\,'}{\vb{H}}{\vec{x}\,''}$ is the Hamiltonian in terms of the position basis, where
+\begin{equation}
+\begin{aligned}
+\mel{\vec{x}\,'}{\vb{H}}{\vec{x}\,''}=-\frac{\hbar^{2}}{2m}\vec{\nabla}\delta(\vec{x}\,'-\vec{x}\,'')+\mel{\vec{x}\,'}{V(\vec{x})}{\vec{x}\,''}
+\end{aligned}
+\end{equation}
+Let us solve for $U(t,t_{0})$ explicitly. We shall consider the Hamiltonian $\vb{H}$ to be time independent. Thus
+\begin{equation}
+\begin{aligned}
+U(t,t_{0})&=e^{-\frac{i}{\hbar}\vb{H}(t-t_{0})}\\
+&=\mathbb{I}-\frac{i}{\hbar}\vb{H}(t-t_{0})+\frac{1}{2\hbar^{2}}\qty[\vb{H}(t-t_{0})]^{2}+\order{(t-t_{0})^{3}}
+\end{aligned}
+\end{equation}
+where $e^{\vb{A}}=\sum_{n=0}^{\infty}\frac{\vb{A}^{n}}{n!}$ is the operator exponential.\\
+
+One finds that $U(t,t_{0})$ still satisfies Schr\"{o}dinger's equation. Likewise, the equation for $U(t,t_{0})$ is consistent with the equation $U(t+\dd{t},t_{0})=\mathbb{I}-\frac{i}{\hbar}\vb{H}\dd{t}$.\\
+
+Recall the eigensystem of the Hamiltonian $\vb{H}$ is given by
+\begin{equation}
+\vb{H}\ket{a'}=E_{a'}\ket{a'}
+\end{equation}
+where $E_{a'}$ are the energy eigenvalues. Thus
+\begin{equation}
+\begin{aligned}
+e^{-\frac{i}{\hbar}\vb{H}t}&=\mathbb{I}(e^{-\frac{i}{\hbar}\vb{H}t})\mathbb{I}\\
+&=\sum_{a',a''}\op{a''}e^{-\frac{i}{\hbar}\vb{H}t}\op{a'}\\
+&=\sum_{a',a''}\op{a''}e^{-\frac{i}{\hbar}E_{a'}t}\op{a'}\\
+&\quad\explain{Since $e^{-\frac{i}{\hbar}\vb{H}t}$ is just a linear combination of powers of $\vb{H}$}\\
+&=\sum_{a',a''}\ket{a''}e^{-\frac{i}{\hbar}E_{a'}t}\ip{a''}{a'}\bra{a'}\\
+&=\sum_{a',a''}\ket{a''}e^{-\frac{i}{\hbar}E_{a'}t}\delta_{a'a''}\bra{a'}\\
+&=\sum_{a'}\ket{a'}e^{-\frac{i}{\hbar}E_{a'}t}\bra{a'}
+\end{aligned}
+\end{equation}
+Given this, one can explicitly find the time dependence of any state
+\begin{equation}
+\ket{\psi,t_{0}=0}=\sum_{a'}\ket{a'}\ip{a'}{\psi}=\sum_{a'}c_{a'}(0)\ket{a'}
+\end{equation}
+At some later time $t$
+\begin{equation}
+\begin{aligned}
+\ket{\psi,t_{0}=0;t}&=U(t,0)\ket{\psi,t_{0}=0}\\
+&=e^{-\frac{i}{\hbar}\vb{H}t}\ket{\psi,t_{0}=0}\\
+&=\sum_{a'}e^{-\frac{i}{\hbar}E_{a'}t}\ket{a'}\ip{a'}{\psi,t_{0}=0}\\
+&=\sum_{a'}c_{a'}(t)\ket{a'}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+c_{a'}(t)=c_{a'}(0)e^{-\frac{i}{\hbar}E_{a'}t}=\ip{a'}{\psi,t_{0}=0}e^{-\frac{i}{\hbar}E_{a'}t}
+\end{equation}
+The coefficients thus evolve in the same manner as $\ket{\psi}$.
+
+\subsection{Different Pictures in Quantum Mechanics}
+In the Schr\"{o}dinger picture, the states depend on time, while the operators do not. In contrast, the Heisenberg picture has the states be time-independent, while operators are time-dependent. To illustrate, consider some unitary operator $U$.
+\begin{equation}
+\ket{\psi}\rightarrow U\ket{\psi}\qq{($U$ transforms ket $\ket{\psi}$ into ket $U\ket{\psi}$)}
+\end{equation}
+Now consider an arbitrary Hermitian operator $\vb{A}$
+\begin{equation}
+\mel{\varphi}{\vb{A}}{\psi}\rightarrow\mel{\varphi}{U^{\dagger}\vb{A}U}{\psi}
+\end{equation}
+In the Schr\"{o}dinger picture, the unitary operator acts on the states
+\begin{equation}
+\mel{\varphi}{\vb{A}}{\psi}\rightarrow(\bra{\varphi}U^{\dagger})\vb{A}(U\ket{\psi})
+\end{equation}
+In the Heisenberg picture, the action is on the operator $\vb{A}$
+\begin{equation}
+\mel{\varphi}{\vb{A}}{\psi}\rightarrow\bra{\varphi}(U^{\dagger}\vb{A}U)\ket{\psi}
+\end{equation}
+Thus, instead of thinking about the transformation of kets, one can think of transforming operators
+\begin{equation}
+\vb{A}\rightarrow U^{\dagger}\vb{A}U
+\end{equation}
+while the kets remain unchanged.\\
+
+Take $U(t)=e^{-\frac{i}{\hbar}\vb{H}t}$ to be the time-evolution operator. Define the Heisenberg picture operator as
+\begin{equation}
+\vb{A}^{(\trm{H})}(t)=U^{\dagger}(t)\vb{A}^{(\trm{S})}U(t)
+\end{equation}
+where $\vb{A}^{\trm{(S)}}$ is the time-independent Schr\"{o}dinger picture operator.\\
+
+At $t=0$
+\begin{equation}
+\begin{aligned}
+\vb{A}^{(\trm{H})}(0)&=U^{\dagger}(0)\vb{A}^{(\trm{S})}U(0)\\
+&=\mathbb{I}\vb{A}^{\trm{(S)}}\mathbb{I}\\
+&=\vb{A}^{\trm{(S)}}
+\end{aligned}
+\end{equation}
+The kets in the Heisenberg picture do not change with time. Thus
+\begin{equation}
+\ket{\psi,t_{0}=0;t}_{\trm{H}}=\ket{\psi,t_{0}=0}
+\end{equation}
+In contrast, the Schr\"{o}dinger picture has kets of the form
+\begin{equation}
+\ket{\psi,t_{0}=0;t}_{\trm{S}}=U(t)\ket{\psi,t_{0}=0}
+\end{equation}
+
+Note that the expectation value of $\vb{A}$ is still the same in both pictures
+\begin{equation}
+\begin{aligned}
+\tensor*[_{\trm{S}}]{\mel{\psi,t_{0}=0;t}{\vb{A}^{\trm{(S)}}}{\psi,t_{0}=0;t}}{_{\trm{S}}}&=\mel{\psi,t_{0}=0}{U^{\dagger}(t)A^{(\trm{S})}U(t)}{\psi,t_{0}=0}\\
+&=\tensor*[_{\trm{H}}]{\mel{\psi,t_{0}=0}{\vb{A}^{\trm{(H)}}(t)}{\psi,t_{0}=0}}{_{\trm{H}}}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\expval{\vb{A}^{\trm{(S)}}}=\expval{\vb{A}^{\trm{(H)}}}
+\end{equation}
+Let us derive an equation of motion for $\vb{A}^{\trm{(H)}}(t)$
+\begin{equation}
+\begin{aligned}
+\vb{A}^{\trm{(H)}}(t)&=U^{\dagger}(t)\vb{A}^{(\trm{S})}U(t)=e^{\frac{i}{\hbar}\vb{H}t}\vb{A}^{\trm{(S)}}e^{-\frac{i}{\hbar}\vb{H}t}\\
+\dv{t}\vb{A}^{\trm{(H)}}&=\frac{i}{\hbar}\vb{H}e^{\frac{i}{\hbar}\vb{H}t}\vb{A}^{\trm{(S)}}e^{-\frac{i}{\hbar}\vb{H}t}-\frac{i}{\hbar}e^{\frac{i}{\hbar}\vb{H}t}\vb{A}^{\trm{(S)}}\underbrace{e^{-\frac{i}{\hbar}\vb{H}t}\vb{H}}_{\mathclap{\trm{commuting operators}}}\\
+&=\frac{i}{\hbar}\vb{H}\vb{A}^{\trm{(H)}}-\frac{i}{\hbar}\vb{A}^{\trm{(H)}}\vb{H}\\
+&=\frac{i}{\hbar}\comm{\vb{H}}{\vb{A}^{\trm{(H)}}}
+\end{aligned}
+\end{equation}
+Note that the Hamiltonian remains the same in both pictures
+\begin{equation}
+\begin{aligned}
+e^{\frac{i}{\hbar}\vb{H}t}\vb{H}e^{-\frac{i}{\hbar}\vb{H}t}&=\vb{H}e^{\frac{i}{\hbar}\vb{H}t}e^{-\frac{i}{\hbar}\vb{H}t}\\
+&=\vb{H}\mathbb{I}\\
+&=\vb{H}
+\end{aligned}
+\end{equation}
+This is a manifestation of conservation of energy.
+
+\subsection{Conserved Quantities}
+Let us apply the Heisenberg equation of motion to a free particle
+\begin{equation}
+\begin{aligned}
+\vb{H}&=\frac{(\vec{\vb{p}})^{2}}{2m}\\
+\therefore \dv{\vb{p}_{i}}{t}&=\frac{i}{\hbar}\comm{\vb{H}}{\vb{p}_{i}}=0
+\end{aligned}
+\end{equation}
+Since $\vb{p}_{i}$ will commute with any function of $\vb{p}_{i}$, this expresses a conservation of momentum for a free particle.\\
+
+In general, any operator $\vb{A}$ such that $\comm{\vb{H}}{\vb{A}}=0$ represents a conserved physical quantity of the system with Hamiltonian $\vb{H}$.\\
+
+Now consider position operator $\vec{\vb{x}}$ which does not commute with $\vb{H}$.
+\begin{equation}
+\dv{\vb{x}_{i}}{t}=\frac{i}{\hbar}\comm{\vb{H}}{\vb{x}_{i}}
+\end{equation}
+Recall that $\comm{\vb{x}_{i}}{\vb{p}_{i}}=\vb{x}_{i}\vb{p}_{i}-\vb{p}_{i}\vb{x}_{i}=i\hbar$. also note that $(\vec{\vb{p}})^{2}=\sum_{i=1}^{3}\vb{p}_{i}^{2}$. Thus
+\begin{equation}
+\begin{aligned}
+\comm{\vb{p}_{i}^{2}}{\vb{x}_{i}}&=\vb{p}_{i}^{2}\vb{x}_{i}-\vb{x}_{i}\vb{p}_{i}^{2}\\
+&=\vb{p}_{i}^{2}\vb{x}_{i}-(i\hbar+\vb{p}_{i}\vb{x}_{i})\vb{p}_{i}\\
+&=\vb{p}_{i}^{2}\vb{x}_{i}-i\hbar\vb{p}_{i}-\vb{p}_{i}\vb{x}_{i}\vb{p}_{i}\\
+&=\cancel{\vb{p}_{i}^{2}\vb{x}_{i}}-i\hbar\vb{p}_{i}-\cancel{\vb{p}_{i}^{2}\vb{x}_{i}}-i\hbar\vb{p}_{i}\\
+&=-2i\hbar\vb{p}_{i}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\dv{\vb{x}_{i}}{t}=-\frac{i}{\hbar}\qty(\frac{1}{2m})(2i\hbar\vb{p}_{i})=\frac{\vb{p}_{i}}{m}
+\end{equation}
+By extension
+\begin{equation}
+\begin{aligned}
+\comm{\vb{x}_{i}}{\vb{p}_{i}}&=i\hbar\\
+\comm{\vb{x}_{i}^{2}}{\vb{p}_{i}}&=2i\hbar\vb{x}_{i}\\
+&\vdots\\
+\comm{\vb{x}_{i}^{n}}{\vb{p}_{i}}&=ni\hbar\vb{x}_{i}^{n-1}
+\end{aligned}
+\end{equation}
+More generally, consider a particle interacting with some external potential
+\begin{equation}
+\vb{H}=\frac{(\vec{\vb{p}})^{2}}{2m}+V(\vec{\vb{x}})
+\end{equation}
+Thus
+\begin{equation}
+\dv{\vb{p}_{i}}{t}=\frac{i}{\hbar}\comm{\vb{H}}{\vb{p}_{i}}=\frac{i}{\hbar}\comm{V(\vec{\vb{x}})}{\vb{p}_{i}}
+\end{equation}
+Consider the action of the commutator on some state $\ket{\psi}$
+\begin{equation}
+\begin{aligned}
+\comm{V(\vec{\vb{x}})}{\vb{p}_{i}}\ket{\psi}&=V(\vec{\vb{x}})\vb{p}_{i}\ket{\psi}-\vb{p}_{i}\qty(V(\vec{\vb{x}})\ket{\psi})\\
+&=V(\vec{\vb{x}})\vb{p}_{i}\ket{\psi}-\qty(\vb{p}_{i}V(\vec{\vb{x}}))\ket{\psi}-V(\vec{\vb{x}})\qty(\vb{p}_{i}\ket{\psi})\\
+&\quad\explain{Since $\vb{p}_{i}$ is a derivative in the position representation}\\
+&=-\qty(\vb{p}_{i}V(\vec{\vb{x}}))\ket{\psi}\\
+&=i\hbar\pdv{x_{i}}V(\vec{\vb{x}})\ket{\psi}
+\end{aligned}
+\end{equation}
+Thus, $\dv{\vb{p}_{i}}{t}=-\pdv{x_{i}}V(\vec{\vb{x}})$, which is quantum mechanical analogue of Newton's second law. This yields Ehrenfest theorem.\\
+
+Consider now the acceleraion
+\begin{equation}
+\begin{aligned}
+\dv[2]{\vb{x}_{i}}{t}&=\frac{i}{\hbar}\comm{\vb{H}}{\dv{\vb{x}_{i}}{t}}\\
+&=\frac{i}{\hbar}\comm{\vb{H}}{\frac{\vb{p}_{i}}{m}}\qq{since $\vb{x}_{i}$ still commutes with $V(\vec{\vb{x}})$}\\
+&=\frac{i}{\hbar m}\comm{V(\vec{\vb{x}})}{\vb{p}_{i}}\qq{since $\vb{p}_{i}$ and $\vb{p}_{j}$ commute}\\
+&=-\frac{1}{m}\pdv{x_{i}}V(\vec{\vb{x}})
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\dv[2]{\vec{\vb{x}}}{t}=-\frac{1}{m}\vec{\nabla}V(\vec{\vb{x}})
+\end{equation}
+
+\example{1}{Take $V(\vec{\vb{x}})=e\vec{E}\cdot\vec{\vb{x}}$ to be the potential due to an electric field $\vec{E}$ for a particle of charge $-e$.
+\begin{equation}
+\vec{F}=-\vec{\nabla}V(\vec{\vb{x}})=-e\vec{E}
+\end{equation}
+The expectation value of both sides is
+\begin{equation}
+m\dv[2]{\expval{\vec{\vb{x}}}}{t}=-e\vec{E}
+\end{equation}
+Thus, the average position of the particle will move according to a classical equation of motion.
+}
+
+Let us write the equation
+\begin{equation}
+i\hbar\pdv{t}\ket{\psi,t_{0};t}=\vb{H}\ket{\psi,t_{0};t}
+\end{equation}
+as a regular Schr\"{o}dinger equation in the position representation.\\
+
+We denote $\psi(\vec{x}\,',t)$ as $\ip{\vec{x}\,'}{\psi,t_{0};t}$. Also, we consider $\vb{H}=\frac{(\vec{\vb{p}})^{2}}{2m}+V(\vec{\vb{x}})$. Multiplying both sides by $\bra{\vec{x}\,'}$
+\begin{equation}
+\begin{aligned}
+i\hbar\pdv{t}\ip{\vec{x}\,'}{\psi,t_{0};t}&=\mel{\vec{x}\,'}{\vb{H}}{\psi,t_{0};t}\\
+i\hbar\pdv{t}\psi(\vec{x}\,',t)&=\mel{\vec{x}\,'}{\frac{(\vec{\vb{p}})^{2}}{2m}}{\psi,t_{0};t}+\mel{\vec{x}\,'}{V(\vec{x}\,')}{\psi,t_{0};t}
+\end{aligned}
+\end{equation}
+Note that $V(\vec{\vb{x}})\ket{\vec{x}\,'}=V(\vec{x}\,')\ket{\vec{x}\,'}$
+\begin{equation}
+\implies \mel{\vec{x}\,''}{V(\vec{\vb{x}})}{\vec{x}\,'}=V(\vec{x}\,')\ip{\vec{x}\,''}{\vec{x}\,'}=V(\vec{x}\,')\delta(\vec{x}\,''-\vec{x}\,')
+\end{equation}
+Earlier, we found that $\mel{\vec{x}\,'}{\vec{\vb{p}}}{\psi}=-i\hbar\vec{\nabla}'\ip{\vec{x}\,'}{\psi}$. Similarly
+\begin{equation}
+\begin{aligned}
+(\vec{\vb{p}}\cdot\vec{\vb{p}})\ket{\psi}&=(-i\hbar\vec{\nabla})\cdot(-i\hbar\vec{\nabla})\ket{\psi}=-\hbar^{2}\nabla^{2}\ket{\psi}\\
+\implies\mel{\vec{x}\,''}{\frac{(\vec{\vb{p}})^{2}}{2m}}{\psi}&=\frac{1}{2m}\int\dd[3]{x'}\ip{\vec{x}\,''}{\vec{x}\,'}(-\hbar^{2}\nabla'^{2})\ip{\vec{x}\,'}{\psi}\\
+&=-\frac{\hbar^{2}}{2m}\nabla''^{2}\ip{\vec{x}\,''}{\psi}\\
+\implies\mel{\vec{x}\,'}{\frac{(\vec{\vb{p}})^{2}}{2m}}{\psi}&=-\frac{\hbar^{2}}{2m}\nabla'^{2}\ip{\vec{x}\,'}{\psi}
+\end{aligned}
+\end{equation}
+Note that
+\begin{equation}
+\bra{\vec{x}\,'}V(\vec{\vb{x}})=(V(\vec{\vb{x}})\ket{\vec{x}\,'})^{\dagger}=(V(\vec{x}\,')\ket{\vec{x}\,'})^{\dagger}=\bra{\vec{x}\,'}V(\vec{x}\,')
+\end{equation}
+Thus, Schr\"{o}dinger equation becomes
+\begin{equation}
+\begin{aligned}
+i\hbar\pdv{t}\ip{\vec{x}\,'}{\psi,t_{0};t}&=-\frac{\hbar^{2}}{2m}\nabla'^{2}\ip{\vec{x}\,'}{\psi,t_{0};t}+V(\vec{x}\,')\ip{\vec{x}\,'}{\psi,t_{0};t}\\
+i\hbar\pdv{t}\psi(\vec{x}\,',t)&=-\frac{\hbar^{2}}{2m}\nabla'^{2}\psi(\vec{x}\,',t)+V(\vec{x}\,')\psi(\vec{x}\,',t)
+\end{aligned}
+\end{equation}
+This is the ordinary Schr\"{o}dinger equation for wavefunctions.\\
+
+Let us derive the time-independent Schr\"{o}dinger equation. The time-dependence of an energy eigenstate is given by
+\begin{equation}
+\begin{aligned}
+\ket{a',t_{0}=0;t}&=e^{-\frac{i}{\hbar}E_{a'}t}\ket{a',t_{0}=0}\\
+&=e^{-\frac{i}{\hbar}E_{a'}t}\ket{a'}
+\end{aligned}
+\end{equation}
+Thus, $\ip{\vec{x}\,'}{a',t_{0}=0;t}=e^{-\frac{i}{\hbar}E_{a'}t}\ip{\vec{x}\,'}{a'}$. Substituting into the original Schr\"{o}dinger equation
+\begin{equation}
+E_{a'}\ip{\vec{x}\,'}{a'}=-\frac{\hbar^{2}}{2m}\nabla'^{2}\ip{\vec{x}\,'}{a'}+V(\vec{x}\,')\ip{\vec{x}\,'}{a'}
+\end{equation}
+This is the time-independent Schr\"{o}dinger equation for stationary states of the Hamiltonian.
+
+\newpage
+\section{Rotations and Angular Momentum}
+Consider the algebra of the rotations in 3D space. Suppose one has a Cartesian coordinate system $\{x,y,z\}$. To be consistent, we shall use the active view of rotations (the physical system is rotated while the coordinate system is kept fixed).\\
+
+Consider rotation the system $\vec{r}$ about the $z$-axis to the vector $\vec{r}\,'$ by an angle $\varphi$. We take position $\varphi$ to be a right-handed rotation around the $z$-axis. Note the $z$-component remains constant.
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (4,0) node[right] {$\hat{x}$};
+	\draw[->] (0,0) -- (0,4) node[above] {$\hat{y}$};
+	\draw[->] (0,0) -- (3,2.646) node[above] {$\vec{r}\,'$};
+	\draw[->] (0,0) -- (3.872,1) node[right] {$\vec{r}$};
+	\draw[->] (0,0) -- (-1,3.872) node[left] {$\hat{z}\times\vec{r}$};
+	\draw[fill=white] (0,0) circle (4pt);
+	\fill (0,0) circle (2pt) node[below left] {$\hat{z}$};
+	\draw (0.9682,0.2500) arc (14.4775:41.4096:1) node[xshift=0.2cm,right] {$\varphi$};
+\end{tikzpicture}
+\end{center}
+Let the vector perpendicular to $\vec{r}$ be denoted $\hat{z}\times\vec{r}$. One can then write the vector $\vec{r}\,'$ as
+\begin{equation}
+\begin{aligned}
+\vec{r}\,'&=\vec{r}\cos\varphi+(\hat{z}\times\vec{r})\sin\varphi\\
+&=(x\hat{x}+y\hat{y})\cos\varphi+[\hat{z}\times(x\hat{x}+y\hat{y})]\sin\varphi\\
+&=(x\hat{x}+y\hat{y})\cos\varphi+(x\hat{y}-y\hat{x})\sin\varphi\\
+&=(x\cos\varphi-y\sin\varphi)\hat{x}+(y\cos\varphi+x\sin\varphi)\hat{y}
+\end{aligned}
+\end{equation}
+Thus, $x'=x\cos\varphi-y\sin\varphi$, $y'=x\sin\varphi+y\cos\varphi$, and $z'=z$. Moreover
+\begin{equation}
+\begin{aligned}
+\vec{r}\,'&=R_{z}(\varphi)\vec{r}\\
+\mqty[x'\\y'\\z']&=\mqty[\cos\varphi & -\sin\varphi & 0\\ \sin\varphi & \cos\varphi & 0 \\ 0 & 0 & 1]\mqty[x\\y\\z]
+\end{aligned}
+\end{equation}
+$R_{z}(\varphi)$ is known as the rotation matrix about the $z$-axis. Analogously, one can find for $R_{x}(\varphi)$ and $R_{y}(\varphi)$
+\begin{equation}
+\begin{aligned}
+R_{x}(\varphi)&=\mqty[1 & 0 & 0 \\ 0 & \cos\varphi & -\sin\varphi \\ 0 & \sin\varphi & \cos\varphi]\\
+R_{y}(\varphi)&=\mqty[\cos\varphi & 0 & -\sin\varphi \\ 0 & 1 & 0 \\ \sin\varphi & 0 & \cos\varphi]
+\end{aligned}
+\end{equation}
+Consider the transpose of a rotation matrix $R_{z}^{T}(\varphi)$.
+\begin{equation}
+\begin{aligned}
+R_{z}^{T}(\varphi)&=\mqty[\cos\varphi & \sin\varphi & 0\\ -\sin\varphi & \cos\varphi & 0 \\ 0 & 0 & 1]\\
+R_{z}(\varphi)R_{z}^{T}(\varphi)&=\mqty[\cos\varphi & -\sin\varphi & 0\\ \sin\varphi & \cos\varphi & 0 \\ 0 & 0 & 1]\mqty[\cos\varphi & \sin\varphi & 0\\ -\sin\varphi & \cos\varphi & 0 \\ 0 & 0 & 1]=\mathbb{I}\\
+\implies R_{z}^{T}(\varphi)&=R_{z}^{-1}(\varphi)=R_{z}(-\varphi)
+\end{aligned}
+\end{equation}
+One can find analogous results for $R_{x}(\varphi)$ and $R_{y}(\varphi)$. Thus, rotation matrices are orthogonal. Rotation matrices are always represented by orthogonal matrices.\\
+
+Note that in general
+\begin{equation}
+R_{i}(\varphi_{1})R_{j}(\varphi_{2})\neq R_{j}(\varphi_{1})R_{i}(\varphi_{2}),\quad i,j\in\{x,y,z\},\quad i\neq j
+\end{equation}
+Thus
+\begin{equation}
+\comm{R_{i}}{R_{j}}\neq 0\qq{for $i\neq j$, $i,j\in\{x,y,z\}$}
+\end{equation}
+Consider infinitesimal rotations $\varphi=\epsilon\ll1$ and ignore $\order{\epsilon^{3}}$.
+\begin{equation}
+\begin{aligned}
+R_{x}(\epsilon)&=\mqty[1 & 0 & 0 \\ 0 & 1-\frac{\epsilon^{2}}{2} & -\epsilon \\ 0 & \epsilon & 1-\frac{\epsilon^{2}}{2}]\\
+R_{y}(\epsilon)&=\mqty[1-\frac{\epsilon^{2}}{2} & 0 & -\epsilon \\ 0 & 1 & 0 \\ \epsilon & 0 & 1-\frac{\epsilon^{2}}{2}]\\
+R_{z}(\epsilon)&=\mqty[1-\frac{\epsilon^{2}}{2} & -\epsilon & 0 \\ \epsilon & 1-\frac{\epsilon^{2}}{2} & 0 \\ 0 & 0 & 1]
+\end{aligned}
+\end{equation}
+Consider commutation relations between rotations about different axes. Note that rotations do not commute while transformations do commute ($\vb{T}(\vec{x})\vb{T}(\vec{y})=\vb{T}(\vec{y})\vb{T}(\vec{x})$).
+\begin{center}
+\begin{tikzpicture}
+	\draw[->,shorten >=1mm,shorten <=1mm] (0,0) -- node[below] {$\vb{T}(\vec{x})$} (3,0);
+	\draw[->,shorten >=1mm,shorten <=1mm] (3,0) -- node[right] {$\vb{T}(\vec{y})$} (3,3);
+	\draw[->,shorten >=1mm,shorten <=1mm] (0,0) -- node[left] {$\vb{T}(\vec{y})$} (0,3);
+	\draw[->,shorten >=1mm,shorten <=1mm] (0,3) -- node[above] {$\vb{T}(\vec{x})$} (3,3);
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0,0) -- (2,0,0) node[right] {$x$};
+	\draw[->] (0,0,0) -- (0,2,0) node[above] {$y$};
+	\draw[->] (0,0,0) -- (0,0,2) node[below left] {$z$};
+	\draw[->, ultra thick,red] (0,0,0) -- (0,1.5,0) node[above right] {$\vec{r}$};
+	\draw[->] (3,1,0) -- node[above] {$R_{x}\qty(\frac{\pi}{2})$} (5,1,0);
+	\draw[->] (6,0,0) -- (8,0,0) node[right] {$x$};
+	\draw[->] (6,0,0) -- (6,2,0) node[above] {$y$};
+	\draw[->] (6,0,0) -- (6,0,2) node[below left] {$z$};
+	\draw[->, ultra thick,red] (6,0,0) -- (6,0,1.5) node[above left] {$\vec{r}$};
+	\draw[->] (9,1,0) -- node[above] {$R_{y}\qty(\frac{\pi}{2})$} (11,1,0);
+	\draw[->] (12,0,0) -- (14,0,0) node[right] {$x$};
+	\draw[->] (12,0,0) -- (12,2,0) node[above] {$y$};
+	\draw[->] (12,0,0) -- (12,0,2) node[below left] {$z$};
+	\draw[->, ultra thick,red] (12,0,0) -- (13.5,0,0) node[above right] {$\vec{r}$};
+	\draw[->] (0,-4,0) -- (2,-4,0) node[right] {$x$};
+	\draw[->] (0,-4,0) -- (0,-2,0) node[above] {$y$};
+	\draw[->] (0,-4,0) -- (0,-4,2) node[below left] {$z$};
+	\draw[->, ultra thick,red] (0,-4,0) -- (0,-2.5,0) node[above right] {$\vec{r}$};
+	\draw[->] (3,-3,0) -- node[above] {$R_{y}\qty(\frac{\pi}{2})$} (5,-3,0);
+	\draw[->] (6,-4,0) -- (8,-4,0) node[right] {$x$};
+	\draw[->] (6,-4,0) -- (6,-2,0) node[above] {$y$};
+	\draw[->] (6,-4,0) -- (6,-4,2) node[below left] {$z$};
+	\draw[->, ultra thick,red] (12,-4,0) -- (12,-2.5,0) node[above right] {$\vec{r}$};
+	\draw[->] (9,-3,0) -- node[above] {$R_{x}\qty(\frac{\pi}{2})$} (11,-3,0);
+	\draw[->] (12,-4,0) -- (14,-4,0) node[right] {$x$};
+	\draw[->] (12,-4,0) -- (12,-2,0) node[above] {$y$};
+	\draw[->] (12,-4,0) -- (12,-4,2) node[below left] {$z$};
+	\draw[->, ultra thick,red] (12,-4,0) -- (13.5,-4,0) node[above left] {$\vec{r}$};
+\end{tikzpicture}
+\end{center}
+\begin{equation}
+\begin{aligned}
+R_{x}(\epsilon)R_{y}(\epsilon)&=\ldots=\mqty[1-\frac{\epsilon^{2}}{2} & 0 & \epsilon \\ \epsilon^{2} & 1-\frac{\epsilon^{2}}{2} & -\epsilon \\ -\epsilon & \epsilon & 1-\epsilon^{2}]\\
+R_{y}(\epsilon)R_{x}(\epsilon)&=\ldots=\mqty[1-\frac{\epsilon^{2}}{2} & \epsilon^{2} & \epsilon \\ 0 & 1-\frac{\epsilon^{2}}{2} & -\epsilon \\ -\epsilon & \epsilon & 1-\epsilon^{2}]\\
+\comm{R_{x}(\epsilon)}{R_{y}(\epsilon)}&=\mqty[0 & -\epsilon^{2} & 0\\ \epsilon^{2} & 0 & 0\\ 0 & 0 & 0]=R_{z}(\epsilon^{2})-\mathbb{I} \qq{to order $\epsilon^{2}$}
+\end{aligned}
+\end{equation}
+Thus, $R_{x}(\epsilon)$ and $R_{y}(\epsilon)$ commute to first order, but not to second order.
+
+\subsection{Rotations in Quantum Mechanics}
+Groups in which the elements commute, like translations are \ul{abelian}. Groups with non-commuting elements are \ul{non-abelian}.\\
+
+Let us associate a rotation operator $D(R)$ to rotation matrix $R$.
+\begin{equation}
+\ket{\psi}_{R}=D(R)\ket{\psi}
+\end{equation}
+$\ket{\psi}_{R}$ is the rotated version of $\ket{\psi}$. If $R$ represents the rotation b an infinitesimally small angle $\dd{\varphi}$ about an axis $\hat{n}$, then by analogy with the infinitesimal translations and infinitesimal time-evolution, $D(R)$ should be of the form
+\begin{equation}
+D(\hat{n},\dd{\varphi})=\mathbb{I}-\frac{i}{\hbar}(\vec{\vb{J}}\cdot\hat{n})\dd{\varphi}
+\end{equation}
+where $\vec{\vb{J}}$ is a Hermitian operator and has dimensions of angular momentum. We say $\vec{\vb{J}}$ is the generator of rotations.\\
+
+We find again for finite rotations
+\begin{equation}
+D(\hat{n},\varphi)=\lim_{N\rightarrow\infty}\qty[\mathbb{I}-\frac{i}{\hbar}(\vec{\vb{J}}\cdot\hat{n})\frac{\varphi}{N}]^{N}=e^{-\frac{i}{\hbar}\vec{\vb{J}}\cdot\hat{n}\varphi}
+\end{equation}
+$D(R)$ must have the same properties as the rotation matrices themselves. If $R_{3}=R_{1}R_{2}$, then $D(R_{3})=D(R_{1})D(R_{2})$. This means we can translate the commutation relations between the matrices themselves to commutation relations to the corresponding $D$ operators.
+\begin{equation}
+\therefore\comm{D_{x}(\epsilon)}{D_{y}(\epsilon)}=D_{z}(\epsilon^{2})-\mathbb{I}
+\end{equation}
+To demonstrate
+\begin{equation}
+\begin{aligned}
+D_{x}(\epsilon)&=\mathbb{I}-\frac{i}{\hbar}\vb{J}_{x}\epsilon-\frac{1}{2\hbar^{2}}\vb{J}_{x}^{2}\epsilon^{2}+\order{\epsilon^{3}}\\
+D_{y}(\epsilon)&=\mathbb{I}-\frac{i}{\hbar}\vb{J}_{y}\epsilon-\frac{1}{2\hbar^{2}}\vb{J}_{y}^{2}\epsilon^{2}+\order{\epsilon^{3}}\\
+D_{z}(\epsilon)&=\mathbb{I}-\frac{i}{\hbar}J_{z}\epsilon^{2}+\order{\epsilon^{3}}
+\end{aligned}
+\end{equation}
+Up to second order of $\epsilon$
+\begin{equation}
+\begin{aligned}
+\comm{D_{x}(\epsilon)}{D_{y}(\epsilon)}&=D_{x}(\epsilon)D_{y}(\epsilon)-D_{y}(\epsilon)D_{x}(\epsilon)\\
+&=\qty(\mathbb{I}-\frac{i}{\hbar}\vb{J}_{x}\epsilon-\frac{1}{2\hbar^{2}}\vb{J}_{x}^{2}\epsilon^{2})\qty(\mathbb{I}-\frac{i}{\hbar}\vb{J}_{y}\epsilon-\frac{1}{2\hbar^{2}}\vb{J}_{y}^{2}\epsilon^{2})\\
+&\quad-\qty(\mathbb{I}-\frac{i}{\hbar}\vb{J}_{y}\epsilon-\frac{1}{2\hbar^{2}}\vb{J}_{y}^{2}\epsilon^{2})\qty(\mathbb{I}-\frac{i}{\hbar}\vb{J}_{x}\epsilon-\frac{1}{2\hbar^{2}}\vb{J}_{x}^{2}\epsilon^{2})\\
+&=\cancel{\mathbb{I}}-\cancel{\frac{i}{\hbar}\vb{J}_{y}\epsilon}-\cancel{\frac{1}{2\hbar^{2}}\vb{J}_{y}^{2}\epsilon^{2}}-\cancel{\frac{i}{\hbar}\vb{J}_{x}\epsilon}-\cancel{\frac{1}{2\hbar^{2}}\vb{J}_{x}^{2}\epsilon^{2}}-\frac{1}{\hbar^{2}}\vb{J}_{x}\vb{J}_{y}\epsilon^{2}\\
+&\quad-\cancel{\mathbb{I}}+\cancel{\frac{i}{\hbar}\vb{J}_{x}\epsilon}+\cancel{\frac{1}{2\hbar^{2}}\vb{J}_{x}^{2}\epsilon^{2}}+\cancel{\frac{i}{\hbar}\vb{J}_{y}\epsilon}+\cancel{\frac{1}{2\hbar^{2}}\vb{J}_{x}^{2}\epsilon^{2}}+\frac{1}{\hbar^{2}}\vb{J}_{y}\vb{J}_{x}\epsilon^{2}\\
+&=-\frac{1}{\hbar^{2}}\comm{\vb{J}_{x}}{\vb{J}_{y}}\epsilon^{2}\\
+&=D_{z}(\epsilon^{2})-\mathbb{I}\\
+&=-\frac{i}{\hbar}\vb{J}_{z}\epsilon^{2}\\
+\implies \comm{\vb{J}_{x}}{\vb{J}_{y}}&=i\hbar\vb{J}_{z}
+\end{aligned}
+\end{equation}
+In general, $\comm{\vb{J}_{i}}{\vb{J}_{j}}=i\hbar\varepsilon_{ijk}\vb{J}_{k}$, where $\varepsilon_{ijk}$ is the fully antisymmetric tensor.
+\begin{equation}
+\begin{aligned}
+\varepsilon_{xyz}&=\varepsilon_{yzx}=\varepsilon_{zxy}=1\\
+\varepsilon_{xzy}&=\varepsilon_{zyx}=\varepsilon_{yxz}=1
+\end{aligned}
+\end{equation}
+Groups of rotations in 3D are non-abelian since the generators of rotation do not commute. Groups of translations are abelian since their generators of translations commute.\\
+
+When the generators of infinitesimal transformations do not commute, the corresponding group of operators is non-abelian. When they do commute, the corresponding group is abelian.
+
+\subsection{Spin-$\frac{1}{2}$ Operators}
+The simplest example of angular momentum is a spin-$\frac{1}{2}$ system. The spin operators $\vb{S}_{\hat{n}}$ satisfy the same commutation relation as angular momentum
+\begin{equation}
+\comm{\vb{S}_{i}}{\vb{S}_{j}}=i\hbar\varepsilon_{ijk}\vb{S}_{k}
+\end{equation}
+where $\vec{\vb{S}}=\frac{\hbar}{2}\vec{\sigma}=\frac{\hbar}{2}(\sigma_{x},\sigma_{y},\sigma_{z})$, with $\vec{\sigma}=(\sigma_{x},\sigma_{y},\sigma_{z})$ being the Pauli matrices.
+\begin{equation}
+\begin{aligned}
+\sigma_{x}&=\mqty[0 & 1\\ 1&0]\\
+\sigma_{y}&=\mqty[0 & -i\\ i & 0]\\
+\sigma_{z}&=\mqty[1 & 0\\ 0&-1]
+\end{aligned}
+\end{equation}
+Note that the Pauli matrices have the property
+\begin{equation}
+\sigma_{i}^{2}=\mathbb{I},\quad i\in\{x,y,z\}
+\end{equation}
+The spin operators can be written as
+\begin{equation}
+\vb{S}_{i}=\frac{\hbar}{2}\sum_{a,b}\ket{a}\sigma_{i_{ab}}\bra{b}
+\end{equation}
+where $\ket{a},\ket{b}\in\{\ket{\up},\ket{\dn}\}$. Thus, expanded in Dirac notation
+\begin{equation}
+\begin{aligned}
+\vb{S}_{x}&=\frac{\hbar}{2}\qty(\op{\up}{\dn}+\op{\dn}{\up})\\
+\vb{S}_{y}&=i\frac{\hbar}{2}\qty(-\op{\up}{\dn}+\op{\dn}{\up})\\
+\vb{S}_{z}&=\frac{\hbar}{2}\qty(\op{\up}{\up}-\op{\dn}{\dn})
+\end{aligned}
+\end{equation}
+where $\ket{\up}$ and $\ket{\dn}$ are eigenkets of $\vb{S}_{z}$. Note that
+\begin{equation}
+\begin{aligned}
+\vb{S}_{z}\ket{\up}&=\frac{\hbar}{2}\ket{\up}\\
+\vb{S}_{z}\ket{\dn}&=-\frac{\hbar}{2}\ket{\dn}
+\end{aligned}
+\end{equation}
+
+\subsection{Rotation of Operators}
+Consider a rotation about the $z$-axis by angle $\varphi$.
+\begin{equation}
+D_{z}(\varphi)=e^{-\frac{i}{\hbar}\vb{S}_{z}\varphi}
+\end{equation}
+The effect of this rotation on $\expval{\vb{S}_{x}}$ is
+\begin{equation}
+\begin{aligned}
+\expval{\vb{S}_{x}}_{R}&=\tensor*[_{R}]{\mel{\psi}{\vb{S}_{x}}{\psi}}{_{R}}\\
+&=\mel{\psi}{D_{z}^{\dagger}(\varphi)\vb{S}_{x}D_{z}(\varphi)}{\psi}
+\end{aligned}
+\end{equation}
+Moreover
+\begin{equation}
+\begin{aligned}
+D_{z}^{\dagger}(\varphi)\vb{S}_{x}D_{z}(\varphi)&=e^{\frac{i}{\hbar}\vb{S}_{z}\varphi}\vb{S}_{x}e^{-\frac{i}{\hbar}\vb{S}_{z}\varphi}\\
+&=e^{\frac{i}{2}\sigma_{z}\varphi}\vb{S}_{x}e^{-\frac{i}{2}\sigma_{z}\varphi}\qq{since $\vec{\vb{S}}=\vec{\sigma}$}
+\end{aligned}
+\end{equation}
+Performing a Taylor expansion
+\begin{equation}
+\begin{aligned}
+D_{z}(\varphi)&=e^{-\frac{i}{2}\sigma_{z}\varphi}\\
+&=\sum_{n=0}^{\infty}\frac{1}{n!}\qty(-\frac{i}{2})^{n}\sigma_{z}^{n}\varphi^{n}\\
+&=\sum_{n=0}^{\infty}\frac{1}{(2n)!}\qty(-\frac{i\varphi}{2})^{2n}\mathbb{I}^{n}+\sum_{n=0}^{\infty}\frac{1}{(2n+1)!}\qty(-\frac{i\varphi}{2})^{2n+1}\mathbb{I}^{n}\sigma_{z}\\
+&\quad\explain{Since $\sigma_{z}^{2}=\mathbb{I}$}\\
+&=\sum_{n=0}^{\infty}\frac{(-1)^{n}}{(2n)!}\qty(\frac{\varphi}{2})^{2n}\mathbb{I}-i\sum_{n=0}^{\infty}\frac{(-1)^{n}}{(2n+1)!}\qty(\frac{\varphi}{2})^{2n+1}\sigma_{z}\\
+&=\cos\qty(\frac{\varphi}{2})\mathbb{I}-i\sigma_{z}\sin\qty(\frac{\varphi}{2})
+\end{aligned}
+\end{equation}
+This reasoning holds for any Pauli matrix. Thus
+\begin{equation}
+\begin{aligned}
+D_{\hat{n}}(\varphi)=e^{-\frac{i}{2}\vec{\sigma}\cdot\hat{n}\varphi}=\cos\qty(\frac{\varphi}{2})\mathbb{I}-i\sin\qty(\frac{\varphi}{2})\vec{\sigma}\cdot\hat{n}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+D_{z}^{\dagger}(\varphi)\vb{S}_{x}D_{z}(\varphi)&=\qty(\cos\qty(\frac{\varphi}{2})\mathbb{I}-i\sin\qty(\frac{\varphi}{2})\sigma_{z})\vb{S}_{x}\qty(\cos\qty(\frac{\varphi}{2})\mathbb{I}-i\sin\qty(\frac{\varphi}{2})\sigma_{z})\\
+&=\frac{\hbar}{2}\qty[\cos^{2}\qty(\frac{\varphi}{2})\sigma_{x}+i\cos\qty(\frac{\varphi}{2})\sin\qty(\frac{\varphi}{2})\comm{\sigma_{z}}{\sigma_{x}}+\sin^{2}\qty(\frac{\varphi}{2})\sigma_{z}\sigma_{x}\sigma_{z}]
+\end{aligned}
+\end{equation}
+From the commutation relation for $\vb{S}_{\hat{n}}$
+\begin{equation}
+\frac{\hbar^{2}}{4}\comm{\sigma_{i}}{\sigma_{j}}=i\hbar\qty(\frac{\hbar}{2})\varepsilon_{ijk}\sigma_{k}
+\end{equation}
+Thus, $\comm{\sigma_{i}}{\sigma_{j}}=2i\varepsilon_{ijk}\sigma_{k}$. By hand
+\begin{equation}
+\begin{aligned}
+\sigma_{x}\sigma_{z}&=\ldots=-i\sigma_{y}\\
+\sigma_{z}\sigma_{x}&=\ldots=i\sigma_{y}\\
+\implies \sigma_{x}\sigma_{z}&=-\sigma_{z}\sigma_{x}
+\end{aligned}
+\end{equation}
+Therefore
+\begin{equation}
+\begin{aligned}
+D_{z}^{\dagger}(\varphi)\vb{S}_{x}D_{z}(\varphi)&=\frac{\hbar}{2}\qty[\cos^{2}\qty(\frac{\varphi}{2})\sigma_{x}+\frac{i}{2}\sin\qty(\varphi)\comm{\sigma_{z}}{\sigma_{x}}-\sin^{2}\qty(\frac{\varphi}{2})\sigma_{z}^{2}\sigma_{x}]\\
+&=\frac{\hbar}{2}\qty[\qty(\cos^{2}\qty(\frac{\varphi}{2})-\sin^{2}\qty(\frac{\varphi}{2}))\sigma_{x}+\frac{i}{2}\sin\qty(\varphi)\comm{\sigma_{z}}{\sigma_{x}}]\\
+&=\frac{\hbar}{2}\qty(\cos(\varphi)\sigma_{x}-\sin(\varphi)\sigma_{y})\\
+&=\cos(\varphi)\vb{S}_{x}-\sin(\varphi)\vb{S}_{y}
+\end{aligned}
+\end{equation}
+as expected from the rotation matrix $R_{z}(\varphi)$. Thus
+\begin{equation}
+\expval{\vb{S}_{x}}_{R}=\expval{\vb{S}_{x}}\cos\varphi-\expval{\vb{S}_{y}}\sin\varphi
+\end{equation}
+Both the operator $\vb{S}$ and its expectation values transform under rotation as an ordinary vector under a rotation matrix.
+
+\subsection{Rotation of Kets}
+In Dirac notation, any ket that represents a spin-$\frac{1}{2}$ system can be written as a linear combination of the eigenstates $\{\ket{\up},\ket{\dn}\}$ of $\vb{S}_{z}$.\\
+
+These kets may alternatively be represented as $z$-component vectors (spinors)
+\begin{equation}
+\begin{aligned}
+\ket{\up}&=\mqty[1 \\ 0],\quad &\ket{\dn}&=\mqty[0\\1]\\
+\sigma_{z}\ket{\up}&=\mqty[1 & 0\\0 & -1]\mqty[1\\0]=\mqty[1\\0],\quad &\sigma_{z}\ket{\dn}&=\mqty[1 & 0\\0 & -1]\mqty[0\\1]=-\mqty[0\\1]
+\end{aligned}
+\end{equation}
+For an arbitrary state $\ket{z}$
+\begin{equation}
+\begin{aligned}
+\ket{z}&=z_{\up}\ket{\up}+z_{\dn}\ket{\dn}=\mqty[z_{\up}\\z_{\dn}]
+\end{aligned}
+\end{equation}
+$z_{\up}$ and $z_{\dn}$ are complex amplitudes, such that they normalize $\ket{z}$.
+\begin{equation}
+\ip{z}=\abs{z_{\up}}^{2}+\abs{z_{\dn}}^{2}=1\qq{by the normalization condition}
+\end{equation}
+$\abs{z_{\up}}^{2}$ and $\abs{z_{\dn}}^{2}$ are the probabilities to find the system $\ket{z}$ in eigenstate $\ket{\up}$ and $\ket{\dn}$ respectively after measurement.\\
+
+Let us find the spinor that is an eigenstate of $\vec{\sigma}\cdot\hat{n}$
+\begin{equation}
+\vec{\sigma}\cdot\hat{n}\ket{z}=\ket{z}\qq{since eigenvalues of $\vec{\sigma}\cdot\hat{n}$ are $\pm1$}
+\end{equation}
+where $\hat{n}=(\sin\theta\cos\phi,\sin\theta\sin\phi,\cos\theta)$.\\
+
+Suppose we start from $\hat{n}$ along the $z$-axis and want to rotate it to a general direction specified by $\theta$ and $\varphi$. To accomplish this, one first rotates by angle $\theta$ around the $y$-axis then by angle $\varphi$ around the $z$-axis. Thus
+\begin{equation}
+\begin{aligned}
+\ket{z}&=e^{-\frac{i}{2}\sigma_{z}\varphi}e^{-\frac{i}{2}\sigma_{y}\theta}\ket{\up}\\
+&=\mqty[\cos\qty(\frac{\varphi}{2})-i\sin\qty(\frac{\varphi}{2}) & 0\\0 & \cos\qty(\frac{\varphi}{2})+i\sin\qty(\frac{\varphi}{2})]\mqty[\cos\qty(\frac{\theta}{2}) & -\sin\qty(\frac{\theta}{2}) \\ \sin\qty(\frac{\theta}{2}) & \cos\qty(\frac{\theta}{2})]\mqty[1\\0]\\
+&=\mqty[e^{-i\frac{\varphi}{2}}\cos\qty(\frac{\theta}{2}) \\ e^{i\frac{\varphi}{2}}\sin\qty(\frac{\theta}{2})]
+\end{aligned}
+\end{equation}
+Consider the expectation values of $\vec{\vb{S}}$ now
+\begin{equation}
+\begin{aligned}
+\mel{z}{\vb{S}_{x}}{z}&=\frac{\hbar}{2}\mel{z}{\sigma_{x}}{z}\\
+&=\frac{\hbar}{2}\sum_{a,b}z_{a}^{*}\sigma_{x_{ab}}z_{b}\quad a,b\in\{\ket{\up},\ket{\dn}\}\\
+&=\frac{\hbar}{2}\qty(z_{\up}^{*}z_{\dn}+z_{\dn}^{*}z_{\up})\\
+&=\frac{\hbar}{2}\sin\theta\cos\varphi\\
+&=\frac{\hbar}{2}n_{x}\\
+\mel{z}{\vb{S}_{y}}{z}&=\ldots\\
+&=\frac{\hbar}{2}\sin\theta\sin\varphi\\
+&=\frac{\hbar}{2}n_{y}\\
+\mel{z}{\vb{S}_{z}}{z}&=\ldots\\
+&=\frac{\hbar}{2}\cos\theta\\
+&=\frac{\hbar}{2}n_{z}
+\end{aligned}
+\end{equation}
+Thus, $\mel{z}{\vec{\vb{S}}}{z}=\frac{\hbar}{2}\hat{n}$, where $\hat{n}=z_{a}^{*}\vec{\sigma}_{ab}z_{b}$ is another way to represent a unit vector in terms of two complex numbers satisfying the condition $\abs{z_{\up}}^{2}+\abs{z_{\dn}}^{2}=1$. Note that we shall ignore Euler angles in this course.
+
+\subsection{Theory of Angular Momentum}
+Consider the square of the angular momentum operator $\vec{\vb{J}}$.
+\begin{equation}
+\vec{\vb{J}}^{2}=\vb{J}_{x}^{2}+\vb{J}_{y}^{2}+\vb{J}_{z}^{2}
+\end{equation}
+Consider its commutator with $\vb{J}_{z}$
+\begin{equation}
+\begin{aligned}
+\comm{\vec{\vb{J}}^{2}}{\vb{J}_{z}}&=\comm{\vb{J}_{x}^{2}+\vb{J}_{y}^{2}+\vb{J}_{z}^{2}}{\vb{J}_{z}}\\
+&=\comm{\vb{J}_{x}^{2}+\vb{J}_{y}^{2}}{\vb{J}_{z}}\\
+&\quad\explain{Since $\vb{J}_{z}$ commutes with powers of itself}\\
+&=\vb{J}_{x}^{2}\vb{J}_{z}-\vb{J}_{z}\vb{J}_{x}^{2}+\vb{J}_{y}^{2}\vb{J}_{z}-\vb{J}_{z}\vb{J}_{y}^{2}
+\end{aligned}
+\end{equation}
+Note that
+\begin{equation}
+\begin{aligned}
+\vb{J}_{x}\comm{\vb{J}_{x}}{\vb{J}_{z}}+\comm{\vb{J}_{x}}{\vb{J}_{z}}\vb{J}_{x}&=\vb{J}_{x}(\vb{J}_{x}\vb{J}_{z}-\vb{J}_{z}\vb{J}_{x})+(\vb{J}_{x}\vb{J}_{z}-\vb{J}_{z}\vb{J}_{x})\vb{J}_{x}\\
+&=\vb{J}_{x}^{2}\vb{J}_{z}-\vb{J}_{x}\vb{J}_{z}\vb{J}_{x}+\vb{J}_{x}\vb{J}_{z}\vb{J}_{x}-\vb{J}_{z}\vb{J}_{x}^{2}\\
+&=\vb{J}_{x}^{2}\vb{J}_{z}-\vb{J}_{z}\vb{J}_{x}^{2}\\
+\therefore \comm{\vec{\vb{J}}^{2}}{\vb{J}_{z}}&=\vb{J}_{x}\comm{\vb{J}_{x}}{\vb{J}_{z}}+\comm{\vb{J}_{x}}{\vb{J}_{z}}\vb{J}_{x}+\vb{J}_{y}\comm{\vb{J}_{x}}{\vb{J}_{z}}+\comm{\vb{J}_{x}}{\vb{J}_{z}}\vb{J}_{y}\\
+&=i\hbar\qty(-\vb{J}_{x}\vb{J}_{y}-\vb{J}_{y}\vb{J}_{x}+\vb{J}_{y}\vb{J}_{x}+\vb{J}_{x}\vb{J}_{y})\\
+&\quad\explain{Using $\comm{\vb{J}_{i}}{\vb{J}_{j}}=\varepsilon_{ijk}(i\hbar\vb{J}_{k}$}
+&=0
+\end{aligned}
+\end{equation}
+By similar arguments, $\comm{\vec{\vb{J}}^{2}}{\vb{J}_{x}}=\comm{\vec{\vb{J}}^{2}}{\vb{J}_{y}}=0$. Thus, $\vec{\vb{J}}^{2}$ commutes with all commutes of $\vec{\vb{J}}=(\vb{J}_{x},\vb{J}_{y},\vb{J}_{z})$. This implies $\vec{\vb{J}}^{2}$ and $\vb{J}_{z}$ possess common eigenstates. Note that while $\vec{\vb{J}}^{2}$ commutes 74with all components of $\vec{\vb{J}}$, this does not mean the components commute with each other. One cannot find simultaneous eigenstates between components of $\vec{\vb{J}}$. These eigenstates are specified by
+\begin{equation}
+\vec{\vb{J}}^{2}\ket{a,b}=a\ket{a,b}\quad\trm{and}\quad\vb{J}_{z}\ket{a,b}=b\ket{a,b}
+\end{equation}
+Let us denote the following operators $\vb{J}_{\pm}$ as
+\begin{equation}
+\vb{J}_{\pm}=\vb{J}_{x}\pm i\vb{J}_{y}
+\end{equation}
+Note that $\vb{J}_{\pm}^{*}=\vb{J}_{\mp}$ are not Hermitian.
+
+\begin{equation}
+\begin{aligned}
+\comm{\vb{J}_{+}}{\vb{J}_{-}}&=\comm{\vb{J}_{x}+i\vb{J}_{y}}{\vb{J}_{x}-i\vb{J}_{y}}\\
+&=-i\comm{\vb{J}_{x}}{\vb{J}_{y}}+i\comm{\vb{J}_{y}}{\vb{J}_{x}}\\
+&=2\hbar\vb{J}_{z}\\
+\comm{\vb{J}_{z}}{\vb{J}_{\pm}}&=\comm{\vb{J}_{z}}{\vb{J}_{x}\pm i\vb{J}_{y}}\\
+&=\comm{\vb{J}_{z}}{\vb{J}_{x}}\pm i\comm{\vb{J}_{z}}{\vb{J}_{y}}\\
+&=\pm\hbar\qty(\vb{J}_{x}\pm i\vb{J}_{y})\\
+&=\pm\hbar\vb{J}_{\pm}\\
+\comm{\vec{\vb{J}}^{2}}{\vb{J}_{\pm}}&=\comm{\vec{\vb{J}}^{2}}{\vb{J}_{x}\pm i\vb{J}_{y}}\\
+&=\comm{\vec{\vb{J}}^{2}}{\vb{J}_{x}}\pm i\comm{\vec{\vb{J}}^{2}}{\vb{J}_{y}}\\
+&=0
+\end{aligned}
+\end{equation}
+Consider now state $\vb{J}_{\pm}\ket{a,b}$
+\begin{equation}
+\begin{aligned}
+\vb{J}_{z}\vb{J}_{\pm}\ket{a,b}&=\qty(\comm{\vb{J}_{z}}{\vb{J}_{\pm}}+\vb{J}_{\pm}\vb{J}_{z})\ket{a,b}\\
+&=(\pm\hbar\vb{J}_{\pm}+\vb{J}_{+}b)\ket{a,b}\\
+&=(b\pm\hbar)\vb{J}_{\pm}\ket{a,b}
+\end{aligned}
+\end{equation}
+Thus, $\vb{J}_{\pm}\ket{a,b}$ is still an eigenstate of $\vb{J}_{z}$, but with eigenvalue increased or decreased by $\hbar$. Thus, $\vb{J}_{\pm}$ are called \ul{ladder operators}.
+\begin{equation}
+\begin{aligned}
+\vec{\vb{J}}^{2}\vb{J}_{\pm}\ket{a,b}&=\vb{J}_{\pm}\vec{\vb{J}}^{2}\ket{a,b}\qq{since $\comm{\vec{\vb{J}}^{2}}{\vb{J}_{\pm}}=0$}\\
+&=\vb{J}_{\pm}a\ket{a,b}\\
+&=a\vb{J}_{\pm}\ket{a,b}
+\end{aligned}
+\end{equation}
+Thus, $\vb{J}_{\pm}\ket{a,b}$ is still an eigenstate of $\vec{\vb{J}}^{2}$ with the eigenvalues unchanged.\\
+
+We denote $\vb{J}_{\pm}\ket{a,b}=c_{\pm}\ket{a,b\pm\hbar}$, where $c_{\pm}$ are coefficients to be determined.\\
+
+We shall now find the upper and lower limits on the eigenvalue $b$. Consider
+\begin{equation}
+\begin{aligned}
+\vec{\vb{J}}^{2}-\vb{J}_{z}^{2}=\vb{J}_{x}^{2}+\vb{J}_{y}^{2}\\
+&=\qty[\frac{1}{2}\qty(\vb{J}_{+}+\vb{J}_{-})]^{2}+\qty[\frac{1}{2i}(\vb{J}_{+}-\vb{J}_{-})]^{2}\\
+&=\frac{1}{2}(\vb{J}_{+}\vb{J}_{-}+\vb{J}_{-}\vb{J}_{+})\\
+&=\frac{1}{2}(\vb{J}_{+}\vb{J}_{+}^{\dagger}+\vb{J}_{+}^{\dagger}\vb{J}_{+})
+\end{aligned}
+\end{equation}
+
+Note that $\mel{a,b}{\vb{J}_{+}\vb{J}_{+}^{\dagger}}{a,b}$ is the norm of ket $\vb{J}_{+}^{\dagger}\ket{a,b}$ and $\mel{a,b}{\vb{J}_{+}^{\dagger}\vb{J}_{+}}{a,b}$ is the norm of ket $\vb{J}_{+}\ket{a,b}$. Thus
+\begin{equation}
+\begin{aligned}
+\mel{a,b}{(\vec{\vb{J}}^{2}-\vb{J}_{z}^{2})}{a,b}&=\frac{1}{2}\qty[\mel{a,b}{\vb{J}_{+}\vb{J}_{+}^{\dagger}}{a,b}+\mel{a,b}{\vb{J}_{+}^{\dagger}\vb{J}_{+}}{a,b}]\\
+&\geq 0
+\end{aligned}
+\end{equation}
+Therefore
+\begin{equation}
+\begin{aligned}
+\mel{a,b}{(\vec{\vb{J}}^{2}-\vb{J}_{z}^{2})}{a,b}&=\mel{a,b}{\vec{\vb{J}}^{2}}{a,b}-\mel{a,b}{\vb{J}_{z}^{2}}{a,b}\\
+&=a-b^{2}\\
+&\geq0\\
+\implies a&\geq b^{2} \implies -\sqrt{a}\leq b \leq \sqrt{a}
+\end{aligned}
+\end{equation}
+Thus, $b$ is bounded. This is merely a consequence of the fact that $\expval{\vec{\vb{J}}^{2}}\geq\expval{\vb{J}_{z}^{2}}$. There must be some maximum eigenvalue $b_{\trm{max}}$ of $\vb{J}_{z}$ such that
+\begin{equation}
+\begin{aligned}
+\vb{J}_{+}\ket{a,b_{\trm{max}}}&=0\\
+\therefore \vb{J}_{-}\vb{J}_{+}\ket{a,b_{\trm{max}}}&=\vb{J}_{-}(0)=0
+\end{aligned}
+\end{equation}
+However
+\begin{equation}
+\begin{aligned}
+\vb{J}_{-}\vb{J}_{+}&=(\vb{J}_{x}-i\vb{J}_{y})(\vb{J}_{x}+i\vb{J}_{y})\\
+&=\vb{J}_{x}^{2}+\vb{J}_{y}^{2}+i(\vb{J}_{x}\vb{J}_{y}-\vb{J}_{y}\vb{J}_{x})\\
+&=\vb{J}_{x}^{2}+\vb{J}_{y}^{2}+i\comm{\vb{J}_{x}}{\vb{J}_{y}}\\
+&=\vec{\vb{J}}^{2}-\vb{J}_{z}^{2}-\hbar\vb{J}_{z}\\
+\vb{J}_{-}\vb{J}_{+}\ket{a,b_{\trm{max}}}&=(\vec{\vb{J}}^{2}-\vb{J}_{z}^{2}-\hbar\vb{J}_{z})\ket{a,b_{\trm{max}}}\\
+&=(a-b_{\trm{max}}^{2}-\hbar b_{\trm{max}})\ket{a,b_{\trm{max}}}\\
+&=0\\
+\implies a-b_{\trm{max}}^{2}-\hbar b_{\trm{max}}&=0\implies a= b_{\trm{max}}(b_{\trm{max}}+\hbar)
+\end{aligned}
+\end{equation}
+Similarly
+\begin{equation}
+\begin{aligned}
+\vb{J}_{-}\ket{a,b_{\trm{min}}}&=0\\
+\vb{J}_{+}\vb{J}_{-}\ket{a,b_{\trm{min}}}&=\vb{J}_{+}(0)=0
+\end{aligned}
+\end{equation}
+However
+\begin{equation}
+\begin{aligned}
+\vb{J}_{+}\vb{J}_{-}&=(\vb{J}_{x}+i\vb{J}_{y})(\vb{J}_{x}-i\vb{J}_{y})\\
+&=\vb{J}_{x}^{2}+\vb{J}_{y}^{2}+i(\vb{J}_{y}\vb{J}_{x}-\vb{J}_{x}\vb{J}_{y})\\
+&=\vb{J}_{x}^{2}+\vb{J}_{y}^{2}-i\comm{\vb{J}_{x}}{\vb{J}_{y}}\\
+&=\vec{\vb{J}}^{2}-\vb{J}_{z}^{2}+\hbar\vb{J}_{z}\\
+\vb{J}_{+}\vb{J}_{-}\ket{a,b_{\trm{min}}}&=(\vec{\vb{J}}^{2}-\vb{J}_{z}^{2}+\hbar\vb{J}_{z})\ket{a,b_{\trm{min}}}\\
+&=(a-b_{\trm{min}}^{2}+\hbar b_{\trm{min}})\ket{a,b_{\trm{min}}}\\
+&=0\\
+\implies a-b_{\trm{min}}^{2}+\hbar b_{\trm{max}}&=0\implies a= b_{\trm{min}}(b_{\trm{min}}-\hbar)
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+b_{\trm{max}}(b_{\trm{max}}+\hbar)&=b_{\trm{min}}(b_{\trm{min}}-\hbar)\\
+b_{\trm{min}}&=-b_{\trm{max}}
+\end{aligned}
+\end{equation}
+Since one must be able to reach $\ket{a,b_{\trm{max}}}$ by applying $\vb{J}_{+}$ a finite $n$ amount of times to $\ket{a,b_{\trm{min}}}$
+\begin{equation}
+\begin{aligned}
+\vb{J}_{+}^{n}\ket{a,b_{\trm{min}}}&=(b_{\trm{min}}+n\hbar)\ket{a,b_{\trm{max}}}=b_{\trm{max}}\ket{a,b_{\trm{max}}}\\
+b_{\trm{min}}+n\hbar&=b_{\trm{max}}\\
+2b_{\trm{max}}&=n\hbar\\
+b_{\trm{max}}&=\frac{n\hbar}{2}
+\end{aligned}
+\end{equation}
+Defining $j=\frac{b_{\trm{max}}}{\hbar}$, one finds that $j=\frac{n}{2}$ is an integer or half-integer. The maximum eigenvalue of $\vb{J}_{z}$ is $\hbar j$. The eigenvalue of $\vec{\vb{J}}^{2}$ becomes $a=b_{\trm{max}}(b_{\trm{max}}+\hbar)=\hbar^{2}j(j+1)$.\\
+
+For a classical vector, one expects $a=\hbar^{2}j^{2}$. Note that as $j$ increases, the angular momentum becomes more and more classical.\\
+
+Let $b=m\hbar$, $m\in\{-j,-j+1,\ldots,j-1,j\}$. If $j$ is an integer, then all values of $m$ are integers. If $j$ is a half-integer, then all values of $m$ are half-integers. There are $2j+1$ distinct values for $m$. We replace the eigenequations for $\vec{\vb{J}}^{2}$ and $\vb{J}_{z}$ with
+\begin{equation}
+\begin{aligned}
+\vec{\vb{J}}^{2}\ket{j,m}&=\hbar^{2}j(j+1)\ket{j,m}\\
+\vb{J}_{z}\ket{j,m}&=\hbar m\ket{j,m}
+\end{aligned}
+\end{equation}
+where $-j\leq m\leq j$ and $j=\frac{n}{2}$ is the magnitude of the angular momentum (e.g. $j=\frac{1}{2}$ for an electron).\\
+
+The matrix elements of the angular momentum operators are
+\begin{equation}
+\begin{aligned}
+\mel{j',m'}{\vec{\vb{J}}^{2}}{j,m}&=\hbar^{2}j(j+1)\delta_{jj'}\delta_{mm'}\\
+\mel{j',m'}{\vb{J}_{z}}{j,m}&=\hbar m\delta_{jj'}\delta_{mm'}
+\end{aligned}
+\end{equation}
+The expectation value for $\vb{J}_{-}\vb{J}_{+}$ is
+\begin{equation}
+\begin{aligned}
+\mel{j,m}{\vb{J}_{-}\vb{J}_{+}}{j,m}&=\mel{j,m}{(\vec{\vb{J}}^{2}-\vb{J}_{z}^{2}-\hbar\vb{J}_{z})}{j,m}\\
+&=\hbar^{2}j(j+1)-\hbar^{2}m^{2}-\hbar^{2}m\\
+&=\hbar^{2}j(j+1)-\hbar^{2}m(m+1)
+\end{aligned}
+\end{equation}
+However, note that $\vb{J}_{-}\vb{J}_{+}=\vb{J}_{+}^{\dagger}\vb{J}_{+}$. Thus
+\begin{equation}
+\begin{aligned}
+\mel{j,m}{\vb{J}_{-}\vb{J}_{+}}{j,m}&=\mel{j,m}{\vb{J}_{+}^{\dagger}\vb{J}_{+}}{j,m}\\
+&=\norm{\vb{J}_{+}\ket{j,m}}^{2}\\
+&=\norm{c_{jm}^{+}\ket{j,m}}^{2}\\
+&=\abs{c_{jm}^{+}}^{2}\norm{\ket{j,m}}^{2}\\
+&=\abs{c_{jm}^{+}}^{2}
+\end{aligned}
+\end{equation}
+Taking $c_{jm}^{+}$ to be real
+\begin{equation}
+\begin{aligned}
+c_{jm}^{+}=\hbar\sqrt{(j-m)(j+m+1)}
+\end{aligned}
+\end{equation}
+Analogously, one can find for $c_{jm}^{-}$ that
+\begin{equation}
+c_{jm}^{-}=\hbar\sqrt{(j+m)(j-m+1)}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\vb{J}_{\pm}\ket{j,m}&=\hbar\sqrt{(j\mp m)(j\pm m+1)}\ket{j,m\pm1}\\
+\mel{j',m'}{\vb{J}_{\pm}}{j,m}&=\hbar\sqrt{(j\mp m)(j\pm m+1)}\delta_{jj'}\delta_{m'(m\pm1)}
+\end{aligned}
+\end{equation}
+Given the definition of $\vb{J}_{+}$ and $\vb{J}_{-}$
+\begin{equation}
+\begin{aligned}
+\vb{J}_{x}&=\frac{1}{2}(\vb{J}_{+}+\vb{J}_{-})\\
+\vb{J}_{y}&=\frac{1}{2i}(\vb{J}_{+}-\vb{J}_{-})
+\end{aligned}
+\end{equation}
+Thus, one can find the matrix elements of $\vb{J}_{x}$ and $\vb{J}_{y}$ in addition to $\vb{J}_{z}$.\\
+
+Returning to the rotation operator $D(R)=e^{-\frac{i}{\hbar}\vec{\vb{J}}\cdot\hat{n}\varphi}$, since $\vec{\vb{J}}^{2}$ commutes with any component of $\vec{\vb{J}}$
+\begin{equation}
+\comm{\vec{\vb{J}}^{2}}{D(R)}=0
+\end{equation}
+Therefore
+\begin{equation}
+\begin{aligned}
+\vec{\vb{J}}^{2}D(R)\ket{j,m}&=D(R)\vec{\vb{J}}^{2}\ket{j,m}\\
+&=\hbar^{2}j(j+1)D(R)\ket{j,m}
+\end{aligned}
+\end{equation}
+$D(R)\ket{j,m}$ is still an eigenket of $\vec{\vb{J}}^{2}$ with the same eigenvalue $\hbar^{2}j(j+1)$. However, $D(R)$ in general does not commute with $\vb{J}_{z}$ (i.e. $\comm{D(R)}{\vb{J}_{z}}\neq 0$).
+\begin{equation}
+\begin{aligned}
+D(R)\ket{j,m}&=\mathbb{I}D(R)\ket{j,m}\\
+&=\sum_{j',m'}\op{j',m'}D(R)\ket{j,m}\\
+&=\sum_{m'}\op{j,m'}D(r)\ket{j,m}\qq{by orthogonality}\\
+&=\sum_{m'}\ket{j,m'}D_{m'm}^{(j)}(R)
+\end{aligned}
+\end{equation}
+where $D_{m'm}^{(j)}(R)$ is defined to be $\mel{j,m'}{D(R)}{j,m}$.\\
+
+$D^{(j)}(R)$ is a $2j+1$-dimensional irreducible representation of one group of rotations. $\mel{j',m'}{D(R)}{j,m}$ is proportional to $\delta_{j'j}$. This implies that the matrix $\mel{j,m'}{D(R)}{j,m}$ is block diagonal, with each block corresponding to a specific $j$. The size of each block is $2j+1$. $D_{m'm}^{(j)}(R)$ is a probability amplitude to find the system in state $\ket{j,m'}$ after rotation of the original state $\ket{j,m}$.\\
+
+Consider $j=\frac{1}{2}$ case
+\begin{equation}
+\begin{aligned}
+D(R)&=e^{-\frac{i}{\hbar}\vec{\vb{J}}\cdot\hat{n}\varphi}\\
+&=e^{-\frac{i}{2}\vec{\sigma}\cdot\hat{n}\varphi}\\
+&=\cos\qty(\frac{\varphi}{2})\mathbb{I}-i\vec{\sigma}\cdot\hat{n}\sin\qty(\frac{\varphi}{2})\\
+&=\mqty[\cos\qty(\frac{\varphi}{2})-in_{z}\sin\qty(\frac{\varphi}{2}) & (-in_{x}-n_{y})\sin\qty(\frac{\varphi}{2})\\ (in_{x}-n_{y})\sin\qty(\frac{\varphi}{2}) & \cos\qty(\frac{\varphi}{2})+in_{z}\sin\qty(\frac{\varphi}{2})]
+\end{aligned}
+\end{equation}
+
+\subsection{Orbital and Spin Angular Momentum}
+In classical mechanics, angular momentum is what is know as \ul{orbital angular momentum}, defined as
+\begin{equation}
+\vec{\vb{L}}=\vec{\vb{r}}\times\vec{\vb{p}}
+\end{equation}
+where $\vec{\vb{r}}$ and $\vec{\vb{p}}$ are both operators.\\
+
+In quantum mechanics, the total angular momentum is the sum of the orbital angular momentum and the \ul{spin}
+\begin{equation}
+\vec{\vb{J}}=\vec{\vb{L}}+\vec{\vb{S}}
+\end{equation}
+Consider the commutation relations for $\vec{\vb{L}}$
+\begin{equation}
+\begin{aligned}
+\comm{\vb{L}_{x}}{\vb{L}_{y}}&=\comm{\vb{y}\vb{p}_{z}-\vb{z}\vb{p}_{y}}{\vb{z}\vb{p}_{x}-\vb{x}\vb{p}_{z}}\\
+&=\comm{\vb{y}\vb{p}_{z}}{\vb{z}\vb{p}_{x}}-\cancelto{0}{\comm{\vb{y}\vb{p}_{z}}{\vb{x}\vb{p}_{z}}}-\cancelto{0}{\comm{\vb{z}\vb{p}_{y}}{\vb{z}\vb{p}_{x}}}+\comm{\vb{z}\vb{p}_{y}}{\vb{x}\vb{p}_{z}}\\
+&\quad\explain{Since $\vb{x}\neq\vb{y}$, $\vb{p}_{z}=\vb{p}_{z}$ and $\vb{z}=\vb{z}$, $\vb{p}_{y}\neq\vb{p}_{x}$}\\
+&\quad\explain{$\comm{\vb{p}_{i}}{\vb{p}_{j}}=\comm{\vb{x}_{i}}{\vb{x}_{j}}=0$, $\comm{\vb{x}_{i}}{\vb{p}_{j}}=\delta_{ij}$}\\
+&=\ldots\\
+&=\vb{y}\vb{p}_{x}\underbrace{\comm{\vb{p}_{z}}{\vb{z}}}_{-i\hbar}+\vb{p}_{y}\vb{x}\underbrace{\comm{\vb{z}}{\vb{p}_{z}}}_{i\hbar}\\
+&=i\hbar(\vb{x}\vb{p}_{y}-\vb{y}\vb{p}_{x})\\
+&=i\hbar\vb{L}_{z}
+\end{aligned}
+\end{equation}
+
+Similar relations can be found for other combinations, yielding the canonical commutation relation
+\begin{equation}
+\comm{\vb{L}_{i}}{\vb{L}_{j}}=i\hbar\varepsilon_{ijk}\vb{L}_{k}
+\end{equation}
+Consider spin-less infinitesimal rotations $(\vec{\vb{S}}=\vec{0})$. In this case, $\vec{\vb{J}}=\vec{\vb{L}}$.
+\begin{equation}
+D_{z}(\delta\varphi)=e^{-\frac{i}{\hbar}\vb{L}_{z}\delta\varphi}=\mathbb{I}-\frac{i}{\hbar}\vb{L}_{z}\delta\varphi=\mathbb{I}-\frac{i}{\hbar}\delta\varphi(\vb{x}\vb{p}_{y}-\vb{y}\vb{p}_{x})
+\end{equation}
+Acting on a position eigenket $\ket{\vec{x}\,'}$
+\begin{equation}
+D_{z}(\delta\varphi)\ket{\vec{x}\,'}=\qty(\mathbb{I}-\frac{i}{\hbar}\delta\varphi\vb{x}\vb{p}_{y}+\frac{i}{\hbar}\delta\varphi\vb{y}\vb{p}_{x})\ket{x',y',z'}
+\end{equation}
+
+Recall that
+\begin{equation}
+\begin{aligned}
+\vb{T}(\dd{\vec{x}}\,')&=\mathbb{I}-\frac{i}{\hbar}\vec{p}\cdot\dd{\vec{x}}\,'\\
+\vb{T}(\dd{\vec{x}}\,')\ket{\vec{x}\,'}&=\ket{\vec{x}\,'+\dd{\vec{x}}\,'}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+D_{z}(\delta\varphi)\ket{\vec{x}\,'}=\ket{x'-\delta\varphi\,y',y'+\delta\varphi\,x',z'}
+\end{equation}
+Another way to see this is
+\begin{equation}
+\begin{aligned}
+D_{z}(\delta\varphi)\ket{\vec{x}\,'}&=\qty(\mathbb{I}-\frac{i}{\hbar}\delta\varphi\,x' \vb{p}_{y}+\frac{i}{\hbar}\delta\varphi\, y'\vb{p}_{x})\ket{x',y',z'}\\
+&=\ket{x'-\delta\varphi\,y',y'+\delta\varphi\,x',z'}
+\end{aligned}
+\end{equation}
+which is exactly the effect of rotating a vector $\vec{x}\,'$ by the infinitesimal rotation matrix $R_{z}(\delta\varphi)$.
+\begin{equation}
+\begin{aligned}
+R_{z}(\delta\varphi)\vec{x}\,'&=\mqty[\cos\delta\varphi &-\sin\delta\varphi & 0\\ \sin\delta\varphi & \cos\delta\varphi & 0 \\ 0 & 0 & 1]\mqty[x' \\ y' \\ z']\\
+&\approx \mqty[1 & -\delta\varphi & 0 \\ \delta\varphi & 1 & 0 \\ 0 & 0 & 1]\mqty[x' \\ y' \\ z']\\\\
+&=\mqty[x'-\delta\varphi\,y'\\ y' + \delta\varphi\,x' \\ z']
+\end{aligned}
+\end{equation}
+Consider a state $\ket{\psi}$ of a paritcle in the coordinate representation with wavefunction
+\begin{equation}
+\psi(\vec{x}\,')=\ip{\vec{x}\,'}{\psi}=\ip{x',y',z'}{\psi}
+\end{equation}
+After rotation $\delta\varphi$ around the $z$-axis
+\begin{equation}
+\begin{aligned}
+\mel{x',y',z'}{D_{z}(\delta\varphi)}{\psi}&=\mel{x',y',z'}{\qty(\mathbb{I}-\frac{i}{\hbar}\vb{L}_{z}\delta\varphi)}{\psi}\\
+&=\mel{\psi}{\qty(\mathbb{I}+\frac{i}{\hbar}\vb{L}_{z}\delta\varphi)}{x',y',z'}^{*}\\
+&=\ip{\psi}{x'+\delta\varphi\,y',y'-\delta\varphi\,x',z'}^{*}\\
+&=\ip{x'+\delta\varphi\,y',y'-\delta\varphi\,x',z'}{\psi}
+\end{aligned}
+\end{equation}
+This may be more easily represented in spherical coordinates
+\begin{equation}
+\begin{aligned}
+\vec{x}\,'&=x'\hat{x}+y'\hat{y}+z'\hat{z}=r\hat{r}\\
+x'&=r\sin\theta\cos\varphi\\
+y'&=r\sin\theta\sin\varphi\\
+z'&=r\cos\theta\\
+r&=\sqrt{(x')^{2}+(y')^{2}+(z')^{2}}
+\end{aligned}
+\end{equation}
+Notice to first order, for a rotation $\delta\varphi$ about the $z$-axis
+\begin{equation}
+\begin{aligned}
+x'&\rightarrow r\sin\theta\cos(\varphi-\delta\varphi)\approx r\sin\theta\cos\varphi+r\sin\theta\sin\phi \,\delta\varphi = x'+\delta\varphi\,y'\\
+y'&\rightarrow r\sin\theta\sin(\varphi-\delta\varphi)\approx r\sin\theta\sin\varphi-r\sin\theta\cos\varphi\,\delta\varphi=y'-\delta\varphi\, x'
+z'&\rightarrow z
+\end{aligned}
+\end{equation}
+The effect of rotation about the $z$-axis is $\varphi\rightarrow\varphi-\delta\varphi$
+\begin{equation}
+\begin{aligned}
+\mel{r,\theta,\varphi}{\qty(\mathbb{I}-\frac{i}{\hbar}\vb{L}_{z}\delta\varphi)}{\psi}&=\ip{r,\theta,\varphi-\delta\varphi}{\psi}\\
+&\approx\ip{r,\theta,\varphi}{\psi}-\delta\varphi\,\pdv{\varphi}\ip{r,\theta,\varphi}{\psi}\\
+&=\ip{r,\theta,\varphi}{\psi}-\frac{i}{\hbar}\delta\varphi\,\mel{r,\theta,\varphi}{\vb{L}_{z}}{\psi}
+\end{aligned}
+\end{equation}
+Thus, the coordinate representation of $\vb{L}_{z}$ is
+\begin{equation}
+\vb{L}_{z}=-i\hbar\pdv{\varphi}
+\end{equation}
+More generally, $\vec{\vb{L}}=\vec{\vb{r}}\times\vec{\vb{p}}=-i\hbar\vec{\vb{r}}\times\vec{\nabla}$. In spherical coordinates
+\begin{equation}
+\begin{aligned}
+\hat{r}&=\hat{x}\sin\theta\cos\varphi+\hat{y}\sin\theta\sin\varphi+\hat{z}\cos\theta\\
+\hat{\varphi}&=-\hat{x}\sin\varphi+\hat{y}\cos\varphi\\
+\hat{\theta}&=\hat{x}\cos\varphi\cos\theta+\hat{y}\sin\varphi\cos\theta-\hat{z}\sin\theta
+\end{aligned}
+\end{equation}
+This can be used to determine
+\begin{equation}
+\begin{aligned}
+\vb{L}_{x}&=\vb{y}\vb{p}_{z}-\vb{z}\vb{p}_{y}=-i\hbar\qty(\vb{y}\pdv{z}-\vb{z}\pdv{y})\\
+\vb{L}_{y}&=\vb{z}\vb{p}_{x}-\vb{x}\vb{p}_{z}=-i\hbar\qty(\vb{z}\pdv{x}-\vb{x}\pdv{z})
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\vec{\nabla}&=\hat{x}\pdv{x}+\hat{y}\pdv{y}+\hat{z}\pdv{z}\\
+&=\hat{r}\pdv{r}+\hat{\varphi}\frac{1}{r\sin\theta}\pdv{\varphi}+\hat{\theta}\frac{1}{r}\pdv{\theta}
+\end{aligned}
+\end{equation}
+Note that $\hat{\theta}=\hat{\varphi}\times\hat{r}$. Thus
+\begin{equation}
+\begin{aligned}
+\pdv{z}&=\cos\theta\pdv{r}-\frac{1}{r\sin\theta}\pdv{\theta}\\
+\pdv{y}&=\sin\theta\sin\varphi\pdv{r}+\frac{\cos\varphi}{r\sin\theta}\pdv{\varphi}+\frac{\cos\theta\sin\varphi}{r}\pdv{\theta}\\
+\pdv{x}&=\sin\theta\cos\varphi\pdv{r}-\frac{\sin\varphi}{r\sin\theta}\pdv{\varphi}+\frac{\cos\theta\cos\varphi}{r}\pdv{\theta}
+\end{aligned}
+\end{equation}
+and
+\begin{equation}
+\begin{aligned}
+\vb{L}_{x}&=-i\hbar\qty(-\sin\varphi\pdv{\theta}-\cot\theta\cos\varphi\pdv{\varphi})\\
+\vb{L}_{y}&=-i\hbar\qty(\cos\varphi\pdv{\theta}-\cot\theta\sin\varphi\pdv{\varphi})\\
+\vb{L}_{z}&=-i\hbar\pdv{\varphi}
+\end{aligned}
+\end{equation}
+Note that all components of $\vec{\vb{L}}$ only contain derivatives with respect to $\theta$ and $\varphi$ (and not $r$) since rotations do not change the length of $r$.
+\begin{equation}
+\begin{aligned}
+\vb{L}_{\pm}&=\vb{L}_{x}\pm i\vb{L}_{y}=-i\hbar e^{\pm i\varphi}\qty(\pm i\pdv{\theta}-\cot\theta\pdv{\varphi})\\
+\vec{\vb{L}}^{2}&=\vb{L}_{x}^{2}+\vb{L}_{y}^{2}+\vb{L}_{z}^{2}\\
+&=\vb{L}_{z}^{2}+\frac{1}{2}\qty(\vb{L}_{+}\vb{L}_{-}+\vb{L}_{-}\vb{L}_{+})\\
+&=\ldots\\
+&=-\hbar^{2}\qty[\frac{1}{\sin^{2}\theta}\pdv[2]{\varphi}+\frac{1}{\sin\theta}\pdv{\theta}\qty(\sin\theta\pdv{\theta})]
+\end{aligned}
+\end{equation}
+Moreover, note that $\comm{\vec{\vb{L}}^{2}}{\vb{L}_{z}}=0$, since $\vec{\vb{L}}^{2}$ is a function of $\theta$ only and does not depend on $\varphi$.\\
+
+Let us find common eigenstates for $\vec{\vb{L}}^{2}$ and $\vb{L}_{z}$. Using a similar process as before
+\begin{equation}
+\begin{aligned}
+\vec{\vb{L}}^{2}\ket{l,m}&=\hbar^{2}l(l+1)\ket{l,m}\\
+\vb{L}_{z}\ket{l,m}&=\hbar m\ket{l,m}
+\end{aligned}
+\end{equation}
+where $m\in\{-l,-l+1,\ldots,l-1,l\}$ and can be $2l+1$ distinct values.\\
+
+Consider the eigenkets $\ket{l,m}$ in the position representation. For spherical coordinates, they should only depend on the angular variables $\theta$ and $\varphi$, given there are no derivatives in $r$.\\
+
+Thus, we define the follow wavefunctions
+\begin{equation}
+\ip{\theta,\varphi}{l,m}=Y_{l}^{m}(\theta,\varphi)
+\end{equation}
+to be the \ul{spherical harmonics}.\\
+
+$\abs{Y_{l}^{m}(\theta,\varphi)}^{2}$ is the probability of finding particle in state $\ket{l,m}$ at $\ket{\theta,\phi}$.
+\begin{equation}
+\begin{aligned}
+\mel{\theta,\varphi}{\vb{L}_{z}}{l,m}&=\hbar m\ip{\theta,\varphi}{l,m}=\hbar mY_{l}^{m}(\theta,\varphi0\\
+\mel{\theta,\varphi}{\vb{L}_{z}}{l,m}&=\qty(-i\hbar\pdv{\varphi})\ip{\theta,\varphi}{l,m}=\qty(-i\hbar\pdv{\varphi})Y_{l}^{m}(\theta,\varphi)\\
+&\quad\explain{By resolution of identity}\\
+\implies \qty(-i\hbar\pdv{\varphi})Y_{l}^{m}(\theta,\varphi)&=\hbar mY_{l}^{m}(\theta,\varphi)
+\end{aligned}
+\end{equation}
+This differential equation implies that the $\varphi$-dependence of $Y_{l}^{m}(\theta,\varphi)$ goes like $Y_{l}^{m}(\theta,\varphi)\sim e^{im\varphi}$.
+
+\begin{equation}
+\begin{aligned}
+\vec{\vb{L}}^{2}\ket{l,m}&=\hbar^{2}l(l+1)\ket{l,m}\\
+-\hbar^{2}\qty[\frac{1}{\sin^{2}\theta}\pdv[2]{\varphi}+\frac{1}{\sin\theta}\pdv{\theta}\qty(\sin\theta\pdv{\theta})]Y_{l}^{m}(\theta,\varphi)&=\hbar^{2}l(l+1)Y_{l}^{m}(\theta,\varphi)
+\end{aligned}
+\end{equation}
+Note that $\qty(-i\hbar\pdv{\varphi})Y_{l}^{m}(\theta,\varphi)=\hbar mY_{l}^{m}(\theta,\varphi)$.
+\begin{equation}
+\therefore\qty[\frac{1}{\sin\theta}\pdv{\theta}\qty(\sin\theta\pdv{\theta})-\frac{m^{2}}{\sin^{2}\theta}+l(l+1)]Y_{l}^{m}(\theta,\varphi)=0
+\end{equation}
+This yields the spherical harmonics solution for $Y_{l}^{m}(\theta,\varphi)$
+\begin{equation}
+Y_{l}^{m}(\theta,\varphi)=(-1)^{m}\sqrt{\frac{(2l+1)(l-m)!}{4\pi(l+m)!}}P_{l}^{m}(\cos\theta)e^{im\varphi}\qq{for $m>0$}
+\end{equation}
+where
+\begin{equation}
+P_{l}^{m}(\cos\theta)=\frac{(-1)^{m+l}}{2^{l}l!}\frac{(l+\abs{m})!}{(l-\abs{m})!}\frac{1}{\sin^{\abs{m}}\theta}\qty(\dv{(\cos\theta)})^{l-\abs{m}}\sin^{2l}\theta
+\end{equation}
+are the \ul{associated Legendre polynomials}.\\
+
+This has the property of
+\begin{equation}
+Y_{l}^{-m}(\theta,\varphi)=(-1)^{l}Y_{l}^{m}{}^{\dagger}(\theta,\varphi)
+\end{equation}
+Under parity (spatial inversion)
+\begin{equation}
+\begin{aligned}
+\theta&\rightarrow\pi-\theta\\
+\varphi&\rightarrow\varphi+\pi\\
+e^{im\varphi}&\rightarrow e^{im\varphi}e^{im\pi}=(-1)^{m}e^{im\varphi}\\
+\cos\theta&\rightarrow-\cos\theta
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+P_{l}^{m}(-\cos\theta)=(-1)^{l-m}P_{l}^{m}(\cos\theta)
+\end{equation}
+Under parity
+\begin{equation}
+\begin{aligned}
+Y_{l}^{m}(\pi-\theta,\varphi+\pi)&=(-1)^{m}(-1)^{l-m}Y_{l}^{m}(\theta,\varphi)\\
+&=(-1)^{l}Y_{l}^{m}(\theta,\varphi)
+\end{aligned}
+\end{equation}
+For even $l$, $Y_{l}^{m}(\theta,\varphi)$ doesn't change under inversion. For odd $l$, $Y_{l}^{m}(\theta,\varphi)$ changes sign under inversion.\\
+
+Remember for total angular momentum $\vec{\vb{J}}$, $j$ was either an integer or half-integer. This is not true for $l$. Take $Y_{l}^{m}(\theta,\varphi)$ and consider a rotation of $2\pi$ for $\varphi$. By rotational symmetry
+\begin{equation}
+\begin{aligned}
+Y_{l}^{m}(\theta,\varphi)&=Y_{l}^{m}(\theta,\varphi+2\pi)\\
+Y_{l}^{m}(\theta,\varphi)&=e^{2\pi im}Y_{l}^{m}(\theta,\varphi)\\
+1&=e^{2\pi im}
+\end{aligned}
+\end{equation}
+If $l$ is a half-integer, then all $m$ are half-integer and $e^{2\pi im}=-1$, which leads to a contradiction. Thus, $l$ and consequently $m$ must be integers. The half-integer component of $\vec{\vb{J}}$ comes entirely from $\vec{\vb{S}}$. $\vec{\vb{L}}$ has a classical analogue, while $\vec{\vb{S}}$ has no classical analogue.
+
+\newpage
+\section{Symmetries in Quantum Mechanics}
+Transformations such as translations, rotation, and time-evolution are associated with unitary operators. We shall call these \ul{symmetry operators}. Suppose $\vb{S}$ is a symmetry operator. For an infinitesimal transformation
+\begin{equation}
+\vb{S}=\mathbb{I}-\frac{i}{\hbar}\vb{G}\epsilon
+\end{equation}
+where $\vb{G}$ is a Hermitian operator (as a consequence of $\vb{S}$ being unitary) and $\epsilon\ll 1$. $\vb{G}$ is the \ul{generator} of transformation $\vb{S}$. For example
+\begin{equation}
+D(\hat{n},\delta\varphi)=\mathbb{I}-\frac{i}{\hbar}\vec{\vb{J}}\cdot\hat{n}\delta\varphi
+\end{equation}
+
+Suppose the Hamiltonian $\vb{H}$ is invariant under $\vb{S}$
+\begin{equation}
+\vb{S}^{\dagger}\vb{H}\vb{S}=\vb{H}
+\end{equation}
+(e.g. a particle in a central potential $\vb{H}=\frac{(\vec{\vb{p}})^{2}}{2m}+V(\vb{r})$, is invariant under rotation $D^{\dagger}\vb{H}D=\vb{H}$. Then
+\begin{equation}
+\begin{aligned}
+\vb{S}^{\dagger}\vb{H}\vb{S}&=\qty(\mathbb{I}+\frac{i}{\hbar}\epsilon\vb{G})\vb{H}\qty(\mathbb{I}-\frac{i}{\hbar}\epsilon\vb{G})\\
+&=\vb{H}+\frac{i\epsilon}{\hbar}\vb{G}\vb{H}-\frac{i\epsilon}{\hbar}\vb{H}\vb{G}+\cancelto{0}{\order{\epsilon^{2}}}\\
+&=\vb{H}+\frac{i\epsilon}{\hbar}\comm{\vb{G}}{\vb{H}}
+\end{aligned}
+\end{equation}
+Since $\vb{S}^{\dagger}\vb{H}\vb{S}=\vb{H}$ (with $\vb{S}$ being a symmetry), then $\comm{\vb{G}}{\vb{H}}=0$. Note in the central potential example, $\comm{\vec{\vb{J}}}{\vb{H}}=0$. By the Heisenberg equation of motion
+\begin{equation}
+\dv{\vb{G}}{t}=\frac{i}{\hbar}\comm{\vb{H}}{\vb{G}}=0
+\end{equation}
+Thus, when $\vb{H}$ is invariant with respect to a symmetry transformation $\vb{S}$, its generator $\vb{G}$ is a conserved quantity.\\
+
+Since $\vb{S}$ is unitary
+\begin{equation}
+\begin{aligned}
+\vb{S}^{\dagger}\vb{H}\vb{S}&=\vb{H}\qq{if $\vb{H}$ is invariant under transformation $\vb{S}$}\\
+\vb{S}^{-1}\vb{H}\vb{S}&=\vb{H}\\
+\vb{H}\vb{S}&=\vb{S}\vb{H}\\
+\comm{\vb{H}}{\vb{S}}&=0
+\end{aligned}
+\end{equation}
+Consider energy eigenkets $\ket{n}$ of $\vb{H}$ with eigenvalues $E_{n}$
+\begin{equation}
+\begin{aligned}
+\vb{H}\ket{n}&=E_{n}\ket{n}\\
+\vb{H}\vb{S}\ket{n}&=\vb{S}\vb{H}\ket{n}=\vb{S}E_{n}\ket{n}=E_{n}\vb{S}\ket{n}
+\end{aligned}
+\end{equation}
+Thus, $\vb{S}\ket{n}$ is also an eigenket of $\vb{H}$ with eigenvalue $E_{n}$. Thus, $\ket{n}$ and $\vb{S}\ket{n}$ are degenerate eigenkets of $\vb{H}$. Symmetries are associated with degeneracies. For ``energy level repulsions", there is an absence of symmetries. There are usually no degeneracies.\\
+
+In the case of the central potential system, the Hamiltonian is rotationally invariant.
+\begin{equation}
+D^{\dagger}(R)\vb{H}D(R)=\vb{H}\implies\comm{\vb{H}}{D(R)}=0
+\end{equation}
+This also implies
+\begin{equation}
+\comm{\vb{H}}{\vec{\vb{J}}^{2}}=0,\quad\comm{\vb{H}}{\vec{\vb{J}}}=0
+\end{equation}
+Thus, one can find simultaneous eigenkets $\ket{n,j,m}$ of $\vb{H}$, $\vec{\vb{J}}^{2}$, and $\vb{J}_{z}$.
+\begin{equation}
+\vb{H}\ket{n,j,m}=E_{n}\ket{n,j,m}
+\end{equation}
+Since $\comm{\vb{H}}{D(R)}=0$, $D(R)\ket{n,j,m}$ is also an eigenstate of $\vb{H}$ with the same energy. Thus, one has
+\begin{equation}
+\begin{aligned}
+D(R)\ket{n,j,m}&=\sum_{m'}\op{n,j,m'}D(R)\ket{n,j,m}\\
+&=\sum_{m'}\ket{n,j,m'}D^{(j)}_{m'm}(R)
+\end{aligned}
+\end{equation}
+If all states of this form, for an arbitrary rotation $D(R)$ are eigenstates with the same energy, it must be true that all $\ket{n,j,m}$ with different $m\in\{-j,\ldots,j\}$ have the same energy. Thus, in the presence of rotational symmetry, all eigenstates are $2j+1$-fold degenerate. These rotations are an example of continuous symmetries. The rotation angle can be changed continuously.
+
+\subsection{Discrete Symmetries}
+\subsubsection{Parity Symmetry}
+Parity changes a right-handed coordinate system to a left-handed coordinate system.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0,0) -- (2,0,0) node[right] {$\hat{x}$};
+	\draw[->] (0,0,0) -- (0,2,0) node[above] {$\hat{y}$};
+	\draw[->] (0,0,0) -- (0,0,2) node[below left] {$\hat{z}$};
+	\node at (3,1,0) {$\hat{z}=\hat{x}\times\hat{y}$};
+
+	\draw[->] (8,0,0) -- (6,0,0) node[left] {$\hat{x}$};
+	\draw[->] (8,0,0) -- (8,-2,0) node[below] {$\hat{y}$};
+	\draw[->] (8,0,0) -- (8,0,-2) node[above right] {$\hat{z}$};
+	\node at (11,1,0) {$\hat{z}=-\hat{x}\times\hat{y}$};
+\end{tikzpicture}
+\end{center}
+In essence, $\vec{r}\rightarrow-\vec{r}$. Inversion change handedness, while rotation preserve handedness.\\
+
+As usual, consider transformations of kets and not the coordinate system, which remains fixed. Under the action of the parity operator, $\ket{\psi}\rightarrow\Pi\ket{\psi}$.\\
+
+By definition, the expectation value of the position operator $\vec{\vb{x}}$ changes sign under the parity operator $\Pi$. Thus
+\begin{equation}
+\begin{aligned}
+\mel{\psi}{\Pi^{\dagger}\vec{\vb{x}}\Pi}{\psi}&=-\mel{\psi}{\vec{\vb{x}}}{\psi}\\
+\pi^{\dagger}\vec{\vb{x}}\Pi&=-\vec{\vb{x}}\\
+\vec{\vb{x}}\Pi&=-\Pi\vec{\vb{x}}\qq{since $\Pi$ is unitary from $\mel{\psi}{\Pi^{\dagger}\Pi}{\psi}=\ip{\psi}=1$}
+\end{aligned}
+\end{equation}
+This can be written as $\acomm{\vec{\vb{x}}}{\Pi}=0$, where $\acomm{\vec{\vb{x}}}{\Pi}=\vec{\vb{x}}\Pi+\Pi\vec{\vb{x}}$ is the \ul{anti-commutator}.\\
+
+For $\Pi$ acting on the position eigenket $\ket{\vec{x}\,'}$
+\begin{equation}
+\vec{\vb{x}}\Pi\ket{\vec{x}\,'}=-\Pi\vec{\vb{x}}\ket{\vec{x}\,'}=-\vec{x}\,'\Pi\ket{\vec{x}\,'}
+\end{equation}
+Thus, $\Pi\ket{\vec{x}\,'}$ is also an eigenket of $\vec{\vb{x}}$ with eigenvalue $-\vec{x}\,'$. Thus
+\begin{equation}
+\Pi\ket{\vec{x}\,'}=e^{i\delta}\ket{-\vec{x}\,'}\qq{where $e^{i\delta}$ is an arbitrary phase factor}
+\end{equation}
+We shall choose $e^{i\delta}=1$ by convention.\\
+
+Additionally
+\begin{equation}
+\begin{aligned}
+\Pi^{2}\ket{\vec{x}\,'}&=\Pi\ket{\vec{x}\,'}=\ket{\vec{x}\,'}\\
+\therefore\Pi^{2}&=\mathbb{I}\Longleftrightarrow\Pi^{-1}=\Pi
+\end{aligned}
+\end{equation}
+Since $\Pi^{-1}=\Pi$ and $\Pi^{-1}=\Pi^{\dagger}$, $\Pi=\Pi^{\dagger}$. Thus, $\Pi$ is Hermitian and unitary. Since $\Pi^{2}=\mathbb{I}$, the eigenvalues of $\Pi$ must be $\pm1$.\\
+
+Consider the effects of parity on translation $T(\dd{\vec{x}}\,')=\mathbb{I}-\frac{i}{\hbar}\vec{\vb{p}}\cdot\dd{\vec{x}}\,'$.
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-4,0) -- (4,0) node[right] {$x$};
+	\draw[<->] (0,-3) -- (0,3) node[above] {$y$};
+	\draw[<->] (-4,-3) -- (4,3);
+	\draw[dashed] (-4,-2) -- (4,2);
+	\draw[->] (-4,-2) -- node[left] {$-\dd{\vec{x}}\,'$} (-4,-3);
+	\draw[->] (4,2) -- node[right] {$\dd{\vec{x}}\,'$} (4,3);
+\end{tikzpicture}
+\end{center}
+Thus
+\begin{equation}
+\begin{aligned}
+\Pi T(\dd{\vec{x}}\,')&=T(-\dd{\vec{x}}\,')\Pi\\
+\implies \Pi T(\dd{\vec{x}}\,')\Pi^{\dagger}&=T(-\dd{\vec{x}}\,')\\
+\Pi\qty(\mathbb{I}-\frac{i}{\hbar}\vec{\vb{p}}\cdot\dd{\vec{x}}\,')\Pi^{\dagger}&=\mathbb{I}+\frac{i}{\hbar}\vec{\vb{p}}\cdot\dd{\vec{x}}\,'\\
+\mathbb{I}-\frac{i}{\hbar}\Pi\vec{\vb{p}}\cdot\dd{\vec{x}}\,'\Pi^{\dagger}&=\mathbb{I}+\frac{i}{\hbar}\vec{\vb{p}}\cdot\dd{\vec{x}}\,'\\
+\Pi\vec{\vb{p}}\cdot\dd{\vec{x}}\,'\Pi^{\dagger}&=-\vec{\vb{p}}\cdot\dd{\vec{x}}\,'\\
+\Pi\vec{\vb{p}}\Pi^{\dagger}&=-\vec{\vb{p}}\qq{since $\dd{\vec{x}}\,'$ isn't an operator}
+\end{aligned}
+\end{equation}
+Thus, $\vec{\vb{p}}$ changes sign under parity. Thus, position operator $\vec{\vb{x}}$ and momentum operator $\vec{\vb{p}}$ has odd symmetry under parity. Thus, one can see that $\vec{\vb{L}}$ is even under parity.
+\begin{equation}
+\vec{\vb{L}}=\vec{\vb{x}}\times\vec{\vb{p}}\rightarrow\Pi^{\dagger}\vec{\vb{L}}\Pi=\vec{\vb{L}}
+\end{equation}
+More generally, connecting with rotations, parity can be represented as a diagonal matrix.
+\begin{equation}
+R^{\pi}=\mqty[-1 & 0 & 0\\ 0 & -1 & 0\\ 0 & 0 & -1]
+\end{equation}
+This clearly commutes with any rotation matrix $R$. Thus
+\begin{equation}
+\comm{R^{\pi}}{R}=0\implies\comm{\Pi}{D(R)}=0
+\end{equation}
+For $D(R)=\mathbb{I}-\frac{i}{\hbar}\vec{\vb{J}}\cdot\hat{n}\dd{\varphi}$
+\begin{equation}
+\begin{aligned}
+\Pi D(R)&=D(R)\Pi\\
+\Pi^{\dagger}D(R)\Pi&=D(R)\\
+\Pi^{\dagger}\qty(\mathbb{I}-\frac{i}{\hbar}\vec{\vb{J}}\cdot\hat{n}\dd{\varphi})\Pi&=\mathbb{I}-\frac{i}{\hbar}\vec{\vb{J}}\cdot\hat{n}\dd{\varphi}\\
+\mathbb{I}-\frac{i}{\hbar}\Pi^{\dagger}\vec{\vb{J}}\cdot\hat{n}\Pi\dd{\varphi}&=\mathbb{I}-\frac{i}{\hbar}\vec{\vb{J}}\cdot\hat{n}\dd{\varphi}\\
+\Pi^{\dagger}\vec{\vb{J}}\cdot\hat{n}\Pi&=\vec{\vb{J}}\cdot\hat{n}\\
+\implies\Pi^{\dagger}\vec{\vb{J}}\Pi&=\vec{\vb{J}}
+\end{aligned}
+\end{equation}
+Thus, $\vec{\vb{J}}$ has been proven to be even under parity. This also implies that $\Pi^{\dagger}\vec{\vb{S}}\Pi=\vec{\vb{S}}$. Thus, spin $\vec{\vb{S}}$ is also even under parity.\\
+
+Vectors which are odd under parity are called \ul{polar vectors}. Those that are even under parity are called \ul{axial vectors} (or \ul{pseudo-vectors}). Scalar operators that change sign under parity are called \ul{pseudo-scalars}
+
+
+
+
+\end{document}
