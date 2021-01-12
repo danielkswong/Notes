@@ -61,6 +61,21 @@
 	#1
 	\end{minipage}\hspace{4em}\bigskip
 }
+
+\newcommand{\theorem}[1]{% Aligns the environment for theorems
+	\ul{Theorem}:\hfill
+	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
+	#1
+	\end{minipage}\hspace{4em}\bigskip
+}
+
+\newcommand{\proof}[1]{% Aligns the environment for theorems
+	\ul{Proof}:\hfill
+	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
+	#1
+	\end{minipage}\hspace{4em}\bigskip
+}
+
 \newcommand{\definition}[1]{% Aligns the environment for definitions
 	\ul{Definition}:\hfill
 	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
@@ -134,8 +149,8 @@ This implies that $\braket{\psi}{\psi}=\braket{\psi}{\psi}^{*}$ is real. We post
 Thus, every state in the Hilbert space can be normalized.
 \begin{equation}
 \begin{aligned}
-\ket*{\tilde{\psi}}&=\frac{1}{\sqrt{\braket{\psi}{\psi}}}\ket{\psi}\\
-\implies \braket*{\tilde{\psi}}{\tilde{\psi}}&=\frac{\braket{\psi}{\psi}}{\braket{\psi}{\psi}}=1
+\ket*{\widetilde{\psi}}&=\frac{1}{\sqrt{\braket{\psi}{\psi}}}\ket{\psi}\\
+\implies \braket*{\widetilde{\psi}}{\widetilde{\psi}}&=\frac{\braket{\psi}{\psi}}{\braket{\psi}{\psi}}=1
 \end{aligned}
 \end{equation}
 If one has that $\braket{\varphi}{\psi}=0$, then $\ket{\psi}$ and $\ket{\varphi}$ are orthogonal.\\
@@ -1853,9 +1868,1055 @@ For $D(R)=\mathbb{I}-\frac{i}{\hbar}\vec{\vb{J}}\cdot\hat{n}\dd{\varphi}$
 \end{equation}
 Thus, $\vec{\vb{J}}$ has been proven to be even under parity. This also implies that $\Pi^{\dagger}\vec{\vb{S}}\Pi=\vec{\vb{S}}$. Thus, spin $\vec{\vb{S}}$ is also even under parity.\\
 
-Vectors which are odd under parity are called \ul{polar vectors}. Those that are even under parity are called \ul{axial vectors} (or \ul{pseudo-vectors}). Scalar operators that change sign under parity are called \ul{pseudo-scalars}
+Vectors which are odd under parity are called \ul{polar vectors}. Those that are even under parity are called \ul{axial vectors} (or \ul{pseudo-vectors}). Scalar operators that change sign under parity are called \ul{pseudo-scalars}. For example
+\begin{equation}
+\begin{aligned}
+\Pi^{\dagger}(\vec{\vb{p}}\cdot\vec{\vb{x}})\Pi&=\vec{\vb{p}}\cdot\vec{\vb{x}}\qq{(Scalar)}\\
+\Pi^{\dagger}(\vec{\vb{S}}\cdot\vec{\vb{L}})\Pi&=\vec{\vb{S}}\cdot\vec{\vb{L}}\qq{(Scalar)}\\
+\Pi^{\dagger}(\vec{\vb{S}}\cdot\vec{\vb{x}})\Pi&=\vec{\vb{S}}\cdot\vec{\vb{x}}\qq{(Pseudo-scalar)}\\
+\end{aligned}
+\end{equation}
+Consider the effects of parity on wavefunctions.
+\begin{equation}
+\psi(\vec{x}\,')=\ip{\vec{x}\,'}{\psi}
+\end{equation}
+After parity
+\begin{equation}
+\mel{\vec{x}\,'}{\Pi}{\psi}=\mel{\psi}{\Pi^{\dagger}}{\vec{x}\,'}^{*}=\ip{\psi}{-\vec{x}\,'}^{*}=\ip{-\vec{x}\,'}{\psi}=\psi(-\vec{x}\,')
+\end{equation}
+Suppose $\ket{\psi}$ is an eigenket of $\Pi$. Since the eigenvalues of $\Pi$ are $\pm1$
+\begin{equation}
+\begin{aligned}
+\Pi\ket{\psi}&=\pm\ket{\psi}\\
+\therefore\mel{\vec{x}\,'}{\Pi}{\psi}&=\pm\ip{\vec{x}\,'}{\psi}=\pm\psi(\vec{x}\,')
+\end{aligned}
+\end{equation}
+Thus, for eigenstates $\ket{\psi}$ of $\Pi$
+\begin{equation}
+\psi(-\vec{x}\,')=\pm\psi(\vec{x}\,')
+\end{equation}
+Eigenstates of parity have wavefunctions which are either even or odd functions of $\vec{x}\,'$.\\
 
+Note that not all states are parity eigenstates. For example, eigenstates of linear momentum $\vec{\vb{p}}$ are generally not eigenstates of $\Pi$, since $\Pi$ and $\vec{\vb{p}}$ do not commute.
 
+\example{2}{Momentum eigenstate of a free particle is
+\begin{equation}
+\begin{aligned}
+\psi(\vec{x}\,')&=\frac{1}{(2\pi\hbar)^{\frac{3}{2}}}e^{\frac{i}{\hbar}\vec{p}\cdot\vec{x}}\\
+\psi(-\vec{x}\,')&=\psi^{*}(\vec{x}\,')\neq\pm\psi(\vec{x}\,')
+\end{aligned}
+\end{equation}
+}
 
+However, $\vec{\vb{L}}$ and $\Pi$ commute. Thus, angular momentum eigenstates are also parity eigenstates. Recall that under parity (space inversion)
+\begin{equation}
+\begin{aligned}
+\theta&\rightarrow\pi-\theta\\
+\phi&\rightarrow\phi+\pi\\
+Y_{l}^{m}&\rightarrow(-1)^{l-m}Y_{l}^{m}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\Pi\ket{l,m}=(-1)^{l}\ket{l,m}
+\end{equation}
+States with even integer orbital angular momentum are even under parity. States with odd integers have odd parity.\\
+
+Suppose $\ket{\vb{H}}{\Pi}=0$. Let $\ket{n}$ be an energy eigenket of $\vb{H}$ with eigenvalue $E_{n}$. One can prove that $\ket{n}$ is also a parity eigenstate. Take $\ket{n}$ to be non-degenerate. Consider
+\[
+\frac{1}{2}(\mathbb{I}\pm\Pi)\ket{n}
+\]
+Acting on this state by $\Pi$
+\begin{equation}
+\begin{aligned}
+\Pi\qty[\frac{1}{2}(\mathbb{I}\pm\Pi)]\ket{n}&=\frac{1}{2}(\Pi\pm\Pi^{2})\ket{n}\\
+&=\frac{1}{2}(\Pi\pm\mathbb{I})\ket{n}\\
+&=\pm\frac{1}{2}(\mathbb{I}\pm\Pi)\ket{n}
+\end{aligned}
+\end{equation}
+Thus, $\frac{1}{2}(\mathbb{I}\pm\Pi)\ket{n}$ are eigenkets of $\Pi$ with eigenvalues $\pm1$.
+
+\begin{equation}
+\begin{aligned}
+\vb{H}\qty[\frac{1}{2}(\mathbb{I}\pm\Pi)]\ket{n}&=\frac{1}{2}(\mathbb{I}\pm\Pi)\vb{H}\ket{n}\\
+&=E_{n}\qty[\frac{1}{2}(\mathbb{I}\pm\Pi)]\ket{n}
+\end{aligned}
+\end{equation}
+Thus, $\frac{1}{2}(\mathbb{I}\pm\Pi)]\ket{n}$ is also an eigenket of $\vb{H}$ with eigenvalue $E_{n}$. Since $\ket{n}$ is non-degenerate, $\ket{n}=\frac{1}{2}(\mathbb{I}\pm\Pi)\ket{n}$. Thus, $\ket{n}$ is also a parity eigenstate.\\
+
+Suppose we have a container, separated by a penetrable barrier in the middle
+\begin{center}
+\begin{tikzpicture}
+	\draw (-4,-2) rectangle (4,2);
+	\draw (-4,-2) rectangle (0,2);
+	\node at (2,0) {R};
+	\node at (-2,0) {L};
+\end{tikzpicture}
+\end{center}
+where
+\begin{equation}
+\begin{aligned}
+\ket{L}&\equiv\trm{Particle is on the left side}\\
+\ket{R}&\equiv\trm{Particle is on the right side}
+\end{aligned}
+\end{equation}
+Suppose particles tunnel through the barrier with amplitude $\Delta$. The Hamiltonian $\vb{H}$ is
+\begin{equation}
+\begin{aligned}
+\vb{H}&=-\Delta\qty(\op{L}{R}+\op{R}{L})\\
+&=\mqty[0 & -\Delta \\ -\Delta & 0]
+\end{aligned}
+\end{equation}
+The eigenvalues are $E_{\pm}=\pm\Delta$. The corresponding eigenvectors are
+\begin{equation}
+\begin{aligned}
+E_{+}&=+\Delta &\implies \ket{E_{+}}&=\ket{A}=\frac{1}{\sqrt{2}}(\ket{L}-\ket{R})\qq{anti-symmetric}\\
+E_{-}&=-\Delta &\implies \ket{E_{-}}&=\ket{S}=\frac{1}{\sqrt{2}}(\ket{L}+\ket{R})\qq{symmetric}
+\end{aligned}
+\end{equation}
+Parity interchanges left and right. Therefore
+\begin{equation}
+\begin{aligned}
+\Pi\ket{L}&=\ket{R},\quad&\Pi\ket{R}&=\ket{L}\\
+\Pi\ket{S}&=\ket{S},\quad&\Pi\ket{A}&=\ket{A}
+\end{aligned}
+\end{equation}
+Energy eigenkets $\ket{S}$ and $\ket{A}$ are also parity eigenkets.\\
+
+Suppose the barrier becomes impenetrable ($\Delta=0$). Both states $\ket{S}$ and $\ket{A}$ are no degenerate, as $E_{\pm}=0$. Thus
+\begin{equation}
+\begin{aligned}
+\ket{L}&=\frac{1}{\sqrt{2}}(\ket{S}+\ket{A})\\
+\ket{R}&=\frac{1}{\sqrt{2}}(\ket{S}-\ket{A})
+\end{aligned}
+\end{equation}
+are also energy eigenstates, but are not eigenstates of parity.\\
+
+\subsubsection{Parity Selection Rules}
+Suppose $\ket{\alpha}$ and $\ket{\beta}$ are parity eigenstates
+\begin{equation}
+\begin{aligned}
+\Pi\ket{\alpha}&=\epsilon_{\alpha}\ket{\alpha}\\
+\Pi\ket{\beta}&=\epsilon_{\beta}\ket{\beta}\\
+\end{aligned}
+\end{equation}
+where $\epsilon_{\alpha},\epsilon_{\beta}=\pm1$. Looking at the matrix elements of $\vec{\vb{x}}$
+\begin{equation}
+\begin{aligned}
+\mel{\beta}{\vec{\vb{x}}}{\alpha}&=\mel{\beta}{\mathbb{I}\vec{\vb{x}}\mathbb{I}}{\alpha}\\
+&=\mel{\beta}{\Pi^{-1}\Pi\vec{\vb{x}}\Pi^{-1}\Pi}{\alpha}\\
+&=\mel{\beta}{\Pi^{\dagger}\Pi^{\dagger}\vec{\vb{x}}\Pi\Pi}{\alpha}\\
+&\quad\explain{Since $\Pi$ is Hermitian and unitary}\\
+&=\epsilon_{\alpha}\epsilon_{\beta}\mel{\beta}{\Pi^{\dagger}\vec{\vb{x}}\Pi}{\alpha}\\
+&=-\epsilon_{\alpha}\epsilon_{\beta}\mel{\beta}{\vec{\vb{x}}}{\alpha}
+\end{aligned}
+\end{equation}
+Thus
+\begin{enumerate}
+\item
+$\epsilon_{\alpha}\epsilon_{\beta}=1$, where one of the states is of odd parity and the other is of even parity, OR
+\item
+$\mel{\beta}{\vec{\vb{x}}}{\alpha}=0$, where the matrix element can only be non-zero between states of different parity.
+\end{enumerate}
+
+\subsection{Symmetries of Discrete Translations}
+Consider symmetries associated with discrete translations. These arise all the time in condensed matter when considering translations of a crystal lattice. Consider a 1D periodic potential.
+\begin{center}
+\begin{tikzpicture}
+	\draw[domain=0:10,samples=200,blue] plot (\x, {-sin(deg(pi/2*\x))});
+	\draw[|-|] (1,-1.2) -- node[below] {$a$} (5,-1.2);
+	\draw (9,-0.9) -- (9,-1.1) node[below] {$n^{\trm{th}}$ minimum};
+	\draw[->] (11,0) -- (13,0) node[right] {$x$};
+	\node[blue] at (8,1.5) {$V(x)$};
+\end{tikzpicture}
+\end{center}
+Note that $V(x\pm a)=V(x)$.\\
+
+Considering lattice translations of $a$
+\begin{equation}
+\begin{aligned}
+\vb{T}(a)\ket{x'}&=\ket{x'+a}\\
+\vb{T}^{\dagger}(a)V(\vb{x})\vb{T}(a)&=V(\vb{x}+a)=V(\vb{x})\\
+\vb{T}^{\dagger}(a)\frac{\vb{p}^{2}}{2m}\vb{T}(a)&=\frac{\vb{p}^{2}}{2m}
+\end{aligned}
+\end{equation}
+Therefore, for $\vb{H}=\frac{\vb{p}^{2}}{2m}+V(\vb{x})$, $\vb{T}^{\dagger}(a)\vb{H}\vb{T}(a)=\vb{H}$. The Hamiltonian is invariant to lattice translations. Since $\vb{T}^{\dagger}(a)=\vb{T}^{-1}(a)$
+\begin{equation}
+\comm{\vb{H}}{\vb{T}(a)}=0
+\end{equation}
+Thus, one can find simultaneous eigenstates of $\vb{H}$ and $\vb{T}(a)$.\\
+
+Consider the barrier height between the potential minima to be infinite. Thus, once a particle is in a minimum, it cannot tunnel to another one. Let $\ket{n}$ be the state in which the particle is in the $n^{th}$ minimum of potential $V(x)$. $\ket{n}$ is an eigenket of $\vb{H}$, Thus
+\begin{equation}
+\vb{H}\ket{n}=E_{0}\ket{n}\qq{since $\ket{n}$ is the ground state}
+\end{equation}
+Since all minima are equivalent, the ground state has infinite degeneracy.\\
+
+$\vb{T}(a)\ket{n}=\ket{n+1}$, thus $\ket{n}$ is not an eigenket of $\vb{T}(a)$. Instead, consider a linear combination of all the energy eigenkets $\ket{n}$ which would also be an eigenket of $\vb{T}(a)$. This should be possible as $\comm{\vb{H}}{\vb{T}(a)}=0$.\\
+
+Let $\ket{\theta}=\sum_{n=-\infty}^{\infty}e^{in\theta}\ket{n}$, where $-\pi\leq\theta\leq\pi$ since $\theta\rightarrow\theta+2\pi m$ with $m\in\mathbb{Z}$ does not change $e^{in\theta}$.
+
+Acting the translation operator on $\ket{\theta}$
+\begin{equation}
+\begin{aligned}
+\vb{T}(a)\ket{\theta}&=\sum_{n=-\infty}^{\infty}e^{in\theta}\vb{T}(a)\ket{n}\\
+&=\sum_{n=-\infty}^{\infty}e^{in\theta}\ket{n+1}\\
+&=\sum_{n'-1=-\infty}^{\infty}e^{i(n'-1)\theta}\ket{n'}\\
+&\quad\explain{Where $n'-1=n$}\\
+&=e^{-i\theta}\sum_{n=-\infty}^{\infty}e^{in'\theta}\ket{n'}\\
+&=e^{-i\theta}\ket{\theta}
+\end{aligned}
+\end{equation}
+Thus, $\ket{\theta}$ is an eigenstate of $\vb{T}(a)$ with eigenvalue $e^{-i\theta}$. $\ket{\theta}$ is also an eigenket of $\vb{H}$, as $\ket{n}$ is an energy eigenket with eigenvalue $E_{0}$, independent of $n$. Therefore
+\begin{equation}
+\vb{H}\ket{\theta}=E_{0}\ket{\theta}
+\end{equation}
+Let us generalize this to finite barrier heights, albeit heights that are large enough such that particles can only tunnel between nearest-neighbour minima. This is the \ul{tight-binding approximation} in solid state physics. The diagonal elements of $\vb{H}$ in the $\{\ket{n}\}$ basis are all equal due to translational invariance. Thus
+\begin{equation}
+\mel{n}{\vb{H}}{n}=E_{0}\qq{independent of $n$}
+\end{equation}
+However, $\vb{H}$ is not completely diagonal in the $\{n\}$ basis due to leakage into neighbouring lattice sites due to quantum mechanical tunneling. Since the particle can only tunnel to adjacent minima
+\begin{equation}
+\mel{n'}{\vb{H}}{n}\neq0\qq{only if $n'\neq n$ or $n'\neq n\pm1$}
+\end{equation}
+Let $\mel{n\pm1}{\vb{H}}{n}=-\Delta$, where $-\Delta$ is associated with the probability amplitude for tunneling between adjacent minima. $\Delta$ is also independent of $n$ by translational invariance.
+\begin{equation}
+\vb{H}\ket{n}=E_{0}\ket{n}-\Delta\ket{n+1}-\Delta\ket{n-1}
+\end{equation}
+Note $\ket{n}$ is no longer an eigenstate of $\vb{H}$.
+
+\begin{equation}
+\begin{aligned}
+\vb{H}\ket{\theta}&=\sum_{n=-\infty}^{\infty}e^{in\theta}\vb{H}\ket{n}\\
+&=\sum_{n=-\infty}^{\infty}e^{in\theta}\qty(E_{0}\ket{n}-\Delta\ket{n+1}-\Delta\ket{n-1})\\
+&=E_{0}\ket{\theta}-\Delta\sum_{n=-\infty}^{\infty}e^{in\theta}\ket{n+1}-\Delta\sum_{n=-\infty}^{\infty}e^{in\theta}\ket{n-1}\\
+&=E_{0}\ket{\theta}-\Delta\sum_{n=-\infty}^{\infty}e^{i(n-1)\theta}\ket{n}-\Delta\sum_{n=-\infty}^{\infty}e^{i(n+1)\theta}\ket{n}\\
+&=E_{0}\ket{\theta}-\Delta(e^{i\theta}+e^{-i\theta})\sum_{n=-\infty}^{\infty}e^{in\theta}\ket{n}\\
+&=(E_{0}-2\Delta\cos\theta)\ket{\theta}
+\end{aligned}
+\end{equation}
+Thus, $\ket{\theta}$ is an eigenket of $\vb{H}$ with eigenvalue $E(\theta)$ where
+\begin{equation}
+E(\theta)=E_{0}-2\Delta\cos\theta
+\end{equation}
+depends on the continuous real parameter $\theta$. Thus, the infinite degeneracy for infinite barrier heights has been lifted as tunneling becomes allowed ($\Delta$ becomes finite).
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (4,0) node[right]{$\Delta$};
+	\draw[->] (0,0) -- (0,3);
+	\node[left] at (0,1.5) {$E_{0}$};
+	\draw[domain=0:4,samples=200] plot (\x, {1.5+0.05*(\x)^2});
+	\draw[domain=0:4,samples=200] plot (\x, {1.5+0.025*(\x)^2});
+	\draw[domain=0:4,samples=200] plot (\x, {1.5});
+	\draw[domain=0:4,samples=200] plot (\x, {1.5-0.025*(\x)^2});
+	\draw[domain=0:4,samples=200] plot (\x, {1.5-0.05*(\x)^2});
+\end{tikzpicture}
+\end{center}
+Energy levels now form a continuous band of values from $E_{0}-2\Delta$ to $E_{0}+2\Delta$. When $\Delta=0$, the single eigenvalue $E_{0}$ is recovered.\\
+
+To understand the physical meaning of $\ket{\theta}$, consider wavefunction $\ip{x'}{\theta}$
+\begin{equation}
+\begin{aligned}
+\mel{x'}{\vb{T}(a)}{\theta}&=\mel{\theta}{\vb{T}^{\dagger}(a)}{x'}^{*}\\
+&=\ip{\theta}{x'-a}^{*}\\
+&=\ip{x'-a}{\theta}\\
+\mel{x'}{\vb{T}(a)}{\theta}&=e^{-i\theta}\ip{x'}{\theta}\\
+\therefore \ip{x'-a}{\theta}&=e^{-i\theta}\ip{x'}{\theta}
+\end{aligned}
+\end{equation}
+The most general solution of this equation is
+\begin{equation}
+\ip{x'}{\theta}=e^{ikx'}U_{k}(x')
+\end{equation}
+with $\theta=ka$ and $U_{k}(x'+a)=U_{k}(x')$. Thus
+\begin{equation}
+\begin{aligned}
+\ip{x'-a}{\theta}&=e^{ik(x'-a)}U_{k}(x'-a)\\
+&=e^{-ika}e^{ikx'}U_{k}(x')\\
+&=e^{-i\theta}\ip{x'}{\theta}\qq{as required}
+\end{aligned}
+\end{equation}
+Note that $U_{k}(x')$ is a Bloch wavefunction.
+\begin{equation}
+e^{ik(x'-a)}U_{k}(x'-a)=e^{ikx'}U_{k}(x')e^{-ika}
+\end{equation}
+This is an important condition called \ul{Bloch's theorem}. The wavefunction of $\ket{\theta}$, which is an eigenket of $\vb{T}(a)$ can be written as a plane wave $e^{ikx'}$ times a periodic function with periodicity of $a$. Note we only used the fact that $\vb{T}(a)\ket{\theta}=e^{-i\theta}\ket{\theta}$. This theorem still holds even if the tight-binding approximation breaks down.\\
+
+Thus, physically, the wavefunction is a plane wave with propagation wave vector $k$ modulated by periodic function $U_{k}(x')$. Since $\theta$ varies from $-\pi$ to $\pi$, the wave vector varies from $-\frac{\pi}{a}$ to $\frac{\pi}{a}$. The energy eigenvalue $E(k)$ is now
+\begin{equation}
+E(k)=E_{0}-2\Delta\cos(ka)
+\end{equation}
+The energy eigenvalue equation is independent of the detailed shape of the potential as long as the tight-binding approximation is valid. ote there is also a cutoff in wave vector $k$ of the Bloch wavefunction given by $\abs{k}=\frac{\pi}{a}$. The energy eigenvalue equation defines a band dispersion of the tight-binding approximation. These allowed energies form a continuous band called the \ul{Brillouin zone}. $-\frac{\pi}{a}\leq k\leq \frac{\pi}{a}$ corresponds with the first Brillouin zone.\\
+
+One calls $\hbar k$ the crystal momentum and its conservation is a consequence of discrete lattice translation symmetry.
+
+\subsection{Symmetries of Time-Reversal}
+Due to the subtlety and novelty of this symmetry, we shall start with considering a case from classical mechanics. Suppose a particle is moving along a trajectory in the presence of an external force.
+\begin{center}
+\begin{tikzpicture}
+	\draw[domain=0:3,samples=200] plot (\x, {-0.25*(\x)^2});
+	\draw[domain=7:10,samples=200] plot (\x, {-0.25*(\x-7)^2});
+	\draw[->,red,thick,text=black] (1,-0.25) node[above right,xshift=0.3cm] {$\vec{p}$, $t=0$} -- (1.5,-0.5);
+	\draw[->,red,thick,text=black] (8,-0.25) node[above right,xshift=0.3cm] {$-\vec{p}$, $t=0$} -- (7.5,0);
+\end{tikzpicture}
+\end{center}
+Suppose at time $t=0$ we stop the particle and reverse its momentum ($\vec{p}\eval_{t=0}\rightarrow-\vec{p}\eval_{t=0}$). In the absence of friction, the particle simply retraces its trajectory in the opposite direction. In other words, for the equation
+\begin{equation}
+m\dv[2]{\vec{x}}{t}=-\vec{\nabla}V(\vec{x})
+\end{equation}
+Under the time-reversal map $t\rightarrow-t$, the equations of motion do not change. Thus, both $\vec{x}(t)$ and $\vec{x}(-t)$ are solutions to the equations of motion. The laws of motion for a particle in a potential $V(\vec{x})$ are invariant with respect to time-reversal.\\
+
+Consider now a charged particle moving in an external magnetic field. This generates the Lorentz force
+\begin{equation}
+\vec{F}=\frac{e}{c}\vec{v}\times\vec{B}\qq{in CGS units}
+\end{equation}
+\begin{center}
+\begin{tikzpicture}
+	\node at (-1.5,2) {$\bigotimes$};
+	\node at (1.5,2) {$\bigotimes \vec{B}$};
+	\node at (-1.5,-1) {$\bigotimes$};
+	\node at (1.5,-1) {$\bigotimes$};
+	\draw[domain=-2:2,samples=200] plot (\x, {0.5-0.2*(\x)^2});
+	\draw[domain=-2:0,samples=200,<-,red] plot (\x, {0.5-0.2*(\x)^2});
+	\draw[->] (0,0.5) -- (0,-0.5) node[below] {$\vec{F}$};
+	\draw[->] (0,0.5) -- node[above] {$\vec{v}$} (-1,0.5);
+\end{tikzpicture}
+\end{center}
+Note $\vec{B}$ points into the page. Suppose the particle is stopped and the direction of velocity is reversed. Taking $\vec{B}$ to be the same sign, $\vec{F}$ changes sign.
+
+\begin{center}
+\begin{tikzpicture}
+	\node at (-1.5,2) {$\bigotimes$};
+	\node at (1.5,2) {$\bigotimes \vec{B}$};
+	\node at (-1.5,-1) {$\bigotimes$};
+	\node at (1.5,-1) {$\bigotimes$};
+	\draw[domain=-2:2,samples=200] plot (\x, {0.5-0.2*(\x)^2});
+	\draw[domain=0:2,samples=200,->,red] plot (\x, {0.5+0.2*(\x)^2});
+	\draw[->] (0,0.5) -- (0,1.5) node[above] {$\vec{F}$};
+	\draw[->] (0,0.5) -- node[below] {$\vec{v}$} (1,0.5);
+\end{tikzpicture}
+\end{center}
+The time-reversal trajectory won't be the same. The motion of a charge particle in an external magnetic field violates time-reversal invariance, assuming the field itself is fixed.\\
+
+Consider now a quantum mechanical particle moving in potential $V(\vec{x})$. The equations of motion are determined by the Schr\"{o}dinger equation.
+\begin{equation}
+i\hbar\pdv{\psi}{t}=\qty(-\frac{\hbar^{2}\nabla^{2}}{2m}+V(\vec{x}))\psi
+\end{equation}
+If $\psi(\vec{x},t)$ is a solution, simply taking $\psi(\vec{x},-t)$ will not be a solution to the equation, as the left-side picks up an extra negative sign, while the right-hand side doesn't. However, $\psi^{*}(\vec{x},-t)$ is a solution, which can be verified by taking the complex conjugate of the Schr\"{o}dinger equation.
+\begin{equation}
+i\hbar\pdv{\psi^{*}(\vec{x},-t)}{(-t)}=\qty(-\frac{\hbar^{2}\nabla^{2}}{2m}+V(\vec{x}))\psi^{*}(\vec{x},-t)
+\end{equation}
+Thus, time-reversal in quantum mechanics is tied to complex conjugation. Let us introduce the time-reversal operator $\Theta$. If $\ket{\psi}$ is an arbitrary state, then $\Theta\ket{\psi}$ corresponds to the time-reversal state.\\
+
+Suppose at time $t=0$, the system is in state $\ket{\psi}$. Applying the infinitesimal time translation operator
+\begin{equation}
+\ket{\psi,t=\delta t}=\qty(\mathbb{I}-\frac{i}{\hbar}\vb{H}\delta t)\ket{\psi}
+\end{equation}
+Suppose at time $t=0$, one applies the time-reversal operator and then lets the system to evolve under $\vb{H}$. Thus, the state is
+\[
+\qty(\mathbb{I}-\frac{i}{\hbar}\vb{H}\delta t)\Theta\ket{\psi}
+\]
+If motion obeys time-reversal, then the state must be of the form
+\[
+\Theta\ket{\psi,t=-\delta t}
+\]
+Thus
+\begin{equation}
+\begin{aligned}
+\qty(\mathbb{I}-\frac{i}{\hbar}\vb{H}\delta t)\Theta\ket{\psi}&=\Theta\ket{\psi,t=-\delta t}\\
+&=\Theta\qty(\mathbb{I}-\frac{i}{\hbar}\vb{H}(-\delta t))\ket{\psi}\\
+&=\Theta\qty(\mathbb{I}+\frac{i}{\hbar}\vb{H}\delta t)\ket{\psi}
+\end{aligned}
+\end{equation}
+This must be true for an arbitrary ket $\ket{\psi}$. Simplifying
+\begin{equation}
+\begin{aligned}
+\qty(\mathbb{I}-\frac{i}{\hbar}\vb{H}\delta t)\Theta&=\Theta\qty(\mathbb{I}+\frac{i}{\hbar}\vb{H}\delta t)\\
+-i\vb{H}\Theta&=\Theta i\vb{H}
+\end{aligned}
+\end{equation}
+Let us argue that $\Theta$ is not unitary. If $\Theta$ is unitary, $i$ can be canceled and we obtain
+\begin{equation}
+-\vb{H}\Theta=\Theta\vb{H}
+\end{equation}
+Consider an energy eigenket $\ket{n}$ with energy eigenvalue $E_{n}$. The time-reversed state would be $\Theta\ket{n}$.
+\begin{equation}
+\vb{H}\Theta\ket{n}=-\Theta\vb{H}\ket{n}=(-E_{n})\Theta\ket{n}
+\end{equation}
+This mean $\Theta\ket{n}$ is an eigenket with energy $-E_{n}$. Thus, time-reversal would change the sign of the energy This is nonsensical. For example, for a free particle, the time-reversal would simply the reverse the direction of motion. However, its energy should still remain the same. Moreover
+\begin{equation}
+\vb{H}=\frac{\vec{\vb{p}}^{2}}{2m}
+\end{equation}
+Under time-reversal, $\vb{H}$ should remain the same ($\vec{\vb{p}}^{2}$ doesn't change sign under time-reversal). Thus, $\Theta$ must act on $i$ as well. It is not a unitary operator, but rather an anti-unitary operator.\\
+
+For a unitary operator $U$
+\begin{equation}
+\begin{aligned}
+\ket*{\widetilde{\psi}}&=U\ket{\psi},\quad\ket*{\widetilde{\phi}}=U\ket{\phi}\\
+\ip*{\widetilde{\phi}}{\widetilde{\psi}}&=\mel{\phi}{U^{\dagger}U}{\psi}=\ip{\phi}{\psi}
+\end{aligned}
+\end{equation}
+In the case of time-reversal, since $\Theta$ is not unitary, this cannot be the case. Instead, we have
+\begin{equation}
+\abs{\ip*{\widetilde{\phi}}{\widetilde{\psi}}}^{2}=\abs{\ip{\phi}{\psi}}^{2}
+\end{equation}
+Thus, one can have now
+\begin{equation}
+\ip*{\widetilde{\phi}}{\widetilde{\psi}}=\ip{\phi}{\psi}^{*}\qq{instead of}\ip*{\widetilde{\phi}}{\widetilde{\psi}}=\ip{\phi}{\psi}
+\end{equation}
+
+\definition{Suppose $\ket*{\widetilde{\phi}}=\theta\ket{\phi}$ and $\ket*{\widetilde{\psi}}=\theta\ket{\psi}$. $\theta$ is \ul{anti-unitary} if $\ip*{\widetilde{\phi}}{\widetilde{\psi}}=\ip{\phi}{\psi}^{*}$ and $\theta\qty(c_{1}\ket{\psi}+c_{2}\ket{\phi})=c_{1}^{*}\theta\ket{\psi}+c_{2}^{*}\theta\ket{\phi}$.}
+
+One can show that an anti-unitary operator may be written as $\theta=UK$, where $U$ is a unitary operator and $K$ is a \ul{complex conjugation operator} that complex conjugates all complex numbers to its right.
+\begin{equation}
+\therefore Kc\ket{\alpha}=c^{*}K\ket{\alpha},\quad c\in\mathbb{C}
+\end{equation}
+If $\ket{\psi}=\sum_{a'}\ket{a'}\ip{a'}{\psi}$ then
+\begin{equation}
+K\ket{\psi}=\sum_{a'}\ket{a'}\ip{a'}{\psi}^{*}
+\end{equation}
+Therefore
+\begin{equation}
+\begin{aligned}
+\theta(c_{1}\ket{\psi}+c_{2}\ket{\phi})&=UK(c_{1}\ket{\psi}+c_{2}\ket{\phi})\\
+&=c_{1}^{*}UK\ket{\psi}+c_{2}^{*}UK\ket{\phi}\\
+&=c_{1}^{*}\theta\ket{\psi}+c_{2}^{*}\theta\ket{\phi}\qq{as before}
+\end{aligned}
+\end{equation}
+Thus, $\theta=UK$ is valid.\\
+
+One can now write $\ket*{\widetilde{\psi}}$ as
+\begin{equation}
+\begin{aligned}
+\ket*{\widetilde{\psi}}&=\theta\ket{\psi}\\
+&=UK\ket{\psi}\\
+&=UK\sum_{a'}\ket{a'}\ip{a'}{\psi}\\
+&=\sum_{a'}\ip{a'}{\psi}^{*}U\ket{a'}\\
+&=\sum_{a'}\ip{\psi}{a'}U\ket{a'}
+\end{aligned}
+\end{equation}
+Similarly
+\begin{equation}
+\ket*{\widetilde{\phi}}=\theta\ket{\phi}=\sum_{a'}\ip{\phi}{a'}U\ket{a'}
+\end{equation}
+Taking the Hermitian conjugate
+\begin{equation}
+\bra*{\widetilde{\phi}}=\sum_{a'}\ip{\phi}{a'}^{*}\bra{a'}U^{\dagger}=\sum_{a'}\ip{a'}{\phi}\bra{a'}U^{\dagger}
+\end{equation}
+Therefore
+\begin{equation}
+\begin{aligned}
+\ip*{\widetilde{\phi}}{\widetilde{\psi}}&=\sum_{a'a''}\ip{a'}{\phi}\ip{\psi}{a''}\mel{a'}{U^{\dagger}U}{a''}\\
+&=\sum_{a'a''}\ip{a'}{\phi}\ip{\psi}{a''}\ip{a'}{a''}\\
+&=\sum_{a'a''}\ip{a'}{\phi}\ip{\psi}{a''}\delta_{a'a''}\\
+&=\sum_{a'}\ip{a'}{\phi}\ip{\psi}{a'}\\
+&=\ip{\psi}{\phi}\\
+&=\ip{\phi}{\psi}^{*}
+\end{aligned}
+\end{equation}
+Since $\Theta$ is anti-unitary, $\Theta i=-i\Theta$. Thus, from before
+\begin{equation}
+\begin{aligned}
+-i\vb{H}\Theta&=\Theta i\vb{H}\\
+\vb{H}\Theta&=\Theta\vb{H}
+\end{aligned}
+\end{equation}
+Thus, $\vb{H}$ commutes with $\Theta$ and $\comm{\vb{H}}{\Theta}=0$.\\
+
+Let $\ket*{\widetilde{\psi}}=\Theta\ket{\psi}$ and $\ket*{\widetilde{\phi}}=\Theta\ket{\phi}$. Let $\vb{A}$ be some operator that is not necessarily Hermitian. Let $\ket{\xi}=\vb{A}^{\dagger}\ket{\phi}$. Thus, $\bra{\xi}=\bra{\phi}\vb{A}$.\\
+
+Therefore
+\begin{equation}
+\begin{aligned}
+\mel{\phi}{\vb{A}}{\psi}&=\ip{\xi}{\psi}\\
+&=\ip*{\widetilde{\xi}}{\widetilde{\psi}}^{*}\\
+&=\ip*{\widetilde{\psi}}{\widetilde{\xi}}\\
+&=\mel*{\widetilde{\psi}}{\Theta}{\xi}\\
+&=\mel*{\widetilde{\psi}}{\Theta \vb{A}^{\dagger}}{\phi}\\
+&=\mel*{\widetilde{\psi}}{\Theta \vb{A}^{\dagger}\Theta^{-1}\Theta}{\phi}\\
+&=\mel*{\widetilde{\psi}}{\Theta\vb{A}^{\dagger}\Theta^{-1}}{\widetilde{\phi}}
+\end{aligned}
+\end{equation}
+If $\vb{A}$ is Hermitian
+\begin{equation}
+\begin{aligned}
+\mel{\phi}{\vb{A}}{\psi}=\mel*{\widetilde{\psi}}{\Theta\vb{A}\Theta^{-1}}{\widetilde{\phi}}
+\end{aligned}
+\end{equation}
+The time-reversal operator of $\vb{A}$ is $\Theta\vb{A}\Theta^{-1}$. If $\Theta\vb{A}\Theta^{-1}=\vb{A}$, $\vb{A}$ is even under time-reversal. If $\Theta\vb{A}\Theta^{-1}=-\vb{A}$, $\vb{A}$ is odd under time-reversal. Therefore
+\begin{equation}
+\begin{aligned}
+\mel{\phi}{\vb{A}}{\psi}&=\pm\mel*{\widetilde{\psi}}{\vb{A}}{\widetilde{\phi}}\\
+&=\pm\mel*{\widetilde{\phi}}{\vb{A}}{\widetilde{\psi}}^{*}
+\end{aligned}
+\end{equation}
+If $\ket{\phi}=\ket{\psi}$
+\begin{equation}
+\mel{\psi}{\vb{A}}{\psi}=\pm\mel*{\widetilde{\psi}}{\vb{A}}{\widetilde{\psi}}\qq{(expectation value)}
+\end{equation}
+Consider linear momentum operator $\vec{\vb{p}}$. By physical arguments, under time-reversal, the expectation value of $\vec{\vb{p}}$ changes sign
+\begin{equation}
+\mel{\psi}{\vec{\vb{p}}}{\psi}=-\mel*{\widetilde{\psi}}{\vec{\vb{p}}}{\widetilde{\psi}}
+\end{equation}
+Thus, $\vec{\vb{p}}$ is odd under time-reversal, $\Theta\vec{\vb{P}}\Theta^{-1}=-\vec{\vb{p}}$.
+\begin{equation}
+\begin{aligned}
+\vec{\vb{p}}\Theta\ket{\vec{p}\,'}&=-\Theta\vec{\vb{p}}\Theta^{-1}\Theta\ket{\vec{p}\,'}\\
+&=-\Theta\vec{\vb{p}}\ket{\vec{p}\,'}\\
+&=-\vec{p}\,'\Theta\ket{\vec{p},'}
+\end{aligned}
+\end{equation}
+Thus, $\Theta\ket{\vec{p}\,'}=\ket{-\vec{p}\,'}$.\\
+
+Similarly, by physical arguments, under time-reversal, the expectation value of the position operator $\vec{\vb{x}}$ does not change sign under time-reversal.
+\begin{equation}
+\mel{\psi}{\vec{\vb{x}}}{\psi}=\mel*{\widetilde{\psi}}{\vec{\vb{x}}}{\widetilde{\psi}}
+\end{equation}
+Thus, $\vec{\vb{x}}$ is even under time-reversal, $\Theta\vec{\vb{x}}\Theta^{-1}=\vec{\vb{x}}$.
+\begin{equation}
+\begin{aligned}
+\vec{\vb{x}}\Theta\ket{\vec{x}\,'}&=\Theta\vec{\vb{x}}\Theta^{-1}\Theta\ket{\vec{x}\,'}\\
+&=\Theta\vec{\vb{x}}\ket{\vec{x}\,'}\\
+&=\vec{x}\,'\Theta\ket{\vec{x}\,'}
+\end{aligned}
+\end{equation}
+Thus, $\Theta\ket{\vec{x}\,'}=\ket{\vec{x}\,'}$.\\
+
+Checking the invariance of the commutation relation under time-reversal
+\begin{equation}
+\begin{aligned}
+\comm{\vb{x}_{i}}{\vb{p}_{j}}&=i\hbar\delta_{ij}\\
+\comm{\vb{x}_{i}}{\vb{p}_{j}}\ket{\psi}&=i\hbar\delta_{ij}\ket{\psi}\\
+\Theta\comm{\vb{x}_{i}}{\vb{p}_{j}}\ket{\psi}&=\Theta i\hbar\delta_{ij}\ket{\psi}\\
+\Theta\comm{\vb{x}_{i}}{\vb{p}_{j}}\ket{\psi}&=-i\hbar\delta_{ij}\Theta\ket{\psi}
+\end{aligned}
+\end{equation}
+Since this is true for arbitrary state $\ket{\psi}$
+\begin{equation}
+\begin{aligned}
+\Theta\comm{\vb{x}_{i}}{\vb{p}_{j}}\Theta^{-1}&=-i\hbar\delta_{ij}\\
+\Theta\comm{\vb{x}_{i}}{\vb{p}_{j}}\Theta^{-1}&=-\comm{\vb{x}_{i}}{\vb{p}_{j}}
+\end{aligned}
+\end{equation}
+This is expected, as $\Theta\comm{\vb{x}_{i}}{\vb{p}_{j}}\Theta^{-1}=\comm{\vb{x}_{i}}{-\vb{p}_{j}}$. Thus, $\Theta$ preserves the $\vec{\vb{x}}$ and $\vec{\vb{p}}$ commutation relation. Similarly, the preserve $\comm{\vb{J}_{i}}{\vb{J}_{j}}=i\hbar\varepsilon_{ijk}\vb{J}_{k}$, $\vec{\vb{J}}$ must be odd under time-reversal
+\begin{equation}
+\Theta\vec{\vb{J}}\Theta^{-1}=-\vec{\vb{J}}
+\end{equation}
+This is consistent with $\vec{\vb{J}}=\vec{\vb{x}}\times\vec{\vb{p}}$ for spinless systems.\\
+
+Let us see that this gives the same transformation rules for wavefunctions as found earlier
+\begin{equation}
+\begin{aligned}
+\ket{\psi}&=\int\dd{\vec{x}\,'}\ket{\vec{x}\,'}\ip{\vec{x}\,'}{\psi}\\
+\Theta\ket{\psi}&=\int\dd{\vec{x}\,'}\Theta\ket{\vec{x}\,'}\ip{\vec{x}\,'}{\psi}\\
+&=\int\dd{\vec{x}\,'}\ip{\vec{x}\,'}{\psi}^{*}\Theta\ket{\vec{x}\,'}\\
+&=\int\dd{\vec{x}\,'}\ip{\vec{x}\,'}{\psi}^{*}\ket{\vec{x}\,'}\\
+&=\int\dd{\vec{x}\,'}\ket{\vec{x}\,'}\ip{\vec{x}\,'}{\psi}^{*}
+\end{aligned}
+\end{equation}
+Thus, $\psi(\vec{x}\,')\rightarrow\psi^{*}(\vec{x}\,')$ as before. Moreover
+\begin{equation}
+\begin{aligned}
+\mel{\vec{x}\,''}{\Theta}{\psi}&=\int\dd{\vec{x}\,'}\ip{\vec{x}\,''}{\vec{x}\,'}\ip{\vec{x}\,'}{\psi}^{*}\\
+&=\int\dd{\vec{x}\,'}\delta(\vec{x}\,''-\vec{x}\,')\ip{\vec{x}\,'}{\psi}^{*}\\
+&=\ip{\vec{x}\,''}{\psi}^{*}
+\end{aligned}
+\end{equation}
+Similarly, one can find through the same process
+\begin{equation}
+\mel{\vec{p}\,''}{\Theta}{\psi}=\ip{-\vec{p}\,''}{\psi}^{*}
+\end{equation}
+
+\theorem{Suppose the Hamiltonian is invariant under time-reversal and its energy eigenket is non-degenerate, then the corresponding wavefunction may be chosen to be real.}
+
+\proof{\begin{equation}
+\vb{H}\Theta\ket{n}=\Theta\vb{H}\ket{n}=E_{n}\Theta\ket{n}
+\end{equation}
+Thus, $\ket{n}$ and $\Theta\ket{n}$ have the same energy. Since $\ket{n}$ is non-degenerate, $\ket{n}=\Theta\ket{n}$. However
+\begin{equation}
+\ip{\vec{x}\,'}{n}=\mel{\vec{x}\,'}{\Theta}{n}=\ip{\vec{x}\,'}{n}
+\end{equation}
+Thus, $\ip{\vec{x}\,'}{n}$ is real.
+}
+
+\subsection{Time-Reversal of Spin-$\frac{1}{2}$ Systems}
+Consider a particle with spin-$\frac{1}{2}$. Consider an arbitrary spinor, which can be thought of as an eigenket of $\vec{\vb{S}}\cdot\hat{n}$, where
+\begin{equation}
+\hat{n}=(\sin\theta\cos\varphi,\sin\theta\sin\varphi,\cos\theta)
+\end{equation}
+This can be found by finding eigenket $\ket{\up}$ of $\vb{S}_{z}$ and rotating it to direction $\hat{n}$. Thus, the eigenket is
+\begin{equation}
+\ket{\hat{n},\up}=e^{-\frac{i}{\hbar}\vb{S}_{z}\varphi}e^{-\frac{i}{\hbar}\vb{S}_{y}\theta}\ket{\up}
+\end{equation}
+From before
+\begin{equation}
+\Theta\vb{S}\Theta^{-1}=-\vec{\vb{S}}\implies \Theta\vec{\vb{S}}=-\vec{\vb{S}}\Theta
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\Theta\ket{\hat{n},\up}&=\Theta e^{-\frac{i}{\hbar}\vb{S}_{z}\varphi}e^{-\frac{i}{\hbar}\vb{S}_{y}\theta}\ket{\up}\\
+&=e^{-\frac{i}{\hbar}\vb{S}_{z}\varphi}e^{-\frac{i}{\hbar}\vb{S}_{y}\theta}\ket{\up}\\
+&\quad\explain{Note that $\Theta\vec{\vb{S}}=-\vec{\vb{S}}\Theta$, but $\Theta i=-i\Theta$, so the negative signs cancel.}
+\end{aligned}
+\end{equation}
+What is $\Theta\ket{\up}$?
+\begin{equation}
+\vb{S}_{z}\Theta\ket{\up}=-\Theta\vb{S}_{z}\ket{\up}=-\frac{\hbar}{2}\Theta\ket{\up}
+\end{equation}
+Thus, $\Theta\ket{\up}$ is an eigenket of $\vb{S}_{z}$ with eigenvalues $-\frac{\hbar}{2}$. Thus
+\begin{equation}
+\Theta\ket{\up}=e^{i\eta}\ket{\dn}\qq{where $e^{i\eta}$ is an arbitrary phase factor}
+\end{equation}
+Therefore
+\begin{equation}
+\begin{aligned}
+\Theta\ket{\hat{n},\up}&=e^{-\frac{i}{\hbar}\vb{S}_{z}\varphi}e^{-\frac{i}{\hbar}\vb{S}_{y}\theta}e^{i\eta}\ket{\dn}\\
+&=e^{i\eta}\ket{\hat{n},\dn}
+\end{aligned}
+\end{equation}
+where
+\begin{equation}
+\begin{aligned}
+\ket{\hat{n},\dn}&=e^{-\frac{i}{\hbar}\vb{S}_{z}\varphi}e^{-\frac{i}{\hbar}\vb{S}_{y}\theta}\ket{\dn}\\
+&=\qty(\cos\frac{\varphi}{2}-i\sigma_{z}\sin\frac{\varphi}{2})\qty(\cos\frac{\theta}{2}-i\sigma_{y}\sin\frac{\theta}{2})\ket{\dn}\\
+&=\mqty[e^{-\frac{i\varphi}{2}} & 0 \\ 0 & e^{\frac{i\varphi}{2}}]\mqty[\cos\frac{\theta}{2} & -\sin\frac{\theta}{2} \\ \sin\frac{\theta}{2} & \cos\frac{\theta}{2}]\mqty[0 \\ 1]\\
+&=\mqty[-e^{-\frac{i\varphi}{2}}\sin\frac{\theta}{2} \\ e^{\frac{i\varphi}{2}}\cos\frac{\theta}{2}]
+\end{aligned}
+\end{equation}
+Note that similarly
+\begin{equation}
+\ket{\hat{n},\up}=\mqty[-e^{-\frac{i\varphi}{2}}\cos\frac{\theta}{2} \\ e^{\frac{i\varphi}{2}}\sin\frac{\theta}{2}]
+\end{equation}
+Therefore
+\begin{equation}
+\begin{aligned}
+\ket{\hat{n}(\theta,\varphi),\dn}&=\ket{\hat{n}(\theta+\pi,\varphi),\up}\\
+&=e^{-\frac{i}{\hbar}\vb{S}_{z}\varphi}e^{-\frac{i}{\hbar}\vb{S}_{y}(\theta+\pi)}\ket{\up}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\Theta\ket{\hat{n},\up}&=r^{-\frac{i}{\hbar}\vb{S}_{z}\varphi}e^{-\frac{i}{\hbar}\vb{S}_{y}\theta}e^{i\eta}\ket{\dn}\\
+&=e^{i\eta}\ket{\hat{n},\dn}\\
+&=e^{i\eta}e^{-\frac{i}{\hbar}\vb{S}_{z}\varphi}e^{-\frac{i}{\hbar}\vb{S}_{y}(\theta+\pi)}\ket{\up}
+\end{aligned}
+\end{equation}
+Since $\Theta\ket{\hat{n},\up}=\Theta e^{-\frac{i}{\hbar}\vb{S}_{z}\varphi}e^{-\frac{i}{\hbar}\vb{S}_{y}\theta}\ket{\up}$
+\begin{equation}
+\Theta e^{-\frac{i}{\hbar}\vb{S}_{z}\varphi}e^{-\frac{i}{\hbar}\vb{S}_{y}\theta}\ket{\up}=e^{i\eta}e^{-\frac{i}{\hbar}\vb{S}_{z}\varphi}e^{-\frac{i}{\hbar}\vb{S}_{y}(\theta+\pi)}\ket{\up}
+\end{equation}
+Additionally
+\begin{equation}
+\begin{aligned}
+\Theta&=UK\\
+&=e^{i\eta}e^{-\frac{i}{\hbar}\vb{S}_{y}\pi}K\\
+&=e^{i\eta}e^{-\frac{i}{2}\sigma_{y}\pi}K\\
+&=e^{i\eta}\qty(\cos\frac{\pi}{2}-i\sigma_{y}\sin\frac{\pi}{2})K\\
+&=-ie^{i\eta}\sigma_{y}K
+\end{aligned}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+\Theta\ket{\up}&=-ie^{i\eta}\sigma_{y}\ket{\up}\\
+&=-i\mqty[0 & -i \\ i & 0]\mqty[1\\0]e^{i\eta}\\
+&=e^{i\eta}\ket{\dn}\\
+\Theta\ket{\dn}&=-ie^{i\eta}\sigma_{y}\ket{\dn}\\
+&=-i\mqty[0 & -i\\ i & 0]\mqty[0\\1]e^{i\eta}\\
+&=-e^{i\eta}\ket{\up}
+\end{aligned}
+\end{equation}
+For $\ket{z}=z_{\up}\ket{\up}+z_{\dn}\ket{\dn}$
+\begin{equation}
+\Theta\ket{z}=z_{\up}^{*}e^{i\eta}\ket{\dn}-z_{\dn}^{*}e^{i\eta}\ket{\up}
+\end{equation}
+Applying $\Theta$ again
+\begin{equation}
+\begin{aligned}
+\Theta^{2}\ket{z}&=\Theta\qty(z_{\up}^{*}e^{i\eta}\ket{\dn}-z_{\dn}^{*}e^{i\eta}\ket{\up})\\
+&=z_{\up}e^{-i\eta}\Theta\ket{\dn}-z_{\dn}e^{-i\eta}\Theta\ket{\up}\\
+&=-z_{\up}\ket{\up}-z_{\dn}\ket{\dn}\\
+&=-\ket{z}
+\end{aligned}
+\end{equation}
+Thus, for spin-$\frac{1}{2}$ particles
+\begin{equation}
+\Theta^{2}=-\mathbb{I}
+\end{equation}
+In general, for a spin-$j$ particle
+\begin{equation}
+\Theta^{2}=(-\mathbb{I})^{2j}
+\end{equation}
+
+\subsection{Time-Reversal Invariance and Kramer's Theorem}
+Consider a time-reversal invariant system where $\comm{\Theta}{\vb{H}}=0$. Thus, $\vb{H}$ is even under time-reversal and
+\begin{equation}
+\Theta\vb{H}\Theta^{-1}=\vb{H}
+\end{equation}
+Consider the eigensystem $\vb{H}\ket{n}=E_{n}\ket{n}$. Thus
+\begin{equation}
+\begin{aligned}
+\vb{H}\Theta\ket{n}&=\Theta\vb{H}\ket{n}\\
+&=E_{n}\vb{H}\ket{n}
+\end{aligned}
+\end{equation}
+Assuming $\ket{n}$ is non-degenerate
+\begin{equation}
+\begin{aligned}
+\Theta\ket{n}&=e^{i\delta}\ket{n}\\
+\Theta^{2}\ket{n}&=\Theta e^{i\delta}\ket{n}=e^{-i\delta}\Theta\ket{n}=e^{-i\delta}e^{i\delta}\ket{n}=\ket{n}\\
+\therefore\Theta^{2}&=\mathbb{I}
+\end{aligned}
+\end{equation}
+However, for a spin-$j$ particle, we found $\Theta^{2}=(-\mathbb{I})^{2j}$. For half-integer $j$, $\Theta^{2}=-\mathbb{I}$, leading to a contradiction. Thus, the assumption that $\ket{n}$ is non-degenerate is wrong for half-integers $j$. This leads to \ul{Kramer's theorem}, which states that in a time-reversal invariant system with half-integer spin-$j$, all eigenstates of $\vb{H}$ are degenerate.
+
+\newpage
+\section{Time-Dependent Hamiltonian}
+Thus far, Hamiltonians have been taken to be time-independent. However, many important problems in quantum mechanics involve such time-dependence, in particular problems involving response of the system to an externally applied probe.\\
+
+Take the time-dependent Hamiltonian to be
+\begin{equation}
+\vb{H}=\vb{H}_{0}+V(t)\qq{where $\vb{H}_{0}$ is time-independent}
+\end{equation}
+Contrast this with the time-independent Hamiltonian
+\begin{equation}
+\vb{H}=\frac{(\vec{\vb{p}})^{2}}{2m}+V(\vec{\vb{x}})
+\end{equation}
+Typically, we take the $V(t)=0$ case to be solved in the sense that the energy eigenkets and eigenvalues are known and defined by
+\begin{equation}
+\vb{H}_{0}\ket{n}=E_{n}\ket{n}
+\end{equation}
+Recall for the time-evolution of a state for a time-independent Hamiltonian is
+\begin{equation}
+\ket{\psi,t}_{\trm{S}}=e^{-\frac{i}{\hbar}\vb{H}t}\ket{\psi}
+\end{equation}
+for a state in the Schr\"{o}dinger picture. In the Heisenberg picture, the states are
+\begin{equation}
+\ket{\psi}_{\trm{H}}=\ket{\psi}=e^{\frac{i}{\hbar}\vb{H}t}\ket{\psi,t}_{\trm{S}}
+\end{equation}
+with the operators being time-dependent
+\begin{equation}
+\vb{A}^{(\trm{H})}(t)=e^{\frac{i}{\hbar}\vb{H}t}\vb{A}^{(\trm{S})}e^{-\frac{i}{\hbar}\vb{H}t}
+\end{equation}
+The time-evolution of the operator is given by
+\begin{equation}
+\dv{\vb{A}^{(\trm{H})}}{t}=\frac{i}{\hbar}\comm{\vb{H}}{\vb{A}^{(\trm{H})}}
+\end{equation}
+
+In problems with explicit time-dependence of the Hamiltonian, it becomes convenient to use the \ul{interaction picture}, where
+\begin{equation}
+\ket{\psi,t}_{\trm{I}}=e^{\frac{i}{\hbar}\vb{H}_{0}t}\ket{\psi,t}_{\trm{S}}
+\end{equation}
+is modified by the time-independent component of the Hamiltonian. Likewise, the operators are given by
+\begin{equation}
+\begin{aligned}
+\tensor[_{\trm{S}}]{\mel{\psi,t}{\vb{A}^{(\trm{S})}}{\psi,t}}{_{\trm{S}}}&=\tensor[_{\trm{I}}]{\mel{\psi,t}{e^{\frac{i}{\hbar}\vb{H}_{0}t}\vb{A}^{(S)}e^{-\frac{i}{\hbar}\vb{H}_{0}t}}{\psi,t}}{_{\trm{I}}}\\
+\therefore\vb{A}^{(\trm{I})}(t)&=e^{\frac{i}{\hbar}\vb{H}_{0}t}\vb{A}^{(\trm{S})}e^{-\frac{i}{\hbar}\vb{H}_{0}t}
+\end{aligned}
+\end{equation}
+This picture can be thought of as being an intermediate between the two pictures before. Note that the states and operators in the interaction picture coincide with those of the Heisenberg picture when $\vb{H}=\vb{H}_{0}$ (i.e. $V(t)=0$).\\
+
+Modifying the Schr\"{o}dinger equation
+\begin{equation}
+\begin{aligned}
+i\hbar\pdv{t}\ket{\psi,t}_{\trm{I}}&=i\hbar\pdv{t}\qty(e^{\frac{i}{\hbar}\vb{H}_{0}t}\ket{\psi,t}_{\trm{S}})\\
+&=-\vb{H}_{0}e^{\frac{i}{\hbar}\vb{H}_{0}t}\ket{\psi,t}_{\trm{S}}+e^{\frac{i}{\hbar}\vb{H}_{0}t}i\hbar\pdv{t}\ket{\psi,t}_{\trm{S}}\\
+&=-\vb{H}_{0}e^{\frac{i}{\hbar}\vb{H}_{0}t}\ket{\psi,t}_{\trm{S}}+e^{\frac{i}{\hbar}\vb{H}_{0}t}\vb{H}\ket{\psi,t}_{\trm{S}}\\
+&\quad\explain{By the Schr\"{o}dinger equation for $\ket{\psi,t}_{\trm{S}}$}\\
+&=-\vb{H}_{0}e^{\frac{i}{\hbar}\vb{H}_{0}t}\ket{\psi,t}_{\trm{S}}+e^{\frac{i}{\hbar}\vb{H}_{0}t}\qty(\vb{H}_{0}+V(t))\ket{\psi,t}_{\trm{S}}\\
+&=e^{\frac{i}{\hbar}\vb{H}_{0}t}V(t)\ket{\psi,t}_{\trm{S}}\\
+&\quad\explain{Since $\vb{H}_{0}$ commutes with $e^{\frac{i}{\hbar}\vb{H}_{0}t}$}\\
+&=e^{\frac{i}{\hbar}\vb{H}_{0}t}V(t)e^{-\frac{i}{\hbar}\vb{H}_{0}t}\ket{\psi,t}_{\trm{I}}\\
+\therefore i\hbar\pdv{t}\ket{\psi,t}_{\trm{I}}&=V^{\trm{(I)}}(t)\ket{\psi,t}_{\trm{I}}
+\end{aligned}
+\end{equation}
+where
+\begin{equation}
+V^{(I)}(t)=e^{\frac{i}{\hbar}\vb{H}_{0}t}V(t)e^{-\frac{i}{\hbar}\vb{H}_{0}t}
+\end{equation}
+The time-dependence of $\ket{\psi,t}_{\trm{I}}$ is determined by the time-dependent part of the Hamiltonian.\\
+
+Similarly, for the Heisenberg equation
+\begin{equation}
+\begin{aligned}
+\dv{t}(\vb{A}^{(\trm{I})})&=\dv{t}\qty(e^{\frac{i}{\hbar}\vb{H}_{0}t}\vb{A}^{(\trm{S})}e^{-\frac{i}{\hbar}\vb{H}_{0}t})\\
+&=(\vb{H}_{0}e^{\frac{i}{\hbar}\vb{H}_{0}t}\vb{A}^{(\trm{S})}e^{-\frac{i}{\hbar}\vb{H}_{0}t}+e^{\frac{i}{\hbar}\vb{H}_{0}t}\vb{A}^{(\trm{S})}e^{-\frac{i}{\hbar}\vb{H}_{0}t}(-\vb{H}_{0}))\frac{i}{\hbar}\\
+&=\frac{i}{\hbar}(\vb{H}_{0}\vb{A}^{(\trm{I})}-\vb{A}^{(\trm{I})}\vb{H}_{0})\\
+&=\frac{i}{\hbar}\comm{\vb{H}_{0}}{\vb{A}^{(\trm{I})}}\\
+\therefore\dv{t}\vb{A}^{(\trm{I})}&=\frac{i}{\hbar}\comm{\vb{H}_{0}}{\vb{A}^{(\trm{I})}}
+\end{aligned}
+\end{equation}
+To solve the equations of motion, consider the eigenequation for $\vb{H}_{0}$
+\begin{equation}
+\vb{H}_{0}\ket{n}=E_{n}\ket{n}
+\end{equation}
+One can expand $\ket{\psi,t}_{\trm{I}}$ in the eigenbasis $\{\ket{n}\}$
+\begin{equation}
+\ket{\psi,t}_{\trm{I}}=\sum_{n}c_{n}(t)\ket{n}
+\end{equation}
+Let us rewrite the Schr\"{o}dinger equation for $\ket{\psi,t}_{\trm{I}}$ as a differential equation for coefficients $c_{n}(t)$
+\begin{equation}
+i\hbar\pdv{t}\ket{\psi,t}_{\trm{I}}=V^{(\trm{I})}(t)\ket{\psi,t}_{\trm{I}}
+\end{equation}
+Multiply on the left by $\bra{n}$
+\begin{equation}
+\begin{aligned}
+\bra{n}i\hbar\pdv{t}\qty(\sum_{m}c_{m}(t)\ket{m})&=\mel{n}{V^{(\trm{I})}(t)\sum_{m}c_{m}(t)}{m}\\
+i\hbar\pdv{t}\sum_{m}c_{m}(t)\ip{n}{m}&=\sum_{m}c_{m}(t)\mel{n}{V^{(\trm{I})}(t)}{m}\qq{since $\bra{n}$ is time-independent}\\
+i\hbar\pdv{t}c_{n}(t)&=\sum_{m}c_{m}(t)\mel{n}{V^{(\trm{I})}(t)}{m}
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\mel{n}{V^{(\trm{I})}(t)}{m}&=\mel{n}{e^{\frac{i}{\hbar}\vb{H}_{0}t}V(t)e^{-\frac{i}{\hbar}\vb{H}_{0}t}}{m}\\
+&=\mel{n}{e^{\frac{i}{\hbar}E_{n}t}V(t)e^{-\frac{i}{\hbar}E_{m}t}}{m}\\
+&=e^{\frac{i}{\hbar}(E_{n}-E_{m})t}\mel{n}{V(t)}{m}\\
+&=e^{i\omega_{nm}t}V_{nm}(t)
+\end{aligned}
+\end{equation}
+where $\omega_{nm}=\frac{E_{n}-E_{m}}{\hbar}$ and $V_{nm}(t)=\mel{n}{V(t)}{m}$.
+
+\begin{equation}
+\therefore i\hbar\pdv{t}c_{n}(t)=\sum_{m}V_{nm}(t)e^{i\omega_{nm}t}c_{m}(t)
+\end{equation}
+In most cases, this cannot be solved exactly. However, let us consider a two-state problem with a harmonic potential, that permits a solution.
+
+\subsection{Two-State Harmonic Potential}
+Consider a two-level system in the presence of a harmonic potential.
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0.5) -- (5,0.5) node[right] {$\ket{2}$, $E_{2}$};
+	\draw (0,-0.5) -- (5,-0.5) node[right] {$\ket{1}$, $E_{1}$};
+	\node at (9,0) {$E_{2}>E_{1}$};
+\end{tikzpicture}
+\end{center}
+In this case, $H_{0}=E_{1}\op{1}+E_{2}\op{2}$ and $V(t)=\gamma e^{i\omega t}\op{1}{2}+\gamma e^{-i\omega t}\op{2}{1}$. $V(t)$ describes transitions between states $\ket{1}$ and $\ket{2}$ with probability amplitude $\gamma e^{\pm i\omega t}$ (oscillating amplitude). $\gamma$ and $\omega$ are taken to be real.\\
+
+The equations of motion for the coefficients become
+\begin{equation}
+\begin{aligned}
+i\hbar\dv{t}c_{1}(t)&=V_{12}(t)e^{i\omega_{12}t}c_{2}(t)=\gamma e^{i(\omega-\omega_{21})t}c_{2}(t)\\
+i\hbar\dv{t}c_{2}(t)&=V_{21}(t)e^{i\omega_{21}t}c_{1}(t)=\gamma e^{-i(\omega-\omega_{21})t}c_{1}(t)
+\end{aligned}
+\end{equation}
+Without loss of generality, look for solutions having the ansatz form
+\begin{equation}
+\begin{aligned}
+c_{1}(t)&=c_{1}e^{i\lambda t+\frac{i}{2}(\omega-\omega_{21})t}\\
+c_{2}(t)&=c_{2}e^{i\lambda t-\frac{i}{2}(\omega-\omega_{21})t}
+\end{aligned}
+\end{equation}
+Substituting into the differential equations
+\begin{equation}
+\begin{aligned}
+&\begin{cases}
+i\hbar\qty(i\lambda+\frac{i}{2}(\omega-\omega_{21}))c_{1}e^{i\lambda t+\frac{i}{2}(\omega-\omega_{21})t}&=\gamma c_{2}e^{i\lambda t+\frac{i}{2}(\omega-\omega_{21})t}\\
+i\hbar\qty(i\lambda-\frac{i}{2}(\omega-\omega_{21}))c_{2}e^{i\lambda t-\frac{i}{2}(\omega-\omega_{21})t}&=\gamma c_{1}e^{i\lambda t-\frac{i}{2}(\omega-\omega_{21})t}
+\end{cases}\\
+\implies &\begin{cases}
+\qty(\lambda+\frac{\omega-\omega_{21}}{2})c_{1}+\frac{\gamma}{\hbar}c_{2}&=0\\
+\frac{\gamma}{\hbar}c_{1}+\qty(\lambda-\frac{\omega-\omega_{21}}{\hbar})c_{2}&=0
+\end{cases}\\
+&\underbrace{\mqty[\lambda+\frac{\omega-\omega_{21}}{2} & \frac{\gamma}{\hbar} \\ \frac{\gamma}{\hbar} & \lambda-\frac{\omega-\omega_{21}}{2}]}_{M}\mqty[c_{1} \\ c_{2}] = \mqty[0 \\ 0]
+\end{aligned}
+\end{equation}
+To obtain a non-trivial solution for $c_{1}$ and $c_{2}$, the determinant of the coefficient matrix $M$ must equal to zero.
+\begin{equation}
+\begin{aligned}
+0&=\det(M)\\
+&=\mdet{\lambda+\frac{\omega+\omega_{21}}{2} & \frac{\gamma}{\hbar} \\ \frac{\gamma}{\hbar} & \lambda-\frac{\omega-\omega_{21}}{2}}\\
+&=\qty(\lambda+\frac{\omega-\omega_{21}}{2})\qty(\lambda-\frac{\omega-\omega_{21}}{2})-\qty(\frac{\gamma}{\hbar})^{2}\\
+&=\lambda^{2}-\qty(\frac{\omega-\omega_{21}}{2})^{2}-\qty(\frac{\gamma}{\hbar})^{2}\\
+\therefore\lambda&=\pm\sqrt{\qty(\frac{\omega-\omega_{21}}{2})^{2}-\qty(\frac{\gamma}{\hbar})^{2}}=\pm\Omega
+\end{aligned}
+\end{equation}
+$\Omega$ is called the \ul{Rabi frequency}.\\
+
+To find the corresponding $c_{1}$ and $c_{2}$ coefficients, plug $\lambda=\pm\Omega$ back into the system of equations. For $\lambda=+\Omega$
+\begin{equation}
+\begin{aligned}
+0&=\qty(\Omega+\frac{\omega-\omega_{21}}{2})c_{1}+\frac{\gamma}{\hbar}c_{2}&=0\\
+c_{1}&=-\qty(\frac{c_{2}\frac{\gamma}{\hbar}}{\Omega+\frac{\omega-\omega_{21}}{2}})
+\end{aligned}
+\end{equation}
+Since $\abs{c_{1}(t)}^{2}+\abs{c_{2}(t)}^{2}=1$
+\begin{equation}
+\begin{aligned}
+1&=\abs{c_{2}(t)}^{2}\qty[1+\frac{\qty(\frac{\gamma}{\hbar})^{2}}{\qty(\Omega+\frac{\omega-\omega_{21}}{2})^{2}}]\\
+1&=\abs{c_{2}(t)}^{2}\qty(\frac{2\Omega}{\Omega+\frac{\omega-\omega_{21}}{2}})\\
+c_{2}&=\sqrt{\frac{1}{2}+\frac{\omega-\omega_{21}}{4\Omega}}\\
+c_{2}&=\frac{1}{\sqrt{2}}\sqrt{1+\frac{\omega-\omega_{21}}{2\Omega}}\\
+\implies c_{1}&=-\qty(\frac{c_{2}\frac{\gamma}{\hbar}}{\Omega+\frac{\omega-\omega_{21}}{2}})=-\frac{1}{\sqrt{2}}\sqrt{1-\frac{\omega-\omega_{21}}{2\Omega}}\\
+\end{aligned}
+\end{equation}
+One can repeat this process for $\lambda=-\Omega$. One finds then
+\begin{equation}
+\begin{aligned}
+c_{1}&=\frac{1}{\sqrt{2}}\sqrt{1+\frac{\omega-\omega_{21}}{2\Omega}}\\
+c_{2}&=\frac{1}{\sqrt{2}}\sqrt{1-\frac{\omega-\omega_{21}}{2\Omega}}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+c_{1,\pm}&=\mp\frac{1}{\sqrt{2}}\sqrt{1\mp\frac{\omega-\omega_{21}}{2\Omega}}\\
+c_{2,\pm}&=\frac{1}{\sqrt{2}}\sqrt{1\pm\frac{\omega-\omega_{21}}{2\Omega}}
+\end{aligned}
+\end{equation}
+Plugging $\lambda=\pm\Omega$ and the corresponding coefficients back into the ansatz form
+\begin{equation}
+\begin{aligned}
+c_{1}(t)&=Ac_{1,+}e^{i\qty(\Omega+\frac{\omega-\omega_{21}}{2})t}+Bc_{1,-}e^{-i\qty(\Omega-\frac{\omega-\omega_{21}}{2})t}\\
+c_{2}(t)&=Ac_{2,+}e^{i\qty(\Omega-\frac{\omega-\omega_{21}}{2})t}+Bc_{2,-}e^{-i\qty(\Omega+\frac{\omega-\omega_{21}}{2})t}
+\end{aligned}
+\end{equation}
+where $A$ and $B$ are determined by the initial conditions.\\
+
+Suppose $c_{1}(0)=1$ and $c_{2}(0)=0$. The system is in state $\ket{1}$ at $t=0$
+\begin{equation}
+\begin{aligned}
+\begin{cases}
+Ac_{1,+}+Bc_{1,-} &=1\\
+Ac_{2,+}+Bc_{2,-} &=0
+\end{cases}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\frac{B}{A}&=-\frac{c_{2,+}}{c_{2,-}}\\
+Ac_{1,+}-A\qty(\frac{c_{2,+}}{c_{2,-}}c_{1,-})&=1\\
+A&=\frac{c_{2,-}}{c_{1,+}c_{2,-}-c_{1,-}c_{2,+}}=-\frac{c_{2,-}}{c_{1,+}c_{1,+}+c_{2,+}c_{2,+}}=-\frac{c_{2,-}}{1}=-c_{2,-}\\
+\therefore A&=-\sqrt{\frac{1}{2}\qty(1-\frac{\omega-\omega_{21}}{2\Omega})},\quad B=\sqrt{\frac{1}{2}\qty(1+\frac{\omega-\omega_{21}}{2\Omega})}\\
+\implies c_{2}(t)&=\frac{i\gamma}{\hbar\Omega}e^{-i\frac{(\omega-\omega_{21})}{2}t}\sin(\Omega t)\\
+\abs{c_{2}(t)}^{2}&=\frac{\qty(\frac{\gamma}{\hbar})^{2}}{\qty(\frac{\omega-\omega_{21}}{2})^{2}+\qty(\frac{\gamma}{\hbar})^{2}}\sin^{2}(\Omega t)\\
+\abs{c_{1}(t)}^{2}&=1-\abs{c_{2}(t)}^{2}
+\end{aligned}
+\end{equation}
+One can see that the probability of finding the particle in state $\ket{i}$ (i.e. $\abs{c_{i}(t)}^{2}$) oscillates with frequency $\Omega$. Recall that $\omega$ is the frequency of the driving potential. if one varies the frequency of $\omega$ to match $\omega_{21}$, then
+\begin{enumerate}
+\item The amplitude of oscillations is maximal and is equal to 1.
+\begin{equation}
+\lim_{\omega\rightarrow\omega_{21}}\frac{\qty(\frac{\gamma}{\hbar})^{2}}{\qty(\frac{\omega-\omega_{21}}{2})^{2}+\qty(\frac{\gamma}{\hbar})^{2}}=\frac{\qty(\frac{\gamma}{\hbar})^{2}}{\qty(\frac{\gamma}{\hbar})^{2}}=1
+\end{equation}
+\item The Rabi frequency can be set by the strength of the applied potential $\gamma$ and $\Omega=\frac{\gamma}{\hbar}$
+\begin{equation}
+\lim_{\omega\rightarrow\omega_{21}}\sqrt{\qty(\frac{\omega-\omega_{21}}{2})^{2}+\qty(\frac{\gamma}{\hbar})^{2}}=\sqrt{\qty(\frac{\gamma}{\hbar})^{2}}=\frac{\gamma}{\hbar}
+\end{equation}
+\end{enumerate}
+The condition where $\omega=\omega_{21}=\frac{E_{2}-E_{1}}{\hbar}$ is the \ul{resonance condition}.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (10,0) node[right] {$t$};
+	\draw[->] (0,0) -- (0,5) node[above] {$\abs{c_{i}(t)}^{2}$};
+	\draw (0.1,4) -- (-0.1,4) node[left] {1};
+	\draw (3,0.1) -- (3,-0.1) node[below] {$\frac{\pi\hbar}{2\gamma}$};
+	\draw (6,0.1) -- (6,-0.1) node[below] {$\frac{2\pi\hbar}{2\gamma}$};
+	\draw (9,0.1) -- (9,-0.1) node[below] {$\frac{3\pi\hbar}{2\gamma}$};
+	\draw[domain=0:10,samples=200,red] plot (\x, {4*(sin(deg(pi/6*\x)))^2}) node[right] {$\abs{c_{2}(t)}^{2}$};
+	\draw[domain=0:10,samples=200,blue] plot (\x, {4*(cos(deg(pi/6*\x)))^2}) node[right] {$\abs{c_{1}(t)}^{2}$};
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) -- (2,0) node[right] {$E_{1}$};
+	\draw (0,2) -- (2,2) node[right] {$E_{2}$};
+	\draw[->] (0.5,0) -- (0.5,2);
+	\draw[->] (1.5,2) -- (1.5,0);
+\end{tikzpicture}
+\end{center}
+This can be thought of as periodic cycles of emission and absorption of energy by a two-level system.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (5,0) node[right] {$\omega$};
+	\draw[->] (0,0) -- (0,5) node[above] {$\abs{c_{2}(t)}^{2}_{\trm{max}}$};
+	\draw[domain=0.1:4.9,samples=200] plot (\x, {3.9*(sin(deg(pi/5*\x)))^4+0.1});
+	\draw (2.5,0.1) -- (2.5,-0.1) node[below] {$\omega_{21}$};
+	\draw (0.1,2) -- (-0.1,2) node[left] {$\frac{1}{2}$};
+	\draw (0.1,4) -- (-0.1,4) node[left] {1};
+	\draw[dashed] (2.5,0) -- (2.5,5);
+	\draw[<->] (1.59,2) -- (3.41,2) node[right, xshift=0.3cm] {Full width half maximum $=\frac{4\gamma}{\hbar}$};
+\end{tikzpicture}
+\end{center}
+Note that the smaller the magnitude of the $\ket{1}\leftrightarrow\ket{2}$ coupling $\gamma$, the narrower the resonance peak.
+
+\subsubsection{Magnetic Resonance Imaging (MRI)}
+Consider the specific example of magnetic resonance. Suppose we have an electron in an external magnetic field $\vec{B}_{0}=B_{0}\hat{z}$.
+\begin{equation}
+\begin{aligned}
+\vb{H}_{0}&=-\vec{\mu}\cdot\vec{B}_{0}\\
+\vec{\mu}&=\frac{e}{mc}\vec{\vb{S}}\qq{(magnetic moment of the electron)}\\
+\implies\vb{H}_{0}&=-\frac{e}{mc}\vec{\vb{S}}\cdot\vec{B}_{0}\\
+&=-\frac{eB_{0}}{mc}\vb{S}_{z}\\
+&=-\frac{e\hbar B_{0}}{2mc}\qty(\op{\up}-\op{\dn})
+\end{aligned}
+\end{equation}
+The eigenvalues are
+\begin{equation}
+\begin{aligned}
+E_{\up}&=-\frac{e\hbar B_{0}}{2mc}=E_{1}\\
+E_{\dn}&=\frac{e\hbar B_{0}}{2mc}=E_{2}
+\end{aligned}
+\end{equation}
+The frequency element is
+\begin{equation}
+\omega_{21}=\frac{E_{2}-E_{1}}{\hbar}=\frac{eB_{0}}{mc}
+\end{equation}
+$\omega_{21}$ is the \ul{Larmor frequency} and corresponds to the frequency of precession of a dipole $\mu$ in a magnetic field. Let us apply a time-dependent magnetic field perpendicular to $\vec{B}_{0}$.
+\begin{equation}
+\vec{B}_{1}(t)=B_{1}(\hat{x}\cos(\omega t)+\hat{y}\sin(\omega t))
+\end{equation}
+Thus, the time-dependent $V(t)$ will be due to a rotating magnetic field in the $xy$-plane.
+
+\begin{equation}
+\begin{aligned}
+V(t)&=-\vec{\mu}\cdot\vec{B}_{1}\\
+&=-\frac{eB_{1}}{mc}\qty(\vb{S}_{x}\cos(\omega t)+\vb{S}_{y}\sin(\omega t))\\
+&=-\frac{e\hbar B_{1}}{2mc}\qty[\qty(\op{\up}{\dn}+\op{\dn}{\up})\cos(\omega t)-i\qty(\op{\up}{\dn}-\op{\dn}{\up})\sin(\omega t)]\\
+&=-\frac{e\hbar B_{1}}{2mc}\qty(e^{-i\omega t}\ket{\up}{\dn}+e^{i\omega t}\op{\dn}{\up})\\
+&=-\gamma(e^{-i\omega t}\op{1}{2}+e^{i\omega t}\op{2}{1})
+\end{aligned}
+\end{equation}
+This is similar to the two-state harmonic potential we had previously solved. In this case
+\begin{equation}
+\begin{aligned}
+\gamma&=\frac{e\hbar B_{1}}{2mc}\\
+\omega_{21}&=\frac{eB_{0}}{mc}\\
+\Omega&=\sqrt{\qty(\frac{\gamma}{\hbar})^{2}+\qty(\frac{\omega-\omega_{21}}{2})^{2}}
+\end{aligned}
+\end{equation}
+The full width half-maximum of the resonance curve is
+\begin{equation}
+\frac{4\gamma}{\hbar}=\frac{2eB_{1}}{mc}
+\end{equation}
+This is the basis for MRI techniques. Medical NMR imaging uses the magnetic moments of protons of hydrogen in water molecules in the body in the image. The frequency of the unperturbed system is the spin of hydrogen atoms.
+
+\subsection{Adiabatic Time-Dependence and Berry Phase}
+Another example of time-dependence is the adiabatic (very slow) time-dependence. Suppose one has the Hamiltonian $\vb{H}(t)$. THe eigensystem is given by
+\begin{equation}
+\vb{H}(t)\ket{n,t}=E_{n}(t)\ket{n,t}
+\end{equation}
+where $\ket{n,t}$ are the eigenstates of the Hamiltonian at time $t$ and $E_{n}(t)$ are the eigenvalues at time $t$.\\
+
+The Schr\"{o}dinger equation for a general state $\ket{\psi,t}$ is
+\begin{equation}
+i\hbar\pdv{t}\ket{\psi,t}=\vb{H}(t)\ket{\psi,t}
+\end{equation}
+One can expand $\ket{\psi,t}$ in terms of the complete set of states $\ket{n,t}$
+\begin{equation}
+\ket{\psi,t}=\sum_{n}c_{n}(t)e^{i\theta_{n}(t)}\ket{n,t}
+\end{equation}
+where the coefficients are written as $c_{n}(t)e^{i\theta_{n}(t)}$ for convenience.\\
+
+$\theta_{n}(t)=-\frac{1}{\hbar}\int_{0}^{t}E_{n}(t')\dd{t'}$ is a time-dependent phase associated with the evolution of $\ket{\psi,t}$'s $n$-th energy coefficient.
+\begin{equation}
+\begin{aligned}
+\vb{H}(t)\ket{\psi,t}&=i\hbar\pdv{t}\ket{\psi,t}\\
+&=i\hbar\pdv{t}\qty(\sum_{n}c_{n}(t)e^{i\theta_{n}(t)}\ket{n,t})\\
+&=\sum_{n}i\hbar\pdv{c_{n}(t)}{t}e^{i\theta_{n}(t)}\ket{n,t}-\hbar\sum_{n}c_{n}(t)\pdv{\theta_{n}(t)}{t}e^{i\theta_{n}(t)}\ket{n,t}+i\hbar\sum_{n}c_{n}(t)e^{i\theta_{n}(t)}\pdv{t}\ket{n,t}\\
+\end{aligned}
+\end{equation}
 
 \end{document}
