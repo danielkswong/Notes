@@ -2916,7 +2916,534 @@ $\theta_{n}(t)=-\frac{1}{\hbar}\int_{0}^{t}E_{n}(t')\dd{t'}$ is a time-dependent
 \vb{H}(t)\ket{\psi,t}&=i\hbar\pdv{t}\ket{\psi,t}\\
 &=i\hbar\pdv{t}\qty(\sum_{n}c_{n}(t)e^{i\theta_{n}(t)}\ket{n,t})\\
 &=\sum_{n}i\hbar\pdv{c_{n}(t)}{t}e^{i\theta_{n}(t)}\ket{n,t}-\hbar\sum_{n}c_{n}(t)\pdv{\theta_{n}(t)}{t}e^{i\theta_{n}(t)}\ket{n,t}+i\hbar\sum_{n}c_{n}(t)e^{i\theta_{n}(t)}\pdv{t}\ket{n,t}\\
+&=\sum_{n}i\hbar\pdv{c_{n}(t)}{t}e^{i\theta_{n}(t)}\ket{n,t}+\sum_{n}c_{n}(t)E_{n}(t)e^{i\theta_{n}(t)}\ket{n,t}+i\hbar\sum_{n}c_{n}(t)e^{i\theta_{n}(t)}\pdv{t}\ket{n,t}\\
+&\quad\explain{Since $\pdv{\theta_{n}(t)}{t}=-\frac{1}{\hbar}E_{n}(t)$}\\
+\therefore\vb{H}(t)\ket{\psi,t}&=\vb{H}(t)\sum_{n}c_{n}(t)e^{i\theta_{n}(t)}\ket{n,t}\\
+&=\sum_{n}c_{n}(t)e^{i\theta_{n}(t)}E_{n}(t)\ket{n,t}\\
+\therefore 0&=\sum_{n}i\hbar\pdv{c_{n}(t)}{t}e^{i\theta_{n}(t)}\ket{n,t}+i\hbar\sum_{n}c_{n}(t)e^{i\theta_{n}(t)}\pdv{t}\ket{n,t}
 \end{aligned}
 \end{equation}
+Thus
+\begin{equation}
+\sum_{n}e^{i\theta_{n}(t)}\qty[\pdv{c_{n}(t)}{t}\ket{n,t}+c_{n}(t)\pdv{t}\ket{n,t}]=0
+\end{equation}
+Multiply on the left by $\bra{m,t}$
+\begin{equation}
+\begin{aligned}
+0&=\bra{m,t}\qty[\sum_{n}e^{i\theta_{n}(t)}\qty(\pdv{c_{n}(t)}{t}\ket{n,t}+c_{n}(t)\pdv{t}\ket{n,t})]\\
+0&=\sum_{n}e^{i\theta_{n}(t)}\pdv{c_{n}(t)}{t}\delta_{mn}+\sum_{n}c_{n}(t)e^{i\theta_{n}(t)}\mel{m,t}{\pdv{t}}{n,t}\\
+\pdv{c_{m}(t)}{t}e^{i\theta_{m}(t)}&=-\sum_{n}c_{n}(t)e^{i\theta_{n}(t)}\mel{m,t}{\pdv{t}}{n,t}\\
+\pdv{c_{m}(t)}{t}&=-\sum_{n}c_{n}(t)e^{i(\theta_{m}(t)-\theta_{n}(t))}\mel{m,t}{\pdv{t}}{n,t}
+\end{aligned}
+\end{equation}
+Therefore
+\begin{equation}
+\pdv{c_{m}(t)}{t}=-c_{m}(t)\mel{m,t}{\pdv{t}}{m,t}-\sum_{n\neq m}c_{n}(t)e^{i(\theta_{n}(t)-\theta_{m}(t))}\mel{m,t}{\pdv{t}}{n,t}
+\end{equation}
+The second term indicates that as time evolves, $c_{m}(t)$ changes dues to the difference $\theta_{n}(t)-\theta_{m}(t)$.\\
+
+If $\vb{H}$ was time-independent, $\ket{n}$ and $E_{n}$ would be time-independent and $\mel{m}{\pdv{t}}{n}$ would zero. Thus, one obtains the usual expression
+\begin{equation}
+\ket{\psi,t}=\sum_{n}c_{n}e^{-\frac{i}{\hbar}E_{n}t}\ket{n}
+\end{equation}
+To solve for $c_{n}(t)$, one must determine $\mel{m,t}{\pdv{t}}{n,t}$
+\begin{equation}
+\vb{H}(t)\ket{n,t}=E_{n}(t)\ket{n,t}
+\end{equation}
+Taking the time derivative of both sides
+\begin{equation}
+\pdv{\vb{H}}{t}\ket{n,t}+\vb{H}(t)\pdv{t}\ket{n,t}=\pdv{E_{n}}{t}\ket{n,t}+E_{n}(t)\pdv{t}\ket{n,t}
+\end{equation}
+Multiplying on the left by $\bra{m,t}$
+\begin{equation}
+\begin{aligned}
+\mel{m,t}{\pdv{\vb{H}}{t}}{n,t}+\mel{m,t}{\vb{H}(t)\pdv{t}}{n,t}&=\mel{m,t}{\pdv{E_{n}}{t}}{n,t}+\mel{m,t}{E_{n}(t)\pdv{t}}{n,t}\\
+\mel{m,t}{\pdv{\vb{H}}{t}}{n,t}&=\pdv{E_{n}}{t}\delta_{mn}+\mel{m,t}{E_{n}(t)\pdv{t}}{n,t}-\mel{m,t}{\vb{H}(t)\pdv{t}}{n,t}\\
+\mel{m,t}{\pdv{\vb{H}}{t}}{n,t}&=\pdv{E_{n}}{t}\delta_{mn}+(E_{n}(t)-E_{m}(t))\mel{m,t}{\pdv{t}}{n,t}
+\end{aligned}
+\end{equation}
+If $m=n$
+\begin{equation}
+\mel{m,t}{\pdv{\vb{H}}{t}}{n,t}=\pdv{E_{m}}{t}
+\end{equation}
+If $m\neq n$
+\begin{equation}
+\mel{m,t}{\pdv{t}}{n,t}=\frac{\mel{m,t}{\pdv{\vb{H}}{t}}{n,t}}{E_{n}(t)-E_{m}(t)}
+\end{equation}
+Therefore
+\begin{equation}
+\pdv{c_{m}}{t}=-\sum_{n\neq m}c_{n}(t)e^{i(\theta_{n}(t)-\theta_{m}(t))}\frac{\mel{m,t}{\pdv{\vb{H}}{t}}{n,t}}{E_{n}(t)-E_{m}(t)}-c_{m}(t)\mel{m,t}{\pdv{t}}{m,t}
+\end{equation}
+One can take the \ul{adiabatic approximation} (where $\vb{H}$ depends on $t$ adiabatically and $\pdv{\vb{H}}{t}$ is extremely small). Thus
+\begin{equation}
+\abs{\frac{\mel{m,t}{\pdv{\vb{H}}{t}}{n,t}}{E_{m}(t)-E_{n}(t)}}\ll\abs{\mel{m,t}{\pdv{t}}{n,t}}
+\end{equation}
+Therefore
+\begin{equation}
+\pdv{c_{m}(t)}{t}\approx -c_{m}(t)\mel{m,t}{\pdv{t}}{m,t}
+\end{equation}
+The differential equation for $c_{n}(t)$ has no dependence on $m\neq n$. This is the essence of the adiabatic approximation. If $c_{m}(0)=\delta_{mn}$, then $c_{m}(t)=\delta_{mn}(t)$. This suggests the ansatz form
+\begin{equation}
+c_{m}(t)=c_{m}(0)e^{i\gamma_{m}(t)}\qq{where $\gamma_{m}(t)=i\int_{0}^{t}\mel{n,t'}{\pdv{t}}{n,t'}\dd{t'}$}
+\end{equation}
+Check that
+\begin{equation}
+\pdv{c_{n}}{t}=-\mel{n,t}{\pdv{t}}{n,t}c_{n}(0)e^{i\gamma_{n}(t)}=-\mel{n,t}{\pdv{t}}{n,t}c_{n}(t)
+\end{equation}
+Moreover
+\begin{equation}
+\begin{aligned}
+\pdv{t}\ip{n,t}&=0\qq{since $\ip{n,t}=1$}\\
+\mel{n,t}{\pdv{t}}{n,t}+\pdv{t}(\bra{n,t})\ket{n,t}&=0\\
+\mel{n,t}{\pdv{t}}{n,t}+\qty(\mel{n,t}{\pdv{t}}{n,t})^{*}&=0\\
+\mel{n,t}{\pdv{t}}{n,t}&=-\mel{n,t}{\pdv{t}}{n,t}^{*}
+\end{aligned}
+\end{equation}
+Thus, $\mel{n,t}{\pdv{t}}{n,t}$ is purely imaginary and $\gamma_{n}(t)$ is real.\\
+
+$\gamma_{n}(t)$ is known as the \ul{Berry phase}. In the adiabatic case, if the system starts out in an eigenstate $\ket{n}$ of the Hamiltonian, it stays in the same eigenstate $\ket{n,t}$. Thus
+\begin{equation}
+\ket{\psi,t}=e^{i\gamma_{n}(t)}e^{i\theta_{n}(t)}\ket{n}=e^{i\gamma_{n}(t)}e^{-\frac{i}{\hbar}\int_{0}^{t}\dd{t'}E_{n}(t')}\ket{n}\qq{($c_{n}(0)=1$)}
+\end{equation}
+
+\aside{In general, $\ket{\psi,t}=\sum_{n}c_{n}(0)e^{i\gamma_{n}(t)}e^{i\theta_{n}(t)}\ket{\psi}$.}
+
+Typically, the time-dependence is not directly parametrized by time, but through a time-dependent coordinate $\vec{R}$ (e.g. a time-dependent magnetic field in the case of $\vb{H}=-\vec{\mu}\cdot\vec{B}(t)$). One can express this auxiliary parameter dependence by the vector $\vec{R}$ in parameter space. Thus
+\begin{equation}
+\begin{aligned}
+E_{n}(t)&=E_{n}(\vec{R}(t)),\quad\ket{n,t}=\ket*{n(\vec{R}(t))}\\
+\mel{n,t}{\pdv{t}}{n,t}&=\mel*{n(\vec{R})}{\vec{\nabla}_{R}}{n(\vec{R})}\cdot\dv{\vec{R}}{t}\\
+&\quad\explain{Since $\pdv{t}=\pdv{\vec{R}}{t}\cdot\vec{\nabla}_{R}$}\\
+\therefore\gamma_{n}(t)&=i\int_{0}^{t}\dd{t'}\mel*{n(\vec{R}(t))}{\vec{\nabla}_{R}}{n(\vec{R}(t))}\cdot\dv{\vec{R}}{t}\\
+&=i\int_{\vec{R}(0)}^{\vec{R}(t)}\mel{n}{\vec{\nabla}_{R}}{n}\cdot\dd{\vec{R}}
+\end{aligned}
+\end{equation}
+
+Suppose $\vec{R}(t)=\vec{R}(0)$ (i.e one goes along a closed curve in the space of parameters $\vec{R}$ during the time $t$). The vector $\vec{R}$ traces out a curve $\mathcal{C}$. Thus
+\begin{equation}
+\gamma_{n}(\mathcal{C})=i\oint_{\mathcal{C}}\mel{n,t}{\vec{\nabla}_{R}}{n,t}\cdot\dd{\vec{R}}
+\end{equation}
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[->,fill=lightGray] plot [smooth cycle, samples=8,domain={1:8}] (\x*360/8+5*rnd:0.5cm+1cm*rnd) node[right,xshift=-0.25cm] {\^{} $\vec{A}$};
+	\node[left] at (-1.5,0) {$\mathcal{C}$};
+	\node at (0,0) {$S$};
+\end{tikzpicture}
+\end{center}
+\newpage
+Define $\vec{A}_{n}(\vec{R})=i\mel{n,t}{\vec{\nabla}_{R}}{n,t}$ as the \ul{Berry connection vector}.\\
+
+Since $\mathcal{C}$ is a closed curve, $\gamma_{n}(\mathcal{C})=\oint_{\mathcal{C}}\vec{A}_{n}(\vec{R})\cdot\dd{\vec{R}}$ defines the circulation of $\vec{A}$ around the path $\mathcal{C}$. By Stoke's theorem, this can be rewritten as
+\begin{equation}
+\gamma_{n}=\int_{S}\qty(\vec{\nabla}_{R}\times\vec{A}_{n}(\vec{R}))\cdot\dd{\vec{a}}
+\end{equation}
+where the integral is over the surface $S$ bounded by path $\mathcal{C}$. We define $\vec{\Omega}_{n}(\vec{R})=\vec{\nabla}_{R}\times\vec{A}_{n}(\vec{R})$ as the \ul{Berry curvature}.\\
+
+Thus, $\gamma_{n}(\mathcal{C})=\int_{S}\vec{\Omega}_{n}(\vec{R})\cdot\dd{\vec{a}}$ is the flux of the Berry curvature through the surface bounded by path $\mathcal{C}$. Thus, $\gamma_{n}(\mathcal{C})$ is non-zero if $\vec{\Omega}_{n}(\vec{R})$ is non-zero. Otherwise, if $\vec{\Omega}_{n}(\vec{R})$ is zero, then the Berry connection vector has no physical consequence and the Berry phase $\gamma_{n}(\vec{R})$ is zero.
+
+\begin{equation}
+\vb{H}(\vec{R})\ket*{n(\vec{R})}=E_{n}(\vec{R})\ket*{n(\vec{R})}
+\end{equation}
+Suppose $\ket*{n(\vec{R})}$ is transformed to $e^{i\Chi(\vec{R})}\ket*{n(\vec{R})}$. The same equation is still satisfied.
+
+\begin{equation}
+\vec{\nabla}_{R}\qty(e^{i\Chi(\vec{R})}\ket*{n(\vec{R})})=i\vec{\nabla}_{R}\Chi e^{i\Chi(\vec{R})}\ket*{n(\vec{R})}+e^{i\Chi(\vec{R})}\vec{\nabla}_{R}\ket*{n(\vec{R})}
+\end{equation}
+Thus, $\vec{A}(\vec{R})$ has been transformed to $\vec{A}(\vec{R})\cdot\vec{\nabla}_{R}\Chi$.\\
+
+Can we always choose $\vec{\nabla}_{R}\Chi=\vec{A}_{n}(\vec{R})$ such that the new $\vec{A}_{n}(\vec{R})$ is zero, such that $\gamma_{n}(\vec{R})=0$? NO! This is only true ($\vec{\nabla}_{R}\Chi=\vec{A}_{n}(\vec{R})$) if $\vec{\nabla}_{R}\times\vec{A}(\vec{R})=\vec{0}$. When $\vec{\Omega}_{n}(\vec{R})\neq\vec{0}$, the phase $\gamma_{n}$ cannot be eliminate by gauge transformation and has observable consequnces. This is analogous to the magnetic field (not in real space, but in the parameter $\vec{R}$).
+
+\subsection{Time-Dependent Perturbation Theory}
+The two previous examples are some of the few problems that can be solved analytically. In most cases though, this is not true. As such, we introduce time-dependent perturbation theory for small perturbations to obtain approximate solutions.
+\begin{equation}
+\vb{H}(t)=\vb{H}_{0}+V(t)\qq{where we assume $V(t)$ is small compared to $\vb{H}_{0}$}
+\end{equation}
+The time-evolution of a state in the interaction picture is given by
+\begin{equation}
+i\hbar\pdv{t}\ket{\psi,t}_{\trm{I}}=V^{(\trm{I})}(t)\ket{\psi,t}_{\trm{I}}
+\end{equation}
+We define the time-evolution operator in the interaction picture as
+\begin{equation}
+\ket{\psi,t}_{\trm{I}}=V^{(I)}(t)\ket{\psi}
+\end{equation}
+Substituting into the Schr\"{o}dinger equation in the interaction picture, since $\ket{\psi}$ is an arbitrary state
+\begin{equation}
+i\hbar\pdv{t}U^{(\trm{I})}(t)=V^{(\trm{I})}(t)U^{(\trm{I})}(t)
+\end{equation}
+This can be solved formally as
+\begin{equation}
+U^{(\trm{I})}(t)=\mathbb{I}-\frac{i}{\hbar}\int_{0}^{t}V^{(\trm{I})}(t')U^{(\trm{I})}(t')\dd{t'}
+\end{equation}
+while subject to the initial condition $U^{(\trm{I})}(0)=\mathbb{I}$.\\
+
+Solving for $U^{(\trm{I})}(t)$ by iteration (where we will drop the (I) superscript for convenience)
+\begin{equation}
+\begin{aligned}
+U(t)&=\mathbb{I}-\frac{i}{\hbar}\int_{0}^{t}\dd{t'}V(t')\qq{(first order approximation)}\\
+U(t)&=\mathbb{I}-\frac{i}{\hbar}\int_{0}^{t}\dd{t'}V(t')\qty[\mathbb{I}-\frac{i}{\hbar}\int_{0}^{t'}\dd{t''}V(t'')]\qq{(second order approximation)}\\
+&=\mathbb{I}-\frac{i}{\hbar}\int_{0}^{t}\dd{t'}V(t')+\qty(-\frac{i}{\hbar})^{2}\int_{0}^{t}\dd{t'}\int_{0}^{t'}\dd{t''}V(t')V(t'')\\
+&\vdots\\
+U(t)&=\mathbb{I}-\frac{i}{\hbar}\int_{0}^{t}\dd{t'}V(t')+\qty(-\frac{i}{\hbar})^{2}\int_{0}^{t}\dd{t'}\int_{0}^{t'}\dd{t''}V(t')V(t'')+\ldots\\
+&\quad+\qty(-\frac{i}{\hbar})^{n}\int_{0}^{t}\dd{t'}\int_{0}^{t'}\dd{t''}\ldots\int_{0}^{t^{(n-1)}}\dd{t^{(n)}}V(t')V(t'')\ldots V(t^{(n)})\\
+&\qq{($n$-th order approximation)}
+\end{aligned}
+\end{equation}
+This series is called the \ul{Dyson series}.\\
+
+Solving the Dyson series is often impossible or impractical. Instead, one can use the Dyson series to calculate the lower-order corrections of the coefficients to get an approximation. Connecting this to the coefficients $c_{n}(t)$
+\begin{equation}
+\begin{aligned}
+\ket{\psi,t}_{\trm{I}}=\sum_{n}c_{n}(t)\ket{n}&=U^{(\trm{I})}(t)\ket{\psi}\\
+\sum_{n}c_{n}(t)\ket{n}&=\sum_{n}\op{n}U^{(\trm{I})}(t)\ket{\psi}\qq{by resolution of identity}\\
+c_{n}(t)&=\mel{n}{U^{(\trm{I})}(t)}{\psi}
+\end{aligned}
+\end{equation}
+Since $U(t)=\mathbb{I}+\ldots+\qty(-\frac{i}{\hbar})^{n}\int_{0}^{t}\dd{t'}\int_{0}^{t'}\dd{t''}\ldots\int_{0}^{t^{(n-1)}}\dd{t^{(n)}}V(t')V(t'')\ldots V(t^{(n)})$, one can write $c_{n}(t)$ as a series, namely
+\begin{equation}
+c_{n}(t)=c_{n}^{(0)}+c_{n}^{(1)}(t)+c_{n}^{(2)}(t)+\ldots
+\end{equation}
+where $c_{n}^{(i)}(t)$ is $c_{n}(t)$ to the $i$-th order of $V^{(\trm{I})}(t)$.
+\begin{equation}
+\begin{aligned}
+c_{n}(t)&=\mel{n}{U^{(\trm{I})}(t)}{\psi}\\
+&=\ip{n}{\psi}+\ldots+\qty(-\frac{i}{\hbar})^{n}\int_{0}^{t}\dd{t'}\int_{0}^{t'}\dd{t''}\ldots\int_{0}^{t^{(n-1)}}\mel{n}{V(t')V(t'')\ldots V(t^{(n)})}{\psi}\\
+\implies c_{n}^{(n)}(t)&=\qty(-\frac{i}{\hbar})^{n}\int_{0}^{t}\dd{t'}\int_{0}^{t'}\dd{t''}\ldots\int_{0}^{t^{(n-1)}}\dd{t^{(n)}}\mel{n}{V(t')V(t'')\ldots V(t^{(n)})}{\psi}
+\end{aligned}
+\end{equation}
+Let us consider the case where the initial state $\ket{\psi}$ is the energy eigenstate $\ket{i}$, where $\vb{H}_{0}\ket{i}=E_{i}\ket{i}$.
+\begin{equation}
+\begin{aligned}
+c_{n}^{(0)}&=\delta_{ni}\\
+c_{n}^{(1)}(t)&=\qty(-\frac{i}{\hbar})\int_{0}^{t}\mel{n}{V^{(\trm{I})}(t')}{o}\dd{t'}\\
+&=\qty(-\frac{i}{\hbar})\int_{0}^{t}\mel{n}{e^{\frac{i}{\hbar}\vb{H}_{0}t'}V(t')e^{-\frac{i}{\hbar}\vb{H}_{0}t'}}{i}\dd{t'}\\
+&=\qty(-\frac{i}{\hbar})\int_{0}^{t}e^{\frac{i}{\hbar}(E_{n}-E_{i})t'}\mel{n}{V(t')}{i}\dd{t'}\\
+&=\qty(-\frac{i}{\hbar})\int_{0}^{t}e^{i\omega_{ni}t'}V_{ni}(t')\dd{t'}\\
+&\quad\explain{$\omega_{ni}=\frac{E_{n}-E_{i}}{\hbar}$, $V_{ni}(t)=\mel{n}{V(t)}{i}$}\\
+c_{n}^{(2)}(t)&=\qty(-\frac{i}{\hbar})^{2}\int_{0}^{t}\dd{t'}\int_{0}^{t'}\dd{t''}\mel{n}{V^{(\trm{I})}(t')V^{(\trm{I})}(t'')}{i}\\
+&=\qty(-\frac{i}{\hbar})^{2}\int_{0}^{t}\dd{t'}\int_{0}^{t'}\dd{t''}\sum_{m}\mel{n}{V^{(\trm{I})}(t')}{m}\mel{m}{V^{(\trm{I})}t'')}{i}\\
+&=\qty(-\frac{i}{\hbar})^{2}\int_{0}^{t}\dd{t'}\int_{0}^{t'}\dd{t''}\sum_{m}\mel{n}{V^{(\trm{I})}(t')}{m}\mel{m}{V^{(\trm{I})}(t'')}{i}\\
+&=\qty(-\frac{i}{\hbar})^{2}\int_{0}^{t}\dd{t'}\int_{0}^{t'}\dd{t''}\sum_{m}e^{i\omega_{nm}t'}e^{i\omega_{mi}t''}V_{nm}(t')V_{mi}(t'')
+\end{aligned}
+\end{equation}
+In this way, the coefficients $c_{n}(t)$ can be calculated to any order.\\
+
+\aside{The order of $V^{(\trm{I})}(t)$ is important since in general $\comm{V^{(\trm{I})}(t)}{V^{(\trm{I})}(t')}\neq0$ for $t\neq t'$. Consider for example $V(t)=B_{x}\cos(\omega t)\vb{S}_{x}+B_{y}\sin(\omega t)\vb{S}_{y}$.}
+
+One can define a \ul{transition probability} as the probability to find the system in state $\ket{n}$ at time $t$ if the system initially started out in state $\ket{i}$ at time $t=0$.
+\begin{equation}
+P(i\rightarrow n)=\abs{c_{n}^{(0)}(t)+c_{n}^{(1)}(t)+c_{n}^{(2)}(t)+\ldots}^{2}
+\end{equation}
+Restricting ourselves to first-order perturbation theory
+\begin{equation}
+\begin{aligned}
+c_{n}^{(1)}(t)&=-\frac{i}{\hbar}\int_{0}^{t}\dd{t'}e^{i\omega_{ni}t'}V_{ni}(t')\\
+P(i\rightarrow n)&=\abs{c_{n}^{(0)}(t)+c_{n}^{(1)}(t)}^{2}\\
+&=\abs{c_{n}^{(1)}(t)}^{2}\qq{for $n\neq i$}\\
+&=\frac{1}{\hbar^{2}}\abs{\int_{0}^{t}e^{i\omega_{ni}t'}V_{ni}(t')}^{2}
+\end{aligned}
+\end{equation}
+
+Consider the specific example of harmonic perturbation.
+\begin{equation}
+V(t)=Ve^{i\omega t}+V^{\dagger}e^{-i\omega t}
+\end{equation}
+where
+\begin{equation}
+V=\gamma\op{1}{2},\quad V^{\dagger}=\gamma\op{2}{1}
+\end{equation}
+in the case of the two-level system previously.
+\begin{equation}
+\begin{aligned}
+c_{n}^{(1)}(t)&=-\frac{i}{\hbar}\int_{0}^{t}\dd{t'}e^{i\omega_{ni}t'}V_{ni}(t')\\
+&=-\frac{i}{\hbar}\int_{0}^{t}\dd{t'}e^{i\omega_{ni}t'}\qty[V_{ni}e^{i\omega t'}+V_{ni}^{\dagger}e^{-i\omega t'}]\\
+&=\qty(-\frac{i}{\hbar})\qty[\frac{V_{ni}\qty(e^{i(\omega_{ni}+\omega)t}-1)}{i(\omega_{ni}+\omega)}+\frac{V_{ni}^{\dagger}\qty(e^{i(\omega_{ni}-\omega)t}-1)}{i(\omega_{ni}-\omega)}]\\
+&=\frac{1}{\hbar}\qty[\frac{V_{ni}\qty(1-e^{i(\omega_{ni}+\omega)t})}{(\omega_{ni}+\omega)}+\frac{\qty(1-e^{i(\omega_{ni}-\omega)t})V_{in}^{*}}{(\omega_{ni}-\omega)}]
+\end{aligned}
+\end{equation}
+The transition probability will only be significant if the resonance condition is satisfied (i.e. $\omega\approx\pm\omega_{ni}$). More specifically, $c_{n}^{(1)}(t)$ becomes maximized. Assume $\omega\approx\omega_{ni}$. Thus, the second term dominates in $c_{n}^{(1)}(t)$. Therefore
+\begin{equation}
+\begin{aligned}
+c_{n}^{(1)}(t)&\approx\qty(\frac{1}{\hbar})\qty[\frac{(1-e^{i(\omega_{ni}-\omega)t})V_{in}^{*}}{(\omega_{ni}-\omega)}]\\
+\implies \abs{c_{n}^{(1)}(t)}^{2}&=\frac{\abs{V_{in}}^{2}}{\hbar^{2}}\abs{\frac{1-e^{i(\omega_{ni}-\omega)t}}{\omega_{ni}-\omega}}^{2}\\
+&=\frac{\abs{V_{in}}^{2}}{\hbar^{2}}\frac{\qty(1-e^{i(\omega_{ni}-\omega)t})\qty(1-e^{-i(\omega_{ni}-\omega)t})}{(\omega_{ni}-\omega)^{2}}\\
+&=\frac{\abs{V_{in}}^{2}}{\hbar^{2}(\omega_{ni}-\omega)^{2}}\qty[1+1-2\cos\qty(\qty(\omega_{ni}-\omega)t)]\\
+&=\frac{2\abs{V_{in}}^{2}}{\hbar^{2}(\omega_{ni}-\omega)^{2}}\qty[1-\cos\qty(\qty(\omega_{ni}-\omega)t)]\\
+&=\frac{4\abs{V_{in}}^{2}}{\hbar^{2}(\omega_{ni}-\omega)^{2}}\sin^{2}\qty(\frac{(\omega_{ni}-\omega)t}{2})\\
+&=\frac{\abs{V_{in}}^{2}}{\hbar^{2}}\frac{\sin^{2}\qty(\frac{(\omega_{ni}-\omega)t}{2})t^{2}}{\qty(\frac{(\omega_{ni}-\omega)t}{2})^{2}}\\
+&=P(i\rightarrow n)
+\end{aligned}
+\end{equation}
+Let us consider the probability in its long-term behaviour (i.e. $t\rightarrow\infty$). Note however that the time-dependent perturbation becomes less and less valid at later times. As such, one qualifies this analysis by saying that one looks at large times, but not too large that the perturbation breaks down. Let $\alpha=\frac{\omega_{ni}-\omega}{2}$.
+\begin{equation}
+f(\alpha)=\lim_{t\rightarrow\infty}\frac{\sin^{2}(\alpha t)}{\pi\alpha^{2}t}
+\end{equation}
+When $\alpha\neq0$, $f(\alpha)=0$. However, for $\alpha t\ll 1$, $\sin^{2}(\alpha t)\approx \alpha^{2}t^{2}$.
+\begin{equation}
+\begin{aligned}
+f(0)&=\lim_{t\rightarrow\infty}\lim_{\alpha\rightarrow0}\frac{\sin^{2}(\alpha t)}{\pi\alpha^{2}t}\\
+&=\lim_{t\rightarrow\infty}\lim_{\alpha\rightarrow0}\frac{\alpha^{2}t^{2}}{\pi\alpha^{2}t}\\
+&=\lim_{t\rightarrow\infty}\frac{t}{\pi}\\
+&=\infty
+\end{aligned}
+\end{equation}
+Note also that
+\begin{equation}
+\begin{aligned}
+\int_{-\infty}^{\infty}\dd{\alpha}f(\alpha)&=\int_{-\infty}^{\infty}\frac{\sin^{2}(\alpha t)}{\pi\alpha^{2}t}=1
+\therefore f(\alpha)&=\delta(\alpha)
+\end{aligned}
+\end{equation}
+Note that the factor of $\pi$ makes $f(a)=\delta(\alpha)$ exactly.\\
+
+Consider the transition rate for transition probability per unit time
+\begin{equation}
+W(i\rightarrow n)=\dv{t}P(i\rightarrow n)
+\end{equation}
+At $t=\infty$
+\begin{equation}
+\begin{aligned}
+P(i\rightarrow n)&=\lim_{t\rightarrow\infty}\frac{\pi\abs{V_{in}}^{2}}{\hbar^{2}}\delta\qty(\frac{\omega_{ni}-\omega}{2})t\\
+&=\lim_{t\rightarrow\infty}\frac{2\pi\abs{V_{in}}^{2}}{\hbar^{2}}\delta(E_{n}-E_{i}-\hbar\omega)t\qq{since $\delta(cx)=\frac{1}{\abs{c}}\delta(x)$}\\
+W(i\rightarrow n)&=\dv{t}P(i\rightarrow n)\\
+&=\frac{2\pi\abs{V_{in}}^{2}}{\hbar}\delta(E_{n}-E_{i}-\hbar\omega)
+\end{aligned}
+\end{equation}
+This equation for $W(i\rightarrow n)$ at $t=\infty$ is known as \ul{Fermi's golden rule}. This $\delta$-function expresses energy conservation in the sense that it is only non-zero if $E_{n}-E_{i}=\hbar\omega$. For example, if the final state has a larger energy than the initial state ($E_{n}>E_{i}$), the the only way to transition from $\ket{i}$ to $\ket{n}$ is to absorb a quanta with energy $\hbar\omega=E_{n}-E_{i}$. This is known as \ul{absorption}. In contrast, when $E_{i}>E_{n}$, the only way to transition is to emit a quanta with energy $\hbar\omega=E_{i}-E_{n}$ (equivalent to absorbing a quanta with $-\hbar\omega=E_{n}-E_{i}$). This is called \ul{stimulated emission}.
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) node[left] {$E_{i}$} -- (3,0);
+	\draw (0,2) node[left] {$E_{n}$} -- (3,2);
+	\draw[->,thick] (1,0) -- node[right] {$\hbar\omega=E_{n}-E_{i}$} (1,2);
+	\node[anchor=north west,right] at (5,1)
+		{\[
+			\begin{aligned}
+				&\trm{For absorption}\\
+				&W(i\rightarrow n)=\dv{P(i\rightarrow n)}{t}=\frac{2\pi\abs{V_{in}}^{2}}{\hbar}\delta(E_{n}-E_{i}-\hbar\omega)
+			\end{aligned}
+		\]};
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) node[left] {$E_{n}$} -- (3,0);
+	\draw (0,2) node[left] {$E_{i}$} -- (3,2);
+	\draw[<-,thick] (1,0) -- node[right] {$\hbar\omega=E_{n}-E_{i}$} (1,2);
+	\node[anchor=north west,right] at (5,1)
+		{\[
+			\begin{aligned}
+				&\trm{For stimulated emission}\\
+				&W(i\rightarrow n)=\dv{P(i\rightarrow n)}{t}=\frac{2\pi\abs{V_{in}}^{2}}{\hbar}\delta(E_{n}-E_{i}+\hbar\omega)
+			\end{aligned}
+		\]};
+\end{tikzpicture}
+\end{center}
+The probability under a time-independent (constant) perturbation can be computed by setting $\omega=0$.
+\begin{equation}
+\therefore\abs{c_{n}^{(1)}(t)}^{2}=\frac{\abs{V_{in}}^{2}}{\hbar^{2}}\frac{\sin^{2}\qty(\frac{\omega_{ni}t}{2})}{\qty(\frac{\omega_{ni}}{2})^{2}}
+\end{equation}
+Plotting $f(\omega_{ni})=\frac{\sin^{2}\qty(\frac{\omega_{ni}t}{2})}{\qty(\frac{\omega_{ni}}{2})^{2}}$
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-4,0) -- (4,0) node[right] {$\omega_{ni}$};
+	\draw[<->] (0,-0.5) -- (0,5) node[above] {$f(\omega_{ni})$};
+	\draw[domain=-4:-0.025,samples=400] plot (\x, {0.5*(sin(deg(3*\x)))^2/(\x)^2});
+	\draw[domain=0.025:4,samples=400] plot (\x, {0.5*(sin(deg(3*\x)))^2/(\x)^2});
+	\draw[domain=-4:4,samples=200,red] plot (\x, {0.5*(sin(deg(2*\x)))^2/(\x)^2});
+	\draw[domain=-4:4,samples=200,green] plot (\x, {0.5*(sin(deg(\x)))^2/(\x)^2});
+	\draw (0.1,4.5) -- (-0.1,4.5) node[left] {$t^{2}$};
+	\draw (-2.094,0.1) -- (-2.094,-0.1) node[below] {$-\frac{4\pi}{t}$};
+	\draw (-1.047,0.1) -- (-1.047,-0.1) node[below] {$-\frac{2\pi}{t}$};
+	\draw (1.047,0.1) -- (1.047,-0.1) node[below] {$\frac{2\pi}{t}$};
+	\draw (2.094,0.1) -- (2.094,-0.1) node[below] {$\frac{4\pi}{t}$};
+	\node at (0.7,3.5) {$t$};
+	\node[red] at (1,2) {$t_{2}$};
+	\node[green] at (1.3,1) {$t_{1}$};
+	\node at (3,3) {$t_{1}<t_{2}<t$};
+\end{tikzpicture}
+\end{center}
+At $\omega_{ni}=0$
+\begin{equation}
+f(0)=\lim_{\omega_{ni}\rightarrow0}\frac{\sin^{2}\qty(\frac{\omega_{ni}t}{2})}{\qty(\frac{\omega_{ni}}{2})^{2}}=t^{2}
+\end{equation}
+As time increases the height of the central peak increases as $t^{2}$, while its width decreases as $\frac{1}{t}$. At long times, $P(i\rightarrow n)$ becomes appreciable only for states with
+\begin{equation}
+\begin{aligned}
+\abs{\omega_{ni}}&\sim\frac{2\pi}{t}\\
+\implies\abs{\frac{E_{n}-E_{i}}{\hbar}}&\sim\frac{2\pi}{t}\\
+\abs{E_{n}-E_{i}}t&\sim2\pi\hbar
+\end{aligned}
+\end{equation}
+This is similar to the energy-time uncertainty relation $\Delta E\Delta t\sim\hbar$.\\
+
+Consider now the initial state $\ket{i}$ under the action of the perturbation. It is convenient to use a gradually turned on perturbation of the form
+\begin{equation}
+V(t)=Ve^{\eta t},\,\eta>0,\,\eta\rightarrow0^{+}
+\end{equation}
+Confirming that we get the same results as before, for $n\neq i$
+\begin{equation}
+\begin{aligned}
+c_{n}^{(1)}(t)&=-\frac{i}{\hbar}V_{ni}\int_{-\infty}^{t}\dd{t'}e^{\eta t'}e^{i\omega_{ni}t'}\\
+&\quad\explain{The lower bound is negative infinity as for any finite $\eta>0$, $V(t\rightarrow-\infty)=0$. The perturbation is absent at $t\rightarrow-\infty$ and is slowly turned on.}\\
+&=-\frac{i}{\hbar}V_{ni}\qty(\frac{e^{\eta t+i\omega_{ni}t}}{\eta+i\omega_{ni}})\\
+\abs{c_{n}^{(1)}(t)}^{2}&=\frac{\abs{V_{ni}}^{2}}{\hbar^{2}}\frac{e^{2\eta t}}{\eta^{2}+\omega_{ni}^{2}}=P(i\rightarrow n)
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+W(i\rightarrow n)&=\dv{t}\abs{c_{n}^{(1)}(t)}^{2}\\
+&=\frac{2\abs{V_{in}}^{2}}{\hbar^{2}}\frac{\eta e^{2\eta t}}{\eta^{2}+\omega_{ni}^{2}}
+\end{aligned}
+\end{equation}
+Note that
+\begin{equation}
+\begin{aligned}
+\lim_{\eta\rightarrow 0}\frac{\eta}{\eta^{2}+\omega_{ni}^{2}}=\pi\delta(\omega_{ni}=\pi\hbar\delta(E_{n}-E_{i})
+\end{aligned}
+\end{equation}
+since
+\begin{equation}
+\lim_{\eta\rightarrow0}\frac{\eta}{\eta^{2}+\omega_{ni}^{2}}=\begin{cases}
+0 & \trm{if $\omega_{ni}\neq0$}\\
+\infty & \trm{if $\omega_{ni}=0$}
+\end{cases}
+\end{equation}
+and
+\begin{equation}
+\int_{-\infty}^{\infty}\dd{\omega_{ni}}\frac{\eta}{\eta^{2}+\omega_{ni}^{2}}=\pi
+\end{equation}
+\newpage
+Through this, one calculates the probability that the system remains in state $\ket{i}$.
+\begin{equation}
+\begin{aligned}
+c_{i}^{(0)}(t)&=1\\
+c_{i}^{(1)}(t)&=\qty(-\frac{i}{\hbar})V_{ii}\int_{-\infty}^{t}\dd{t'}e^{\eta t'}e^{i\omega_{ii}t'}\\
+&=\qty(-\frac{i}{\hbar\eta})V_{ii}e^{\eta t}\qq{since $\omega_{ii}=0$}\\
+c_{i}^{(2)}(t)&=\qty(-\frac{i}{\hbar})^{2}\sum_{m}\int_{-\infty}^{t}\dd{t'}\int_{-\infty}^{t'}\int_{-\infty}^{t'}\dd{t''}e^{i\omega_{im}t'}e^{i\omega_{mi}t''}V_{im}(t')V_{mi}(t'')\\
+&=\qty(-\frac{i}{\hbar})^{2}\sum_{m}\abs{V_{mi}}^{2}\int_{-\infty}^{t}\dd{t'}\int_{-\infty}^{t'}\dd{t''}e^{\eta t'}e^{i\omega_{im}t'}e^{\eta t''}e^{i\omega_{mi}t''}\\
+&=\qty(-\frac{i}{\hbar})^{2}\sum_{m}\abs{V_{mi}}^{2}\int_{-\infty}^{t}\dd{t'}e^{\eta t'}e^{i\omega_{im}t'}\qty(\frac{e^{\eta t'}e^{i\omega_mi}t'}{\eta+i\omega_{mi}})\\
+&=\qty(-\frac{i}{\hbar})^{2}\sum_{m}\abs{V_{mi}}^{2}\frac{e^{2\eta t}}{2\eta(\eta+i\omega_{mi})}\\
+&=\qty(-\frac{i}{\hbar})^{2}\abs{V_{ii}}^{2}\frac{e^{2\eta t}}{2\eta^{2}}+\qty(-\frac{i}{\hbar})^{2}\sum_{m\neq i}\abs{V_{mi}}^{2}\frac{e^{2\eta t}}{2\eta\qty(\eta+i\frac{E_{m}-E_{i}}{\hbar})}\\
+&=\qty(-\frac{i}{\hbar})^{2}\abs{V_{ii}}^{2}\frac{e^{2\eta t}}{2\eta^{2}}+\qty(-\frac{i}{\hbar})\sum_{m\neq i}\abs{V_{mi}}^{2}\frac{e^{2\eta t}}{2\eta(E_{i}-E_{m}+i\hbar\eta)}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+c_{i}(t)&\approx c_{i}^{(0)}(t)+c_{i}^{(1)}(t)+c_{i}^{(2)}(t)\\
+&=1-\frac{i}{\hbar\eta}V_{ii}V^{\eta t}+\qty(-\frac{i}{\hbar})^{2}\abs{V_{ii}}^{2}\frac{e^{2\eta t}}{2\eta^{2}}+\qty(-\frac{i}{\hbar})\sum_{m\neq i}\abs{V_{mi}}^{2}\frac{e^{2\eta t}}{2\eta(E_{i}-E_{m}+i\hbar\eta)}
+\end{aligned}
+\end{equation}
+and
+\begin{equation}
+\hspace{-1cm}
+\begin{aligned}
+\frac{1}{c_{i}(t)}\dv{c_{i}(t)}{t}&=\frac{-\frac{i}{\hbar}V_{ii}e^{\eta t}+\qty(-\frac{i}{\hbar})^{2}\abs{V_{ii}}^{2}\frac{e^{2\eta t}}{\eta}+\qty(-\frac{i}{\hbar})\sum_{m\neq i}\abs{V_{mi}}^{2}\frac{e^{2\eta t}}{E_{i}-E_{m}+i\hbar\eta}}{1-\frac{i}{\hbar\eta}V_{ii}e^{\eta t}}\\
+&=\qty[\qty(-\frac{i}{\hbar})V_{ii}e^{\eta t}+\qty(-\frac{i}{\hbar})^{2}\abs{V_{ii}}^{2}\frac{e^{2\eta t}}{\eta}+\qty(-\frac{i}{\hbar})^{2}\sum_{m\neq i}\abs{V_{im}}^{2}\frac{e^{2\eta t}}{E_{i}-E_{m}+i\hbar\eta}]\qty[1+\frac{i}{\hbar}V_{ii}\frac{e^{\eta t}}{\eta}]\\
+&\quad\explain{By binomial approximation, since $\frac{V_{ii}}{\hbar\eta}\ll1$}\\
+&\approx-\frac{i}{\hbar}V_{ii}+\qty(-\frac{i}{\hbar})\sum_{m\neq i}\frac{\abs{V_{im}}^{2}}{E_{i}-E_{m}+i\hbar\eta}\\
+&\quad\explain{Up to second order in $V$ and using that $\eta\rightarrow0^{+}$}
+\end{aligned}
+\end{equation}
+Defining $\Delta_{i}$ as
+\begin{equation}
+\begin{aligned}
+\Delta_{i}&=V_{ii}+\sum_{m\neq i}\frac{\abs{V_{im}}^{2}}{E_{i}-E_{m}+i\hbar\eta}\\
+\implies\dv{c_{i}}{t}&=-\frac{i}{\hbar}\Delta_{i}c_{i}(t)\\
+\implies c_{i}(t)&=c_{i}(0)e^{-\frac{i}{\hbar}\Delta_{i}t}\qq{(interaction picture)}\\
+&\trm{or}\\
+c_{i}(t)&=c_{i}(0)e^{-\frac{i}{\hbar}E_{i}t}e^{-\frac{i}{\hbar}\Delta_{i}t}\qq{($c_{i}(0)=1$ for initial state $\ket{i}$)}
+\end{aligned}
+\end{equation}
+What is the physical meaning of this result? Recall that $c_{i}(t)$ are the coefficients of the wavefunction in the interaction picture. Decomposing the contributions into two orders
+\begin{equation}
+\begin{aligned}
+\Delta_{i}&=\Delta_{i}^{(1)}+\Delta_{i}^{(2)}\\
+\implies\Delta_{i}^{(1)}&=V_{ii}\qq{which agrees with first order time-independent perturbation theory}
+\end{aligned}
+\end{equation}
+However
+\begin{equation}
+\Delta_{i}^{(2)}=\sum_{m\neq i}\abs{V_{im}}^{2}\frac{1}{E_{i}-E_{m}-i\hbar\eta}
+\end{equation}
+Note that
+\begin{equation}
+\begin{aligned}
+\Im\qty(\frac{1}{\Chi+i\epsilon})&=\Im\qty(\frac{\Chi-i\epsilon}{\Chi^{2}+\epsilon^{2}})\\
+&=-\frac{\epsilon}{\Chi^{2}+\epsilon^{2}}\\
+&=-\pi\delta(x)\\
+\implies \Im(Delta_{i}^{2})&=-\pi\sum_{m\neq i}\abs{V_{im}}^{2}\delta(E_{i}-E_{m})
+\end{aligned}
+\end{equation}
+In comparison with Fermi's golden rule with $\omega=0$
+\begin{equation}
+\begin{aligned}
+\sum_{m\neq i}W(i\rightarrow m)&=\frac{2\pi}{\hbar}\sum_{m\neq i}\abs{V_{mi}}^{2}\delta(E_{i}-E_{m})\\
+&=-\frac{2}{\hbar}\Im(\Delta_{i}^{(2)})
+\end{aligned}
+\end{equation}
+Note that $\ket{\psi,t}_{\trm{I}}=\sum_{n}c_{n}(t)\ket{n}$. Thus, $\Re(\Delta_{i})$ has the meaning of the shift of energy of $\ket{i}$ under the action of the perturbation.\\
+
+Define $\Gamma_{i}=-2\Im(\Delta_{i})>0$ as a decay constant. Then
+\begin{equation}
+\begin{aligned}
+c_{i}(t)&=e^{-\frac{i}{\hbar}\qty(\Re(\Delta_{i})+i\Im(\Delta_{i}))t}\\
+\therefore \abs{c_{i}(t)}^{2}&=e^{\frac{2}{\hbar}\Im(\Delta_{i})t}=e^{-\frac{\Gamma_{i}}{\hbar}}=e^{-\frac{t}{\tau_{i}}}
+\end{aligned}
+\end{equation}
+Thus, $\Gamma_{i}$ is the decay rate for state $\ket{i}$ and $\tau_{i}=\frac{\hbar}{\Gamma_{i}}$ is the lifetime of state $\ket{i}$.\\
+
+In the Schr\"{o}dinger picture
+\begin{equation}
+c_{i}(t)=e^{-\frac{i}{\hbar}E_{i}t}e^{-\frac{1}{2\hbar}\Gamma_{i}t}
+\end{equation}
+Taking the Fourier transformation with respect to $t$
+\begin{equation}
+\begin{aligned}
+\int_{0}^{\infty}\dd{t}e^{\frac{i}{\hbar}Et}e^{-\frac{i}{\hbar}E_{i}t-\frac{1}{2\hbar}\Gamma_{i}t}&=-\frac{1}{\qty(\frac{i}{\hbar})\qty(E-E_{i}+\frac{i\Gamma_{i}}{2})}=\frac{i\hbar}{\qty(E-E_{i}+\frac{i\Gamma_{i}}{2})}\\
+\Im\qty(\frac{1}{E-E_{i}+\frac{i\Gamma_{i}}{2}})&=-\frac{\frac{1}{2}\Gamma_{i}}{(E-E_{1})^{2}+\frac{\Gamma_{i}^{2}}{4}}=A(E)\qq{(spectral function)}\\
+\lim_{\Gamma_{i}\rightarrow 0}\frac{\frac{1}{2}\Gamma_{i}}{(E-E_{i})^{2}+\frac{\Gamma_{i}^{2}}{4}}&=\pi\delta(E-E_{i})
+\end{aligned}
+\end{equation}
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-4,0) -- (4,0) node[right] {$E-E_{i}$};
+	\draw[<->] (0,-0.5) -- (0,4.5) node[above] {$A(E)$};
+	\draw[domain=-4:4,samples=200] plot (\x, {2/((\x)^2+0.5)});
+	\node[right,xshift=0.3cm] at (0,4) {$\frac{1}{\Gamma_{i}}$};
+	\draw[<->] (-0.704,2) -- (0.704,2);
+	\node[right] at (0.8,2) {$\Delta E=\Gamma_{i}$ at full width half maximum};
+\end{tikzpicture}
+\end{center}
+The width of the peak is $\Gamma_{I}$. One can say that the energy level $E_{i}$ has been broadened by $\Gamma_{i}$ due to the perturbation.
+\begin{equation}
+\Delta E\sim\Gamma_{i}=\frac{\hbar}{\tau_{i}}
+\end{equation}
+Thus, $\Delta E\tau_{i}\sim\hbar$, which is another way to view the energy-time uncertainty relation. Moreover, one can see that for $t>\tau_{i}$, the probability to find the system in the initial state becomes exponentially small.
+
+\newpage
+\section{Relativistic Quantum Mechanics}
+Let us find a generalization of quantum mechanics consistent with special relativity, with which one will use to analyze fast moving particles.\\
+
+There are two main principles of special relativity
+\begin{enumerate}
+\item The laws of nature are the same in all frames of reference where an inertial frame is a frame in which a free body moves with constant velocity.
+\item The speed of light is the same in all inertial frames of reference, with nothing moving faster than this speed.
+\end{enumerate}
+Let us define an \ul{event} to be something that happens at a specific time and point in space ($\vec{x}$,$t$). Consider two events ($\vec{x}_{1}$,$t_{1}$) and ($\vec{x}_{2}$,$t_{2}$). The \ul{interval} between them is
+\begin{equation}
+s_{12}=\sqrt{c^{2}(t_{2}-t_{1})^{2}-(\vec{x}_{2}-\vec{x}_{1})^{2}}
+\end{equation}
+where $c$ is the speed of light. It is measured by the emission of light at ($\vec{x}_{1}$,$t_{1}$) and detection of the same beam of light at ($\vec{x}_{2}$,$t_{2}$).\\
+
+Since light always propagates at the speed of light $c$, one has $\abs{\vec{x}_{2}-\vec{x}_{1}}=c(t_{2}-t_{1})$ such that $s_{12}=0$. This interval is called a \ul{light-like interval}. In general, $s_{12}^{2}$ can also be positive or negative. If $s_{12}^{2}>0$, the two events could in principle be related by a physical signal. This interval is \ul{time-like}. If $s_{12}^{2}<0$, the events are non-related, yielding a \ul{space-like interval}.\\
+
+Consider an infinitesimally small interval
+\begin{equation}
+\end{equation}
+
 
 \end{document}
