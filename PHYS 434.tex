@@ -3376,7 +3376,7 @@ Note that
 \Im\qty(\frac{1}{\Chi+i\epsilon})&=\Im\qty(\frac{\Chi-i\epsilon}{\Chi^{2}+\epsilon^{2}})\\
 &=-\frac{\epsilon}{\Chi^{2}+\epsilon^{2}}\\
 &=-\pi\delta(x)\\
-\implies \Im(Delta_{i}^{2})&=-\pi\sum_{m\neq i}\abs{V_{im}}^{2}\delta(E_{i}-E_{m})
+\implies \Im(\Delta_{i}^{2})&=-\pi\sum_{m\neq i}\abs{V_{im}}^{2}\delta(E_{i}-E_{m})
 \end{aligned}
 \end{equation}
 In comparison with Fermi's golden rule with $\omega=0$
@@ -3638,6 +3638,59 @@ Thus
 \pdv{\rho}{t}+\vec{\nabla}\cdot\vec{j}&=0\qq{(continuity equation)}
 \end{aligned}
 \end{equation}
+This states the conservation of current. The flow of $\vec{j}$ through a surface 
+\begin{equation}
+\pdv{t}\int\dd[3]{x}\rho(\vec{x},t)=-\int\dd[3]{x}\vec{\nabla}\cdot\vec{j}=-\oint\vec{j}\cdot\dd{\vec{s}}
+\end{equation}
+\begin{center}
+\begin{tikzpicture}
+	\draw[->,fill=lightGray] plot [smooth cycle, samples=8,domain={1:8}] (\x*360/8+5*rnd:0.5cm+1cm*rnd) node[right] {$S$};
+	\node at (0,0) {$V$};
+\end{tikzpicture}
+\end{center}
+The amount of probability flowing out of the surface is equal to the rate of change of the probability density. In relativistic notation, the \ul{4-current} is
+\begin{equation}
+j^{\mu}=(\rho,\vec{j})
+\end{equation}
+Thus, the continuity equation should look like $\pd{\mu}j^{\mu}=0$.\\
+
+From the Klein-Gordon equation
+\begin{equation}
+\pdv[2]{\psi}{t}=\vec{\nabla}^{2}\psi-m^{2}\psi\qq{and}\pdv[2]{\psi^{*}}{t}=\vec{\nabla}^{2}\psi^{*}-m^{2}\psi^{*}
+\end{equation}
+Taking their difference with weights $\psi^{*}$ and $\psi$ respectively
+\begin{equation}
+\begin{aligned}
+\psi^{*}\pdv[2]{\psi}{t}-\psi\pdv[2]{\psi^{*}}{t}&=\psi^{*}\vec{\nabla}^{2}\psi-\psi\vec{\nabla}^{2}\psi^{*}\\
+\pdv{t}\qty(\psi^{*}\pdv{\psi}{t}-\psi\pdv{\psi^{*}}{t})&=\vec{\nabla}\cdot\qty(\psi^{*}\vec{\nabla}\psi-\psi\vec{\nabla}\psi^{*})
+\end{aligned}
+\end{equation}
+If one defines $\vec{j}=-\frac{i}{2m}\qty(\psi^{*}\vec{\nabla}\psi-\psi\vec{\nabla}\psi^{*})$ and $\rho(\vec{x},t)=-\frac{i}{2m}\qty(\psi^{*}\pdv{\psi}{t}-\psi\pdv{\psi^{*}}{t})$, then one obtains
+\begin{equation}
+\begin{aligned}
+-\pdv{\rho}{t}&=\vec{\nabla}\cdot\vec{j}\\
+\pdv{\rho}{t}+\vec{\nabla}\cdot\vec{j}&=0\\
+\pd{\mu}j^{\mu}&=0\qq{as expected}
+\end{aligned}
+\end{equation}
+However, the plane-wave solution $\psi(x^{\mu})=Ne^{ip^{\mu}x_{\mu}}$ yields a $\rho(x^{\mu})$ that is not positive-definite. Thus, $\rho(x^{\mu})$ cannot have the meaning of a probability density. This is connected to the existence of the negative energy solution. Furthermore, the wavefunction $\psi$ in the Klein-Gordon equation is scalar and thus cannot describe an electron with spin.
+
+\subsection{Dirac Equation}
+Dirac realized that in order to describe a relativistic electron, one needs to find a Lorentz-invariant equation that is first order in time, similar to the Schr\"{o}dinger equation. If the equation is linear in time, it has the form
+\begin{equation}
+\qty(c^{\mu}\pd{\mu}-m)\psi=0
+\end{equation}
+However, if $c^{\mu}$ are simply four complex numbers, then $c^{\mu}$ implies a preferred direction in space-time, meaning the equation would not be Lorentz invariant. Thus, $c^{\mu}$ cannot simple be numbers. Let $c^{\mu}=i\gamma^{\mu}$.
+\begin{equation}
+\qty(i\gamma^{\mu}\pd{\mu}-m)\psi=0
+\end{equation}
+This equation must still give the energy eigenvalues $E=\pm\sqrt{\pm\vec{p}^{2}+m^{2}}$. Using the plane-wave leads to the same problem as before, so instead let us multiply on the left by $\qty(i\gamma^{\mu}\pd{\mu}+m)$.
+\begin{equation}
+\begin{aligned}
+\end{aligned}
+\end{equation}
+
+
 
 
 \end{document}
