@@ -97,7 +97,9 @@
 
 \newcommand{\angstrom}{\textup{\AA}} % Angstrom symbol
 \newcommand{\Chi}{\mathcal{X}} % Inline chi symbol
-\newcommand{\sign}{\trm{sign}}
+\newcommand{\sign}{\trm{sign}} % Sign function
+\newcommand{\pd}[1]{\partial_{#1}} % Covariant 4-gradient
+\newcommand{\pu}[1]{\partial^{#1}} % Contravariant 4-gradient
 \renewcommand{\Re}{\trm{Re}} % Real
 \renewcommand{\Im}{\trm{Im}} % Imaginary
 \renewcommand{\CancelColor}{\color{red}} % Changes the cancel colour to red
@@ -3443,6 +3445,198 @@ Since light always propagates at the speed of light $c$, one has $\abs{\vec{x}_{
 
 Consider an infinitesimally small interval
 \begin{equation}
+\dd{s^{2}}=c^{2}\dd{t^{2}}-\dd{l^{2}}, \quad\dd{l}=\sqrt{\dd{x}^{2}+\dd{y}^{2}+\dd{z}^{2}}
+\end{equation}
+In another inertial frame
+\begin{equation}
+\dd{s'{}^{2}}=c^{2}\dd{t'{}^{2}}=c^{2}\dd{t'{}^{2}}-\dd{l'{}^{2}},\quad\dd{l'}=\sqrt{\dd{x'{}^{2}}+\dd{y'{}^{2}}+\dd{z'{}^{2}}}
+\end{equation}
+By Taylor series
+\begin{equation}
+\dd{s^{2}}=f(\dd{s'{}^{2}}=a+b\dd{s'{}^{2}}+\cancelto{0}{\order{(\dd{s'{}^{2}})^{2}}}
+\end{equation}
+For a light-like interval, $\dd{s^{2}}=0$. Thus
+\begin{equation}
+\dd{s^{2}}=b\dd{s'{}^{2}}\qq{($a$ must equal to 0)}
+\end{equation}
+Furthermore, $b$ cannot depend on $\vec{x}$ or $t$ as that would violate the uniformity of space and time. Thus
+\begin{equation}
+b=b(\vec{v})\qq{where $\vec{v}$ is the relative velocity between two frames}
+\end{equation}
+Also, $b$ cannot depend on the direction of $\vec{v}$ due to the isotropy of space. Thus, $b=b(v)$.\\
+
+Suppose one has three frames $K$, $K'$, and $K''$. The relative velocities are
+\begin{itemize}
+\item $\vec{v}_{1}$ between $K$ and $K'$
+\item $\vec{v}_{2}$ between $K'$ and $K''$
+\item $\vec{v}_{3}$ between $K$ and $K''$
+\end{itemize}
+Thus
+\begin{itemize}
+\item $\dd{s^{2}}=b(v_{1})\dd{s'{}^{2}}$
+\item $\dd{s'{}^{2}}=b(v_{2})\dd{s''{}^{2}}$
+\item $\dd{s^{2}}=b(v_{12})\dd{s''{}^{2}}$
+\end{itemize}
+Thus
+\begin{equation}
+b(v_{12})=b(v_{1})b(v_{2})
+\end{equation}
+$v_{12}$ in general depends on the angle between $\vec{v}_{1}$ and $\vec{v}_{2}$. Thus, $v_{12}$ is a function of $v_{1}$, $v_{2}$, and the angle between them. However, $b(v_{1})b(v_{2})$ is simply a product and does not depend on the angle between $\vec{v}_{1}$ and $\vec{v}_{2}$. Thus, $b(v)$ is a constant and must equal to 1, as this must hold true for all $v$. Thus
+\begin{equation}
+\dd{s^{2}}=\dd{s'{}^{2}}\qq{(Interval is invariant in all reference frames)}
+\end{equation}
+Transformations between reference frames must preserve the interval.
+
+\subsection{Proper Time}
+Consider a particle with velocity $\vec{v}$ in the laboratory frame.
+\begin{equation}
+v=\dv{l}{t},\quad\dd{l}=\sqrt{\dd{x}^{2}+\dd{y}^{2}+\dd{z}^{2}}
+\end{equation}
+where $\dd{l}$ is the distance moved in the lab frame in time $\dd{t}$. Recall that
+\begin{equation}
+\dd{s}^{2}=c^{2}\dd{t}^{2}-\dd{l}^{2}
+\end{equation}
+In the frame where the particle is at rest
+\begin{equation}
+\dd{l'{}^{2}}=0\implies \dd{s'{}^{2}}=c^{2}\dd{t'{}^{2}}
+\end{equation}
+Since $\dd{s^{2}}=\dd{s'{}^{2}}$
+\begin{equation}
+\begin{aligned}
+c^{2}\dd{t^{2}}-\dd{l^{2}}&=c^{2}\dd{t'{}^{2}}\\
+\dd{t'}&=\sqrt{\dd{t^{2}}-\frac{\dd{l^{2}}}{c^{2}}}\\
+&=\dd{t}\sqrt{1-\frac{1}{c^{2}}\frac{\dd{l^{2}}}{\dd{t^{2}}}}\\
+&=\dd{t}\sqrt{1-\frac{v^{2}}{c^{2}}}
+\end{aligned}
+\end{equation}
+
+$\dd{t'}$ is denoted the \ul{proper time interval}, which is taken in the frame of the moving particle.\\
+
+Let us define the \ul{contravariant 4-position} as
+\begin{equation}
+x^{\mu}=(x^{0},x^{1},x^{2},x^{3})=(ct,x,y,z)
+\end{equation}
+Let us also define the \ul{covariant 4-position} as
+\begin{equation}
+x_{\mu}=(ct,-x,-y,-z)
+\end{equation}
+The scalar product of the 4-vectors yields the invariant interval
+\begin{equation}
+x^{\mu}x_{\mu}=c^{2}t^{2}-x^{2}-y^{2}-z^{2}=ct^{2}-\abs*{\vec{x}}^{2}\qq{(Lorentz scalar)}
+\end{equation}
+This interval is invariant with respect to Lorentz transformations such as rotations and reference frame transformations.
+\begin{equation}
+\dd{x^{\mu}}=(c\dd{t},\dd{x},\dd{y},\dd{z})
+\end{equation}
+The \ul{4-velocity} is
+\begin{equation}
+\begin{aligned}
+u^{\mu}&=\dv{x^{\mu}}{s}=\frac{1}{c}\dv{x^{\mu}}{t_{\trm{proper}}}=\frac{1}{c\sqrt{1-\frac{v^{2}}{c^{2}}}}\dv{x^{\mu}}{t}=\qty(\frac{1}{\sqrt{1-\frac{v^{2}}{c^{2}}}},\frac{\vec{v}}{c\sqrt{1-\frac{v^{2}}{c^{2}}}})\\
+u^{\mu}u_{\mu}&=\frac{1}{1-\frac{v^{2}}{c^{2}}}-\frac{\frac{v^{2}}{c^{2}}}{1-\frac{v^{2}}{c^{2}}}=1\qq{(invariant under transformations)}
+\end{aligned}
+\end{equation}
+Note that one uses $\dd{s}$ instead of $\dd{t}$ as $\dd{t}$ changes with changes of reference frame.\\
+
+The \ul{4-momentum} is
+\begin{equation}
+p^{\mu}=mcu^{\mu}=\qty(\frac{mc}{\sqrt{1-\frac{v^{2}}{c^{2}}}},\frac{m\vec{v}}{\sqrt{1-\frac{v^{2}}{c^{2}}}})=\qty(\frac{E}{c},\vec{p})
+\end{equation}
+where $m$ is the rest mass. Note the extra factor of $\frac{1}{\sqrt{1-\frac{v^{2}}{c^{2}}}}$ for relativistic energy and momentum.
+\begin{equation}
+\begin{aligned}
+p^{\mu}p_{\mu}&=\frac{E^{2}}{c^{2}}-\abs*{\vec{p}}^{2}=\frac{m^{2}c^{2}}{1-\frac{v^{2}}{c^{2}}}-\frac{m^{2}v^{2}}{1-\frac{v^{2}}{c^{2}}}=m^{2}c^{2}\qq{(invariant under transformation)}\\
+\implies E^{2}&=m^{2}c^{4}+\abs*{\vec{p}}^{2}c^{2}
+\end{aligned}
+\end{equation}
+Using natural units ($\hbar=c=1$) that are often employed in relativistic quantum mechanics
+\begin{equation}
+E^{2}=m^{2}+\abs*{\vec{p}}^{2}
+\end{equation}
+Furthermore, in natural units
+\begin{equation}
+\vec{p}=-i\vec{\nabla}\qq{and}E=\vb{H}=i\pdv{t}
+\end{equation}
+where previously $\vec{p}=-i\hbar\vec{\nabla}$ and $\vb{H}=i\hbar\pdv{t}$. The Schr\"{o}dinger equation in natural units is $i\pdv{t}\psi(\vec{x},t)=-\frac{\vec{\nabla}^{2}}{2m}\psi(\vec{x},t)$. Note the Schr\"{o}dinger equation is not invariant under Lorentz transformations.
+
+\subsection{Free Relativistic Particle}
+Consider a free particle. In non-relativistic quantum mechanics, $E=\vb{H}=\frac{\vec{p}^{2}}{2m}$. This yields the Schr\"{o}dinger equation
+\begin{equation}
+i\pdv{t}\psi=-\frac{\vec{\nabla}^{2}}{2m}\psi
+\end{equation}
+For a relativistic particle, $E=\sqrt{m^{2}+\vec{\vb{p}}^{2}}$. Thus
+\begin{equation}
+i\pdv{t}\psi=\sqrt{m^{2}-\vec{\nabla}^{2}}\psi
+\end{equation}
+This is a bad equation as the right-hand side is highly non-local. It contains an infinite series of derivatives, as can be seen by Taylor expanding the expression for $E$. It becomes impossible to formulate a ``covariant" wave equation.\\
+
+Instead, taking the square $E^{2}=m^{2}+\vec{\vb{p}}^{2}$
+\begin{equation}
+\begin{aligned}
+-\pdv[2]{t}\psi(\vec{x},t)&=(m^{2}-\vec{\nabla}^{2})\psi(\vec{x},t)\\
+\therefore\qty(\pdv[2][{t}-\vec{\nabla}^{2}+m^{2})\psi(\vec{x},t)&=0
+\end{aligned}
+\end{equation}
+This is the \ul{Klein-Gordon equation}. Note this equation has some problems. It permits solutions with negative energy. Likewise, a second order time derivative can not be defined from the time-evolution operator.\\
+
+In relativistic notation, if $F(x^{\mu})$ is a scalar
+\begin{equation}
+\begin{aligned}
+\dd{F}&=\pdv{F}{x^{\mu}}\dd{x^{\mu}}\\
+\therefore\pdv{x^{\mu}}&=\qty(\pdv{t},\vec{\nabla})
+\end{aligned}
+\end{equation}
+We define $\partial_{\mu}=\qty(\pdv{t},\vec{\nabla})$ as the \ul{covariant 4-gradient} and $\partial^{\mu}=\qty(\pdv{t},-\vec{\nabla})$ as the \ul{contravariant 4-gradient}. Note the opposite signs from regular 4-vectors.
+\begin{equation}
+\pd{\mu}\pu{\mu}=\pu{\mu}\pd{\mu}=\pdv[2]{t}-\vec{\nabla}^{2}
+\end{equation}
+The Klein-Gordon equation becomes
+\begin{equation}
+\qty(\pd{\mu}\pu{\mu}+m^{2})\psi=0
+\end{equation}
+This is clearly Lorentz invariant, as $\pd{\mu}\pu{\mu}$ is a Lorentz scalar and $m^{2}$ is a constant.\\
+
+One expects the solution to this equation to have the ansatz form of a plane-wave
+\begin{equation}
+\psi(\vec{x},t)=Ne^{i(\vec{p}\cdot\vec{x}-Et)}=Ne^{-ip^{\mu}x_{\mu}}
+\end{equation}
+where $p^{\mu}=(E,\vec{p})$ and $x_{\mu}=(t,-\vec{x})$.\\
+
+Checking to see if the equation is satisfied
+\begin{equation}
+\begin{aligned}
+\qty(\pdv[2]{t}-\vec{\nabla}^{2}+m^{2})\psi(\vec{x},t)&=\qty(\pdv[2]{t}-\vec{\nabla}^{2}+m^{2})Ne^{i(\vec{p}\cdot\vec{x}-Et)}\\
+&=(-E^{2}+\vec{p}^{2}+m^{2})\psi(\vec{x},t)\\
+&=0
+\end{aligned}
+\end{equation}
+Since $\psi(\vec{x},t)\neq0$, $E^{2}=\vec{p}^{2}+m^{2}$ as stated before.\\
+
+Thus, there are eigenvalues with both positive and negative energy. Another problem with the Klein-Gordon equation is due to the probability density.\\
+
+In non-relativistic quantum mechanics, $\rho(\vec{x},t)=\psi^{*}(\vec{x},t)\psi(\vec{x},t)$ is the probability density. Thus, $\rho(\vec{x},t)\dd[3]{x}$ is the probability of finding the particle in an infinitesimal volume element $\dd[3]{x}$. The probability density satisfies the continuity equations
+\begin{equation}
+\begin{aligned}
+i\pdv{\psi}{t}&=-\frac{\vec{\nabla}^{2}}{2m}\psi\\
+-i\pdv{\psi^{*}}{t}&=-\frac{\vec{\nabla}^{2}}{2m}\psi^{*}
+\end{aligned}
+\end{equation}
+Taking their difference with weights $\psi^{*}$ and $\psi$ respectively
+\begin{equation}
+i\qty(\psi^{*}\pdv{\psi}{t}+\psi\pdv{\psi^{*}}{t})=-\psi^{*}\frac{\vec{\nabla}^{2}}{2m}\psi+\psi\frac{\vec{\nabla}^{2}}{2m}\psi^{*}
+\end{equation}
+Let us define the probability current as
+\begin{equation}
+\vec{j}=-\frac{i}{2m}\qty(\psi^{*}\vec{\nabla}\psi-\psi\vec{\nabla}\psi^{*})
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\vec{\nabla}\cdot\vec{j}&=-\frac{i}{2m}\qty(\psi^{*}\vec{\nabla}^{2}\psi-\psi\vec{\nabla}^{2}\psi^{*}+\cancel{\vec{\nabla}\psi^{*}\cdot\vec{\nabla}\psi}-\cancel{\vec{\nabla}\psi\cdot\vec{\nabla}\psi^{*}})\\
+&=-\qty(\psi^{*}\pdv{\psi}{t}+\psi\pdv{\psi^{*}}{t})\\
+&=-\pdv{t}\qty(\psi^{*}\psi)\\
+&=-\pdv{\rho}{t}\\
+\pdv{\rho}{t}+\vec{\nabla}\cdot\vec{j}&=0\qq{(continuity equation)}
+\end{aligned}
 \end{equation}
 
 
