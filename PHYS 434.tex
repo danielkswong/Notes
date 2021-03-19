@@ -97,9 +97,11 @@
 
 \newcommand{\angstrom}{\textup{\AA}} % Angstrom symbol
 \newcommand{\Chi}{\mathcal{X}} % Inline chi symbol
+\newcommand{\Tau}{\mathcal{T}} % Capital tau symbol
 \newcommand{\sign}{\trm{sign}} % Sign function
 \newcommand{\pd}[1]{\partial_{#1}} % Covariant 4-gradient
 \newcommand{\pu}[1]{\partial^{#1}} % Contravariant 4-gradient
+\newcommand{\id}{\mathbb{I}} % Identity matrix
 \renewcommand{\Re}{\trm{Re}} % Real
 \renewcommand{\Im}{\trm{Im}} % Imaginary
 \renewcommand{\CancelColor}{\color{red}} % Changes the cancel colour to red
@@ -3687,10 +3689,170 @@ However, if $c^{\mu}$ are simply four complex numbers, then $c^{\mu}$ implies a 
 This equation must still give the energy eigenvalues $E=\pm\sqrt{\pm\vec{p}^{2}+m^{2}}$. Using the plane-wave leads to the same problem as before, so instead let us multiply on the left by $\qty(i\gamma^{\mu}\pd{\mu}+m)$.
 \begin{equation}
 \begin{aligned}
+(i\gamma^{\mu}\pd{\mu}+m)(i\gamma^{\mu}\pd{\mu}-m)\psi&=0\\
+(-\gamma^{\mu}\pd{\mu}\gamma^{\nu}\pd{\nu}-m^{2}-\cancel{mi\gamma^{\mu}\pd{\mu}}+\cancel{mi\gamma^{\nu}\pd{\nu}})\psi&=0\\
+(\gamma^{\mu}\gamma^{\nu}\pd{\mu}\pd{\nu}+m^{2})\psi&=0
 \end{aligned}
 \end{equation}
+These two terms cancel since both $\mu$ and $\nu$ are summed from 0 to 3. This will turn to the Klein-Gordon equation if
+\begin{equation}
+\gamma^{\mu}\gamma^{\nu}\pd{\mu}\pd{\nu}=\pd{\mu}\pu{\mu}=\eta^{\mu\nu}\pd{\mu}\pd{\nu}\qq{(i.e. if $\gamma^{\mu}\gamma^{\nu}=\eta^{\mu\nu}$)}
+\end{equation}
+where $\eta^{\mu\nu}$ is the \ul{Minkowski metric tensor} with
+\begin{itemize}
+\item $\eta^{00}=1$
+\item $\eta^{11}=\eta^{22}=\eta^{33}=-1$
+\item $\eta^{ij}=0$ if $i\neq j$
+\item $\eta^{\mu\nu}\pd{\mu}\pd{\nu}=\pd[2]{t}-\pd[2]{x}-\pd[2]{y}-\pd[2]{z}$
+\item $a^{\mu}=\eta^{\mu\nu}a_{\nu}$
+\end{itemize}
+Since $\eta^{\mu\nu}=\eta^{\nu\mu}$ is symmetric, one can write $\eta^{\mu\nu}$ as
+\begin{equation}
+\eta^{\mu\nu}=\frac{1}{2}(\eta^{\nu\mu}+\eta^{\mu\nu})=\frac{1}{2}(\gamma^{\mu}\gamma^{\nu}+\gamma^{\nu}\gamma^{\mu})=\frac{1}{2}\acomm{\gamma^{\mu}}{\gamma^{\nu}}
+\end{equation}
+This condition defines \ul{Clifford algebra}. THus
+\begin{itemize}
+\item $(\gamma^{0})=1$
+\item $(\gamma^{1})^{2}=(\gamma^{2})^{2}=(\gamma^{3})^{2}=-1$
+\item $\gamma^{\mu}\gamma^{\nu}=-\gamma^{\nu}\gamma^{\mu}$ since $\gamma^{\mu}$ and $\gamma^{\nu}$ anti-commute when $\mu\neq\nu$
+\end{itemize}
+This implies $\gamma^{\mu}$ cannot be ordinary numbers.\\
 
+One can write the Dirac equation now as
+\begin{equation}
+(\underbrace{i\gamma^{0}\pd{t}}_{\trm{time}}+\underbrace{i\gamma^{i}\pd{i}}_{\trm{space}}-m)\psi=0,\quad i\in\{1,2,3\}
+\end{equation}
+Multiplying by $\gamma^{0}$ on the left
+\begin{equation}
+\begin{aligned}
+(i\pd{t}+i\gamma^{0}\gamma^{i}\pd{i}-m\gamma^{0})\psi&=0\\
+i\pd{t}\psi&=(-i\gamma^{0}\gamma^{i}\pd{i}+m\gamma^{0})\psi
+\end{aligned}
+\end{equation}
+This defines the \ul{Dirac Hamiltonian} as
+\begin{equation}
+\begin{aligned}
+\vb{H}&=-i\gamma^{0}\gamma^{i}\pd{i}+m\gamma^{0}\\
+&\quad\explain{Since $i\pdv{\psi}{t}\psi=\vb{H}\psi$}
+\end{aligned}
+\end{equation}
+Note that $\gamma^{\mu}\pd{\mu}=\gamma^{0}\pd{t}+\gamma^{1}\pd{x}+\gamma^{2}\pd{y}+\gamma^{3}\pd{z}$ is an Einstein sum.\\
 
+What is the nature of $\gamma^{\mu}$? Since $\gamma^{\mu}$ are not ordinary numbers, one suspects they must be matrices. They cannot be $2\times2$ matrices, since these can always be expanded as a linear combination of the unit matrix and Pauli spin matrices, which do not satisfy Clifford algebra. It turns out $\gamma^{\mu}$ must be $4\times4$ \ul{gamma matrices}. $\gamma^{\mu}$ forms a basis for $4\times4$ Hermitian matrices. Their representation is
+\begin{equation}
+\begin{aligned}
+\gamma^{0}&=\mqty[\mathbb{I} & 0 \\ 0 & -\mathbb{I}]=\mathbb{I}\otimes\Tau_{3}\equiv\mathbb{I}\Tau_{3},\quad&\Tau_{3}=\mqty[1 & 0 \\ 0 & -1]\\
+\gamma^{i}&=\mqty[0 & \sigma^{i} \\ -\sigma^{i} & 0]=i\sigma^{i}\otimes\Tau_{2}\equiv i\sigma^{i}\Tau_{2},\quad&\Tau_{2}=\mqty[0 & -i \\ i & 0]
+\end{aligned}
+\end{equation}
+Note both $\sigma^{i}$ and $\Tau_{i}$ are the standard $2\times2$ Pauli spin matrices. Clifford algebra when $(\sigma^{i})^{2}=(\Tau_{i})^{2}=\mathbb{I}$ and $\sigma^{i}\sigma^{j}=-\sigma^{j}\sigma^{i}$ when $i\neq j$. One can see now that
+\begin{equation}
+\begin{aligned}
+(\gamma^{0})^{2}&=(\mathbb{I}\otimes\Tau_{3})^{2}=\mathbb{I}^{2}\otimes\Tau_{3}^{2}=\mathbb{I}\otimes\mathbb{I}=\mathbb{I}\\
+(\gamma^{i})^{2}&=(i\sigma^{i}\otimes\Tau_{2})^{2})^{2}=-\mathbb{I}\otimes\mathbb{I}=-\mathbb{I}\\
+\gamma^{i}\gamma^{j}&=(i\sigma^{i}\otimes\Tau_{2})(i\sigma^{j}\otimes\Tau_{2}),\quad i\neq j\\
+&=-\sigma^{i}\sigma^{j}\otimes\id\\
+&=\sigma^{j}\sigma^{i}\otimes\id\\
+&=-(i\sigma^{j}\otimes\Tau_{2})(i\sigma^{i}\otimes\Tau_{2})\\
+&=-\gamma^{j}\gamma^{i}
+\end{aligned}
+\end{equation}
+Define $\alpha_{i}=\gamma^{0}\gamma^{i}$ and $\beta=\gamma^{0}$. The Dirac Hamiltonian then becomes
+\begin{equation}
+\begin{aligned}
+\vb{H}&=-\vec{\alpha}\cdot\vec{\vb{p}}+\beta m,\quad\vb{p}_{i}=-i\pd{i}\\
+&=-i\vec{\alpha}\cdot\vec{\nabla}+\beta m
+\end{aligned}
+\end{equation}
+$\psi$ must then be a 4-component vector (spinor). $\psi^{\dagger}$ is now defined to be the complex conjugated row vector corresponding to the column vector $\psi$. The probability density
+\begin{equation}
+\rho=\psi^{\dagger}\psi=\abs{\psi_{1}}^{2}+\abs{\psi_{2}}^{2}+\abs{\psi_{3}}^{2}+\abs{\psi_{4}}^{2}
+\end{equation}
+is positive definite. Let us show $\rho$ satisfies a continuity equation.\\
 
+Define $\vec{j}=\psi^{\dagger}\vec{\alpha}\psi$ as the probability current. From the Dirac equation
+\begin{equation}
+\begin{aligned}
+i\pdv{\psi}{t}&=(-i\vec{\alpha}\cdot\vec{\nabla}+\beta m)\psi\\
+-i\pdv{\psi^{\dagger}}{t}&=i\vec{\nabla}\psi^{\dagger}\cdot\vec{\alpha}+m\psi^{\dagger}\beta
+\end{aligned}
+\end{equation}
+Note that both $\alpha_{i}$ and $\beta$ are Hermitian.\\
+
+Taking the difference weighted by $\psi^{\dagger}$ and $\psi$ respectively.
+\begin{equation}
+\begin{aligned}
+i\qty(\psi^{\dagger}\pdv{\psi}{t}+\pdv{\psi^{\dagger}}{t}\psi)&=-i\psi^{\dagger}\vec{\alpha}\cdot\vec{\nabla}\psi-i\vec{\nabla}\psi^{\dagger}\cdot\vec{\alpha}\psi\\
+i\pdv{t}\qty(\psi^{\dagger}\psi)&=-i\vec{\nabla}\cdot(\psi^{\dagger}\vec{\alpha}\psi)\\
+\pdv{\rho}{t}&=-\vec{\nabla}\cdot\vec{j}\\
+\pdv{\rho}{t}+\vec{\nabla}\cdot\vec{j}&=0
+\end{aligned}
+\end{equation}
+Thus, the Dirac equation immediately solves the issue of the lack of conserved probability density in the Klein-Gordon equation.\\
+
+Introduce the \ul{Dirac adjoint} $\overline{\psi}=\psi^{\dagger}\gamma^{0}$ to simplify the notation.
+\begin{equation}
+\begin{aligned}
+\rho&=\psi^{\dagger}\psi=\psi^{\dagger}\overbrace{\gamma^{0}\gamma^{0}}^{\id}\psi=\overline{\psi}\gamma^{0}\psi\\
+\vec{j}&=\psi^{\dagger}\vec{\alpha}\psi=\psi^{\dagger}\gamma^{0}\vec{\gamma}\psi=\overline{\psi}\vec{\gamma}\psi\qq{where $\vec{\gamma}=(\gamma^{1},\gamma^{2},\gamma^{3})$}
+\end{aligned}
+\end{equation}
+Thus, the continuity equation in covariant form is
+\begin{equation}
+\pdv{t}(\overline{\psi}\gamma^{0}\psi)+\vec{\nabla}\cdot(\overline{\psi}\vec{\gamma}\psi)=\pd{\mu}j^{\mu}=0
+\end{equation}
+where $j^{\mu}=\overline{\psi}\gamma^{\mu}\psi=(\rho,\vec{j})$ is the \ul{4-current vector}.\\
+
+Solve the Dirac equation by looking for plane-wave solutions $\psi=Ne^{i(\vec{p}\cdot\vec{x}-Et)}$. Plugging into the Dirac equation
+\begin{equation}
+E\psi=(\vec{\alpha}\cdot\vec{p}+\beta m)\psi
+\end{equation}
+This is an eigenvalue problem for a $4\times4$ matrix.
+\begin{equation}
+\begin{aligned}
+\gamma^{0}&=\id\otimes\Tau_{3}\equiv\Tau_{3}\\
+\gamma^{i}&=i\sigma^{i}\otimes\Tau_{2}\equiv i\sigma^{i}\Tau_{2}\\
+\implies\vb{H}(\vec{p})&=\vec{\alpha}\cdot\vec{p}+\beta m\\
+&=\alpha_{i}p_{i}+\beta m\\
+&=\gamma^{0}\gamma^{i}p_{i}+\beta m\\
+&=\Tau_{3}(i\sigma^{i}\Tau_{2})p_{i}+\Tau_{3}m\\
+&=i\sigma^{i}\Tau_{3}\Tau_{2}p_{i}+m\Tau_{3}\\
+&\quad\explain{Since $\sigma^{i}$ and $\Tau_{i}$ act on different Hilbert spaces, they commute. Note however the $\Tau_{i}$ do not commute when each other.}\\
+&=i\sigma^{i}(-i\Tau_{1})p_{i}+m\Tau_{3}\\
+&=\Tau_{1}\vec{\sigma}\cdot\vec{p}+m\Tau_{3}\\
+&=(\vec{\sigma}\cdot\vec{p})\otimes\Tau_{1}+m\id\otimes\Tau_{3}\\
+\implies\vb{H}&=\mqty[m & \vec{\sigma}\cdot\vec{p} \\ \vec{\sigma}\cdot\vec{p} & -m]
+\end{aligned}
+\end{equation}
+One can diagonalize $\vec{\sigma}\cdot\vec{p}$ independently from the rest of $\vb{H}$, since $\vec{\sigma}\cdot\vec{p}$ acts on a different vector space than $\Tau_{i}$ and $m$ is a constant.
+\begin{equation}
+\begin{aligned}
+\vec{\sigma}\cdot\vec{p}=\mqty[p_{z} & p_{x}-ip_{y} \\ p_{x}+ip_{y} & -p_{z}]
+\end{aligned}
+\end{equation}
+The eigenvalues are
+\begin{equation}
+\begin{aligned}
+0&=\det(\vec{\sigma}\cdot\vec{p}-\epsilon\id)\\
+\implies \epsilon&=\pm\vec{p}=\pm\sqrt{p_{x}^{2}+p_{y}^{2}+p_{z}^{2}}
+\end{aligned}
+\end{equation}
+$\epsilon=p$ corresponds to $\expval{\vec{\sigma}}$ lying along $\vec{p}$, whereas $\epsilon=-p$ corresponds to $\expval{\vec{\sigma}}$ lying opposite to $\vec{p}$. The projection of spin onto momentum is called \ul{helicity}. If $\expval{\vec{\sigma}\cdot\vec{p}}$ is positive ($\vec{\sigma}$ lies along $\vec{p}$), one has \ul{right-handed helicity}. Otherwise, if $\expval{\vec{\sigma}\cdot\vec{p}}$ is negative ($\vec{\sigma}$ lies opposite to $\vec{p}$), one has \ul{left-handed helicity}.\\
+
+The diagonalization of $\vec{\sigma}\cdot\vec{p}$ means transforming the $4\times 4$ matrix $\vb{H}$ into block diagonal form.
+\begin{equation}
+\vb{H}=\mqty[\vb{H}_{R} & 0 \\ 0 & \vb{H}_{L}]
+\end{equation}
+where $\vb{H}_{R}=\Tau_{1}p+m\Tau_{3}$ and $\vb{H}_{L}=-\Tau_{1}p+m\Tau_{3}$.\\
+
+The eigenvalues of both $\vb{H}_{R}$ and $\vb{H}_{L}$ are identical and equal to $E_{p}=\pm\sqrt{p^{2}+m^{2}}$. Each eigenstate is doubly degenerate, corresponding to each possible helicity. However, one still has the negative energy problem. A particle would want to ``fall to the bottom" to minimize its energy, but there is no bottom. Dirac proposed a solution based on Pauli's exclusion principle. Electrons are fermions and fermions were experimentally found to obey Pauli's exclusion principle. In this case, two fermions cannot occupy the same state. Dirac's proposal states that in what one calls a vacuum is a state in which all the negative energy states are filled by fermions, such that an extra fermion in the positive energy state cannot fall down to negative energy states.
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (-4,0) -- (4,0) node[right] {$p$};
+	\draw[<->] (0,-4) -- (0,4) node[above] {$E$};
+	\draw[<->,domain=-3.46:3.46,samples=200] plot (\x,{sqrt((\x)^2+2)}) node[right] {$E=\sqrt{p^{2}+m^{2}}$};
+	\draw[<->,domain=-3.46:3.46,samples=200] plot (\x,{-sqrt((\x)^2+2)}) node[right] {$E=-\sqrt{p^{2}+m^{2}}$};
+\end{tikzpicture}
+\end{center}
 
 \end{document}
