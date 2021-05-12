@@ -3512,8 +3512,9 @@ c^{2}\dd{t^{2}}-\dd{l^{2}}&=c^{2}\dd{t'{}^{2}}\\
 \end{aligned}
 \end{equation}
 
-$\dd{t'}$ is denoted the \ul{proper time interval}, which is taken in the frame of the moving particle.\\
+$\dd{t'}$ is denoted the \ul{proper time interval}, which is taken in the frame of the moving particle.
 
+\subsection{4-Vectors}
 Let us define the \ul{contravariant 4-position} as
 \begin{equation}
 x^{\mu}=(x^{0},x^{1},x^{2},x^{3})=(ct,x,y,z)
@@ -3852,7 +3853,457 @@ The eigenvalues of both $\vb{H}_{R}$ and $\vb{H}_{L}$ are identical and equal to
 	\draw[<->] (0,-4) -- (0,4) node[above] {$E$};
 	\draw[<->,domain=-3.46:3.46,samples=200] plot (\x,{sqrt((\x)^2+2)}) node[right] {$E=\sqrt{p^{2}+m^{2}}$};
 	\draw[<->,domain=-3.46:3.46,samples=200] plot (\x,{-sqrt((\x)^2+2)}) node[right] {$E=-\sqrt{p^{2}+m^{2}}$};
+	\draw[<->] (0.1,1.314) node[below right] {$2m$} -- (0.1,-1.314);
+	\fill (-0.5,2) circle (2pt) node[above] {e$^{-}$};
+	\fill (-0.5,-2) circle (2pt) node[below,yshift=-0.2cm] {e$^{-}$};
+	\draw[->,shorten >=1mm] (-0.5,-2) -- (-0.5,2);
+	\draw[->,shorten >=1mm,decorate,decoration={snake}] (-2.75,-4) -- (-0.5,-2);
 \end{tikzpicture}
 \end{center}
+The group of negative energy states filled with fermions is called a \ul{Dirac} \ul{negative energy sea} and is unobservable. However, the lack of an electron in one of the negative energy states is observable as a positron, which is the anti-particle of an electron with the same mass, but with opposite charge. A photon can excite an electron out of this sea, leaving a positive energy electron and negative energy positron. These electron-positron pairs can annihilate and emit photons. These positrons have been observed experimentally. This picture works only for fermions, which have half-integer spin. Bosons require an analysis by Feynman.
 
+\subsection{Spin}
+Let us prove that $\vec{\sigma}$ is the spin. The mechanical momentum for a particle with charge $-e$ in an electromagnetic field is related to the canonical momentum as
+\begin{equation}
+m\vec{v}=\vec{p}+\frac{e}{c}\vec{A}=-i\vec{\nabla}+\frac{e}{c}\vec{A}\qq{(by correspondance principle)}
+\end{equation}
+where $\vec{p}$ is the canonical momentum from the Hamiltonian formalism and $\vec{A}$ is the vector potential.\\
+
+Thus, for a free particle, since kinetic energy is $\frac{m\abs*{\vec{v}}^{2}}{2m}$, the non-relativistic Hamiltonian becomes (in natural units)
+\begin{equation}
+\vb{H}=\frac{1}{2}\qty(-i\vec{\nabla}+e\vec{A})^{2}
+\end{equation}
+Applying the same substitution in the Dirac Hamiltonian
+\begin{equation}
+\begin{aligned}
+\vb{H}&=\tau_{1}\vec{\sigma}\cdot\qty(-i\vec{\nabla}+e\vec{A})+m\tau_{3}=\mqty[m & \vec{\sigma}\cdot(\vec{p}+e\vec{A}) \\ \vec{\sigma}\cdot(\vec{p}+e\vec{A}) & -m]\\
+\therefore\vb{H}\psi&=E\psi\implies\mqty[m & \vec{\sigma}\cdot(\vec{p}+e\vec{A}) \\ \vec{\sigma}\cdot(\vec{p}+e\vec{A}) & -m]\mqty[u \\ v] =E\mqty[u \\ v]
+\end{aligned}
+\end{equation}
+where $u$ and $v$ are two-component spinors.\\
+
+In the non-relativistic limit, $p\l m$ and $E\approx m$. From the lower equation
+\begin{equation}
+\begin{aligned}
+\vec{\sigma}\cdot(\vec{p}+e\vec{A})u-mv&=Ev\approx mv\\
+\therefore \vec{\sigma}\cdot(\vec{p}+e\vec{A})u&=2mv\\
+\implies v&=\frac{1}{2m}\vec{\sigma}\cdot(\vec{p}+e\vec{A})u
+\end{aligned}
+\end{equation}
+From the top equation
+\begin{equation}
+\begin{aligned}
+mu+\vec{\sigma}\cdot(\vec{p}+e\vec{A})v&=Eu\\
+\frac{1}{2m}\vec{\sigma}\cdot(\vec{p}+e\vec{A})\vec{\sigma}\cdot(\vec{p}+e\vec{A})u&=(E-m)u
+\end{aligned}
+\end{equation}
+For any vectors $\vec{\alpha}$ and $\vec{\beta}$
+\begin{equation}
+\begin{aligned}
+(\vec{\sigma}\cdot\vec{\alpha})(\vec{\sigma}\cdot\vec{\beta})&=\sigma^{i}\alpha_{i}\sigma^{j}\beta_{j}\\
+&=\frac{1}{2}\qty(\acomm{\sigma^{i}}{\sigma^{j}}+\comm{\sigma^{i}}{\sigma^{j}})\alpha_{i}\beta_{j}\\
+&=(\delta_{ij}+i\varepsilon_{ijk}\sigma^{k})\alpha_{i}\beta_{j}\\
+&=\vec{\alpha}\cdot\vec{\beta}+i\vec{\sigma}\cdot(\vec{\alpha}\times\vec{\beta})
+\end{aligned}
+\end{equation}
+
+Thus
+\begin{equation}
+(E-m)u=\frac{1}{2m}\qty(\vec{p}+e\vec{A})^{2}u+\frac{i}{2m}\vec{\sigma}\cdot\underbrace{\qty[(\vec{p}+e\vec{A})\times(\vec{p}+e\vec{A})]}_{\neq0 \trm{ since }\vec{p}=-i\vec{\nabla}}u
+\end{equation}
+where
+\begin{equation}
+\begin{aligned}
+\qty(\vec{p}+e\vec{A})\times\qty(\vec{p}+e\vec{A})u&=\qty(-i\vec{\nabla}+e\vec{A})\times\qty(-i\vec{\nabla}+e\vec{A})u\\
+&=\cancelto{0}{-\vec{\nabla}\times\qty(\vec{\nabla}u)}-ie\vec{\nabla}\times\qty(\vec{A}u)-ie\vec{A}\times\vec{\nabla}u+\cancelto{0}{e^{2}\vec{A}\times\vec{A}u}\\
+&=-ie\qty[\vec{\nabla}\times\qty(\vec{A}u)+\vec{A}\times\qty(\vec{\nabla}u)]\\
+&=-ie\bigg[\qty(\vec{\nabla}\times\vec{A})u+\cancelto{0}{\qty(\vec{\nabla}u)\times\vec{A}+\vec{A}\times\qty(\vec{\nabla}u)}\bigg]\\
+&=-ie\vec{B}u
+\end{aligned}
+\end{equation}
+Therefore
+\begin{equation}
+(E-m)u=\frac{1}{2m}\qty(\vec{p}+e\vec{A})^{2}u+\frac{e}{2m}\vec{\sigma}\cdot\vec{B}u
+\end{equation}
+Since $\vec{S}=\frac{1}{2}\vec{\sigma}$ (in natural units)
+\begin{equation}
+\qty(\frac{e}{2m}\vec{\sigma}\cdot\vec{B})=2\qty(\frac{e}{2m}\vec{S}\cdot\vec{B})
+\end{equation}
+
+\aside{Note that $2\qty(\frac{e}{2m}\vec{S}\cdot\vec{B})=g\mu_{B}\vec{S}\cdot\vec{B}=-\vec{\mu}\cdot\vec{B}$, where $g\approx 2$ is the gyroscopic ratio for electrons, $\mu_{B}=\frac{e\hbar}{2mc}$ is the Bohr magneton, and $\vec{\mu}=-g\mu_{B}\vec{S}$ is the magnetic dipole moment.}\\
+Thus
+\begin{equation}
+\begin{aligned}
+\underbrace{(E-m)}_{\trm{kinetic energy}}&u=\frac{1}{2m}\qty(\vec{p}+e\vec{A})^{2}u-\vec{\mu}\cdot\vec{B}u\\
+\frac{1}{2m}\qty(-i\vec{\nabla}+e\vec{A})^{2}&u-\vec{\mu}\cdot\vec{B}u=\vb{T}u
+\end{aligned}
+\end{equation}
+This is the non-relativistic Schr\"{o}dinger equation for an electron in a magnetic field. The existence of spin follows from combining quantum mechanics and special relativity. This combination also leads to anti-particles. If we had solved for $v$ instead, this would simply lead to the spinor of the anti-particle.\\
+
+In the non-relativistic limit
+\begin{equation}
+E=\sqrt{m^{2}+p^{2}}=m\sqrt{1+\frac{p^{2}}{m^{2}}}\approx m\qty(1+\frac{p^{2}}{2m^{2}})=m+\frac{p^{2}}{2m}
+\end{equation}
+Thus, one can see the Dirac equation predicts the contribution of $-\vec{\mu}\cdot\vec{B}$ due to the spin of the particle.
+
+\subsection{Ultrarelativistic limit}
+In the ultrarelativistic limit, $p\gg m$ and $E\approx p$, a characteristic called chirality occurs. Let us introduce a new matrix called $\gamma^{5}$ (named as such due to historical reasons).
+\begin{equation}
+\gamma^{5}=i\gamma^{0}\gamma^{1}\gamma^{2}\gamma^{3}
+\end{equation}
+In Dirac representation, $\gamma^{0}=\tau_{3}$ and $\gamma^{i}=i\sigma^{i}\tau_{2}$.
+\begin{equation}
+\begin{aligned}
+\therefore\gamma^{5}&=i\qty(\tau_{3})\qty(i\sigma^{1}\tau_{2})\qty(i\sigma^{2}\tau_{2})\qty(i\sigma^{3}\tau_{2})\\
+&=\sigma^{1}\sigma^{2}\sigma^{3}\tau_{3}\tau_{2}^{3}\\
+&=\sigma^{1}\sigma^{2}\sigma^{3}\tau_{3}\tau_{2}\\
+&\quad\explain{Since $\tau_{2}^{2}=\mathbb{I}$}
+\end{aligned}
+\end{equation}
+Note that
+\begin{equation}
+\begin{aligned}
+\tau_{3}\tau_{2}\mqty[1 & 0 \\ 0 & -i]\mqty[0 & -i \\ i & 0]=\mqty[0 & -i \\ -i & 0]=-i\tau_{1}\\
+\sigma^{1}\sigma^{2}&=\mqty[0 & 1 \\ 1 & 0]\mqty[0 & -i \\ i & 0]=\mqty[i & 0\\ 0 & -i]=i\sigma^{3}
+\end{aligned}
+\end{equation}
+Therefore
+\begin{equation}
+\begin{aligned}
+\gamma^{5}&=i\qty(\sigma^{3})^{2}\qty(-i\tau_{1})\\
+&=\tau_{1}
+\end{aligned}
+\end{equation}
+The Dirac Hamiltonian is
+\begin{equation}
+\qty(\tau_{1}\vec{\sigma}\cdot\vec{p}+m\tau_{3})\psi=E\psi
+\end{equation}
+In the non-relativistic limit, $p\ll m$. Thus
+\begin{equation}
+\begin{aligned}
+m\tau_{3}\psi&=E\psi \qq{($p$ treated as though $p=0$)}\\
+m\mqty[\mathbb{I} & 0 \\ 0 & -\mathbb{I}]\psi&=E\psi\\
+\implies E&=\pm m
+\end{aligned}
+\end{equation}
+In Dirac representation, the Dirac Hamiltonian becomes diagonal in the non-relativistic limit. This is no true in the ultrarelativistic limit. Note $\gamma^{0}$ is diagonal in this representation.\\
+
+In Weyl representation, let $\gamma^{0}=\tau_{1}$ and $\gamma^{i}=i\sigma^{i}\tau_{2}$. Thus
+\begin{equation}
+\begin{aligned}
+\gamma^{5}&=i\gamma^{0}\gamma^{1}\gamma^{2}\gamma^{3}\\
+&=i(\tau_{1})(i\sigma^{1}\tau_{2})(i\sigma^{2}\tau_{2})(i\sigma^{3}\tau_{2})\\
+&=(\sigma^{1}\sigma^{2}\sigma^{3})(\tau_{1}\tau_{2}^{3})\\
+&=i(\tau_{1}\tau_{2})\\
+&=i(i\tau_{3})\\
+&=-\tau_{3}
+\end{aligned}
+\end{equation}
+In this representation, the Dirac Hamiltonian becomes
+\begin{equation}
+\begin{aligned}
+\vb{H}&=\vec{\alpha}\cdot\vec{p}+\beta m\\
+&=\alpha_{i}p_{i}+\beta m\\
+&=\gamma^{0}\gamma^{i}p_{i}+\gamma^{0}m\\
+&=\tau_{1}(i\sigma^{i}\tau_{2})p_{o}+\tau_{1}m\\
+&=i\sigma^{i}(i\tau_{3})p_{i}+m\tau_{1}\\
+&=-\tau_{3}\sigma^{i}p_{i}+m\tau_{1}\\
+&=-\tau_{3}\vec{\sigma}\cdot\vec{p}+m\tau_{1}\\
+&=\mqty[-\vec{\sigma}\cdot\vec{p} & m \\ m & \vec{\sigma}\cdot\vec{p}]
+\end{aligned}
+\end{equation}
+In the limit $m=0$ (i.e. massless particles), the upper and lower blocks of $\vb{H}$ decouple and the matrix becomes block diagonal. One gets two independent $2\times 2$ equations instead of a single $4\times 4$ equation. This is the \ul{Weyl equation}. Two 2-component fermions are ``hiding" in the 4-component Dirac fermion.\\
+
+One cannow write the Hamiltonian as two separate $2\times2$ Hamiltonians $\vb{H}=\pm \vec{\sigma}\cdot\vec{p}$. Let $\vb{H}_{L}=-\vec{\sigma}\cdot\vec{p}$ and $\vb{H}_{R}=\vec{\sigma}\cdot\vec{p}$. Thus the Weyl equations are
+\begin{equation}
+\begin{aligned}
+i\pdv{\psi_{L}}{t}&=\vb{H}_{L}\psi_{L}\\
+i\pdv{\psi_{R}}{t}&=\vb{H}_{R}\psi_{R}
+\end{aligned}
+\end{equation} 
+where $\psi_{L}$ describes the particle with left-handed chirality while $\psi_{R}$ describes the particle with right-handed chirality.\\
+
+\aside{Chirality is an eigenvale of $\gamma^{5}$ equal to $\pm1$.}\\
+
+Solving for $\psi_{L}$
+\begin{equation}
+i\pdv{\psi_{L}}{t}=\vb{H}_{L}\psi_{L}=-\vec{\sigma}\cdot\vec{p}\psi_{L}=i\vec{\sigma}\cdot\vec{\nabla}\psi_{L}
+\end{equation}
+\begin{equation}
+i\pdv{\psi_{R}}{t}=\vb{H}_{R}\psi_{R}=\vec{\sigma}\cdot\vec{p}\psi_{R}=-i\vec{\sigma}\cdot\vec{\nabla}\psi_{R}
+\end{equation}
+We introduce the notation
+\begin{equation}
+\sigma^{\mu}=(\mathbb{I},\vec{\sigma})\quad\trm{and}\quad\overline{\sigma}^{\mu}=(\mathbb{I},-\vec{\sigma})
+\end{equation}
+Thus, the Weyl equations become
+\begin{equation}
+\begin{aligned}
+\sigma^{\mu}\partial_{\mu}\psi_{R}&=0\\
+\overline{\sigma}^{\mu}\partial_{\mu}\psi_{L}&=0
+\end{aligned}
+\end{equation}
+Note that the $L$ and $R$ indices refer to left- or right-handed chirality. Massless fermions have another conserved quantum number called \ul{chirality}. Finite mass mixes the two chiralities.
+\begin{equation}
+\begin{aligned}
+\gamma^{5}&=\mqty[-\mathbb{I} & 0 \\ 0 & \mathbb{I}]\\
+\implies \gamma^{5}\psi_{L}&=-\psi_{L}\\
+\gamma^{5}\psi_{R}&=\psi_{R}\qq{since $\vb{H}=\vec{\sigma}\cdot\vec{p}\gamma^{5}$}
+\end{aligned}
+\end{equation}
+Thus, one can see that $\gamma^{5}$ is the chirality operator.\\
+
+Weyl fermions (massless chiral fermions) are the elementary building blocks of matter.\\
+
+Another useful way to see the conservation of chirality is to derive the continuity equation for chirality current. For our ordinary 4-current $j^{\mu}=(\rho,\vec{j})=(\psi^{\dagger}\psi,\psi^{\dagger}\vec{\alpha}\psi)$. One can conveniently rewrite this in terms of the Dirac adjoint such that
+\begin{equation}
+j^{\mu}=\overline{\psi}\gamma^{\mu}\psi
+\end{equation}
+where $\overline{\psi}=\psi^{\dagger}\gamma^{0}$ is the Dirac adjoint. Thus, the continuity equations becomes
+\begin{equation}
+\partial_{\mu}j^{\mu}=0
+\end{equation}
+In this example, this expresses the conservation of particle number (charge conservation).\\
+
+Let us define the \ul{chiral 4-current}.
+\begin{equation}
+\begin{aligned}
+j_{5}^{\mu}&=\overline{\psi}\gamma^{\mu}\gamma^{5}\psi\\
+\therefore j_{5}^{0}&=\psi^{\dagger}\gamma^{5}\psi=\psi_{R}^{\dagger}\psi_{R}-\psi_{L}^{\dagger}\psi_{L}\\
+\vec{j}_{5}&=\psi^{\dagger}\vec{\alpha}\gamma^{5}\psi=\psi_{R}^{\dagger}\vec{\alpha}\psi_{R}-\psi_{L}^{\dagger}\vec{\alpha}\psi_{L}
+\end{aligned}
+\end{equation}
+Note that chiral charge is the difference between the right-handed charge and left-handed charge.
+\begin{equation}
+\begin{aligned}
+\partial_{\mu}j_{5}^{\mu}&=\partial_{\mu}(\overline{\psi}\gamma^{\mu}\gamma^{5}\psi)\\
+&=(\partial_{\mu}\overline{\psi})\gamma^{\mu}\gamma^{5}\psi+\overline{\psi}\gamma^{\mu}\gamma^{5}(\partial_{\mu}\psi)
+\end{aligned}
+\end{equation}
+From the Dirac equation
+\begin{equation}
+ (i\gamma^{\mu}\partial_{\mu}-m)\psi=0
+\end{equation}
+Since $\gamma^{5}$ anti-commutes with all $\gamma^{\mu}$
+\begin{equation}
+\begin{aligned}
+\gamma^{\mu}\gamma^{5}\partial_{\mu}\psi&=-\gamma^{5}\gamma^{\mu}\partial_{\mu}\psi=im\gamma^{5}\psi\qq{from Dirac equation}\\
+\implies \overline{\psi}\gamma^{\mu}\gamma^{5}\partial_{\mu}\psi&=im\overline{\psi}\gamma^{5}\psi
+\end{aligned}
+\end{equation}
+
+From the Hermitian conjugate of the Dirac equation
+\begin{equation}
+\qty[\qty(i\gamma^{\mu}\partial_{\mu}-m)\psi]^{\dagger}=-i\partial_{\mu}\phi^{\dagger}\qty(\gamma^{\mu})^{\dagger}-m\psi^{\dagger}=0
+\end{equation}
+Since $\gamma^{0}=\tau_{1}$, $(\gamma^{0})^{\dagger}=\gamma^{0}$ is Hermitian. Similarly, since $\gamma^{i}=i\sigma^{i}\tau_{2}$, $(\gamma^{i})^{\dagger}=-\gamma^{i}$ is anti-Hermitian. Since $\tau_{1}\tau_{1}\tau_{1}=\tau_{1}$ and $\tau_{1}\tau_{2}\tau_{1}=-\tau_{2}$
+\begin{equation}
+(\gamma^{\mu})^{\dagger}=\gamma^{0}\gamma^{\mu}\gamma^{0}
+\end{equation}
+Thus, the Hermitian conjugate of the Dirac equation becomes
+\begin{equation}
+\begin{aligned}
+-i\partial_{\mu}\psi^{\dagger}\gamma^{0}\gamma^{\mu}\gamma^{0}-m\psi^{\dagger}&=0\\
+\implies \partial_{\mu}\overline{\psi}\gamma^{\mu}&=im\overline{\psi}\qq{(after multiplying $\gamma^{0}$ on the right)}\\
+\implies(\partial_{\mu}\overline{\psi})\gamma^{\mu}\gamma^{5}\psi&=im\overline{\psi}\gamma^{5}\psi
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\partial_{\mu}j_{5}^{\mu}=im\overline{\psi}\gamma^{5}\psi+im\overline{\psi}\gamma^{5}\psi=2im\overline{\psi}\gamma^{5}\psi
+\end{equation}
+This is the \ul{chiral continuity equation}.
+
+\aside{Illustrating a conserved quantity will create a continuity equation with the right hand side equal to zero.}\\
+
+When $m=0$, one can see that $\partial_{\mu}j_{5}^{\mu}=0$. Thus, chiral charge is conserved for massless fermions. Note that in actuality, a more careful derivation of relativistic quantum mechanics leads to
+\begin{equation}
+\partial_{\mu}j_{5}^{\mu}=2im\overline{\psi}\gamma^{5}\psi+\underbrace{\frac{e^{2}}{16\pi^{2}}\varepsilon^{\mu\nu\alpha\beta}F_{\mu\nu}F_{\alpha\beta}}_{\trm{chiral anomaly}}
+\end{equation}
+
+\subsection{Symmetries of Dirac Equation}
+\subsubsection{Parity}
+We shall now consider the symmetries inherent in the Dirac equation of the free particle
+\begin{equation}
+i\pdv{t}\psi(\vec{x},t)=\vb{H}\psi(\vec{x},t)=E\psi(\vec{x},t)
+\end{equation}
+where
+\begin{equation}
+\vb{H}=-i\gamma^{0}\gamma^{i}\partial_{i}+m\gamma^{0}
+\end{equation}
+Under parity
+\begin{equation}
+x^{\mu}=(x^{0},\vec{x})=(t,\vec{x})\rightarrow(t,-\vec{x})=x^{\prime\mu}
+\end{equation}
+Multiplying $\gamma^{0}$ to the left of the Dirac equation
+\begin{equation}
+\begin{aligned}
+\gamma^{0}\qty(i\gamma^{\mu}\partial_{\mu}-m)\psi&=\gamma^{0}(i\gamma^{0}\partial_{0}+i\gamma^{i}\partial_{i}-m)\psi\\
+&=(i\gamma^{0}\partial_{0}-i\gamma^{i}\partial_{i}-m)\gamma^{0}\psi\\
+&=(i\gamma^{\mu}\partial_{\mu}^{\prime}-m)\gamma^{0}\psi
+\end{aligned}
+\end{equation}
+Note that
+\begin{equation}
+\begin{aligned}
+\partial_{i}&=\pdv{x^{i}}\\
+\implies-\partial_{i}&=-\pdv{x^{i}}\\
+\implies-\partial_{\mu}&=\partial_{\mu}^{\prime}=\pdv{x^{\prime\mu}}
+\end{aligned}
+\end{equation}
+
+Thus
+\begin{equation}
+\gamma^{0}(i\gamma^{\mu}\partial_{\mu}-m)\psi=(i\gamma^{\mu}\partial_{\mu}^{\prime}-m)\psi=0
+\end{equation}
+Thus, $\gamma^{0}\psi$ obeys the Dirac equation where $\partial_{\mu}^{\prime}$ are the derivatives in the inverted coordinates. This indicates that $\psi^{\prime}(x^{\prime\mu})=\gamma^{0}\psi(x^{\mu})$ is the solution of the Dirac equation under parity and that $\gamma^{0}$ is the parity operator.\\
+
+From this, one can see the Dirac operator is parity invariant
+\begin{equation}
+\begin{aligned}
+(\gamma^{0})^{\dagger}(i\gamma^{\mu}\partial_{\mu}-m)\gamma^{0}&=\gamma^{0}(i\gamma^{\mu}\partial{\mu}-m)\gamma^{0}\\
+&=(i\gamma^{\mu}\partial_{\mu}^{\prime}-m)\gamma^{0}\gamma^{0}\\
+&=(i\gamma^{\mu}\partial_{\mu}^{\prime}-m)
+\end{aligned}
+\end{equation}
+
+Moreover, the gamma matrices under parity are
+\begin{equation}
+\begin{aligned}
+(\gamma^{0})^{\dagger}\gamma^{0}\gamma^{0}&=(\gamma^{0})^{\dagger}=\gamma^{0}\\
+(\gamma^{0})^{\dagger}\gamma^{i}\gamma^{0}&=-\gamma^{0}\gamma^{0}\gamma^{i}=-\gamma^{i}\\
+(\gamma^{0})^{\dagger}\gamma^{5}\gamma^{0}&=\gamma^{0}(i\gamma^{0}\gamma^{1}\gamma^{2}\gamma^{3})\gamma^{0}\\
+&=-\gamma^{0}(i\gamma^{0}\gamma^{1}\gamma^{2})\gamma^{0}\gamma^{3}\\
+&=\gamma^{0}(i\gamma^{0}\gamma^{1})\gamma^{0}(\gamma^{2}\gamma^{3})\\
+&=-\gamma^{0}(i\gamma^{0}\gamma^{0})(\gamma^{1}\gamma^{2}\gamma^{3})\\
+&=-i\gamma^{0}\gamma^{1}\gamma^{2}\gamma^{3}\\
+&=-\gamma^{4}
+\end{aligned}
+\end{equation}
+Thus, $\gamma^{0}$ is even under parity and $\gamma^{i}$ and $\gamma^{5}$ are odd under parity. This makes sense as $\gamma^{5}$ is the chirality operator.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0,0) -- (2,0,0) node[right] {$\hat{y}$};
+	\draw[->] (0,0,0) -- (0,2,0) node[above] {$\hat{z}$};
+	\draw[->] (0,0,0) -- (0,0,2) node[below left] {$\hat{x}$};
+	\draw[->] (3,1,0) -- (5,1,0);
+	\draw[->] (8,1,0) -- (6,1,0) node[left] {$\hat{y}$};
+	\draw[->] (8,1,0) -- (8,-0.5,0) node[below] {$\hat{z}$};
+	\draw[->] (8,1,0) -- (8,1,-2) node[above right] {$\hat{x}$};
+\end{tikzpicture}
+\end{center}
+One will show later that $\gamma^{5}$ is even under time-reversal, which will also imply $\gamma^{5}$ is the chirality operator.
+
+\subsubsection{Charge Conjugation}
+In the presence of an electromagnetic field, the Dirac equation becomes
+\begin{equation}
+[i\gamma^{\mu}(\partial_{\mu}+ieA_{\mu})-m]\psi=0
+\end{equation}
+where $A^{\mu}=(A^{0},\vec{A})$. Taking the complex conjugate
+\begin{equation}
+[-i(\gamma^{\mu})^{*}(\partial_{\mu}-ieA_{\mu})-m]\psi^{*}=0\qq{(since $A^{\mu}$ is real)}
+\end{equation}
+In Dirac representation
+\begin{equation}
+\begin{aligned}
+\gamma^{0}&=\tau_{3} \quad\trm{and} &\gamma^{i}&=i\sigma^{i}\tau_{2}\\
+\implies(\gamma^{0})^{*}&=\tau_{3} \quad\trm{and} &(\gamma^{i})^{*}&=-i(\sigma^{i})^{*}\tau_{2}^{*}
+\end{aligned}
+\end{equation}
+Moreover
+\begin{equation}
+\begin{aligned}
+(\gamma^{1})^{*}&=\gamma^{1}\\
+(\gamma^{2})^{*}&=-\gamma^{2}\\
+(\gamma^{3})^{*}&=\gamma^{3}
+\end{aligned}
+\end{equation}
+The gamma matrices are defined by satisfying Clifford algebra. One property required is that
+\begin{equation}
+\frac{1}{2}\acomm{\gamma^{\mu}}{\gamma^{\nu}}=\eta^{\mu\nu}
+\end{equation}
+One sees that
+\begin{equation}
+\frac{1}{2}\acomm{-(\gamma^{\mu})^{*}}{-(\gamma^{\nu})^{*}}=\eta^{\mu\nu}
+\end{equation}
+Thus, $-(\gamma^{\mu})^{*}$ also satisfies Clifford algebra and are also a legitimate gamma matrix representation in the same basis. There exists a transformation $\mathcal{C}$ such that
+\begin{equation}
+-(\gamma^{\mu})^{*}=\mathcal{C}^{\dagger}\gamma^{\mu}\mathcal{C}
+\end{equation}
+
+Substituting in the Dirac equation
+\begin{equation}
+\begin{aligned}
+[i\mathcal{C}^{\dagger}\gamma^{\mu}\mathcal{C}(\partial_{\mu}-ieA_{\mu})-m]\psi^{\dagger}&=0\\
+\mathcal{C}^{\dagger}[i\gamma^{\mu}\mathcal{C}(\partial_{\mu}-ieA_{\mu})-m\mathcal{C}]\psi^{\dagger}&=0\\
+\mathcal{C}^{\dagger}[i\gamma^{\mu}(\partial_{\mu}-ieA_{\mu})-m]\mathcal{C}\psi^{\dagger}&=0\\
+[i\gamma^{\mu}(\partial_{\mu}-ieA_{\mu})-m]\mathcal{C}\psi^{\dagger}&=0\\
+[i\gamma^{\mu}(\partial_{\mu}-ieA_{\mu})-m]\psi_{\mathcal{C}}&=0\\
+\end{aligned}
+\end{equation}
+where $\gamma_{\mathcal{C}}=\mathcal{C}\psi^{*}$. This is the charge-conjugation Dirac equation. Moreover, it is the Dirac equation for the positron.\\
+
+Let us find the matrix $\mathcal{C}$.
+\begin{equation}
+\begin{aligned}
+-(\gamma^{\mu})^{*}&=\mathcal{C}^{\dagger}\gamma^{\mu}\mathcal{C}\\
+\implies \mathcal{C}(\gamma^{\mu})^{*}&=-\gamma^{\mu}\mathcal{C}
+\end{aligned}
+\end{equation}
+Thus, $\mathcal{C}$ commutes with $\gamma^{2}$ and anti-commutes with $\gamma^{0}$, $\gamma^{1}$, and $\gamma^{3}$. Therefore, $\mathcal{C}=\gamma^{2}$, with $\gamma^{2}$ being the charge-conjugation operator.
+\begin{equation}
+\psi_{\mathcal{C}}=\gamma^{2}\psi^{*}
+\end{equation}
+
+\subsection{Time-Reversal}
+The Dirac equation is
+\begin{equation}
+i\pdv{\psi}{t}=\vb{H}\psi
+\end{equation}
+where 
+\begin{equation}
+\vb{H}=-i\gamma^{0}\gamma^{i}\partial_{i}+\gamma^{0}m
+\end{equation}
+Under time-reversal, one wants the Dirac equation to be of the form
+\begin{equation}
+i\pdv{t^{\prime}}\psi^{\prime}(t^{\prime})=\vb{H}\psi^{\prime}(t^{\prime})
+\end{equation}
+where $t^{\prime}=-t$ and $\psi^{\prime}(t^{\prime})=\Theta\psi(t)$.\\
+
+We know that $\Theta=UK$. We need that $\Theta\vb{H}\Theta^{-1}=\vb{H}$. It is more convenient to write this condition as $\Theta^{-1}\vb{H}\Theta=\vb{H}$.
+\begin{equation}
+\therefore KU^{\dagger}\gamma^{0}UK=\gamma^{0} \quad\trm{and}\quad KU^{\dagger}(i\gamma^{0}\gamma^{i})UK=i\gamma^{0}\gamma^{i}
+\end{equation}
+This is so that $\vb{H}$ is even under parity.\\
+
+Multiplying on the left and right by $K$
+\begin{equation}
+U^{\dagger}\gamma^{0}U=\gamma^{0}\qq{since $\gamma^{0}$ is real (in the Dirac and Weyl basis)}
+\end{equation}
+Similarly for $i\gamma^{0}\gamma^{i}$
+\begin{equation}
+\begin{aligned}
+U^{\dagger}(i\gamma^{0}\gamma^{i})U&=K(i\gamma^{0}\gamma^{i})K=-i\gamma^{0}(\gamma^{i})^{*}\\
+\implies -i\gamma^{0}(\gamma^{i})^{*}&=U^{\dagger}(i\gamma^{0})UU^{\dagger}\gamma^{i}U\\
+&=i\gamma^{0}U^{\dagger}\gamma^{i}U\qq{since $U^{\dagger}\gamma^{0}U=\gamma^{0}$}\\
+\implies U^{\dagger}\gamma^{i}U&=-(\gamma^{i})^{*}
+\end{aligned}
+\end{equation}
+Since only $\gamma^{2}$ involves $i$ in the Dirac and Weyl basis, $U$ commutes with $\gamma^{2}$. Thus, $U$ commutes with $\gamma^{0}$ and $\gamma^{2}$, but anti-commutes with $\gamma^{1}$ and $\gamma^{3}$.
+\begin{equation}
+\implies U=\gamma^{1}\gamma^{3}
+\end{equation}
+Since $\gamma^{1}=i\tau_{2}\sigma^{1}$ and $\gamma^{3}=i\tau_{2}\sigma^{3}$
+\begin{equation}
+\begin{aligned}
+U&=(i\tau_{2}\sigma^{1})(i\tau_{2}\sigma^{3})\\
+&=-(\tau_{2})^{2}\sigma^{1}\sigma^{3}\\
+&=-\sigma^{1}\sigma^{3}\\
+&=-\mqty[0 & 1 \\ 1 & 0]\mqty[1 & 0 \\ 0 & -1]\\
+&=-\mqty[0 & -1 \\ 1 & 0]\\
+&=\mqty[0 & 1 \\ -1 & 0]\\
+&=i\sigma^{2}
+\end{aligned}
+\end{equation}
+Thus, one obtains $U=i\sigma^{2}$, which is in agreement with results obtained earlier for the time-reversal operator acting on a spin-$\frac{1}{2}$ system. The difference in sign is simply a phase factor.
 \end{document}
