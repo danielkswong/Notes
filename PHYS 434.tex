@@ -4305,5 +4305,340 @@ U&=(i\tau_{2}\sigma^{1})(i\tau_{2}\sigma^{3})\\
 &=i\sigma^{2}
 \end{aligned}
 \end{equation}
-Thus, one obtains $U=i\sigma^{2}$, which is in agreement with results obtained earlier for the time-reversal operator acting on a spin-$\frac{1}{2}$ system. The difference in sign is simply a phase factor.
+Thus, one obtains $U=i\sigma^{2}$, which is in agreement with results obtained earlier for the time-reversal operator acting on a spin-$\frac{1}{2}$ system. The difference in sign is simply a phase factor.\\
+
+Under time-reversal
+\begin{equation}
+\begin{aligned}
+\Theta\gamma^{5}\Theta^{-1}&=UK\gamma^{5}KU^{\dagger}\\
+&=\gamma^{1}\gamma^{3}K(i\gamma^{0}\gamma^{1}\gamma^{2}\gamma^{3})K\gamma^{3}\gamma^{1}\\
+&=\gamma^{1}\gamma^{3}(i\gamma^{0}\gamma^{1}\gamma^{2}\gamma^{3})\gamma^{3}\gamma^{1}\\
+&=\gamma^{1}\gamma^{3}(\gamma^{3}\gamma^{1})(i\gamma^{0}\gamma^{1}\gamma^{2}\gamma^{3})\\
+&=i\gamma^{0}\gamma^{1}\gamma^{2}\gamma^{3}\\
+&=\gamma^{5}
+\end{aligned}
+\end{equation}
+Thus, $\gamma^{5}$ is odd under parity and even under time-reversal. Thus, one can see that $\gamma^{5}$ is chirality.\\
+
+We now have three fundamental symmetry operators in terms of gamma matrices.
+\begin{equation}
+\begin{aligned}
+\gamma^{0}&\equiv\mathcal{P}\\
+\gamma^{2}&\equiv\mathcal{C}\\
+\gamma^{1}\gamma^{3}&\equiv\mathcal{T}\\
+\therefore\mathcal{C}\mathcal{P}\mathcal{T}&=\gamma^{2}\gamma^{0}\gamma^{1}\gamma^{3}\propto\gamma^{5}
+\end{aligned}
+\end{equation}
+The product of charge conjugation, parity, and time-reversal (CPT) is a very important symmetry. This is regarded to be the most fundamental symmetry in nature. No violations have been found.
+
+\newpage
+\section{Many Body Quantum Mechanics}
+Most problems in nature involve many bodies. Even ``single particle" relativistic quantum mechanics is in fact a many particle problem due to the existence of the Dirac sea. Condensed matter and relativistic quantum mechanics are very similar in this aspect.\\
+
+In classical mechanics, individual particle trajectories may be followed. Thus, particles may always be distinguished from each other. In quantum mechanics, this is impossible due to the uncertainty principle. Thus, identical particles are indistinguishable.
+
+\subsection{Two Particle System}
+Consider the problem of a two-particle system. Let $\ket{K^{\prime}}\ket{K^{\prime\prime}}$ be a state in which particle 1 has observables $K^{\prime}$ and particle 2 has observables $K^{\prime\prime}$. Note that $\ket{K^{\prime}}\ket{K^{\prime\prime}}$ is defined to be a direct product (or tensor product).\\
+
+In principle, interchanging the systems produces a different state $\ket{K^{\prime\prime}}\ket{K^{\prime}}$ if $K^{\prime}\neq K^{\prime\prime}$. Moreover, $(\bra{K^{\prime}}\bra{K^{\prime\prime}})(\ket{K^{\prime\prime}}\ket{K^{\prime}})=\ip{K^{\prime}}{K^{\prime\prime}}\ip{K^{\prime\prime}}{K^{\prime}}=0$ if $K^{\prime}\neq K^{\prime\prime}$. Thus, they are orthogonal. However, in the case of quantum identical particles, the particles cannot be distinguished, due to the fact that the particles can not be traced.
+
+\begin{center}
+\begin{tikzpicture}
+	\node[left] at (-4,-0.9993) {$2$}; 
+	\node[left] at (-4,0.9993) {$1$};
+	\draw[domain=-4:4,samples=200] plot (\x, {tanh(\x)}) node[right] {$2$};
+	\draw[domain=-4:4,samples=200] plot (\x, {-tanh(\x)}) node[right] {$1$};
+\end{tikzpicture}
+\end{center}
+Distinguishability lies on being able to specify a trajectory for the particles (i.e. specifying both $\vec{x}(t)$ and $\vec{p}(t)$). In quantum mechanics, $\vec{x}(t)$ and $\vec{p}(t)$ cannot be specified at the same time. Thus, the concept of trajectory does not exist and quantum particles are indistinguishable.\\
+
+If one measures $K^{\prime}$ and $K^{\prime\prime}$ on the two particle system, due to the indistinguishability of the particles, one does not know which state that corresponds with our measurements. In principle, this can be any linear combination of $\ket{K^{\prime}}\ket{K^{\prime\prime}}$ and $\ket{K^{\prime\prime}}\ket{K^{\prime}}$
+\[
+c_{1}\ket{K^{\prime}}\ket{K^{\prime\prime}}+c_{2}\ket{K^{\prime\prime}}\ket{K^{\prime}}
+\]
+All kets of this form lead to an identical set of eigenvalues when a measurement is performed. This is known as \ul{exchange degeneracy}. This presents a difficulty as a specification of the eigenvalues of a complete set of observables does not completely determine the state ket.
+
+\subsection{Permutation Operator}
+Define the \ul{permutation operator} as
+\begin{equation}
+P_{12}\ket{K^{\prime}}\ket{K^{\prime\prime}}=\ket{K^{\prime\prime}}\ket{K^{\prime}}
+\end{equation}
+with
+\begin{equation}
+P_{12}=P_{21}
+\end{equation}
+and
+\begin{equation}
+P_{12}^{2}=\mathbb{I}
+\end{equation}
+Under $P_{12}$, particle 1 having $K^{\prime}$ becomes particle 1 having $K^{\prime\prime}$, while particle 2 having $K^{\prime\prime}$ becomes particle 2 having $K^{\prime}$. In other words, it as the effect of interchanging 1 and 2. Note that since $P_{12}^{2}=\mathbb{I}$, $P_{12}$ has eigenvalues $\pm1$.\\
+
+Consider specifically the case where the two particle state is specified completely be eigenvalues of a Hermitian operator $\vb{A}$ for each of the particles.
+\begin{align}
+\vb{A}_{1}\ket{a^{\prime}}\ket{a^{\prime\prime}}&=a^{\prime}\ket{a^{\prime}}\ket{a^{\prime\prime}}\\
+\vb{A}_{2}\ket{a^{\prime}}\ket{a^{\prime\prime}}&=a^{\prime\prime}\ket{a^{\prime}}\ket{a^{\prime\prime}}
+\end{align}
+where the subscripts on $\vb{A}$ denote the particle labels and $\vb{A}_{1}$ and $\vb{A}_{2}$ are thus observables $\vb{A}$ for particles 1 and 2.\\
+
+Applying $P_{12}$ on the left of the first equation
+\begin{equation}
+\begin{aligned}
+P_{12}\vb{A}_{1}P_{12}^{-1}P_{12}\ket{a^{\prime}}\ket{a^{\prime\prime}}&=a^{\prime}P_{12}\ket{a^{\prime}}\ket{a^{\prime\prime}}\\
+P_{12}\vb{A}_{1}P_{12}^{-1}\ket{a^{\prime\prime}}\ket{a^{\prime}}&=a^{\prime}\ket{a^{\prime\prime}}\ket{a^{\prime}}
+\end{aligned}
+\end{equation}
+This is consistent with the second equation with $a^{\prime}$ and $a^{\prime\prime}$ flipped. Thus
+\begin{equation}
+P_{12}\vb{A}_{1}P_{12}^{-1}=\vb{A}_{2}
+\end{equation}
+
+\subsection{Fermions and Bosons}
+The Hamiltonian for a two-particle system of identical particles is
+\begin{equation}
+\vb{H}=\frac{\vec{p}_{1}^{2}}{2m}+\frac{\vec{p}_{2}^{2}}{2m}+V_{\trm{ex}}(\abs*{\vec{x}_{1}-\vec{x}_{2}})+V_{\trm{ext}}(\vec{x}_{1})+V_{\trm{ext}}(\vec{x}_{2})
+\end{equation}
+Given that $P_{12}\vb{A}_{1}P_{12}^{-1}=\vb{A}_{2}$, $P_{12}\vb{H}P_{12}^{-1}$ exchanges the particle labels 1 and 2 in the Hamiltonian. It is clear that $\vb{H}$ is invariant under the permutation operator. Thus
+\begin{equation}
+\begin{aligned}
+P_{12}\vb{H}P_{12}^{-1}&=\vb{H}\\
+P_{12}\vb{H}&=\vb{H}P_{12}\\
+\comm{\vb{H}}{P_{12}}&=0\\
+\dv{P_{12}}{t}&=0
+\end{aligned}
+\end{equation}
+and $\vb{H}$ and $P_{12}$ are simultaneously diagonalizable. Since $P_{12}$ commutes with $\vb{H}$, $P_{12}$ is a constant of motion. Thus, if one starts in an eigenstate of $P_{12}$, one will remain in this eigenstate at all times.\\
+
+In nature, resolution of the exchange degeneracy problem is that all legitimate states of many-particle systems are eigenstates of $P_{12}$. Since the eigenvalues of $P_{12}$ are $\pm1$, there are two types of eigenstates. Particles with the $+1$ eigenvalue are \ul{bosons}. Particles with the $-1$ eigenvalue are \ul{fermions}. Note in connection with spin, half-integer spins are fermions while full integer spins are bosons.\\
+
+Let us construct the eigenstates of $P_{12}$
+\begin{equation}
+\ket{K^{\prime},K^{\prime\prime}}_{\pm}=\frac{1}{\sqrt{2}}\qty(\ket{K^{\prime}}\ket{K^{\prime\prime}}\pm\ket{K^{\prime\prime}}\ket{K^{\prime}})
+\end{equation}
+It can be seen that
+\begin{equation}
+P_{12}\ket{K^{\prime},K^{\prime\prime}}_{\pm}=\pm\ket{K^{\prime},K^{\prime\prime}}_{\pm}
+\end{equation}
+
+$\ket{K^{\prime},K^{\prime\prime}}_{+}$ is symmetric under $P_{12}$ while $\ket{K^{\prime},K^{\prime\prime}}_{-}$ is anti-symmetric under $P_{12}$. Let us define the \ul{symmetrizer} and \ul{anti-symmetrizer} as
+\begin{align}
+S_{12}&=\frac{1}{2}(\mathbb{I}+P_{12})\\
+A_{12}&=\frac{1}{2}(\mathbb{I}-P_{12})
+\end{align}
+These are projection operators that pick out the important symmetric and anti-symmetric states. This can be seen as follows
+\begin{equation}
+\hspace{-1cm}
+\begin{aligned}
+S_{12}\qty(c_{1}\ket{K^{\prime}}\ket{K^{\prime\prime}}+c_{2}\ket{K^{\prime\prime}}\ket{K^{\prime}})&=\frac{1}{2}\qty(c_{1}\ket{K^{\prime}}\ket{K^{\prime\prime}}+c_{2}\ket{K^{\prime\prime}}\ket{K^{\prime}})+\frac{1}{2}\qty(c_{1}\ket{K^{\prime\prime}}\ket{K^{\prime}}+c_{2}\ket{K^{\prime}}\ket{K^{\prime\prime}})\\
+&=\frac{c_{1}+c_{2}}{2}\qty(\ket{K^{\prime}}\ket{K^{\prime\prime}}+\ket{K^{\prime\prime}}\ket{K^{\prime}})\\
+A_{12}\qty(c_{1}\ket{K^{\prime}}\ket{K^{\prime\prime}}+c_{2}\ket{K^{\prime\prime}}\ket{K^{\prime}})&=\frac{1}{2}\qty(c_{1}\ket{K^{\prime}}\ket{K^{\prime\prime}}+c_{2}\ket{K^{\prime\prime}}\ket{K^{\prime}})-\frac{1}{2}\qty(c_{1}\ket{K^{\prime\prime}}\ket{K^{\prime}}+c_{2}\ket{K^{\prime}}\ket{K^{\prime\prime}})\\
+&=\frac{c_{1}-c_{2}}{2}\qty(\ket{K^{\prime}}\ket{K^{\prime\prime}}-\ket{K^{\prime\prime}}\ket{K^{\prime}})
+\end{aligned}
+\end{equation}
+Note that since $P_{12}$ is a constant of motion and $P_{12}\ket{K^{\prime},K^{\prime\prime}}_{\pm}=\pm\ket{K^{\prime},K^{\prime\prime}}_{\pm}$, two particle state kets that start symmetrical or anti-symmetrical remain so at all times. In the symmetric case, the particles are bosons, while the anti-symmetric case, the particles are fermions.
+
+\subsection{Symmetrization Postulate}
+Systems containing $N$ identical particles are either totally symmetrical under the interchange of any pair (i.e they satisfy Bose-Einstein statistics) or anti-symmetrical under the interchange (i.e. they satisfy Fermi-Dirac statistics).
+\begin{equation}
+\begin{aligned}
+\therefore P_{ij}\ket{\trm{$N$ identical bosons}}&=\ket{\trm{$N$ identical bosons}}\\
+P_{ij}\ket{\trm{$N$ identical fermions}}&=-\ket{\trm{$N$ identical fermions}}
+\end{aligned}
+\end{equation}
+It is an empirical fact that mixed symmetry does not occur in nature.\\
+
+An immediate consequence of fermions being anti-symmetric is the \ul{Pauli exclusion principle}, which states two fermions can not occupy the same state (i.e. they can not have the same quantum numbers). Suppose we have two particles that can occupy two states $\ket{K^{\prime}}$ and $\ket{K^{\prime\prime}}$. If the particles are fermions, in order to have an anti-symmetric state, the only possible state of the system is
+\begin{equation}
+\ket{\psi}=\frac{1}{\sqrt{2}}\qty(\ket{K^{\prime}}\ket{K^{\prime\prime}}-\ket{K^{\prime\prime}}\ket{K^{\prime}})
+\end{equation}
+If $K^{\prime}=K^{\prime\prime}$, then $\ket{\psi}=0$, implying the two fermions cannot be in the same state in a system. This is the reason one does not simply fall through the ground (which is made up of fermionic particles).\\
+
+For bosons, three symmetric states are possible
+\[
+\ket{K^{\prime}}\ket{K^{\prime}},\quad\ket{K^{\prime\prime}}\ket{K^{\prime\prime}},\quad\trm{and}\quad\frac{1}{\sqrt{2}}\qty(\ket{K^{\prime}}\ket{K^{\prime\prime}}+\ket{K^{\prime\prime}}\ket{K^{\prime}})
+\]
+In comparison, it can bee seen that fermions avoid being in the same state, whereas classical particles and bosons can occupy the same state. In particular, bosons tend to be in the same state, given that two of the three kets have the bosons in the same state.
+
+\subsection{Three Particle System}
+Consider three identical particles that can take three states $\ket{K^{\prime}}$, $\ket{K^{\prime\prime}}$, and $\ket{K^{\prime\prime\prime}}$. Constructing a totally symmetric and totally anti-symmetric state
+\begin{equation}
+\begin{aligned}
+\ket{K^{\prime},K^{\prime\prime},K^{\prime\prime\prime}}_{+}&=\frac{1}{\sqrt{6}}(\ket{K^{\prime}}\ket{K^{\prime\prime}}\ket{K^{\prime\prime\prime}}+\ket{K^{\prime\prime}}\ket{K^{\prime}}\ket{K^{\prime\prime\prime}}+\ket{K^{\prime\prime}}\ket{K^{\prime\prime\prime}}\ket{K^{\prime}}\\
+&\quad+\ket{K^{\prime\prime\prime}}\ket{K^{\prime\prime}}\ket{K^{\prime}}+\ket{K^{\prime\prime\prime}}\ket{K^{\prime}}\ket{K^{\prime\prime}}+\ket{K^{\prime}}\ket{K^{\prime\prime\prime}}\ket{K^{\prime\prime}})\\
+\ket{K^{\prime},K^{\prime\prime},K^{\prime\prime\prime}}_{-}&=\frac{1}{\sqrt{6}}(\ket{K^{\prime}}\ket{K^{\prime\prime}}\ket{K^{\prime\prime\prime}}-\ket{K^{\prime\prime}}\ket{K^{\prime}}\ket{K^{\prime\prime\prime}}+\ket{K^{\prime\prime}}\ket{K^{\prime\prime\prime}}\ket{K^{\prime}}\\
+&\quad-\ket{K^{\prime\prime\prime}}\ket{K^{\prime\prime}}\ket{K^{\prime}}+\ket{K^{\prime\prime\prime}}\ket{K^{\prime}}\ket{K^{\prime\prime}}-\ket{K^{\prime}}\ket{K^{\prime\prime\prime}}\ket{K^{\prime\prime}})
+\end{aligned}
+\end{equation}
+where we note that the factor of 6 comes from there being $3!$ combinations of kets. If two states are the same $(\ket{K^{\prime}}=\ket{K^{\prime\prime}}\neq\ket{K^{\prime\prime\prime}})$, there are no anti-symmetric states. On the other hand, the symmetric state becomes
+\begin{equation}
+\ket{K^{\prime},K^{\prime},K^{\prime\prime\prime}}=\frac{1}{\sqrt{3}}\qty(\ket{K^{\prime}}\ket{K^{\prime}}\ket{K^{\prime\prime\prime}}+\ket{K^{\prime}}\ket{K^{\prime\prime\prime}}\ket{K^{\prime}}+\ket{K^{\prime\prime\prime}}\ket{K^{\prime}}\ket{K^{\prime}})
+\end{equation}
+where the factor of 3 comes from $\frac{2!}{3!}$. Note that being \ul{totally} symmetric or anti-symmetric means $\ket{K^{\prime},K^{\prime\prime},K^{\prime\prime\prime}}_{\pm}$ are simultaneous eigenkets of $P_{12}$, $P_{23}$, and $P_{13}$.\\
+
+It is clear that constructing such many particle symmetric and anti-symmetric states becomes more complicated as the number of particles increases.
+
+\subsection{Occupation Number Representation}
+To simplify notation, we make the crucial observation that only information required in a given multi-particle state is how many times a particular single-particle state $\ket{K_{i}}$ appears in the state.\\
+
+Define a multi-particle state vector as
+\[
+\ket{n_{1},n_{2},\ldots,n_{i},\ldots}
+\]
+where $n_{i}$ is the number of times a particular single-particle state $\ket{K_{i}}$ (with eigenvalue $K_{i}$) for some operator. This is called the \ul{occupation number representation}. These states are said to exist in a new kind of vector space called the \ul{Fock space}. Operators acting on states in Fock space will change the occupation numbers $n_{i}$.\\
+
+Define a special state in Fock space called the \ul{vacuum state}
+\begin{equation}
+\ket{0,0,0,\ldots}\equiv\ket{0}
+\end{equation}
+All occupation numbers are zero. One can also define a \ul{single-particle state} as
+\begin{equation}
+\ket{0,0,0,\ldots,n_{i}=1,\ldots}\equiv\ket{K_{i}}
+\end{equation}
+Let us define a \ul{creation operator} $a_{i}^{\dagger}$ in Fock space such that
+\begin{equation}
+\begin{aligned}
+a_{i}^{\dagger}\ket{n_{1},n_{2},\ldots,n_{i},\ldots}\propto\ket{n_{1},n_{2},\ldots,n_{i}+1,\ldots}\quad\trm{and}\quad a_{i}^{\dagger}\ket{0}=\ket{K_{i}}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+1&=\ip{K_{i}}\\
+&=\mel{0}{a_{i}a_{i}^{\dagger}}{0}\\
+&=\mel{0}{a_{i}}{K_{i}}
+\end{aligned}
+\end{equation}
+In order for this to hold true, $a_{i}\ket{K_{i}}=\ket{0}$. Thus, $a_{i}$ is the \ul{annihilation operator}. We conclude with the following postulates for the annihilation operator.
+\begin{align}
+a_{i}\ket{n_{1},n_{2},\ldots,n_{i},\ldots}&\propto\ket{n_{1},n_{2},\ldots,n_{i}-1,\ldots}\\
+a_{i}\ket{0}&=0\ket{0}\\
+a_{i}\ket{K_{j}}&=0\ket{0}\quad\trm{if $i\neq j$} \implies a_{i}\ket{K_{j}}=\delta_{ij}\ket{0}
+\end{align}
+Clearly applying $a_{i}^{\dagger}$ and $a_{j}^{\dagger}$ for $i\neq j$ in different orders is equivalent to permuting particles. In this case, $a_{i}^{\dagger}a_{j}^{\dagger}\ket{0}$ places the ``first" particle in state $\ket{K_{j}}$ and then the ``second" particle in state $\ket{K_{i}}$. Similarly, $a_{j}^{\dagger}a_{i}^{\dagger}\ket{0}$ places the ``first" particle in state $\ket{K_{i}}$ and the ``second" particle in state $\ket{K_{j}}$. Thus
+\begin{equation}
+a_{i}^{\dagger}a_{j}^{\dagger}=\pm a_{j}^{\dagger}a_{i}^{\dagger}
+\end{equation}
+where the positive sign refers to bosons and the negative sign refers to fermions.
+\begin{align}
+\therefore a_{i}^{\dagger}a_{j}^{\dagger}-a_{j}^{\dagger}a_{i}^{\dagger}&=0 &\implies&\comm{a_{i}^{\dagger}}{a_{j}^{\dagger}}\trm{ for bosons}\\
+a_{i}^{\dagger}a_{j}^{\dagger}+a_{j}^{\dagger}a_{i}^{\dagger}&=0 &\implies&\acomm{a_{i}^{\dagger}}{a_{j}^{\dagger}}\trm{ for fermions}
+\end{align}
+
+Taking the adjoint of both equations
+\begin{align}
+\comm{a_{i}}{a_{j}}&=0 \trm{ for bosons}\\
+\acomm{a_{i}}{a_{j}}&=0 \trm{ for fermions}
+\end{align}
+
+Letting $a_{j}^{\dagger}=a_{i}^{\dagger}$ for fermions
+\begin{equation}
+2(a_{i}^{\dagger})^{2}=0\implies (a_{i}^{\dagger})^{2}=a_{i}^{2}=0
+\end{equation}
+Thus, the Pauli exclusion principle is automatically built into to formalism, as that implies $a_{i}^{\dagger}a_{i}^{\dagger}=0$ for some single-particle state $\ket{K_{i}}$.
+
+\example{3}{Recall the solution of the harmonic oscillator problem in 1D using the raising and lowering operators.
+\begin{equation}
+\vb{H}=\frac{p^{2}}{2m}+\frac{m\omega^{2}}{2}x^{2}
+\end{equation}
+One defines
+\begin{align}
+a^{\dagger}&=\frac{1}{\sqrt{2\hbar}}\qty(\sqrt{m\omega}x-\frac{i}{\sqrt{m\omega}}p)\\
+a&=\frac{1}{\sqrt{2\hbar}}\qty(\sqrt{m\omega}x+\frac{i}{\sqrt{m\omega}}p)
+\end{align}
+Thus
+\begin{equation}
+\begin{aligned}
+\comm{a}{a^{\dagger}}&=-\frac{i}{2\hbar}\comm{x}{p}+\frac{i}{2\hbar}\comm{p}{x}=\qty(-\frac{i}{2\hbar})(i\hbar)+\frac{i}{2\hbar}(-i\hbar)=\frac{1}{2}+\frac{1}{2}=1
+\end{aligned}
+\end{equation}
+}
+Define the \ul{number operator} $\vb{N}$ as
+\begin{equation}
+\vb{N}=a^{\dagger}a
+\end{equation}
+Note that $\vb{N}^{\dagger}=a^{\dagger}a=\vb{N}$ is Hermitian.
+
+\begin{equation}
+\begin{aligned}
+\vb{N}&=a^{\dagger}a\\
+&=\frac{1}{2\hbar}\qty(\sqrt{m\omega}x-\frac{i}{\sqrt{m\omega}}p)\qty(\sqrt{m\omega}x+\frac{i}{\sqrt{m\omega}}p)\\
+&=\frac{1}{2\hbar}\qty(m\omega x^{2}+\frac{p^{2}}{m\omega}+i\comm{x}{p})\\
+&=\frac{1}{\hbar\omega}\qty(\frac{p^{2}}{2m}+\frac{m\omega^{2}}{2}x^{2})-\frac{1}{2}\\
+&=\frac{\vb{H}}{\hbar\omega}-\frac{1}{2}\\
+\implies \vb{H}&=\hbar\omega\qty(\vb{N}+\frac{1}{2})
+\end{aligned}
+\end{equation}
+Since $\comm{\vb{H}}{\vb{N}}=0$, $\vb{H}$ and $\vb{N}$ can be diagonalized simultaneously. Let $\ket{n}$ be an eigenket of $\vb{N}$ with eigenvalue $n$. Thus
+\begin{equation}
+\vb{N}\ket{n}=n\ket{n}
+\end{equation}
+Similarly
+\begin{equation}
+\vb{H}\ket{n}=E_{n}\ket{n}
+\end{equation}
+Thus
+\begin{equation}
+E_{n}=\hbar\omega\qty(n+\frac{1}{2})
+\end{equation}
+Note since $\comm{a}{a^{\dagger}}=1$
+\begin{align}
+\comm{\vb{N}}{a}&=a^{\dagger}aa-aa^{\dagger}a=a^{\dagger}aa-(1+a^{\dagger}a)a=-a\\
+\comm{\vb{N}}{a^{\dagger}}&=a^{\dagger}aa^{\dagger}-a^{\dagger}a^{\dagger}a=a^{\dagger}(1+a^{\dagger}a)-a^{\dagger}a^{\dagger}a=a^{\dagger}
+\end{align}
+Consider
+\begin{equation}
+\begin{aligned}
+\vb{N}a^{\dagger}\ket{n}&=\qty(\comm{\vb{N}}{a^{\dagger}}+a^{\dagger}\vb{N})\ket{n}\\
+&=\qty(a^{\dagger}+na^{\dagger})\ket{n}\\
+&=(n+1)a^{\dagger}\ket{n}
+\end{aligned}
+\end{equation}
+Thus, $a^{\dagger}\ket{n}$ is also an eigenket of $\vb{N}$ with eigenvalue $n+1$.\\
+
+Analogously
+\begin{equation}
+\begin{aligned}
+\vb{N}a\ket{n}&=(\comm{\vb{N}}{a}+a\vb{N})\ket{n}\\
+&=(-a+na)\ket{n}\\
+&=(n-1)a\ket{n}
+\end{aligned}
+\end{equation}
+Thus, $a\ket{n}$ is also an eigenket of $\vb{N}$ with eigenvalue $n-1$.s
+
+\begin{equation}
+\begin{aligned}
+\therefore a\ket{n}&=c\ket{n-1},\quad c\in\mathbb{C}\\
+\mel{n}{a^{\dagger}a}{n}&=\abs{c}^{2}\ip{n-1}=\abs{c}^{2}\\
+\mel{n}{a^{\dagger}a}{n}&=\mel{n}{\vb{N}}{n}=n\ip{n}=n
+\end{aligned}
+\end{equation}
+Taking $c$ to be real, $c=\sqrt{n}$.
+\begin{equation}
+\implies a\ket{n}=\sqrt{n}\ket{n-1}
+\end{equation}
+If one keeps applying the annihilation operator $a$ on $\ket{n}$ starting from some $n$, the constant eventually crosses over to a negative value. However, $n=\abs{c}^{2}\geq 0$. Thus, the sequence must terminate at $n=0$, such that applying to $a$ to the state leaves it unchanged at $n=0$. This is only the case if $n$ are non-negative integers. Thus, $n$ can be interpreted as the number of quanta of energy $\hbar\omega$ in a given harmonic oscillator eigenstate.\\
+
+Let us return to many-particle states. It is clear one obtains the desired properties for bosons if one postulates $\comm{a_{i}}{a_{i}^{\dagger}}=1$ and interpret $\vb{N}_{i}=a_{i}^{\dagger}a_{i}$ as the \ul{boson number operator} in the state $\ket{K_{i}}$.
+\begin{equation}
+\vb{N}_{i}\ket{n_{1},n_{2},\ldots,n_{i},\ldots}=n_{i}\ket{n_{1},n_{2},\ldots,n_{i},\ldots}
+\end{equation}
+For fermions, one defines the \ul{number operator for fermions} similarly as $\vb{N}_{i}=a_{i}^{\dagger}a_{i}$. However, to ensure that $\vb{N}_{i}$ only has two eigenvalues 0 and 1, one replaces the commutator $\comm{a_{i}}{a_{i}^{\dagger}}=1$ with the anti-commutator $\acomm{a_{i}}{a_{i}^{\dagger}}=1$.
+\begin{equation}
+\begin{aligned}
+\vb{N}_{i}^{2}&=a_{i}^{\dagger}a_{i}a_{i}^{\dagger}a_{i}\\
+&=a_{i}^{\dagger}(\mathbb{I}-a_{i}^{\dagger}a_{i})a_{i}\\
+&=a_{i}^{\dagger}a_{i}-a_{i}^{\dagger}a_{i}^{\dagger}a_{i}a_{i}\\
+&=\vb{N}_{i}-\cancelto{0}{(a_{i}^{\dagger})^{2}}(a_{i})^{2}\\
+&=\vb{N}_{i}
+\end{aligned}
+\end{equation}
+This is only possible if the eigenvalues are 0 and 1.
+
+\subsection{Second Quantization}
+Let us consider how to represent the Hamiltonian in second quantized form. Consider a system of many particles in a box of volume $V$. Let the box be a cube with side length $L$, such that $V=L^{3}$.\\
+
+The single-particle eigenstates are momentum eigenstates
+\begin{equation}
+\ip*{\vec{r}}{\vec{k}}=\psi_{k}(\vec{r})=\frac{1}{\sqrt{V}}e^{i\vec{k}\cdot\vec{r}}
+\end{equation}
+where $\vec{k}=\frac{\vec{p}}{\hbar}$ is the wave vector. Also note that $\varepsilon_{k}=\frac{\hbar^{2}k^{2}}{2m}$ is the energy associated with this wave vector.
 \end{document}
