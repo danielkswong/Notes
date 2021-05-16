@@ -3963,7 +3963,7 @@ In Dirac representation, $\gamma^{0}=\tau_{3}$ and $\gamma^{i}=i\sigma^{i}\tau_{
 Note that
 \begin{equation}
 \begin{aligned}
-\tau_{3}\tau_{2}\mqty[1 & 0 \\ 0 & -i]\mqty[0 & -i \\ i & 0]=\mqty[0 & -i \\ -i & 0]=-i\tau_{1}\\
+\tau_{3}\tau_{2}&=\mqty[1 & 0 \\ 0 & -i]\mqty[0 & -i \\ i & 0]=\mqty[0 & -i \\ -i & 0]=-i\tau_{1}\\
 \sigma^{1}\sigma^{2}&=\mqty[0 & 1 \\ 1 & 0]\mqty[0 & -i \\ i & 0]=\mqty[i & 0\\ 0 & -i]=i\sigma^{3}
 \end{aligned}
 \end{equation}
@@ -4640,5 +4640,232 @@ The single-particle eigenstates are momentum eigenstates
 \begin{equation}
 \ip*{\vec{r}}{\vec{k}}=\psi_{k}(\vec{r})=\frac{1}{\sqrt{V}}e^{i\vec{k}\cdot\vec{r}}
 \end{equation}
-where $\vec{k}=\frac{\vec{p}}{\hbar}$ is the wave vector. Also note that $\varepsilon_{k}=\frac{\hbar^{2}k^{2}}{2m}$ is the energy associated with this wave vector.
+where $\vec{k}=\frac{\vec{p}}{\hbar}$ is the wave vector. Also note that $\varepsilon_{k}=\frac{\hbar^{2}k^{2}}{2m}$ is the energy associated with this wave vector.\\
+
+Using periodic boundary conditions
+\begin{equation}
+\begin{aligned}
+\psi_{k}(x+L,y,z)&=\psi_{k}(x,y,z)\qq{(and similarly for $y$ and $z$)}\\
+\therefore e^{ik_{x}(x+L)}&=e^{ik_{x}x}\implies e^{ik_{x}L}=1
+\end{aligned}
+\end{equation}
+Similarly
+\begin{equation}
+e^{ik_{y}L}=e^{ik_{z}L}=1
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+k_{x}&=\frac{2\pi n_{x}}{L}, &n_{x}&=0,\pm1,\pm2,\ldots\\
+k_{y}&=\frac{2\pi n_{y}}{L}, &n_{y}&=0,\pm1,\pm2,\ldots\\
+k_{z}&=\frac{2\pi n_{z}}{L}, &n_{z}&=0,\pm1,\pm2,\ldots
+\end{aligned}
+\end{equation}
+These have the corresponding single-particle eigenstate energies of
+\begin{equation}
+\varepsilon_{k}=\frac{\hbar^{2}k^{2}}{2m}=\frac{\hbar^{2}(k_{x}^{2}+k_{y}^{2}+k_{z}^{2})}{2m}
+\end{equation}
+In occupation number representation, states of this system are
+\[
+\ket{n_{k_{1}},n_{k_{2}},\ldots,n_{k_{i}},\ldots}
+\]
+The total energy of such a state is
+\begin{equation}
+E=\sum_{k}\varepsilon_{k}n_{k}
+\end{equation}
+This implies the Hamiltonian is of the form
+\begin{equation}
+\vb{H}=\sum_{k}\varepsilon_{k}a_{k}a_{k}^{\dagger}
+\end{equation}
+In order to account for interactions between particles, one must figure out how to change the basis for the creation and annihilation operators. Suppose instead of creating a particle with a specific wave vector $\vec{k}$, one wants to create a particle with a specific position $\vec{r}$.
+\begin{equation}
+\ket*{\vec{r}}=\sum_{k}\ket*{\vec{k}}\ip*{\vec{k}}{\vec{r}}
+\end{equation}
+Since
+\begin{equation}
+\ip*{\vec{k}}{\vec{r}}=\ip*{\vec{r}}{\vec{k}}^{*}=\frac{1}{\sqrt{V}}e^{-i\vec{k}\cdot\vec{r}}
+\end{equation}
+one gets
+\begin{equation}
+\ket*{\vec{r}}=\frac{1}{\sqrt{V}}\sum_{\vec{k}}e^{-i\vec{k}\cdot\vec{r}}\ket*{\vec{k}}
+\end{equation}
+Thus, the creation operator $\psi^{\dagger}(\vec{r})$ for a particle at point $\vec{r}$ is
+\begin{equation}
+\psi^{\dagger}(\vec{r})=\frac{1}{\sqrt{V}}\sum_{\vec{k}}e^{-i\vec{k}\cdot\vec{r}}a_{k}^{\dagger}
+\end{equation}
+Similarly, the annihilation operator $\psi(\vec{r})$ for a particle at position $\vec{r}$ is
+\begin{equation}
+\psi(\vec{r})=\qty(\psi^{\dagger}(\vec{r}))^{\dagger}=\frac{1}{\sqrt{V}}\sum_{\vec{k}}e^{i\vec{k}\cdot\vec{r}}a_{k}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\psi^{\dagger}(\vec{r})\psi(\vec{r})&=\frac{1}{\sqrt{V}}\sum_{k}e^{i(\vec{k}-\vec{k}\,')\cdot\vec{r}}a_{k}^{\dagger}\\
+\implies \int\dd[3]{r}\psi^{\dagger}(\vec{r})\psi(\vec{r})&=\frac{1}{V}\sum_{k,k^{\prime}}a_{k}^{\dagger}a_{k^{\prime}}\int\dd[3]{r}e^{-i(\vec{k}-\vec{k}\,')\cdot\vec{r}}\\
+&=\sum_{k}a_{k}^{\dagger}a_{k}\qq{since $\frac{1}{V}\int\dd[3]{r}e^{-i(\vec{k}-\vec{k}\,')\cdot\vec{r}}=\delta_{\vec{k},\vec{k}\,'}$}
+\end{aligned}
+\end{equation}
+Thus, $\int\dd[3]{\vec{r}}\psi^{\dagger}(\vec{r})\psi(\vec{r})=\sum_{k}a_{k}^{\dagger}a_{k}$ is obtained and is called the total particle number operator. Thus
+\begin{equation}
+\psi^{\dagger}(\vec{r})\psi(\vec{r})=\rho(\vec{r})
+\end{equation}
+is the \ul{particle density operator}.\\
+
+Suppose the particles interact via a potential $U(\vec{r}-\vec{r}\,')$, where for example
+\begin{equation}
+U(\vec{r}-\vec{r}^{\dagger})=\frac{q^{2}}{\abs*{\vec{r}-\vec{r}\,'}}
+\end{equation}
+is the Coulomb potential.\\
+
+Classically, the interaction energy is given by
+\begin{equation}
+E_{\trm{int}}=\frac{1}{2}\int\dd[3]{r}\int\dd[3]{r^{\prime}}\rho(\vec{r})U(\vec{r}-\vec{r}\,')\rho(\vec{r}\,')
+\end{equation}
+with the factor of $\frac{1}{2}$ to avoid double counting.\\
+
+To obtain the Hamiltonian, replace the density with the density operator
+\begin{equation}
+\vb{H}_{\trm{int}}=\frac{1}{2}\int\dd[3]{r}\dd[3]{r^{\prime}}\psi^{\dagger}(\vec{r})\psi(\vec{r})U(\vec{r}-\vec{r}\,')\psi^{\dagger}(\vec{r}\,')\psi(\vec{r}\,')
+\end{equation}
+Let us rewrite this in \ul{normal ordered form} where all creation operators are to the left of the annihilation operators. One now needs to find the commutation relations for $\psi(\vec{r})$ and $\psi^{\dagger}(\vec{r}\,')$.
+\begin{equation}
+\begin{aligned}
+\comm{\psi(\vec{r})}{\psi^{\dagger}(\vec{r}\,')}&=\frac{1}{V}\sum_{k,k^{\prime}}\underbrace{\comm{a_{k}}{a_{k^{\prime}}^{\dagger}}}_{\delta_{k,k'}}e^{i\vec{k}\cdot\vec{r}}e^{-i\vec{k}\,'\cdot\vec{r}\,'}\\
+&=\frac{1}{V}\sum_{k}e^{i\vec{k}\cdot(\vec{r}-\vec{r}\,')}\\
+&=\delta(\vec{r}-\vec{r}\,')
+\end{aligned}
+\end{equation}
+This is true for bosons. In the case of fermions
+\begin{equation}
+\acomm{\psi(\vec{r})}{\psi^{\dagger}(\vec{r}\,')}=\delta(\vec{r}-\vec{r}\,')
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\vb{H}_{\trm{int}}&=\frac{1}{2}\int\dd[3]{r}\dd[3]{r'}U(\vec{r}-\vec{r}\,')\psi^{\dagger}(\vec{r})\psi(\vec{r})\psi^{\dagger}(\vec{r}\,')\psi(\vec{r}\,')\\
+&=\frac{1}{2}\int\dd[3]{r}\dd[3]{r'}U(\vec{r}-\vec{r}\,')\psi^{\dagger}(\vec{r})\qty[\delta(\vec{r}-\vec{r}\,')+\psi^{\dagger}(\vec{r}\,')\psi(\vec{r})]\psi(\vec{r}\,')\\
+&=\frac{1}{2}\int\dd[3]{r}\dd[3]{r'}U(\vec{r}-\vec{r}\,')\psi^{\dagger}(\vec{r})\psi^{\dagger}(\vec{r}\,')\psi(\vec{r})\psi(\vec{r}\,')\\
+&\quad\frac{1}{2}\int\dd[3]{r}\dd[3]{r^{\prime}}U(\vec{r}-\vec{r}\,')\delta(\vec{r}-\vec{r}\,')\psi^{\dagger}(\vec{r})\psi(\vec{r}\,')\\
+&=\frac{1}{2}\int\dd[3]{r}\dd[3]{r^{\prime}}U(\vec{r}-\vec{r}\,')\psi^{\dagger}(\vec{r})\psi^{\dagger}(\vec{r}\,')\psi(\vec{r}\,')\psi(\vec{r})+\frac{U(0)}{2}\int\dd[3]{r}\psi^{\dagger}(\vec{r})\psi(\vec{r})\\
+&=\frac{1}{2}\int\dd[3]{r}\dd[3]{r^{\prime}}U(\vec{r}-\vec{r}\,')\psi^{\dagger}(\vec{r})\psi^{\dagger}(\vec{r}\,')\psi(\vec{r}\,')\psi(\vec{r})+\frac{U(0)N}{2}
+\end{aligned}
+\end{equation}
+Since the second term is a constant, where $N$ is the total particle number, one can ignore it. Thus
+\begin{equation}
+\vb{H}_{\trm{int}}=\frac{1}{2}\int\dd[3]{r}\dd[3]{r^{\prime}}U(\vec{r}-\vec{r}\,')\psi^{\dagger}(\vec{r})\psi^{\dagger}(\vec{r}\,')\psi(\vec{r}\,')\psi(\vec{r})
+\end{equation}
+For fermions, spin must also be taken into account
+\begin{equation}
+\psi^{\dagger}_{\sigma}(\vec{r})=\frac{1}{\sqrt{V}}\sum_{k}e^{-i\vec{k}\cdot\vec{r}}a_{k\sigma},\quad\sigma\in\{\up,\dn\}
+\end{equation}
+In this case, the total particle density is given by
+\begin{equation}
+\rho(\vec{r})=\sum_{\sigma}\psi^{\dagger}_{\sigma}(\vec{r})\psi_{\sigma}(\vec{r})
+\end{equation}
+Therefore, one obtains
+\begin{equation}
+\vb{H}_{\trm{int}}=\frac{1}{2}\int\dd[3]{r}\dd[3]{r^{\prime}}\sum_{\sigma,\sigma^{\prime}}U(\vec{r}-\vec{r}\,')\psi_{\sigma}^{\dagger}(\vec{r})\psi_{\sigma}(\vec{r})\psi_{\sigma^{\prime}}^{\dagger}(\vec{r}\,')\psi_{\sigma^{\prime}}(\vec{r}\,')
+\end{equation}
+Since $\acomm{\psi_{\sigma}(\vec{r})}{\psi_{\sigma^{\prime}}(\vec{r}\,')}=\delta_{\sigma,\sigma_{\prime}}\delta(\vec{r}-\vec{r}\,')$
+\begin{equation}
+\begin{aligned}
+\vb{H}_{\trm{int}}&=\frac{1}{2}\int\dd[3]{r}\dd[3]{r'}\sum_{\sigma,\sigma^{\prime}}U(\vec{r}-\vec{r}\,')\psi_{\sigma}^{\dagger}(\vec{r})\qty[\delta_{\sigma,\sigma^{\prime}}\delta(\vec{r}-\vec{r}\,')-\psi_{\sigma^{\prime}}^{\dagger}(\vec{r})\psi_{\sigma}(\vec{r})]\psi_{\sigma^{\prime}}(\vec{r}\,')\\
+&=\frac{1}{2}\int\dd[3]{r}\dd[3]{r^{\prime}}\sum_{\sigma,\sigma^{\prime}}U(\vec{r}-\vec{r}\,')\psi_{\sigma}^{\dagger}(\vec{r})\psi_{\sigma^{\prime}}^{\dagger}(\vec{r}\,')\psi_{\sigma^{\prime}}(\vec{r}\,')\psi_{\sigma}(\vec{r})+\trm{constant}
+\end{aligned}
+\end{equation}
+Ignoring the constant term
+\begin{equation}
+\vb{H}_{\trm{int}}=\frac{1}{2}\int\dd[3]{r}\dd[3]{r^{\prime}}\sum_{\sigma,\sigma^{\prime}}U(\vec{r}-\vec{r}\,')\psi_{\sigma}^{\dagger}(\vec{r})\psi_{\sigma^{\prime}}^{\dagger}(\vec{r}\,')\psi_{\sigma^{\prime}}(\vec{r}\,')\psi_{\sigma}(\vec{r})
+\end{equation}
+The kinetic energy is given by
+\begin{equation}
+\begin{aligned}
+E_{\trm{kin}}&=\sum_{k}\varepsilon_{k}n_{k}\\
+\implies \vb{H}_{\trm{kin}}&=\sum_{k}\varepsilon_{k}\vb{N}_{k}=\sum_{k}\varepsilon_{k}a_{k}^{\dagger}a_{k}
+\end{aligned}
+\end{equation}
+By analogy to classical mechanics
+\begin{equation}
+\begin{aligned}
+\vb{H}_{\trm{kin}}&=\int\dd[3]{r}\psi^{\dagger}(\vec{r})\qty(-\frac{\hbar^{2}\nabla^{2}}{2m})\psi(\vec{r})\qq{where $\psi^{\dagger}(\vec{r})=\frac{1}{\sqrt{V}}\sum_{k}e^{-i\vec{k}\cdot\vec{r}}a_{k}^{\dagger}$}\\
+\therefore \vb{H}_{\trm{kin}}&=\frac{1}{V}\int\dd[3]{r}\sum_{k_{1},k_{2}}e^{-i\vec{k}_{1}\cdot\vec{r}}a_{k_{1}}^{\dagger}\qty(-\frac{\hbar^{2}\nabla^{2}}{2m})a_{k_{2}}e^{i\vec{k}_{2}\cdot\vec{r}}\\
+&=\frac{1}{V}\int\dd[3]{r}\sum_{k_{1},k_{2}}a_{k_{1}}^{\dagger}a_{k_{2}}\frac{\hbar^{2}k_{2}^{2}}{2m}e^{-i(\vec{k}_{1}-\vec{k}_{2})\cdot\vec{r}}\\
+&=\sum_{k}\frac{\hbar^{2}k^{2}}{2m}a_{k}^{\dagger}a_{k}\\
+&=\sum_{k}\varepsilon_{k}a_{k}^{\dagger}a_{k}\qq{as before, with $\varepsilon_{k}=\frac{\hbar^{2}k^{2}}{2m}$}
+\end{aligned}
+\end{equation}
+Note the Fourier transform of $U(\vec{r}-\vec{r}\,')$ is
+\begin{equation}
+\begin{aligned}
+U(\vec{r}-\vec{r}\,')&=\frac{1}{V}\sum_{\vec{q}}U(\vec{q})e^{i\vec{q}\cdot(\vec{r}-\vec{r}')}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\vb{H}_{\trm{int}}=\frac{1}{2V^{3}}\int\dd[3]{r}\dd[3]{r'}\sum_{\vec{k}_{1},\vec{k}_{2},\vec{k}_{3},\vec{k}_{4},\vec{q}}U(\vec{q})e^{i\vec{q}\cdot(\vec{r}-\vec{r}\,')}a_{k_{1}}^{\dagger}a_{k_{2}}^{\dagger}a_{k_{3}}a_{k_{4}}e^{-i\vec{k}_{1}\cdot\vec{r}}e^{-i\vec{k}_{2}\cdot\vec{r}\,'}e^{i\vec{k}_{3}\cdot\vec{r}\,'}e^{i\vec{k}_{4}\cdot\vec{r}}
+\end{equation}
+Note that
+\begin{equation}
+\begin{aligned}
+\frac{1}{V}\int\dd[3]{r}e^{i(\vec{q}-\vec{k}_{1}+\vec{k}_{4})\cdot\vec{r}}=\delta_{\vec{q}-\vec{k}_{1}+\vec{k}_{4}}\\
+\frac{1}{V}\int\dd[3]{r}e^{i(\vec{q}-\vec{k}_{2}+\vec{k}_{3})\cdot\vec{r}}=\delta_{\vec{q}-\vec{k}_{2}+\vec{k}_{3}}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\vec{q}=\vec{k}_{1}-\vec{k}_{4}&=\vec{k}_{3}-\vec{k}_{2}\\
+\therefore\vec{k}_{1}+\vec{k}_{2}&=\vec{k}_{3}-\vec{k}_{4}\qq{(conservation of linear momentum)}
+\end{aligned}
+\end{equation}
+Let $\vec{k}_{4}=\vec{k}$ and $\vec{k}_{3}=\vec{k}\,'$. Then
+\begin{equation}
+\begin{aligned}
+\vec{k}_{1}&=\vec{k}+\vec{q}\\
+\vec{k}_{2}&=\vec{k}\,'-\vec{q}
+\end{aligned}
+\end{equation}
+Then
+\begin{equation}
+\begin{aligned}
+\vb{H}_{\trm{int}}&=\frac{1}{2V}\sum_{\vec{k},\vec{k}\,',\vec{q}}U(\vec{q})a_{\vec{k}+\vec{q}}^{\dagger}a_{\vec{k}\,'-\vec{q}}^{\dagger}a_{\vec{k}\,'}a_{\vec{k}}
+\end{aligned}
+\end{equation}
+This describes the scattering of particles.
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) -- (-3,1.1) node[above left] {$\vec{k}$};
+	\draw (0,0) -- (-3,-1.6) node[below left] {$\vec{k}\,'$};
+	\draw (0,0) -- (1,1.8) node[above right] {$\vec{k}\,'-\vec{q}$};
+	\draw (0,0) -- (1,-1.8) node[below right] {$\vec{k}+\vec{q}$};
+\end{tikzpicture}
+\end{center}
+Momentum conservation occurs at every vertex of the diagram. This is an elementary Feynman diagram. For a bunch of interacting particles, overall momenta is conserved if there are no external forces. The process of changing momenta is dependent on Fourier component $U(\vec{q})$.\\
+
+Thus
+\begin{equation}
+\vb{H}=\sum_{k}\varepsilon_{k}a_{k}^{\dagger}a_{k}+\frac{1}{2V}\sum_{\vec{k},\vec{k}\,',\vec{q}}U(\vec{q})a_{\vec{k}+\vec{q}}^{\dagger}a_{\vec{k}\,'-\vec{q}}^{\dagger}a_{\vec{k}\,'}a_{\vec{k}}\qq{(in momentum space)}
+\end{equation}
+
+For fermions, accounting for spin
+\begin{equation}
+\vb{H}=\sum_{\vec{k},\sigma}\varepsilon_{k}a_{k,\sigma}^{\dagger}a_{k,\sigma}+\frac{1}{2V}\sum_{\vec{k},\vec{k}\,',\vec{q}}\sum_{\sigma,\sigma^{\prime}}U(\vec{q})a_{\vec{k}+\vec{q},\sigma}^{\dagger}a_{\vec{k}\,'-\vec{q},\sigma}^{\dagger}a_{\vec{k}\,',\sigma^{\prime}}a_{\vec{k},\sigma}
+\end{equation}
+with $\sigma\in\{\up,\dn\}$ for spin-$\frac{1}{2}$ particles.\\
+
+Consider a system of many bosons (e.g. interacting the atoms). Since any number of bosons can occupy the same state, as $T\rightarrow 0$, they will accumulate in the $\vec{k}=0$, $\varepsilon_{k=0}=0$ state.\\
+
+\begin{equation}
+\begin{aligned}
+a_{0}^{\dagger}a_{0}\ket{n_{0},n_{1},\ldots}&=n_{0}\ket{n_{0},n_{1},\ldots}\qq{where $n_{0}\sim 10^{23}$ is very large}\\
+a_{0}a_{0}^{\dagger}-a_{0}^{\dagger}a_{0}&=1\implies a_{0}a_{0}^{\dagger}=a_{0}^{\dagger}a_{0}+1\\
+\therefore a_{0}a_{0}^{\dagger}\ket{n_{0},n_{1},\ldots}&=(1+a_{0}^{\dagger}a_{0})\ket{n_{0},n_{1},\ldots}\\
+&=(n_{0}+1)\ket{n_{0},n_{1},\ldots}\\
+&\approx n_{0}\ket{n_{0},n_{1},\ldots}
+\end{aligned}
+\end{equation}
+Thus, the creation and annihilation operators commute in the limit of large numbers. Thus, $a_{0}^{\dagger}$ and $a_{0}$ simply become complex numbers, which has observable consequences in the superfluidity of ${}^{1}$He. One also sees this in superconductivity.\\
+
+Thus, in the limit of having many particles (i.e. a macroscopic system of quantum particles), they behave classically (given that the $a^{\dagger}$ and $a$ operators turn to complex numbers).
+
 \end{document}
