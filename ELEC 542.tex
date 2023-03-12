@@ -4,8 +4,6 @@
 \usepackage[fleqn]{amsmath} % To write aligned equations
 \usepackage{amssymb} % To write math symbols
 \usepackage{graphicx,float} % To add pictures
-\usepackage{caption} % To add captions
-\usepackage{subcaption} % To add subcaptions
 \usepackage{multirow} % To add multirow lines in tables
 \usepackage{multicol} % To add multicolumn lines in tables
 \usepackage{hyperref} % To add hyperlinks
@@ -16,7 +14,7 @@
 \usepackage{physics} % To use supported physics notation
 \usepackage[none]{hyphenat} % To remove hyphenation
 \usepackage{mathtools}  % To use \mathclap which removes white space for subscripts
-\usepackage{tensor} % For subscripts to the left
+\usepackage{empheq} % To use \empheq environment
 
 \usepackage{fancyhdr} % To input custom headers
 \pagestyle{fancy} % Defines header for all pages other than plain-style pages
@@ -44,45 +42,6 @@
 
 \definecolor{lightGray}{gray}{0.8}
 
-\newcommand{\trm}[1]{\textrm{#1}} % Shorthand for \textrm command
-\newcommand{\up}{\uparrow} % Shorthand for \uparrow command
-\newcommand{\dn}{\downarrow} % Shorthand for \downarrow command
-\newcommand{\en}{\epsilon_{0}} % Shorthand for \epsilon_{0}
-\newcommand{\ul}[1]{\underline{\smash{#1}}} % Properly underlines words
-\newcommand{\explain}[1]{% Adds an arrow to allow for explanations in equations
-	\quad\rotatebox[origin=c]{180}{\enskip$\Lsh$}\hfill
-	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
-	#1
-	\end{minipage}\hspace{4em}\bigskip
-}
-
-\newcommand{\aside}[1]{% Aligns the environment for asides
-	\ul{Aside}:\hfill
-	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
-	#1
-	\end{minipage}\hspace{4em}\bigskip
-}
-
-\newcommand{\theorem}[1]{% Aligns the environment for theorems
-	\ul{Theorem}:\hfill
-	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
-	#1
-	\end{minipage}\hspace{4em}\bigskip
-}
-
-\newcommand{\proof}[1]{% Aligns the environment for proof
-	\ul{Proof}:\hfill
-	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
-	#1
-	\end{minipage}\hspace{4em}\bigskip
-}
-
-\newcommand{\definition}[1]{% Aligns the environment for definitions
-	\ul{Definition}:\hfill
-	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
-	#1
-	\end{minipage}\hspace{4em}\bigskip
-}
 \newcommand{\example}[2]{% Aligns the environment for examples
 	\bigskip
 	\hrule
@@ -95,6 +54,12 @@
 	\hrule
 	\bigskip
 }
+
+\newcommand{\trm}[1]{\textrm{#1}} % Shorthand for \textrm command
+\newcommand{\up}{\uparrow} % Shorthand for \uparrow command
+\newcommand{\dn}{\downarrow} % Shorthand for \downarrow command
+\newcommand{\en}{\epsilon_{0}} % Shorthand for \epsilon_{0}
+\newcommand{\ul}[1]{\underline{\smash{#1}}} % Properly underlines words
 
 \newcommand{\angstrom}{\textup{\AA}} % Angstrom symbol
 \newcommand{\Chi}{\mathcal{X}} % Inline chi symbol
@@ -248,8 +213,152 @@ Thus, in more detail
 \begin{aligned}
 \vb{H}\Psi&=\qty(\sum_{i=1}^{N}-\frac{1}{2}\nabla_{i}^{2}\Psi_{\trm{elec}})\Psi_{\trm{nucl}}+\qty(\sum_{A=1}^{M}-\frac{1}{2M_{A}}\nabla_{A}^{2}\qty(\Psi_{\trm{elec}}\Psi_{\trm{nucl}}))\\
 &\quad+\qty(\sum_{i=1}^{N}\sum_{j>i}^{N}\frac{1}{r_{ij}})\Psi_{\trm{elec}}\Psi_{\trm{nucl}}+\qty(\sum_{A=1}^{M}\sum_{B>A}^{M}\frac{Z_{A}Z_{B}}{R_{AB}})\Psi_{\trm{elec}}\Psi_{\trm{nucl}}\\
-&\quad+\qty(\sum_{i=1}^{N}\sum_{A=1}^{M}-\frac{Z_{A}}{r_{iA}})\Psi_{\trm{elec}}\Psi_{\trm{nucl}}
+&\quad+\qty(\sum_{i=1}^{N}\sum_{A=1}^{M}-\frac{Z_{A}}{r_{iA}})\Psi_{\trm{elec}}\Psi_{\trm{nucl}}\\
+&=\qty[\qty(\sum_{i=1}^{N}-\frac{1}{2}\nabla_{i}^{2}+\sum_{i=1}^{N}\sum_{j>i}^{N}\frac{1}{r_{ij}}+\sum_{i=1}^{N}\sum_{A=1}^{M}-\frac{Z_{A}}{r_{iA}})\Psi_{\trm{elec}}]\Psi_{\trm{nucl}}\\
+&\quad+\sum_{A=1}^{M}\sum_{B>A}^{M}\frac{Z_{A}Z_{B}}{R_{AB}}\Psi_{\trm{elec}}\Psi_{\trm{nucl}}\\
+&\quad+\sum_{A=1}^{M}-\frac{1}{2M_{A}}\big[\cancelto{\mathrlap{\trm{neglect}}}{\qty(\nabla_{A}^{2}\Psi_{\trm{elec}})\Psi_{\trm{nucl}}}+\qty(\nabla_{A}^{2}\Psi_{\trm{nucl}})\Psi_{\trm{elec}}+\cancelto{\mathrlap{\trm{neglect}}}{2\qty(\nabla_{A}\Psi_{\trm{elec}})\qty(\nabla_{A}\Psi_{\trm{nucl}})}]
 \end{aligned}
+\end{equation}
+
+Compare the terms $\nabla_{A}\Psi_{\trm{elec}}$ to $\nabla_{A}\Psi_{\trm{nucl}}$.
+\begin{center}
+\begin{tikzpicture}
+	\draw[domain=-2:2,samples=200] plot (\x, {2*exp(-(\x)^2/2)});
+	\draw[domain=-2:2,samples=200,red,dashed] plot (\x, {2*exp(-(\x-0.2)^2/2)});
+	\draw[<-] (-1.15,1.15) -- (-1.5,1.5) node[above left] {$\Psi_{\trm{elec}}$};
+	\filldraw[black] (0,-0.2) circle (1pt);
+	\filldraw[red] (0.2,-0.2) circle (1pt);
+	\draw[|-|] (0,-0.4) -- node[below,text width=4cm,align=center] {small nucleus movement} (0.2,-0.4);
+	\draw[->] (0.3,2.3) -- (0.3,2.1) node[above,yshift=0.1cm] {small change};
+	\draw[->] (0.3,1.6) -- (0.3,1.8);
+	\draw[domain=4.7:5.35,samples=200] plot (\x, {2*exp(-(\x-5)^2/0.01)});
+	\draw[domain=4.9:5.55,samples=200,red,dashed] plot (\x, {2*exp(-(\x-5.2)^2/0.01)});
+	\draw[<-] (4.75,1.15) -- (4.4,1.5) node[above left] {$\Psi_{\trm{nucl}}$};
+	\draw[->] (5.1,2.3) -- (5.1,2.1) node[above,yshift=0.1cm] {large change};
+	\filldraw[black] (5,-0.2) circle (1pt);
+	\filldraw[red] (5.2,-0.2) circle (1pt);
+	\draw[|-|] (5,-0.4) -- node[below,text width=4cm,align=center] {small nucleus movement} (5.2,-0.4);
+\end{tikzpicture}
+\end{center}
+The electron cloud around a nucleus does not change significantly for small movements of the nucleus. In comparison, the nucleus wavefunction changes significantly with movement of the nucleus. Thus, we expect the first and third term on the third line of the equation above to be much smaller than the second term. Therefore
+\begin{equation}
+\begin{aligned}
+	\vb{H}\Psi&\approx\bigg[\bigg(\overbrace{\sum_{i=1}^{N}-\frac{1}{2}\nabla_{i}^{2}+\sum_{i=1}^{N}\sum_{j>i}^{N}\frac{1}{r_{ij}}+\sum_{i=1}^{N}\sum_{A=1}^{M}-\frac{Z_{A}}{r_{iA}}}^{E_{\trm{elec}}}\bigg)\Psi_{\trm{elec}}\bigg]\Psi_{\trm{nucl}}\\
+&\quad+\sum_{A=1}^{M}\sum_{B>A}^{M}\frac{Z_{A}Z_{B}}{R_{AB}}\Psi_{\trm{elec}}\Psi_{\trm{nucl}}+\sum_{A=1}^{M}-\frac{1}{2M_{A}}\qty(\nabla_{A}^{2}\Psi_{\trm{nucl}})\Psi_{\trm{elec}}\\
+&=E\Psi_{\trm{elec}}\Psi_{\trm{nucl}}]]
+\end{aligned}
+\end{equation}
+\begin{equation}
+\implies\bigg[\sum_{A=1}^{M}-\frac{1}{2M_{A}}\nabla_{A}^{2}+\color{red}\underbrace{\color{black}\sum_{A=1}^{M}\sum_{B>A}^{M}\frac{Z_{A}Z_{B}}{R_{AB}}+E_{\trm{elec}}}_{\substack{\trm{potential energy landscape}\\\trm{for nuclear motion}}}\color{black}\bigg]\Psi=E\Psi
+\end{equation}
+To calculate the force on the nuclei, one would want to find the derivative of this nuclear energy with respect to these nuclei coordinates. This can be done easily using the Hellman-Feynman theorem. Thus, one can do dynamics of the nuclei.
+
+\subsection{Pauli Exclusion Principle and Hartree Products}
+Back to the electronic problem:
+
+\begin{equation}
+\vb{H}_{\trm{elec}}\Psi_{\trm{elec}}=E_{\trm{elec}}\Psi_{\trm{elec}}\quad(\trm{Schr\"{o}dinger equation})
+\end{equation}
+where
+\begin{equation}
+\vb{H}_{\trm{elec}}=\sum_{i=1}^{N}-\frac{1}{2}\nabla_{i}^{2}+\sum_{i=1}^{N}\sum_{A=1}^{M}-\frac{Z_{A}}{r_{iA}}+\sum_{i=1}^{N}\sum_{j>i}^{N}\frac{1}{r_{ij}}
+\end{equation}
+
+One half of the story is still missing: the Pauli exclusion principle. One must now talk about electron spin.\\
+
+Consider the one-electron problem.
+\begin{equation}
+\Chi(\overbrace{\vec{r}_{1},\omega_{1}}^{\vec{x}_{1}})=\begin{cases}
+\Psi(\vec{r}_{1})\alpha(\omega_{1})&\\
+\hfil\small\trm{or}&(\trm{one-electron wavefunction})\\
+\vphantom{\Psi(\vec{r}_{1})\beta(\omega_{1})}
+\smash{\color{red}\underbrace{\color{black}\Psi(\vec{r}_{1})}_{\footnotesize\substack{\trm{spatial}\\\trm{orbitals}}}}\smash{\color{red}\underbrace{\color{black}\beta(\omega_{1})}_{\footnotesize\substack{\trm{spin}\\\trm{orbitals}}}}&
+\end{cases}
+\vphantom{\begin{cases}
+\Psi(\vec{r}_{1})\alpha(\omega_{1})&\\
+\hfil\small\trm{or}&(\trm{one-electron wavefunction})\\
+\vphantom{\Psi(\vec{r}_{1})\beta(\omega_{1})}
+\color{red}\underbrace{\Psi(\vec{r}_{1})}_{\footnotesize\substack{\trm{spatial}\\\trm{orbitals}}}\underbrace{\beta(\omega_{1})}_{\footnotesize\substack{\trm{spin}\\\trm{orbitals}}}&
+\end{cases}}
+\end{equation}
+where
+\begin{equation}
+\int\alpha^{*}(\omega_{1})\beta(\omega_{1})\dd{\omega_{1}}=0
+\end{equation}
+and
+\begin{equation}
+\int\alpha^{*}(\omega_{1})\alpha(\omega_{1})\dd{\omega_{1}}=\int\beta^{*}(\omega_{1})\beta(\omega_{1})\dd{\omega_{1}}=1
+\end{equation}
+Generalizing, the many-electron wavefunction is
+\begin{equation}
+\Chi(\color{red}\underbrace{\color{black}\vec{x}_{1},\ldots,\vec{x}_{N}}_{4N\trm{ variables}}\color{black})
+\end{equation}
+By Pauli's principle, the wavefunction is anti-symmetric by exchange.
+\begin{equation}
+\Chi(\vec{x}_{1},\cdots,\vec{x}_{i},\cdots,\vec{x}_{j},\cdots,\vec{x}_{N})=-\Chi(\vec{x}_{1},\cdots,\tikzmarknode{xj}{\vec{x}_{j}},\cdots,\tikzmarknode{xi}{\vec{x}_{i}},\cdots,\vec{x}_{N})
+\end{equation}
+\begin{tikzpicture}[overlay,remember picture,yshift=-0.2cm]
+	\draw[red,<->] (xj.south) to[bend right] node[midway, below]{swapped} (xi.south);
+\end{tikzpicture}
+
+One must find the solution of Schr\"{o}dinger's equation in the form of an anti-symmetric wavefunction. Let us try a separation of variables (which may not always be justified) for each electron. The first two terms of the electronic Hamiltonian lends itself easily to separating each electron. The third term in $\vb{H}_{\trm{elec}}$ couples the electrons together. As a first step, let us neglect this troublesome third term.
+\begin{equation}
+\begin{aligned}
+\vb{H}_{\trm{elec}}&\approx\sum_{i=1}^{N}\bigg(\underbrace{-\frac{1}{2}\nabla_{i}^{2}+\sum_{A=1}^{M}-\frac{Z_{A}}{r_{iA}}}_{h(i)\,:\,\trm{1-e$^{-}$ Hamiltonian}}\bigg)\\
+&=h(1)+h(2)+\ldots+h(N)\quad\quad\trm{(Hartree approximation)}
+\end{aligned}
+\end{equation}
+Let us now separate the wavefunction $\Chi(\vec{x}_{1},\cdots,\vec{x}_{N})$ as
+\begin{equation}
+\Chi(\vec{x}_{1},\cdots,\vec{x}_{N})=\Chi_{1}(\vec{x}_{1})\Chi_{2}(\vec{x}_{2})\ldots\Chi_{N}(\vec{x}_{N})\quad\trm{(Hartree product)}
+\end{equation}
+Thus, the Schr\"{o}dinger equation becomes
+\begin{equation}
+\qty(h(1)+\ldots+h(N))\qty(\Chi_{1}(\vec{x}_{1})\cdots\Chi_{N}(\vec{x}_{N}))=E\qty(\Chi_{1}(\vec{x}_{1})\cdots\Chi_{N}(\vec{x}_{N}))
+\end{equation}
+with $E=E_{1}+\ldots+E_{N}$.\\
+
+The problem is now reduced to
+\begin{empheq}[left=\empheqlbrace]{align}
+h(1)\Chi_{1}(\vec{x}_{1})&=E_{1}\Chi_{1}(\vec{x}_{1})\\
+& \vdots\\
+h(N)\Chi_{N}(\vec{x}_{N})&=E_{N}\Chi_{N}(\vec{x}_{N})
+\end{empheq}
+Note that these are all the same equation. Thus
+\begin{equation}
+h(1)\Chi_{i}(\vec{x}_{1})=E_{i}\Chi_{i}(\vec{x}_{1}),\quad i=1,\cdots,\infty
+\end{equation}
+Each Hartree product is a solution to the Schr\"{o}dinger equation with energy eigenvalue $E$ which is a sum of all $E_{i}$. Note that are infinitely many solutions.
+
+\subsection{Slater Determinants}
+Note that the solution of the full electron Hamiltonian is a function of $3N$ variables (where $N$ is the number of electrons). This is an incredibly difficult problem to solve numerically.\\
+
+Consider the Hartree product.
+\begin{equation}
+\Chi(\vec{x}_{1},\cdot,\vec{x}_{N})=\Chi_{1}(\vec{x}_{1})\ldots\Chi_{N}(\vec{x}_{N})
+\end{equation}
+Note that this form of the many-electron wavefunction is not anti-symmetric under exchange. Let us introduce the Slater determinant to solve this issue. Consider a system with two electrons. The Slater determinant is
+\begin{equation}
+\Chi(\vec{x}_{1},\vec{x}_{2})=\frac{1}{\sqrt{2}}\qty[\Chi_{1}(\vec{x}_{1})\Chi_{2}(\vec{x}_{2})-\Chi_{1}(\vec{x}_{2})\Chi(\vec{x}_{1})]
+\end{equation}
+One can see that $\Chi(\vec{x}_{2},\vec{x}_{1})=-\Chi(\vec{x}_{1},\vec{x}_{2})$. Moreover, $\Chi(\vec{x}_{1},\vec{x}_{1})=\Chi(\vec{x}_{2},\vec{x}_{2})=0$, which matches the description of the Pauli exclusion principle.\\
+
+In determinant form, the Slater determinant is
+\begin{equation}
+\Chi(\vec{x}_{1},\vec{x}_{2})=\frac{1}{\sqrt{2}}\mdet{\Chi_{1}(\vec{x}_{1}) & \Chi_{2}(\vec{x}_{1})\\ \Chi_{1}(\vec{x}_{2}) & \Chi_{2}(\vec{x}_{2})}
+\end{equation}
+Generalizing to $N$ electrons
+\begin{equation}
+\Chi(\vec{x}_{1},\cdots,\vec{x}_{N})={\frac{1}{\sqrt{\tikzmarknode{A}{N}!}}}\mdet{\Chi_{1}(\vec{x}_{1}) & \ldots & \Chi_{N}(\vec{x}_{1})\\ \vdots & \ddots & \vdots\\ \Chi_{1}(\vec{x}_{N}) & \ldots & \Chi_{N}(\vec{x}_{N})}
+\end{equation}
+\begin{tikzpicture}[overlay,remember picture]
+	\draw[red,->,shorten <=1mm] (A.south) -- ++(-0.2,-0.3) node[below left,yshift=0.2cm] {for normalization};
+\end{tikzpicture}
+
+\newpage
+One can ultimately show that this is anti-symmetric. Its normalization states
+\begin{equation}
+\int\Chi^{*}(\vec{x}_{1},\cdots,\vec{x}_{N})\Chi(\vec{x}_{1},\cdots,\vec{x}_{N})\dd{\vec{x}_{1}}\ldots\dd{\vec{x}_{N}}=1
 \end{equation}
 
 \end{document}
