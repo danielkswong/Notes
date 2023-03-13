@@ -15,6 +15,7 @@
 \usepackage[none]{hyphenat} % To remove hyphenation
 \usepackage{mathtools}  % To use \mathclap which removes white space for subscripts
 \usepackage{empheq} % To use \empheq environment
+\usepackage{enumitem} % Adjust spacing of examples and proof itemize lists
 
 \usepackage{fancyhdr} % To input custom headers
 \pagestyle{fancy} % Defines header for all pages other than plain-style pages
@@ -40,18 +41,15 @@
 \usepackage{color} % To use different colours
 \usepackage[makeroom]{cancel} % To cancel terms in equations
 
-\definecolor{lightGray}{gray}{0.8}
-
-\newcommand{\example}[2]{% Aligns the environment for examples
+\newcommand{\aside}[2]{% Aligns the environment for examples
 	\bigskip
-	\hrule
+	{\color{gray}\hrule}
 	\bigskip
-	\ul{Ex #1}:\hfill
-	\begin{minipage}[t]{\dimexpr\linewidth-8em\relax}
-	#2
-	\end{minipage}\hspace{4em}
+	\begin{itemize}[align=left,labelindent=0em,labelwidth=3em,labelsep*=0.5em,leftmargin=!]
+		\item[\ul{#1}:]{#2}
+	\end{itemize}
 	\bigskip
-	\hrule
+	{\color{gray}\hrule}
 	\bigskip
 }
 
@@ -123,9 +121,9 @@ Let us consider the Schr\"{o}dinger equation for a system.
 	\tikzmarknode{A}{\vb{H}}\tikzmarknode{B}{\Psi}=\tikzmarknode{C}{E}\Psi \quad (\trm{time-independent})
 \end{equation}
 \begin{tikzpicture}[overlay,remember picture,shorten <=1mm,font=\footnotesize]
-	\draw[red,<-] (A.south) -- ++ (-0.3,-0.3) node[left,xshift=0.1cm,yshift=-0.1cm] {Hamiltonian};
-	\draw[red,<-] (B.south) -- ++ (0,-0.5) node[below] {wavefunction};
-	\draw[red,<-] (C.south) -- ++ (0.3,-0.3) node[right,xshift=-0.1cm,yshift=-0.1cm] {energy eigenvalue};
+	\draw[red,->] (A.south) -- ++ (-0.3,-0.3) node[left,xshift=0.1cm,yshift=-0.1cm] {Hamiltonian};
+	\draw[red,->] (B.south) -- ++ (0,-0.5) node[below] {wavefunction};
+	\draw[red,->] (C.south) -- ++ (0.3,-0.3) node[right,xshift=-0.1cm,yshift=-0.1cm] {energy eigenvalue};
 \end{tikzpicture}
 
 The wavefunction is a function of all the electron and nuclei coordinates
@@ -192,6 +190,7 @@ Let us also make a note about states. Consider a carbon atom.
 \end{center}
 Note that the entire population of electrons in this configuration is the ground state. In a one-electron picture, one may grow accustomed to thinking of the 1s orbital as the ground state, which we will want to move away from.
 
+\newpage
 \section{Hartree-Fock}
 Let us try to decouple this problem into two problems: an electronic portion and a nuclei portion.
 
@@ -360,5 +359,116 @@ One can ultimately show that this is anti-symmetric. Its normalization states
 \begin{equation}
 \int\Chi^{*}(\vec{x}_{1},\cdots,\vec{x}_{N})\Chi(\vec{x}_{1},\cdots,\vec{x}_{N})\dd{\vec{x}_{1}}\ldots\dd{\vec{x}_{N}}=1
 \end{equation}
+
+\aside{Ex}{Consider a two-electron Slater determinant. What occurs if the two electrons have opposite spin?
+\begin{equation}
+\begin{aligned}
+\Chi(\vec{x}_{1},\vec{x}_{2})&=\frac{1}{\sqrt{2}}\qty[\Chi_{1}(\vec{x}_{1})\Chi_{2}(\vec{x}_{2})-\Chi_{2}(\vec{x}_{1})\Chi_{1}(\vec{x}_{2})]\\
+\Chi_{1}(\vec{x}_{1})&=\Psi_{1}(\vec{r}_{1})\alpha(\omega_{1})\\
+\Chi_{2}(\vec{x}_{2})&=\Psi_{2}(\vec{r}_{2})\beta(\omega_{2})
+\end{aligned}
+\end{equation}
+Its probability density as a function of $\vec{r}_{1}$ and $\vec{r}_{2}$ is
+\begin{equation}
+\begin{aligned}
+P(\vec{r}_{1},\vec{r}_{2})&=\int\Chi^{*}(\vec{x}_{1},\vec{x}_{2})\Chi(\vec{x}_{1},\vec{x}_{2})\dd{\omega_{1}}\dd{\omega_{2}}\\
+&=\frac{1}{2}\int\qty[\Psi_{1}(\vec{r}_{1})\alpha^{*}(\omega_{1})\Psi_{2}^{*}(\vec{r}_{2})\beta^{*}(\omega_{2})-\Psi_{1}^{*}(\vec{r}_{2})\alpha^{*}(\omega_{2})\Psi_{2}^{*}(\vec{r}_{1})\beta^{*}(\omega_{1})]\\
+&\quad\qty[\Psi_{1}(\vec{r}_{1})\alpha(\omega_{1})\Psi_{2}(\vec{r}_{2})\beta(\omega_{2})-\Psi_{1}(\vec{r}_{2})\alpha(\omega_{2})\Psi_{2}(\vec{r}_{1})\beta(\omega_{1})]\dd{\omega_{1}}\dd{\omega_{2}}\\
+&=\frac{1}{2}\int\big[\abs{\Psi_{1}(\vec{r}_{1})}^{2}\abs{\Psi_{2}(\vec{r}_{2})}^{2}\abs{\alpha(\omega_{1})}^{2}\abs{\beta(\omega_{2})}^{2}\\
+&\quad+\abs{\Psi_{1}(\vec{r}_{2})}^{2}\abs{\Psi_{2}(\vec{r}_{1})}^{2}\abs{\alpha(\omega_{2})}^{2}\abs{\beta(\omega_{1})}^{2}\\
+&\quad\tikzmarknode{A}{-}\Psi_{1}^{*}(\vec{r}_{1})\Psi_{1}(\vec{r}_{2})\Psi_{2}^{*}(\vec{r}_{2})\Psi_{2}(\vec{r}_{1})\alpha^{*}(\omega_{1})\beta(\omega_{1})\beta^{*}(\omega_{2})\alpha(\omega_{2}\tikzmarknode{B}{) }\\
+&\quad\tikzmarknode{C}{-}\Psi_{1}^{*}(\vec{r}_{2})\Psi_{1}(\vec{r}_{1})\Psi_{2}^{*}(\vec{r}_{1})\Psi_{2}(\vec{r}_{2})\alpha^{*}(\omega_{2})\beta(\omega_{2})\beta^{*}(\omega_{1})\alpha(\omega_{1}\tikzmarknode{D}{)}\big]\dd{\omega_{1}}\dd{\omega_{2}}\\
+&=\frac{1}{2}\big[\underbrace{\abs{\Psi_{1}(\vec{r}_{1})}^{2}}_{P_{1}(\vec{r}_{1})}\underbrace{\abs{\Psi_{2}(\vec{r}_{2})}^{2}}_{P_{2}(\vec{r}_{2})}+\abs{\Psi_{1}(\vec{r}_{2})}^{2}\abs{\Psi_{2}(\vec{r}_{1})}^{2}\big]
+\end{aligned}
+\end{equation}
+\begin{tikzpicture}[overlay, remember picture]
+	\draw[red,->] (A.south east) -- (B.north east) node[right,yshift=0.2cm] {$0$};
+	\draw[red,->] (C.south east) -- (D.north east) node[right,yshift=0.2cm] {$0$};
+\end{tikzpicture}This can be interpreted as the average of finding electron 1 at $\vec{r}_{1}$ and electron 2 at $\vec{r}_{2}$ and of finding the same electrons in swapped positions. This form comes from the indistinguishability of electrons.\\
+
+The probability overall came out to be the product of these two individual probabilities. Thus, the motion of the two electrons of opposite spin is uncorrelated.\\
+
+What occurs if the two electrons have the same spin? Following the same algebra, but with replacing $\beta$ with $\alpha$ in $\Chi_{2}$
+\begin{equation}
+\begin{aligned}
+P(\vec{r}_{1},\vec{r}_{2})&=\frac{1}{2}\big[\abs{\Psi_{1}(\vec{r}_{1})}^{2}\abs{\Psi_{2}(\vec{r}_{2})}^{2}+\abs{\Psi_{1}(\vec{r}_{2})}^{2}\abs{\Psi_{2}(\vec{r}_{1})}^{2}]\\
+&\quad-\frac{1}{2}\qty[\Psi_{1}^{*}(\vec{r}_{1})\Psi_{1}(\vec{r}_{2})\Psi_{2}^{*}(\vec{r}_{2})\Psi_{2}(\vec{r}_{1})+\Psi_{1}^{*}(\vec{r}_{2})\Psi_{1}(\vec{r}_{1})\Psi_{2}^{*}(\vec{r}_{1})\Psi_{2}(\vec{r}_{2})]
+\end{aligned}
+\end{equation}
+Now the motion of the two electrons with the same spin is correlated.
+}
+
+\subsection{Representation of Functions}
+In general, we will expand our functions over a complete basis set.
+\begin{equation}
+\Psi(\vec{r})=\sum_{\alpha=1}^{\infty}c_{\alpha}\phi_{\alpha}(\vec{r})
+\end{equation}
+where $\{\phi_{\alpha}(\vec{r})\}$ is a complete basis set.\\
+
+Consider a spatial basis set as follows:
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,-1) -- (0,4) node[right] {$\Psi(\vec{r})$};
+	\draw[->] (-1,0) -- node[below,text width=4cm,align=center] {\color{red}uniform basis set over grid points of size 1} (7,0) node[right] {$\vec{r}$};
+	\draw[blue] plot [smooth] coordinates {(-1,1) (-0.2,2.8) (1,1.9) (1.8,2.1) (2.3,0.9) (3.6,3.1) (5.2,2) (7,3.8)};
+	\draw (0,1) node[left] {$1$} -- (0.8,1) -- (0.8,0);
+	\draw (2.4,1) -- (2.6,1);
+	\foreach \x in {0.2,0.4,0.6,2.4,2.6}{
+		\draw (\x,1) -- (\x,0);
+	}
+	\node at (-0.5,0.5) {$\cdots$};
+	\node at (1.6,0.5) {$\cdots$};
+	\node at (3.4,0.5) {$\cdots$};
+	\node[right] at (7,2) {Example of a real-space basis};
+\end{tikzpicture}
+\end{center}
+One can then express $\Psi(\vec{r})$ as a vector.
+\begin{equation}
+\begin{aligned}
+\Psi(\vec{r})&\equiv \mqty[c_{1} \\ c_{2} \\ \vdots \\ c_{\alpha} \\ \vdots]\\
+&\equiv\ket{\Psi}\quad\trm{(Bra-ket notation)}
+\end{aligned}
+\end{equation}
+Note that these vectors will be infinitely long. In practice, these vectors will be truncated at some point.\\
+
+The conjugate transpose is
+\begin{equation}
+\Psi^{*}(\vec{r})\equiv\mqty[c_{1} & c_{2} & \cdots & c_{\alpha} & \cdots]\equiv\bra{\Psi}
+\end{equation}
+Operators will be represented as matrices. Given that they correspond with real physical quantities, these matrices will be square Hermitian matrices ($\vb{O}=\vb{O}^{\dagger}$).
+
+\subsection{Hartree-Fock Method}
+The idea is to find the best approximation to the ground state of the system in the form of a single Slater determinant.
+\begin{equation}
+\vb{H}\Chi_{0}=E\Chi_{0}
+\end{equation}
+where $\Chi_{0}\equiv\Chi_{0}(\vec{x}_{1},\cdots,\vec{x}_{N})$ is the ground state and is given by the equation
+\begin{equation}
+\Chi_{0}=\frac{1}{\sqrt{N!}}\mdet{\Chi_{1}(\vec{x}_{1}) & \ldots & \Chi_{N}(\vec{x}_{1})\\ \vdots & \ddots & \vdots \\ \Chi_{1}(\vec{x}_{N}) & \ldots & \Chi_{N}(\vec{x}_{N})}
+\end{equation}
+Note that the Slater determinant does not need to be constructed using single electron wavefunctions 1 to $N$. They simply need to be made from \ul{any} $N$ functions. In our case, we will assume all the $\Chi_{i}$ have been ordered such that we have a good starting point for our ground state. An ``excited" Slater determinant may be constructed using one-electron wavefunctions with higher energy.
+\begin{equation}
+\Chi=\frac{1}{\sqrt{N!}}\color{red}\underbrace{\color{black}\mdet{\Chi_{i}(\vec{x}_{1}) & \Chi_{j}(\vec{x}_{1}) & \ldots & \Chi_{k}(\vec{x}_{1})\\ \vdots & \vdots & \ddots & \vdots \\ \Chi_{i}(\vec{x}_{N}) & \Chi_{j}(\vec{x}_{N}) & \ldots & \Chi_{k}(\vec{x}_{N})}}_{\trm{determinant of }N\times N\trm{ matrix}}
+\end{equation}
+Hartree-Fock will transform this problem into
+\begin{equation}
+\tikzmarknode{A}{F}\Chi_{i}(\vec{x}_{1})=\varepsilon_{i}\Chi_{i}(\vec{x}_{1})
+\end{equation}
+\begin{tikzpicture}[overlay, remember picture]
+	\draw[->,red] (A.south) -- ++ (0.1,-0.3) node[below] {Fock operator};
+\end{tikzpicture}
+
+This Fock operator itself will depend on $\{\Chi_{i}(\vec{x}_{1})\}$ that needs to be solved in a self-consistent manner. It will still contain a kinetic term for the electrons, electron-nuclei attraction, but it will transform the electron-electron repulsion into some kind of average electron-electron interaction.
+
+\subsection{Variational Principle}
+The variational principle will serve as a guideline for finding the ground-state Slater determinant. The principle states that the expectation value of the Hamiltonian for the system in a trial wave function $\Chi$ that is normalized will be an upper bound to the ground state energy of the $N$ electron system. This transforms our problem into a minimization problem.
+\begin{equation}
+\mel{\Chi}{\vb{H}}{\Chi}>=E_{0}
+\end{equation}
+\aside{Proof}{Assume that $\{\phi_{\alpha}(\vec{x}_{1},\cdot,\vec{x}_{N})\}$ is the actual exact solution of the $N$-electron problem.
+\begin{equation}
+\vb{H}\ket{\phi_{\alpha}}=E_{\alpha}\ket{\phi_{\alpha}},\quad\alpha=0,1,\cdots,N,\cdots
+\end{equation}
+}
 
 \end{document}
