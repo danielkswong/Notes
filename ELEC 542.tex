@@ -66,8 +66,7 @@
 \newcommand{\pd}[1]{\partial_{#1}} % Covariant 4-gradient
 \newcommand{\pu}[1]{\partial^{#1}} % Contravariant 4-gradient
 \newcommand{\id}{\mathbb{I}} % Identity matrix
-\renewcommand{\Re}{\trm{Re}} % Real
-\renewcommand{\Im}{\trm{Im}} % Imaginary
+\newcommand{\perm}{\trm{P}} % Permutation
 \renewcommand{\CancelColor}{\color{red}} % Changes the cancel colour to red
 
 \begin{document}
@@ -458,17 +457,138 @@ Hartree-Fock will transform this problem into
 	\draw[->,red] (A.south) -- ++ (0.1,-0.3) node[below] {Fock operator};
 \end{tikzpicture}
 
-This Fock operator itself will depend on $\{\Chi_{i}(\vec{x}_{1})\}$ that needs to be solved in a self-consistent manner. It will still contain a kinetic term for the electrons, electron-nuclei attraction, but it will transform the electron-electron repulsion into some kind of average electron-electron interaction.
+This Fock operator itself will depend on $\{\Chi_{i}(\vec{x}_{1})\}$ that needs to be solved in a self-consistent manner. It will still contain a kinetic term for the electrons and electron-nuclei attraction, but it will transform the electron-electron repulsion into some kind of average electron-electron interaction.
 
 \subsection{Variational Principle}
 The variational principle will serve as a guideline for finding the ground-state Slater determinant. The principle states that the expectation value of the Hamiltonian for the system in a trial wave function $\Chi$ that is normalized will be an upper bound to the ground state energy of the $N$ electron system. This transforms our problem into a minimization problem.
 \begin{equation}
 \mel{\Chi}{\vb{H}}{\Chi}>=E_{0}
 \end{equation}
-\aside{Proof}{Assume that $\{\phi_{\alpha}(\vec{x}_{1},\cdot,\vec{x}_{N})\}$ is the actual exact solution of the $N$-electron problem.
+\aside{Proof}{Assume that $\{\phi_{\alpha}(\vec{x}_{1},\cdots,\vec{x}_{N})\}$ is the actual exact solution of the $N$-electron problem.
 \begin{equation}
 \vb{H}\ket{\phi_{\alpha}}=E_{\alpha}\ket{\phi_{\alpha}},\quad\alpha=0,1,\cdots,N,\cdots
 \end{equation}
+such that $E_{0}<E_{1}<\cdots<E_{N}<\cdots$.\\
+
+Since $\vb{H}$ is Hermitian, its solutions form a complete orthonormal set. Thus
+\begin{equation}
+\ket{\Chi}=\sum_{\alpha=0}^{\infty}c_{\alpha}\ket{\phi_{\alpha}}
+\end{equation}
+Multiplying on the left by $\bra{\phi_{\beta}}$
+\begin{equation}
+\ip{\phi_{\beta}}{\Chi}=\sum_{\alpha=0}^{\infty}c_{\alpha}\ip{\phi_{\beta}}{\phi_{\alpha}}=\sum_{\alpha=0}^{\infty}c_{\alpha}\delta_{\alpha\beta}=c_{\beta}
+\end{equation}
+Thus
+\begin{equation}
+\ket{\Chi}=\sum_{\alpha=0}^{\infty}\ip{\phi_{\alpha}}{\Chi}\ket{\phi_{\alpha}}=\underbrace{\sum_{\alpha=0}^{\infty}\op{\phi_{\alpha}}{\phi_{\alpha}}}_{\textstyle\id}\ket{\Chi}
+\end{equation}
+Calculating the expectation value
+\begin{equation}
+\begin{aligned}
+\mel{\Chi}{\vb{H}}{\Chi}&=\qty(\sum_{\alpha=0}^{\infty}\ip{\Chi}{\phi_{\alpha}}\bra{\phi_{\alpha}})\vb{H}\qty(\sum_{\beta=0}^{\infty}\ket{\phi_{\beta}}\ip{\phi_{\beta}}{\Chi})\\
+&=\sum_{\alpha=0}^{\infty}\sum_{\beta=0}^{\infty}\ip{\Chi}{\phi_{\alpha}}\mel{\phi_{\alpha}}{\vb{H}}{\phi_{\beta}}\ip{\phi_{\beta}}{\Chi}\\
+&=\sum_{\alpha=0}^{\infty}\sum_{\beta=0}^{\infty}E_{\beta}\ip{\Chi}{\phi_{\alpha}}\underbrace{\ip{\phi_{\alpha}}{\phi_{\beta}}}_{\delta_{\alpha\beta}}\ip{\phi_{\beta}}{\Chi}\\
+&=\sum_{\alpha=0}^{\infty}E_{\alpha}\ip{\Chi}{\phi_{\alpha}}\ip{\phi_{\alpha}}{\Chi}\\
+&=\sum_{\alpha=0}^{\infty}E_{\alpha}\abs{\ip{\Chi}{\phi_{\alpha}}}^{2}\\
+&\geq E_{0}\sum_{\alpha=0}^{\infty}\abs{\ip{\Chi}{\phi_{\alpha}}}^{2}
+\end{aligned}
+\end{equation}
+Moreover, following a similar procedure
+\begin{equation}
+\ip{\Chi}{\Chi}=\sum_{\alpha=0}^{\infty}\abs{\ip{\Chi}{\phi_{\alpha}}}^{2}=1
+\end{equation}
+Thus
+\begin{equation}
+\mel{\Chi}{\vb{H}}{\Chi}\geq E_{0}
+\end{equation}
 }
 
+\subsection{Expectation Value of Hamiltonian for Single Slater Determinant}
+Let us now work out $\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}$ for $\ket{\Chi_{0}}$ being a single Slater determinant. Recall that
+\begin{equation}
+\vb{H}=\underbrace{\sum_{i=1}^{N}-\frac{1}{2}\nabla_{i}^{2}+\sum_{i=1}^{N}\sum_{A=1}^{M}-\frac{Z_{A}}{r_{iA}}}_{\vb{O}_{1}=\sum_{i=1}^{N}h(1)}+\underbrace{\sum_{i=1}^{N}\sum_{j>i}^{N}\frac{1}{r_{ij}}}_{\vb{O}_{2}}
+\end{equation}
+Thus
+\begin{equation}
+\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}=\mel{\Chi_{0}}{\vb{O}_{1}}{\Chi_{0}}+\mel{\Chi_{0}}{\vb{O}_{2}}{\Chi_{0}}
+\end{equation}
+The first term is
+\begin{equation}
+\begin{aligned}
+\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}&=\mel{\Chi_{0}}{[h(1)+h(2)+\ldots+h(N)]}{\Chi_{0}}\\
+&=N\mel{\Chi_{0}}{h(1)}{\Chi_{0}}\qq{(since $1,\cdots,N$ are just dummy variables)}\\
+&=\frac{N}{\sqrt{N!}}\int\Bigg[\sum_{n-1}^{N!}(-1)^{n+1}\perm_{n}\{\Chi_{1}^{*}(\vec{x}_{1})\Chi_{2}^{*}(\vec{x}_{2})\ldots\Chi_{N}^{*}(\vec{x}_{N})\}h(1)\\
+&\quad\quad\frac{1}{\sqrt{N!}}\sum_{m=1}^{N!}(-1)^{m+1}\perm_{m}\{\Chi_{1}(\vec{x}_{1})\Chi_{2}(\vec{x}_{2})\ldots\Chi_{N}(\vec{x}_{N})\}\Bigg]\dd{\vec{x}_{1}}\ldots\dd{\vec{x}_{N}}\\
+&=\frac{1}{(N-1)!}\int\Bigg[\sum_{n=1}^{N!}\sum_{m=1}^{N!}(-1)^{m+n+2}\perm_{n}\{\Chi_{1}^{*}(\vec{x}_{1})\Chi_{2}^{*}(\vec{x}_{2})\ldots\Chi_{N}^{*}(\vec{x}_{N})\}h(1)\\
+&\qquad\qquad\qquad\qquad\perm_{m}\{\Chi_{1}(\vec{x}_{1})\Chi_{2}(\vec{x}_{2})\ldots\Chi_{N}(\vec{x}_{N})\}\Bigg]\dd{\vec{x}_{1}}\ldots\dd{\vec{x}_{N}}
+\end{aligned}
+\end{equation}
+where $\perm_{n}$ denotes the $n$-th permutation. By orthonormality of $\{\Chi_{i}(\vec{x}_{i})\}$, in the above terms, $\vec{x}_{2},\cdots,\vec{x}_{N}$ must be in the same one-electron function in both permutations for that term to be non-zero. Thus, $\vec{x}_{1}$ will also have one choice left. Moreover, $\perm_{n}$ and $\perm_{m}$ must be the same permutation.
+\begin{equation}
+\begin{aligned}
+\mel{\Chi_{0}}{\vb{O}_{1}}{\Chi_{0}}&=\frac{1}{(N-1)!}\sum_{n=1}^{N}\int\Chi_{n}^{*}(\vec{x}_{1})h(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}\,(N-1)!\\
+&=\sum_{n=1}^{N}\int\Chi_{n}^{*}(\vec{x}_{1})h(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}\\
+&=\sum_{n=1}^{N}\mel{\Chi_{n}}{h}{\Chi_{n}}\qq{or}\color{red}\underbrace{\color{black}\sum_{n=1}^{N}\,[n|h|n]}_{\trm{chemistry notation}}
+\end{aligned}
+\end{equation}
+The second term is
+\begin{equation}
+\begin{aligned}
+\mel{\Chi_{0}}{\vb{O}_{2}}{\Chi_{0}}&=\mel{\Chi_{0}}{\qty[\frac{1}{r_{12}}+\frac{1}{r_{13}}+\ldots+\frac{1}{r_{n-1,n}}]}{\Chi_{0}}\\
+&=\frac{N!}{2!(N-2)!}\mel{\Chi_{0}}{\frac{1}{r_{12}}}{\Chi_{0}}\\
+&=\frac{N!}{2!(N-2)!}\int\Bigg[\sum_{n=1}^{N!}\sum_{m=1}^{N!}\qty(\frac{1}{\sqrt{N1}})\qty(\frac{1}{\sqrt{N!}})(-1)^{n-1}(-1)^{m+1}\\
+&\quad\perm_{n}\{\Chi_{1}^{*}(\vec{x}_{1})\ldots\Chi_{N}^{*}(\vec{x}_{N})\}\frac{1}{r_{12}}\perm_{m}\{\Chi_{1}(\vec{x}_{1})\ldots\Chi_{N}(\vec{x}_{N})\}\Bigg]\dd{\vec{x}_{1}}\ldots\dd{\vec{x}_{N}}
+\end{aligned}
+\end{equation}
+For a given term to be non-zero, $\vec{x}_{j}$ for $j\neq1,2$ has to be in the same $\Chi_{i}$ in both permutations $n$ and $m$ due to orthonormality $\qty(\int\Chi_{k}^{*}(\vec{x}_{j})\Chi_{\ell}(\vec{x}_{j})\dd{\vec{x}_{j}}=\delta_{k\ell})$. Thus
+\begin{equation}
+\begin{aligned}
+\mel{\Chi_{0}}{\vb{O}_{2}}{\Chi_{0}}&=\frac{1}{2(N-2)!}\sum_{n=1}^{N}\sum_{m\neq n}^{N}\bigg[\int(-1)^{\tikzmarknode{A}{n}+1+m+1}\Chi_{n}^{*}(\vec{x}_{1})\Chi_{m}^{*}(\vec{x}_{2})\frac{1}{r_{12}}\Chi_{n}(\vec{x}_{1})\Chi_{m}(\vec{x}_{2})\dd{\vec{x}_{1}}\dd{\vec{x}_{2}}\\
+&\quad+\int(-1)^{n+1+m+1}\Chi_{n}^{*}(\vec{x}_{1})\Chi_{m}^{*}(\vec{x}_{2})\frac{1}{r_{12}}\Chi_{n}(\vec{x}_{2})\Chi_{m}(\vec{x}_{1})\dd{\vec{x}_{1}}\dd{\vec{x}_{2}}\bigg]\\
+&\quad(N-2)\tikzmarknode{B}{!}\\
+&=\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\bigg[\int\Chi_{n}^{*}(\vec{x}_{1})\Chi_{m}^{*}(\vec{x}_{2})\frac{1}{r_{12}}\Chi_{n}(\vec{x}_{1})\Chi_{m}(\vec{x}_{2})\dd{\vec{x}_{1}}\dd{\vec{x}_{2}}\\
+&\quad-\int\Chi_{n}^{*}(\vec{x}_{1})\Chi_{m}^{*}(\vec{x}_{2})\frac{1}{r_{12}}\Chi_{n}(\vec{x}_{2})\Chi_{m}(\vec{x}_{1})\dd{\vec{x}_{1}}\dd{\vec{x}_{2}}\bigg]\\
+&\equiv\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\qty[\ip{nm}{nm}-\ip{nm}{mn}]\\
+&=\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\bigg[\int\Chi_{n}^{*}(\vec{x}_{1})\Chi_{n}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{m}(\vec{x}_{2})\dd{\vec{x}_{1}}\dd{\vec{x}_{2}}\\
+&\quad-\int\Chi_{n}^{*}(\vec{x}_{1})\Chi_{m}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{n}(\vec{x}_{2})\dd{\vec{x}_{1}}\dd{\vec{x}_{2}}\bigg]\\
+&\equiv\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\big(\color{red}\underbrace{\color{black}[nn|mm]}_{\trm{Coulomb}}{\color{black}-}\underbrace{\color{black}[nm|mn]}_{\trm{exchange}}\color{black}\big)
+\end{aligned}
+\end{equation}
+\begin{tikzpicture}[overlay,remember picture]
+	\draw[red,<-,shorten <=1mm] (A.north) -- ++(0,0.5) node[above] {even since they are in the same permutation};
+	\draw[red,<-,shorten <=1mm] (B.east) -- ++(0.3,0) node[right] {arises from the possibility of putting $\vec{x}_{j}$ in the remaining $\Chi_{i}$ functions};
+\end{tikzpicture}
+\newpage
+Thus
+\begin{equation}
+\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}=\sum_{n=1}^{N}[n|h|n]+\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\big([nn|mm]\tikzmarknode{A}{-}[nm|mn]\big)
+\end{equation}
+\begin{tikzpicture}[overlay,remember picture]
+	\draw[red,<-,shorten <=2mm] (A.north) -- ++(0,0.6) node[above] {minimize this!};
+\end{tikzpicture}
+\subsection{Minimization and Lagrange Method of Undetermined Multipliers}
+Note that the previous result for $\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}$ requires the orthonormality of the trial function used to build the Slater determinant $\ket{\Chi_{0}}$. Thus, varying the trial functions while following the variational principle becomes a constrained minimization problem. This can be tackled using the Lagrange method of undetermined multipliers.\\
+
+Let us consider an example. Imagine a function $f(x,y)$ that is to be the subject of minimization following the constraint $g(x,y)=C$.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (-1,0) -- (8,0) node[right] {$x$};
+	\draw[->] (0,-1) -- (0,5) node[above] {$y$};
+	\filldraw[black] (4.5,3) circle (3pt);
+	\draw[rotate around={20:(4.5,3)}] (4.5,3) ellipse (30pt and 15pt);
+	\draw[rotate around={20:(4.5,3)}] (4.5,3) ellipse (60pt and 30pt);
+	\draw[rotate around={20:(4.5,3)}] (4.5,3) node[below left,yshift=-2cm] {contour lines} ellipse (90pt and 45pt);
+	\draw[rotate around={20:(4.5,3)},red,dashed] (4.5,3) ellipse (75pt and 37.5pt);
+	\filldraw[red] (7,3.5) circle (3pt);
+	\draw[red] (4,-1) .. controls (4,1) and (6.5,0) .. (7.35,5) node[right] {$g(x,y)=C$};
+	\draw[red,<-] (7.5,3) -- (8,2.5) node[right] {This is the actual point of interest.};
+\end{tikzpicture}
+\end{center}
+Thus
+\begin{equation}
+\begin{cases}
+g(x,y)-C=0\\
+\nabla f \propto \nabla g \qq{\color{red}(since they're tangential to the contour)}
+\end{cases}
+\end{equation}
 \end{document}
