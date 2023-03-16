@@ -41,7 +41,7 @@
 \usepackage{color} % To use different colours
 \usepackage[makeroom]{cancel} % To cancel terms in equations
 
-\newcommand{\aside}[2]{% Aligns the environment for examples
+\newcommand{\aside}[2]{ % Aligns the environment for examples
 	\bigskip
 	{\color{gray}\hrule}
 	\bigskip
@@ -68,6 +68,7 @@
 \newcommand{\id}{\mathbb{I}} % Identity matrix
 \newcommand{\perm}{\trm{P}} % Permutation
 \renewcommand{\CancelColor}{\color{red}} % Changes the cancel colour to red
+
 
 \begin{document}
 \title{ELEC 542: Nanoscale Modelling}
@@ -591,4 +592,175 @@ g(x,y)-C=0\\
 \nabla f \propto \nabla g \qq{\color{red}(since they're tangential to the contour)}
 \end{cases}
 \end{equation}
+Let us define
+\begin{equation}
+\begin{aligned}
+\mathcal{L}&=f(x,y)-\color{red}\underbrace{\color{black}\lambda}_{\mathclap{\substack{\trm{undetermined}\\\trm{multiplier}}}}\color{black}\qty(g(x,y)-C)\\
+\implies \var{\mathcal{L}}&=\pdv{f}{x}\var{x}+\pdv{f}{y}\var{y}-\lambda\qty(\pdv{g}{x}\var{x}+\pdv{g}{y}\var{y})-\qty(g(x,y)-C)\var{\lambda}
+\end{aligned}
+\end{equation}
+By setting $\var{\mathcal{L}}=0$, since the variations $\var{x}$, $\var{y}$, and $\var{\lambda}$ are independent, all of their coefficients must vanish.
+\begin{empheq}[left=\implies\empheqlbrace]{align}
+\qty(\pdv{f}{x}-\lambda\pdv{g}{x})&=0\\
+\qty(\pdv{f}{y}-\lambda\pdv{g}{y})&=0\\
+\qty(g(x,y)-C)&=0
+\end{empheq}
+Note that the first two equations is equivalent to the condition $\nabla f\propto \nabla g$.
+
+\subsection{Hartree-Fock Equation}
+The ground-state energy is now given by
+\begin{equation}
+E_{0}=\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}=\sum_{n=1}^{N}{\color{red}\underbrace{\color{black}[n|h|n]}_{\trm{1-electron}}}+\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\big({\color{red}\underbrace{\color{black}[nn|mm]}_{\trm{Coulomb}}}-{\color{red}\underbrace{\color{black}[nm|mn]}_{\trm{exchange}}}\big)
+\end{equation}
+Let us minimize $E_{0}$ subject to the constraint that $\{n\}$ is orthnormal (i.e. $[n|m]=\delta_{nm}$).
+\begin{equation}
+\mathcal{L}=E_{0}-\sum_{n=1}^{N}\sum_{m=1}^{N}\lambda_{nm}\qty([n|m]-\delta_{nm})
+\end{equation}
+We want to obtain $\var{\mathcal{L}}=0$. The trial functions will vary from $\{\Chi_{n}\}\rightarrow\{\Chi_{n}+\var{\Chi_{n}}\}$, which we denote in shorthand as $\{n\}\rightarrow\{n+\var{n}\}$.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,-1) -- (0,4) node[right] {$\Chi_{n}(\vec{x}_{1})$};
+	\draw[<->] (-4,0) -- (4,0) node[right] {$\vec{x}_{1}$};
+	\draw[blue] plot [smooth] coordinates {(-4,0.8) (-3,1.4) (-2.2,2.1) (-1.5,1.4) (-0.2,0.7) (1.5,1.7) (3.2,3.5) (4,2.5)};
+	\draw[red] plot [smooth] coordinates {(-4,0.8) (-2.9,1.35) (-2.1,2.05) (-1.4,1.4) (-0.1,0.7) (1.7,1.7) (3.4,3.4) (4,2.6)};
+	\node[right,red] at (4,2.6) {$\Chi_{n}(\vec{x}_{1})+\underbrace{\var{\Chi_{n}(\vec{x}_{1})}}_{\mathclap{\trm{small arbitrary function}}}$};
+\end{tikzpicture}
+\end{center}
+Thus
+\begin{equation}
+\begin{aligned}
+\var{[n|h|n]}&=[(n+\var{n})|h|(n+\var{n})]-[n|h|n]\\
+&=\int\qty(\Chi_{n}^{*}(\vec{x}_{1})+\var{\Chi_{n}^{*}(\vec{x}_{1})})h(1)\qty(\Chi_{n}(\vec{x}_{1})+\var{\Chi_{n}(\vec{x}_{1})})\dd{\vec{x}_{1}}\\
+&\quad-\int\Chi_{n}^{*}(\vec{x}_{1})h(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}\\
+&=\int\var{\Chi_{n}^{*}(\vec{x}_{1})}h(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}+\int\Chi_{n}^{*}(\vec{x}_{1})h(1)\var{\Chi_{n}(\vec{x}_{1})}\dd{\vec{x}_{1}}\\
+&\quad+\int\var{Chi_{n}^{*}(\vec{x}_{1})}h(1)\var{\Chi_{n}(\vec{x}_{1})}\dd{\vec{x}_{1}}
+\end{aligned}
+\end{equation}
+In the limit of $\var{\Chi_{n}(\vec{x}_{1})}$ going to zero, the above expression simplifies to
+\begin{equation}
+\begin{aligned}
+\var{[n|h|n]}&=\int\var{\Chi_{n}^{*}(\vec{x}_{1})}h(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}+\int\Chi_{n}^{*}(\vec{x}_{1})h(1)\var{\Chi_{n}(\vec{x}_{1})}\dd{\vec{x}_{1}}\\
+&=[\var{n}|h|n]+[n|h|\var{n}]
+\end{aligned}
+\end{equation}
+For the Coulomb portion
+\begin{equation}
+\var{[nn|mm]}=\ldots=[\var{n}n|mm]+[n\var{n}|mm]+[nn|\var{m}m]+[nn|m\var{m}]
+\end{equation}
+The exchange portion is
+\begin{equation}
+\var{[nm|mn]}=\ldots=[\var{n}m|mn]+[n\delta{m}|mn]+[nm|\delta{m}n]+[nm|m\delta{n}]
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\var{\mathcal{L}}&=\sum_{n=1}^{N}\qty([\var{n}|h|n])+\sum_{n=1}^{N}\sum_{m=1}^{N}\qty([\var{n}n|mm]-[\delta{n}m|mn])\\
+&\quad-\sum_{n=1}^{N}\sum_{m=1}^{N}\lambda_{nm}[\var{n}|m]+\qcc*
+\end{aligned}
+\end{equation}
+Setting $\var{L}=0$
+\begin{equation}
+\begin{aligned}
+0&=\sum_{n=1}^{N}\bigg[\int\underline{\var{\Chi_{n}^{*}(\vec{x}_{1})}}h(1)\Chi_{n}(\vec{x}_{1})\underline{\dd{\vec{x}_{1}}}+\sum_{m=1}^{N}\bigg(\int\underline{\var{\Chi_{n}^{*}(\vec{x}_{1})}}\Chi_{n}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{m}(\vec{x}_{2})\underline{\dd{\vec{x}_{1}}}\dd{\vec{x}_{2}}\\
+&\quad-\int\underline{\var{\Chi_{n}^{*}(\vec{x}_{1})}}\Chi_{m}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{n}(\vec{x}_{2})\underline{\dd{\vec{x}_{1}}}\dd{\vec{x}_{2}}\bigg)\\
+&\quad-\sum_{m=1}^{N}\int\underline{\var{\Chi_{n}^{*}(\vec{x}_{1})}}\Chi_{m}(\vec{x}_{1})\underline{\dd{\vec{x}_{1}}}\bigg]+\qcc*
+\end{aligned}
+\end{equation}
+Since the underlined factors above are common to all integrals
+\begin{equation}
+\begin{aligned}
+0&=\sum_{n=1}^{N}\Bigg[\int\var{\Chi_{n}^{*}(\vec{x}_{1})}\dd{\vec{x}_{1}}\bigg[h(1)\Chi_{n}(\vec{x}_{1})+\sum_{n=1}^{N}\bigg(\int\Chi_{n}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{m}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
+&\quad-\int\Chi_{m}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{n}(\vec{x}_{2})\dd{\vec{x}_{2}}\bigg)-\sum_{m=1}^{N}\lambda_{nm}\Chi_{m}(\vec{x}_{1})\bigg]\Bigg]
+\end{aligned}
+\end{equation}
+Since $\var{\Chi_{n}(\vec{x}_{1})}$ are arbitrary functions and $\var{\Chi_{n}(\vec{x}_{1})}$ are completely independent of each other for different $n$
+\begin{equation}
+\begin{aligned}
+\sum_{m=1}^{N}\lambda_{nm}\Chi_{m}(\vec{x}_{1})&=h(1)\Chi_{n}(\vec{x}_{1})+\sum_{m=1}^{N}\bigg[\int\Chi_{n}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{m}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
+&\quad-\int\Chi_{m}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{n}(\vec{x}_{2})\dd{\vec{x}_{2}}\bigg]
+\end{aligned}
+\end{equation}
+Let us define
+\begin{equation}
+\begin{aligned}
+{\color{red}\underbrace{\color{black}\vb{J}_{m}(\vec{x}_{1})}_{\mathclap{\substack{\trm{Coulomb operator $m$}\\\trm{(local)}}}}}\Chi_{n}(\vec{x}_{1})&=\int\Chi_{n}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{m}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
+&=\qty(\int\Chi_{m}^{*}(\vec{x}_{2})\frac{1}{r_{12}}\Chi_{m}(\vec{x}_{2})\dd{\vec{x}_{2}})\Chi_{n}(\vec{x}_{1})
+\end{aligned}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+{\color{red}\underbrace{\color{black}\vb{K}_{m}(\vec{x}_{1})}_{\mathclap{\substack{\trm{Exchange operator $m$}\\\trm{(local)}}}}}\Chi_{n}(\vec{x}_{1})&=\int\Chi_{m}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{n}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
+&=\qty(\int\Chi_{m}^{*}(\vec{x}_{2})\frac{1}{r_{12}}\Chi_{n}(\vec{x}_{2})\dd{\vec{x}_{2}})\Chi_{m}(\vec{x}_{1})
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\bigg[\underbrace{h(1)+\sum_{m=1}^{N}\qty(vb{J}_{m}(1)-\vb{K}_{m}(1))}_{\vb{F}(x_{1})\,:\,\trm{Fock operator (non-local operator)}}\bigg]\Chi_{n}(\vec{x}_{1})=\sum_{m=1}^{N}\lambda_{nm}\Chi_{m}(\vec{x}_{1})
+\end{equation}
+\begin{equation}
+\implies \vb{F}(\vec{x}_{1})\Chi_{n}(\vec{x}_{1})=\sum_{m=1}^{N}\lambda_{nm}\Chi_{m}(\vec{x}_{1})\qq{(Hartree-Fock equation)}
+\end{equation}
+To recap, we cast
+\begin{equation}
+\vb{H}\Chi=E\tikzmarknode{Chi}{\Chi}
+\end{equation}
+\begin{tikzpicture}[overlay,remember picture]
+	\draw[red,->,shorten <=1mm] (Chi.east) -- +(0.5,0) node[right] {\trm{many-electron wavefunction}};
+\end{tikzpicture}
+into
+\begin{equation}
+\vb{F}\tikzmarknode{Chi_n}{\Chi_{n}}=\sum_{m=1}^{N}\lambda_{nm}\Chi_{m}
+\end{equation}
+\begin{tikzpicture}[overlay,remember picture]
+	\draw[red,->,shorten <=1mm] (Chi_n.north) -- +(0.5,0.5) node[above right] {\trm{one-electron wavefunction}};
+\end{tikzpicture}
+where $\vb{F}(\vec{x}_{1})$ depend on the one-electron functions themselves (which are the solutions that we are after). This equation needs to be done iteratively in a self-consistent manner. We will start with a one-electron wavefunction, build the Coulomb and exchange operators, and then solve for the new one-electron wavefunctions.
+
+\subsection{Unitary Transformations on Hartree-Fock Solutions}
+The Hartree-Fock equation contains an $N\times N$ matrix $\lambda_{nm}$. The equation can be greatly simplified by transforming $\lambda_{nm}$ into a diagonal matrix.\\
+
+Let us define
+\begin{equation}
+\vb{A}=\mqty[\Chi_{1}(\vec{x}_{1}) & \ldots & \Chi_{N}(\vec{x}_{1})\\ \vdots & \ddots & \vdots \\ \Chi_{1}(\vec{x}_{N}) & \ldots & \Chi_{N}(\vec{x}_{N})]
+\end{equation}
+such that $\Chi_{0}(\vec{x}_{1},\cdots,\vec{x}_{N})=\frac{1}{\sqrt{N!}}\det(\vb{A})$.\\
+
+One can also define
+\begin{equation}
+\vb{A}^{\prime}=\mqty[\Chi_{1}^{\prime}(\vec{x}_{1}) & \ldots & \Chi_{N}^{\prime}(\vec{x}_{1})\\ \vdots & \ddots & \vdots \\ \Chi_{1}^{\prime}(\vec{x}_{N}) & \ldots & \Chi_{N}^{\prime}(\vec{x}_{N})]
+\end{equation}
+such that $\Chi_{0}^{\prime}(\vec{x}_{1},\cdots,\vec{x}_{N})=\frac{1}{\sqrt{N!}}\det(\vb{A}^{\prime})$.\\
+
+\newpage
+Assume that $\vb{A}^{\prime}$ is built from $\vb{A}$ using a unitary transformation.
+\begin{equation}
+\begin{aligned}
+\vb{A}^{\prime}&=\vb{A}\vb{U}\\
+\implies\mqty[\Chi_{1}^{\prime}(\vec{x}_{1}) & \ldots & \Chi_{N}^{\prime}(\vec{x}_{1})\\ \vdots & \ddots & \vdots \\ \Chi_{1}^{\prime}(\vec{x}_{N}) & \ldots & \Chi_{N}^{\prime}(\vec{x}_{N})]&=\mqty[\Chi_{1}(\vec{x}_{1}) & \ldots & \Chi_{N}(\vec{x}_{1})\\ \vdots & \ddots & \vdots \\ \Chi_{1}(\vec{x}_{N}) & \ldots & \Chi_{N}(\vec{x}_{N})]\mqty[U_{11} & \ldots & U_{1N} \\ \vdots & \ddots & \vdots \\ U_{N1} & \ldots & U_{NN}]
+\end{aligned}
+\end{equation}
+with $\vb{U}$ being unitary (i.e. $\vb{U}^{\dagger}\vb{U}=\id$).\\
+
+Evaluating the probability density
+\begin{equation}
+\begin{aligned}
+\ip{\Chi_{0}^{\prime}}{\Chi_{0}^{\prime}}&=\frac{1}{\sqrt{N!}}\qty(\det\vb{A}^{\prime})^{*}\frac{1}{\sqrt{N!}}\qty(\det\vb{A}^{\prime})\\
+&=\frac{1}{N!}\qty(\det\vb{A}^{\prime\dagger})\qty(\det\vb{A}^{\prime})\\
+&=\frac{1}{N!}\det\qty(\vb{A}^{\prime}\vb{A}^{\prime\dagger})\\
+&=\frac{1}{N!}\det(\vb{A}\vb{U}\vb{U}^{\dagger}\vb{A}^{\dagger})\\
+&=\frac{1}{N!}\det\qty(\vb{A}\vb{A}^{\dagger})\\
+&=\ip{\Chi_{0}}{\Chi_{0}}
+\end{aligned}
+\end{equation}
+Thus, for two sets $\{\Chi_{n}\}$ and $\{\Chi_{n}^{\prime}$ that are related by a unitary transformation, the physics of the problem remains the same.
+
+\subsection{Effect of Unitary Transformation on Fock Operator}
+Note that $\vb{F}(\vec{x}_{1})$ contains the solutions $\Chi_{n}(\vec{x}_{1})$ which will be under a unitary transformation.
+\begin{align}
+h^{\prime}(1)=h(1)
+\end{align}
+\begin{align}
+\sum_{m=1}^{N}\vb{J}_{m}^{\prime}(1)&=\sum_{m=1}^{N}
+\end{align}
+
 \end{document}
