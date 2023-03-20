@@ -16,6 +16,7 @@
 \usepackage{mathtools}  % To use \mathclap which removes white space for subscripts
 \usepackage{empheq} % To use \empheq environment
 \usepackage{enumitem} % Adjust spacing of examples and proof itemize lists
+\usepackage{tensor} % For subscripts to the left
 
 \usepackage{fancyhdr} % To input custom headers
 \pagestyle{fancy} % Defines header for all pages other than plain-style pages
@@ -71,7 +72,7 @@
 
 
 \begin{document}
-\title{ELEC 542: Nanoscale Modelling}
+\title{ELEC 542: Nanoscale Modeling and Simulations}
 \author{Daniel Wong\\University of British Columbia\\Instructor: Dr. Alireza Nojeh}
 \date{Winter 2022}
 \maketitle
@@ -754,13 +755,114 @@ Evaluating the probability density
 \end{equation}
 Thus, for two sets $\{\Chi_{n}\}$ and $\{\Chi_{n}^{\prime}$ that are related by a unitary transformation, the physics of the problem remains the same.
 
+\newpage
 \subsection{Effect of Unitary Transformation on Fock Operator}
 Note that $\vb{F}(\vec{x}_{1})$ contains the solutions $\Chi_{n}(\vec{x}_{1})$ which will be under a unitary transformation.
-\begin{align}
+\begin{equation}
 h^{\prime}(1)=h(1)
-\end{align}
-\begin{align}
-\sum_{m=1}^{N}\vb{J}_{m}^{\prime}(1)&=\sum_{m=1}^{N}
-\end{align}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+\sum_{m=1}^{N}\vb{J}_{m}^{\prime}(1)&=\sum_{m=1}^{N}\int\Chi_{m}^{\prime *}(\vec{x}_{2})\frac{1}{r_{12}}\Chi_{m}^{\prime}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
+&=\sum_{m=1}^{N}\int\qty(\sum_{i=1}^{N}\Chi_{i}^{*}(\vec{x}_{2})U_{im}^{*})\frac{1}{r_{12}}\qty(\sum_{j=1}^{N}\Chi_{j}(\vec{x}_{2})U_{jm})\dd{\vec{x}_{2}}\\
+&=\sum_{i=1}^{N}\sum_{j=1}^{N}\sum_{m=1}^{N}U_{jm}U_{im}^{*}\int\Chi_{i}^{*}(\vec{x}_{2})\frac{1}{r_{12}}\Chi_{j}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
+&=\sum_{i=1}^{N}\sum_{j=1}^{N}{\color{red}\underbrace{\color{black}\sum_{m=1}^{N}U_{jm}U_{mi}^{*}}_{(\vb{U}\vb{U}^{\dagger})_{ji}=\delta_{ji}}}\int\Chi_{i}^{*}(\vec{x}_{2})\frac{1}{r_{12}}\Chi_{j}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
+&=\sum_{i=1}^{N}\int\Chi_{i}^{*}(\vec{x}_{2})\frac{1}{r_{12}}\Chi_{i}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
+&=\sum_{i=1}^{N}J_{i}(1)
+\end{aligned}
+\end{equation}
+A similar derivation will show that the exchange portion of the Fock operator does not change under a unitary transformation. Thus, the Fock operator does not change under the unitary transformation.
+
+\subsection{Canonical Hartree-Fock Equation}
+The Hartree-Fock equation is
+\begin{equation}
+\vb{F}\ket{\Chi_{n}}=\sum_{m=1}^{N}\lambda_{nm}\ket{\Chi_{m}}
+\end{equation}
+By orthonormality
+\begin{equation}
+\lambda_{nm}=\mel{\Chi_{m}}{\vb{F}}{\Chi_{n}}
+\end{equation}
+For the constants under a unitary transformation
+\begin{equation}
+\begin{aligned}
+\lambda_{nm}^{\prime}&=\mel{\Chi_{m}^{\prime}}{\vb{F}^{\prime}}{\Chi_{n}^{\prime}}\\
+&=\int\Chi_{m}^{\prime}(\vec{x}_{1})\vb{F}^{\prime}(\vec{x}_{1})\Chi_{n}^{\prime}(\vec{x}_{1})\dd{\vec{x}_{1}}\\
+&=\int\qty(\sum_{i=1}^{N}\Chi_{i}^{*}(\vec{x}_{1})U_{im}^{*})\vb{F}(\vec{x}_{1})\qty(\sum_{j=1}^{N}\Chi_{j}(\vec{x}_{1})U_{jn})\dd{\vec{x}_{1}}\\
+&=\sum_{i=1}^{N}\sum_{j=1}^{N}U_{im}^{*}U_{jn}{\color{red}\underbrace{\color{black}\int\Chi_{i}^{*}(\vec{x}_{1})\vb{F}(\vec{x}_{1})\Chi_{j}(\vec{x}_{1})\dd{\vec{x}_{1}}}_{\lambda_{ji}}}\\
+&=\sum_{i=1}^{N}\sum_{j=1}^{N}U_{jn}\lambda_{ji}U_{im}^{*}\\
+&=\qty(\vb{U}^{\dagger}\vb{\lambda}\vb{U})^{*}_{nm}
+\end{aligned}
+\end{equation}
+There exists a unitary transformation $\vb{U}$ that diagonalizes $\lambda_{nm}$. Among all possible sets of solutions $\{\Chi_{n}\}$, there exists one for which $\lambda_{nm}$ is diagonal. Given the physical equivalence of different sets of solutions, we will choose to work with the set for which $\lambda_{nm}$ is diagonal. Thus
+\begin{equation}
+\vb{F}(\vec{x}_{1})\Chi_{n}(\vec{x}_{1})=\lambda_{n}\Chi_{n}(\vec{x}_{1})\qq{(or $\vb{F}\ket{\Chi_{n}}=\lambda_{n}\ket{\Chi_{n}}$)}
+\end{equation}
+This is the canonical form of the Hartree-Fock equation.
+
+\subsection{Koopmans' Theorem}
+After obtaining the solutions for $\ket{\Chi_{n}}$, we obtain the $n$ one-electron functions with the lowest energy to construct the ground-state Slater determinant.\\
+
+Consider $\lambda_{n}$
+\begin{equation}
+\begin{aligned}
+\lambda_{n}&=\mel{\Chi_{n}}{\vb{F}}{\Chi_{n}}=\ldots=[n|h|n]+\sum_{m=1}^{N}\qty([nn|mm]-[nm|mn])\\
+\implies \sum_{n=1}^{N}\lambda_{n}&=\sum_{n=1}^{N}[n|h|n]+\sum_{n=1}^{N}\sum_{m=1}^{N}\qty([nn|mm]-[nm|mn])
+\end{aligned}
+\end{equation}
+Let us also recall the ground-state energy.
+\begin{equation}
+\begin{aligned}
+E_{0}&=\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}\\
+&=\sum_{n=1}^{N}[n|h|n]+\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\qty([nn|mm]-[nm|mn])
+\end{aligned}
+\end{equation}
+While similar, $\sum_{n=1}^{N}\lambda_{n}\neq E_{0}$. One should not immediately associate $\lambda_{n}$ as energies. Moreover, one should be aware that $\Chi_{n}$ are not physical objects by themselves.\\
+
+Koopmans' theorem states that considering a system of $N$ electrons, if one takes one of the filled one-electron levels ($\lambda_{f}$), then $\lambda_{f}$ is the negative of the ionization potential corresponding to an electron in that level. This however assumes that the other levels and functions do not change as a result of such an ionization event.
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) -- (4,0) node[right] {\footnotesize1};
+	\draw (0,0.5) -- (4,0.5) node[right] {\footnotesize2};
+	\draw (0,1) -- (4,1) node[right] {\footnotesize3};
+	\draw (0,1.5) -- (4,1.5) node[right,xshift=0.05cm,yshift=0.1cm] {\footnotesize\vdots};
+	\draw (0,2) -- (4,2);
+	\draw (0,2.5) -- (4,2.5);
+	\draw (0,3) -- (4,3);
+	\filldraw[black] (2,0) circle (2pt);
+	\filldraw[black] (2,0.5) circle (2pt);
+	\filldraw[black] (2,1) circle (2pt);
+	\filldraw[black] (2,1.5) circle (2pt);
+	\filldraw[black] (2,2) circle (2pt);
+	\filldraw[black] (2,2.5) circle (2pt);
+	\filldraw[black] (2,3) circle (2pt);
+	\draw[decorate,decoration={brace,amplitude=10pt}] (-0.5,0) -- (-0.5,3) node[left,midway,xshift=-0.5cm] {$N$};
+	\node[above] at (2,3.5) {$\vdots$};
+	\draw[<-,shorten <=1mm] (4,2.5) -- (4.5,3) node[above right] {$\lambda_{f}$};
+	\node[right,red,text width=5cm] at (6,3) {$\lambda_{f}$ $\uparrow$, assuming that removing this electron does not change the other levels and functions};
+\end{tikzpicture}
+\end{center}
+
+\aside{Proof}{Consider a system of $N$ electrons with wavefunction $\tensor*[^{N}]{\ket{\Chi}}{}$ and energy $\tensor*[^{N}]{E}{_{0}}$. Let us say that the system with $N-1$ electrons is described by $\tensor*[^{N-1}]{\ket{\Chi}}{}$ and $\tensor*[^{N-1}]{E}{_{0}}$.\\
+
+The ionization potential is $\tensor*[^{N-1}]{E}{_{0}}-\tensor*[^{N}]{E}{_{0}}$. Thus
+\begin{equation}
+\begin{aligned}
+\tensor*[^{N-1}]{E}{_{0}}-\tensor*[^{N}]{E}{_{0}}&=\sum_{\substack{n=1\\n\neq f}}^{N}[n|h|n]+\frac{1}{2}\sum_{\substack{n=1 \\ n\neq f}}^{N}\sum_{\substack{m=1 \\ m\neq f}}^{N}\qty([nn|mm]-[nm|mn])\\
+&\quad-\sum_{n=1}^{N}[n|h|n]-\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\qty([nn|mm]-[nm|mn])\\
+&=-[f|h|f]-\frac{1}{2}\sum_{n=1}^{N}\qty([nn|ff]-[nf|fn])\\
+&\quad-\frac{1}{2}\sum_{m=1}^{N}\qty([ff|mm]-[fm|mf])\\
+&=-[f|h|f]-\sum_{m=1}^{N}\qty([ff|mm]-[fm|mf])\\
+&=-\lambda_{f}
+\end{aligned}
+\end{equation}
+Similarly, if $\lambda_{e}$ corresponds to an empty level, one can show that it represents the negative of an electron affinity (within the same assumption as before).
+\begin{equation}
+\tensor*[^{N+1}]{E}{_{0}}-\tensor*[^{N}]{E}{_{0}}=\ldots=\lambda_{e}
+\end{equation}
+}
+This theorem gives (approximate) physical legitimacy to $\{\lambda_{n}\}$ and $\{\Chi_{n}\}$. From now on, we call $\{\Chi_{n}\}$ \ul{spin orbitals}.  We will also use $\{\varepsilon_{n}\}$ instead of $\{\lambda_{n}\}$.
+
+\subsection{Spatial Form of the Hartree-Fock Equation}
+The Hartree-Fock equation is
 
 \end{document}
