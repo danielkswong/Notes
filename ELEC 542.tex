@@ -304,8 +304,8 @@ By Pauli's principle, the wavefunction is anti-symmetric by exchange.
 One must find the solution of Schr\"{o}dinger's equation in the form of an anti-symmetric wavefunction. Let us try a separation of variables (which may not always be justified) for each electron. The first two terms of the electronic Hamiltonian lends itself easily to separating each electron. The third term in $\vb{H}_{\trm{elec}}$ couples the electrons together. As a first step, let us neglect this troublesome third term.
 \begin{equation}
 \begin{aligned}
-\vb{H}_{\trm{elec}}&\approx\sum_{i=1}^{N}\bigg(\underbrace{-\frac{1}{2}\nabla_{i}^{2}+\sum_{A=1}^{M}-\frac{Z_{A}}{r_{iA}}}_{h(i)\,:\,\trm{1-e$^{-}$ Hamiltonian}}\bigg)\\
-&=h(1)+h(2)+\ldots+h(N)\quad\quad\trm{(Hartree approximation)}
+\vb{H}_{\trm{elec}}&\approx\sum_{i=1}^{N}\bigg(\underbrace{-\frac{1}{2}\nabla_{i}^{2}+\sum_{A=1}^{M}-\frac{Z_{A}}{r_{iA}}}_{\vb{h}(i)\,:\,\trm{1-e$^{-}$ Hamiltonian}}\bigg)\\
+&=\vb{h}(1)+\vb{h}(2)+\ldots+\vb{h}(N)\quad\quad\trm{(Hartree approximation)}
 \end{aligned}
 \end{equation}
 Let us now separate the wavefunction $\Chi(\vec{x}_{1},\cdots,\vec{x}_{N})$ as
@@ -314,19 +314,19 @@ Let us now separate the wavefunction $\Chi(\vec{x}_{1},\cdots,\vec{x}_{N})$ as
 \end{equation}
 Thus, the Schr\"{o}dinger equation becomes
 \begin{equation}
-\qty(h(1)+\ldots+h(N))\qty(\Chi_{1}(\vec{x}_{1})\cdots\Chi_{N}(\vec{x}_{N}))=E\qty(\Chi_{1}(\vec{x}_{1})\cdots\Chi_{N}(\vec{x}_{N}))
+\qty(\vb{h}(1)+\ldots+\vb{h}(N))\qty(\Chi_{1}(\vec{x}_{1})\cdots\Chi_{N}(\vec{x}_{N}))=E\qty(\Chi_{1}(\vec{x}_{1})\cdots\Chi_{N}(\vec{x}_{N}))
 \end{equation}
 with $E=E_{1}+\ldots+E_{N}$.\\
 
 The problem is now reduced to
 \begin{empheq}[left=\empheqlbrace]{align}
-h(1)\Chi_{1}(\vec{x}_{1})&=E_{1}\Chi_{1}(\vec{x}_{1})\\
+\vb{h}(1)\Chi_{1}(\vec{x}_{1})&=E_{1}\Chi_{1}(\vec{x}_{1})\\
 & \vdots\\
-h(N)\Chi_{N}(\vec{x}_{N})&=E_{N}\Chi_{N}(\vec{x}_{N})
+\vb{h}(N)\Chi_{N}(\vec{x}_{N})&=E_{N}\Chi_{N}(\vec{x}_{N})
 \end{empheq}
 Note that these are all the same equation. Thus
 \begin{equation}
-h(1)\Chi_{i}(\vec{x}_{1})=E_{i}\Chi_{i}(\vec{x}_{1}),\quad i=1,\cdots,\infty
+\vb{h}(1)\Chi_{i}(\vec{x}_{1})=E_{i}\Chi_{i}(\vec{x}_{1}),\quad i=1,\cdots,\infty
 \end{equation}
 Each Hartree product is a solution to the Schr\"{o}dinger equation with energy eigenvalue $E$ which is a sum of all $E_{i}$. Note that are infinitely many solutions.
 
@@ -508,7 +508,7 @@ Thus
 \subsection{Expectation Value of Hamiltonian for Single Slater Determinant}
 Let us now work out $\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}$ for $\ket{\Chi_{0}}$ being a single Slater determinant. Recall that
 \begin{equation}
-\vb{H}=\underbrace{\sum_{i=1}^{N}-\frac{1}{2}\nabla_{i}^{2}+\sum_{i=1}^{N}\sum_{A=1}^{M}-\frac{Z_{A}}{r_{iA}}}_{\vb{O}_{1}=\sum_{i=1}^{N}h(1)}+\underbrace{\sum_{i=1}^{N}\sum_{j>i}^{N}\frac{1}{r_{ij}}}_{\vb{O}_{2}}
+\vb{H}=\underbrace{\sum_{i=1}^{N}-\frac{1}{2}\nabla_{i}^{2}+\sum_{i=1}^{N}\sum_{A=1}^{M}-\frac{Z_{A}}{r_{iA}}}_{\vb{O}_{1}=\sum_{i=1}^{N}\vb{h}(i)}+\underbrace{\sum_{i=1}^{N}\sum_{j>i}^{N}\frac{1}{r_{ij}}}_{\vb{O}_{2}}
 \end{equation}
 Thus
 \begin{equation}
@@ -517,20 +517,20 @@ Thus
 The first term is
 \begin{equation}
 \begin{aligned}
-\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}&=\mel{\Chi_{0}}{[h(1)+h(2)+\ldots+h(N)]}{\Chi_{0}}\\
-&=N\mel{\Chi_{0}}{h(1)}{\Chi_{0}}\qq{(since $1,\cdots,N$ are just dummy variables)}\\
-&=\frac{N}{\sqrt{N!}}\int\Bigg[\sum_{n-1}^{N!}(-1)^{n+1}\perm_{n}\{\Chi_{1}^{*}(\vec{x}_{1})\Chi_{2}^{*}(\vec{x}_{2})\ldots\Chi_{N}^{*}(\vec{x}_{N})\}h(1)\\
+\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}&=\mel{\Chi_{0}}{[\vb{h}(1)+\vb{h}(2)+\ldots+\vb{h}(N)]}{\Chi_{0}}\\
+&=N\mel{\Chi_{0}}{\vb{h}(1)}{\Chi_{0}}\qq{(since $1,\cdots,N$ are just dummy variables)}\\
+&=\frac{N}{\sqrt{N!}}\int\Bigg[\sum_{n-1}^{N!}(-1)^{n+1}\perm_{n}\{\Chi_{1}^{*}(\vec{x}_{1})\Chi_{2}^{*}(\vec{x}_{2})\ldots\Chi_{N}^{*}(\vec{x}_{N})\}\vb{h}(1)\\
 &\quad\quad\frac{1}{\sqrt{N!}}\sum_{m=1}^{N!}(-1)^{m+1}\perm_{m}\{\Chi_{1}(\vec{x}_{1})\Chi_{2}(\vec{x}_{2})\ldots\Chi_{N}(\vec{x}_{N})\}\Bigg]\dd{\vec{x}_{1}}\ldots\dd{\vec{x}_{N}}\\
-&=\frac{1}{(N-1)!}\int\Bigg[\sum_{n=1}^{N!}\sum_{m=1}^{N!}(-1)^{m+n+2}\perm_{n}\{\Chi_{1}^{*}(\vec{x}_{1})\Chi_{2}^{*}(\vec{x}_{2})\ldots\Chi_{N}^{*}(\vec{x}_{N})\}h(1)\\
+&=\frac{1}{(N-1)!}\int\Bigg[\sum_{n=1}^{N!}\sum_{m=1}^{N!}(-1)^{m+n+2}\perm_{n}\{\Chi_{1}^{*}(\vec{x}_{1})\Chi_{2}^{*}(\vec{x}_{2})\ldots\Chi_{N}^{*}(\vec{x}_{N})\}\vb{h}(1)\\
 &\qquad\qquad\qquad\qquad\perm_{m}\{\Chi_{1}(\vec{x}_{1})\Chi_{2}(\vec{x}_{2})\ldots\Chi_{N}(\vec{x}_{N})\}\Bigg]\dd{\vec{x}_{1}}\ldots\dd{\vec{x}_{N}}
 \end{aligned}
 \end{equation}
 where $\perm_{n}$ denotes the $n$-th permutation. By orthonormality of $\{\Chi_{i}(\vec{x}_{i})\}$, in the above terms, $\vec{x}_{2},\cdots,\vec{x}_{N}$ must be in the same one-electron function in both permutations for that term to be non-zero. Thus, $\vec{x}_{1}$ will also have one choice left. Moreover, $\perm_{n}$ and $\perm_{m}$ must be the same permutation.
 \begin{equation}
 \begin{aligned}
-\mel{\Chi_{0}}{\vb{O}_{1}}{\Chi_{0}}&=\frac{1}{(N-1)!}\sum_{n=1}^{N}\int\Chi_{n}^{*}(\vec{x}_{1})h(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}\,(N-1)!\\
-&=\sum_{n=1}^{N}\int\Chi_{n}^{*}(\vec{x}_{1})h(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}\\
-&=\sum_{n=1}^{N}\mel{\Chi_{n}}{h}{\Chi_{n}}\qq{or}\color{red}\underbrace{\color{black}\sum_{n=1}^{N}\,[n|h|n]}_{\trm{chemistry notation}}
+\mel{\Chi_{0}}{\vb{O}_{1}}{\Chi_{0}}&=\frac{1}{(N-1)!}\sum_{n=1}^{N}\int\Chi_{n}^{*}(\vec{x}_{1})\vb{h}(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}\,(N-1)!\\
+&=\sum_{n=1}^{N}\int\Chi_{n}^{*}(\vec{x}_{1})\vb{h}(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}\\
+&=\sum_{n=1}^{N}\mel{\Chi_{n}}{\vb{h}}{\Chi_{n}}\qq{or}\color{red}\underbrace{\color{black}\sum_{n=1}^{N}\,[n|\vb{h}|n]}_{\trm{chemistry notation}}
 \end{aligned}
 \end{equation}
 The second term is
@@ -538,7 +538,7 @@ The second term is
 \begin{aligned}
 \mel{\Chi_{0}}{\vb{O}_{2}}{\Chi_{0}}&=\mel{\Chi_{0}}{\qty[\frac{1}{r_{12}}+\frac{1}{r_{13}}+\ldots+\frac{1}{r_{n-1,n}}]}{\Chi_{0}}\\
 &=\frac{N!}{2!(N-2)!}\mel{\Chi_{0}}{\frac{1}{r_{12}}}{\Chi_{0}}\\
-&=\frac{N!}{2!(N-2)!}\int\Bigg[\sum_{n=1}^{N!}\sum_{m=1}^{N!}\qty(\frac{1}{\sqrt{N1}})\qty(\frac{1}{\sqrt{N!}})(-1)^{n-1}(-1)^{m+1}\\
+&=\frac{N!}{2!(N-2)!}\int\Bigg[\sum_{n=1}^{N!}\sum_{m=1}^{N!}\qty(\frac{1}{\sqrt{N!}})\qty(\frac{1}{\sqrt{N!}})(-1)^{n-1}(-1)^{m+1}\\
 &\quad\perm_{n}\{\Chi_{1}^{*}(\vec{x}_{1})\ldots\Chi_{N}^{*}(\vec{x}_{N})\}\frac{1}{r_{12}}\perm_{m}\{\Chi_{1}(\vec{x}_{1})\ldots\Chi_{N}(\vec{x}_{N})\}\Bigg]\dd{\vec{x}_{1}}\ldots\dd{\vec{x}_{N}}
 \end{aligned}
 \end{equation}
@@ -563,7 +563,7 @@ For a given term to be non-zero, $\vec{x}_{j}$ for $j\neq1,2$ has to be in the s
 \newpage
 Thus
 \begin{equation}
-\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}=\sum_{n=1}^{N}[n|h|n]+\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\big([nn|mm]\tikzmarknode{A}{-}[nm|mn]\big)
+\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}=\sum_{n=1}^{N}[n|\vb{h}|n]+\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\big([nn|mm]\tikzmarknode{A}{-}[nm|mn]\big)
 \end{equation}
 \begin{tikzpicture}[overlay,remember picture]
 	\draw[red,<-,shorten <=2mm] (A.north) -- ++(0,0.6) node[above] {minimize this!};
@@ -611,7 +611,7 @@ Note that the first two equations is equivalent to the condition $\nabla f\propt
 \subsection{Hartree-Fock Equation}
 The ground-state energy is now given by
 \begin{equation}
-E_{0}=\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}=\sum_{n=1}^{N}{\color{red}\underbrace{\color{black}[n|h|n]}_{\trm{1-electron}}}+\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\big({\color{red}\underbrace{\color{black}[nn|mm]}_{\trm{Coulomb}}}-{\color{red}\underbrace{\color{black}[nm|mn]}_{\trm{exchange}}}\big)
+E_{0}=\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}=\sum_{n=1}^{N}{\color{red}\underbrace{\color{black}[n|\vb{h}|n]}_{\trm{1-electron}}}+\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\big({\color{red}\underbrace{\color{black}[nn|mm]}_{\trm{Coulomb}}}-{\color{red}\underbrace{\color{black}[nm|mn]}_{\trm{exchange}}}\big)
 \end{equation}
 Let us minimize $E_{0}$ subject to the constraint that $\{n\}$ is orthnormal (i.e. $[n|m]=\delta_{nm}$).
 \begin{equation}
@@ -630,18 +630,18 @@ We want to obtain $\var{\mathcal{L}}=0$. The trial functions will vary from $\{\
 Thus
 \begin{equation}
 \begin{aligned}
-\var{[n|h|n]}&=[(n+\var{n})|h|(n+\var{n})]-[n|h|n]\\
-&=\int\qty(\Chi_{n}^{*}(\vec{x}_{1})+\var{\Chi_{n}^{*}(\vec{x}_{1})})h(1)\qty(\Chi_{n}(\vec{x}_{1})+\var{\Chi_{n}(\vec{x}_{1})})\dd{\vec{x}_{1}}\\
-&\quad-\int\Chi_{n}^{*}(\vec{x}_{1})h(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}\\
-&=\int\var{\Chi_{n}^{*}(\vec{x}_{1})}h(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}+\int\Chi_{n}^{*}(\vec{x}_{1})h(1)\var{\Chi_{n}(\vec{x}_{1})}\dd{\vec{x}_{1}}\\
-&\quad+\int\var{Chi_{n}^{*}(\vec{x}_{1})}h(1)\var{\Chi_{n}(\vec{x}_{1})}\dd{\vec{x}_{1}}
+\var{[n|\vb{h}|n]}&=[(n+\var{n})|\vb{h}|(n+\var{n})]-[n|\vb{h}|n]\\
+&=\int\qty(\Chi_{n}^{*}(\vec{x}_{1})+\var{\Chi_{n}^{*}(\vec{x}_{1})})\vb{h}(1)\qty(\Chi_{n}(\vec{x}_{1})+\var{\Chi_{n}(\vec{x}_{1})})\dd{\vec{x}_{1}}\\
+&\quad-\int\Chi_{n}^{*}(\vec{x}_{1})\vb{h}(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}\\
+&=\int\var{\Chi_{n}^{*}(\vec{x}_{1})}\vb{h}(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}+\int\Chi_{n}^{*}(\vec{x}_{1})\vb{h}(1)\var{\Chi_{n}(\vec{x}_{1})}\dd{\vec{x}_{1}}\\
+&\quad+\int\var{Chi_{n}^{*}(\vec{x}_{1})}\vb{h}(1)\var{\Chi_{n}(\vec{x}_{1})}\dd{\vec{x}_{1}}
 \end{aligned}
 \end{equation}
 In the limit of $\var{\Chi_{n}(\vec{x}_{1})}$ going to zero, the above expression simplifies to
 \begin{equation}
 \begin{aligned}
-\var{[n|h|n]}&=\int\var{\Chi_{n}^{*}(\vec{x}_{1})}h(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}+\int\Chi_{n}^{*}(\vec{x}_{1})h(1)\var{\Chi_{n}(\vec{x}_{1})}\dd{\vec{x}_{1}}\\
-&=[\var{n}|h|n]+[n|h|\var{n}]
+\var{[n|\vb{h}|n]}&=\int\var{\Chi_{n}^{*}(\vec{x}_{1})}\vb{h}(1)\Chi_{n}(\vec{x}_{1})\dd{\vec{x}_{1}}+\int\Chi_{n}^{*}(\vec{x}_{1})\vb{h}(1)\var{\Chi_{n}(\vec{x}_{1})}\dd{\vec{x}_{1}}\\
+&=[\var{n}|\vb{h}|n]+[n|\vb{h}|\var{n}]
 \end{aligned}
 \end{equation}
 For the Coulomb portion
@@ -655,14 +655,14 @@ The exchange portion is
 Thus
 \begin{equation}
 \begin{aligned}
-\var{\mathcal{L}}&=\sum_{n=1}^{N}\qty([\var{n}|h|n])+\sum_{n=1}^{N}\sum_{m=1}^{N}\qty([\var{n}n|mm]-[\delta{n}m|mn])\\
+\var{\mathcal{L}}&=\sum_{n=1}^{N}\qty([\var{n}|\vb{h}|n])+\sum_{n=1}^{N}\sum_{m=1}^{N}\qty([\var{n}n|mm]-[\delta{n}m|mn])\\
 &\quad-\sum_{n=1}^{N}\sum_{m=1}^{N}\lambda_{nm}[\var{n}|m]+\qcc*
 \end{aligned}
 \end{equation}
 Setting $\var{L}=0$
 \begin{equation}
 \begin{aligned}
-0&=\sum_{n=1}^{N}\bigg[\int\underline{\var{\Chi_{n}^{*}(\vec{x}_{1})}}h(1)\Chi_{n}(\vec{x}_{1})\underline{\dd{\vec{x}_{1}}}+\sum_{m=1}^{N}\bigg(\int\underline{\var{\Chi_{n}^{*}(\vec{x}_{1})}}\Chi_{n}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{m}(\vec{x}_{2})\underline{\dd{\vec{x}_{1}}}\dd{\vec{x}_{2}}\\
+0&=\sum_{n=1}^{N}\bigg[\int\underline{\var{\Chi_{n}^{*}(\vec{x}_{1})}}\vb{h}(1)\Chi_{n}(\vec{x}_{1})\underline{\dd{\vec{x}_{1}}}+\sum_{m=1}^{N}\bigg(\int\underline{\var{\Chi_{n}^{*}(\vec{x}_{1})}}\Chi_{n}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{m}(\vec{x}_{2})\underline{\dd{\vec{x}_{1}}}\dd{\vec{x}_{2}}\\
 &\quad-\int\underline{\var{\Chi_{n}^{*}(\vec{x}_{1})}}\Chi_{m}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{n}(\vec{x}_{2})\underline{\dd{\vec{x}_{1}}}\dd{\vec{x}_{2}}\bigg)\\
 &\quad-\sum_{m=1}^{N}\int\underline{\var{\Chi_{n}^{*}(\vec{x}_{1})}}\Chi_{m}(\vec{x}_{1})\underline{\dd{\vec{x}_{1}}}\bigg]+\qcc*
 \end{aligned}
@@ -670,14 +670,14 @@ Setting $\var{L}=0$
 Since the underlined factors above are common to all integrals
 \begin{equation}
 \begin{aligned}
-0&=\sum_{n=1}^{N}\Bigg[\int\var{\Chi_{n}^{*}(\vec{x}_{1})}\dd{\vec{x}_{1}}\bigg[h(1)\Chi_{n}(\vec{x}_{1})+\sum_{n=1}^{N}\bigg(\int\Chi_{n}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{m}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
+0&=\sum_{n=1}^{N}\Bigg[\int\var{\Chi_{n}^{*}(\vec{x}_{1})}\dd{\vec{x}_{1}}\bigg[\vb{h}(1)\Chi_{n}(\vec{x}_{1})+\sum_{n=1}^{N}\bigg(\int\Chi_{n}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{m}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
 &\quad-\int\Chi_{m}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{n}(\vec{x}_{2})\dd{\vec{x}_{2}}\bigg)-\sum_{m=1}^{N}\lambda_{nm}\Chi_{m}(\vec{x}_{1})\bigg]\Bigg]
 \end{aligned}
 \end{equation}
 Since $\var{\Chi_{n}(\vec{x}_{1})}$ are arbitrary functions and $\var{\Chi_{n}(\vec{x}_{1})}$ are completely independent of each other for different $n$
 \begin{equation}
 \begin{aligned}
-\sum_{m=1}^{N}\lambda_{nm}\Chi_{m}(\vec{x}_{1})&=h(1)\Chi_{n}(\vec{x}_{1})+\sum_{m=1}^{N}\bigg[\int\Chi_{n}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{m}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
+\sum_{m=1}^{N}\lambda_{nm}\Chi_{m}(\vec{x}_{1})&=\vb{h}(1)\Chi_{n}(\vec{x}_{1})+\sum_{m=1}^{N}\bigg[\int\Chi_{n}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{m}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
 &\quad-\int\Chi_{m}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{n}(\vec{x}_{2})\dd{\vec{x}_{2}}\bigg]
 \end{aligned}
 \end{equation}
@@ -696,7 +696,7 @@ Let us define
 \end{equation}
 Thus
 \begin{equation}
-\bigg[\underbrace{h(1)+\sum_{m=1}^{N}\qty(vb{J}_{m}(1)-\vb{K}_{m}(1))}_{\vb{F}(x_{1})\,:\,\trm{Fock operator (non-local operator)}}\bigg]\Chi_{n}(\vec{x}_{1})=\sum_{m=1}^{N}\lambda_{nm}\Chi_{m}(\vec{x}_{1})
+\bigg[\underbrace{\vb{h}(1)+\sum_{m=1}^{N}\qty(\vb{J}_{m}(1)-\vb{K}_{m}(1))}_{\vb{F}(\vec{x}_{1})\,:\,\trm{Fock operator (non-local operator)}}\bigg]\Chi_{n}(\vec{x}_{1})=\sum_{m=1}^{N}\lambda_{nm}\Chi_{m}(\vec{x}_{1})
 \end{equation}
 \begin{equation}
 \implies \vb{F}(\vec{x}_{1})\Chi_{n}(\vec{x}_{1})=\sum_{m=1}^{N}\lambda_{nm}\Chi_{m}(\vec{x}_{1})\qq{(Hartree-Fock equation)}
@@ -753,13 +753,13 @@ Evaluating the probability density
 &=\ip{\Chi_{0}}{\Chi_{0}}
 \end{aligned}
 \end{equation}
-Thus, for two sets $\{\Chi_{n}\}$ and $\{\Chi_{n}^{\prime}$ that are related by a unitary transformation, the physics of the problem remains the same.
+Thus, for two sets $\{\Chi_{n}\}$ and $\{\Chi_{n}^{\prime}\}$ that are related by a unitary transformation, the physics of the problem remains the same.
 
 \newpage
 \subsection{Effect of Unitary Transformation on Fock Operator}
 Note that $\vb{F}(\vec{x}_{1})$ contains the solutions $\Chi_{n}(\vec{x}_{1})$ which will be under a unitary transformation.
 \begin{equation}
-h^{\prime}(1)=h(1)
+h^{\prime}(1)=\vb{h}(1)
 \end{equation}
 \begin{equation}
 \begin{aligned}
@@ -805,15 +805,15 @@ After obtaining the solutions for $\ket{\Chi_{n}}$, we obtain the $n$ one-electr
 Consider $\lambda_{n}$
 \begin{equation}
 \begin{aligned}
-\lambda_{n}&=\mel{\Chi_{n}}{\vb{F}}{\Chi_{n}}=\ldots=[n|h|n]+\sum_{m=1}^{N}\qty([nn|mm]-[nm|mn])\\
-\implies \sum_{n=1}^{N}\lambda_{n}&=\sum_{n=1}^{N}[n|h|n]+\sum_{n=1}^{N}\sum_{m=1}^{N}\qty([nn|mm]-[nm|mn])
+\lambda_{n}&=\mel{\Chi_{n}}{\vb{F}}{\Chi_{n}}=\ldots=[n|\vb{h}|n]+\sum_{m=1}^{N}\qty([nn|mm]-[nm|mn])\\
+\implies \sum_{n=1}^{N}\lambda_{n}&=\sum_{n=1}^{N}[n|\vb{h}|n]+\sum_{n=1}^{N}\sum_{m=1}^{N}\qty([nn|mm]-[nm|mn])
 \end{aligned}
 \end{equation}
 Let us also recall the ground-state energy.
 \begin{equation}
 \begin{aligned}
 E_{0}&=\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}\\
-&=\sum_{n=1}^{N}[n|h|n]+\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\qty([nn|mm]-[nm|mn])
+&=\sum_{n=1}^{N}[n|\vb{h}|n]+\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\qty([nn|mm]-[nm|mn])
 \end{aligned}
 \end{equation}
 While similar, $\sum_{n=1}^{N}\lambda_{n}\neq E_{0}$. One should not immediately associate $\lambda_{n}$ as energies. Moreover, one should be aware that $\Chi_{n}$ are not physical objects by themselves.\\
@@ -847,11 +847,11 @@ Koopmans' theorem states that considering a system of $N$ electrons, if one take
 The ionization potential is $\tensor*[^{N-1}]{E}{_{0}}-\tensor*[^{N}]{E}{_{0}}$. Thus
 \begin{equation}
 \begin{aligned}
-\tensor*[^{N-1}]{E}{_{0}}-\tensor*[^{N}]{E}{_{0}}&=\sum_{\substack{n=1\\n\neq f}}^{N}[n|h|n]+\frac{1}{2}\sum_{\substack{n=1 \\ n\neq f}}^{N}\sum_{\substack{m=1 \\ m\neq f}}^{N}\qty([nn|mm]-[nm|mn])\\
-&\quad-\sum_{n=1}^{N}[n|h|n]-\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\qty([nn|mm]-[nm|mn])\\
-&=-[f|h|f]-\frac{1}{2}\sum_{n=1}^{N}\qty([nn|ff]-[nf|fn])\\
+\tensor*[^{N-1}]{E}{_{0}}-\tensor*[^{N}]{E}{_{0}}&=\sum_{\substack{n=1\\n\neq f}}^{N}[n|\vb{h}|n]+\frac{1}{2}\sum_{\substack{n=1 \\ n\neq f}}^{N}\sum_{\substack{m=1 \\ m\neq f}}^{N}\qty([nn|mm]-[nm|mn])\\
+&\quad-\sum_{n=1}^{N}[n|\vb{h}|n]-\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}\qty([nn|mm]-[nm|mn])\\
+&=-[f|\vb{h}|f]-\frac{1}{2}\sum_{n=1}^{N}\qty([nn|ff]-[nf|fn])\\
 &\quad-\frac{1}{2}\sum_{m=1}^{N}\qty([ff|mm]-[fm|mf])\\
-&=-[f|h|f]-\sum_{m=1}^{N}\qty([ff|mm]-[fm|mf])\\
+&=-[f|\vb{h}|f]-\sum_{m=1}^{N}\qty([ff|mm]-[fm|mf])\\
 &=-\lambda_{f}
 \end{aligned}
 \end{equation}
@@ -864,5 +864,38 @@ This theorem gives (approximate) physical legitimacy to $\{\lambda_{n}\}$ and $\
 
 \subsection{Spatial Form of the Hartree-Fock Equation}
 The Hartree-Fock equation is
+\begin{equation}
+\vb{F}(\vec{x}_{1})\Chi_{n}(\vec{x}_{1})=\varepsilon_{n}\Chi_{n}(\vec{x}_{1})
+\end{equation}
+where
+\begin{equation}
+\Chi_{n}(\vec{x}_{1})=\begin{cases}
+\Psi_{n\alpha}(\vec{r}_{1})\alpha(\omega_{1}) \qq{or}\\
+\Psi_{n\beta}(\vec{r}_{1})\beta(\omega_{1})
+\end{cases}
+\end{equation}
+In order to come up with an implementation of Hartree-Fock, we divide this equation into two possibilities.\\
 
+For restricted Hartree-Fock (RHF), one assumes that spin orbitals come in pairs and that the spatial part remains the same (i.e. $\Psi_{n\alpha}(\vec{r}_{1})=\Psi_{n\beta}(\vec{r}_{1})$). This may work well for systems with paired electrons. Alternatively, for unrestricted Hartree-Fock (UHF), one does not have the above assumption. One can use either RHF or UHF for both close-shell (even $N$) or open-shell (odd $N$) systems.\\
+
+Let us consider RHF for even $N$.
+\begin{equation}
+\begin{aligned}
+\Chi_{1}(\vec{x}_{1})=\Psi_{1}(\vec{r}_{1})\alpha(\omega_{1})\qq{,}&\Chi_{2}(\vec{x}_{1})=\Psi_{1}(\vec{r}_{1})\beta(\omega_{1})\\
+\Chi_{3}(\vec{x}_{1})=\Psi_{2}(\vec{r}_{1})\alpha(\omega_{1})\qq{,}&\Chi_{4}(\vec{x}_{1})=\Psi_{2}(\vec{r}_{1})\beta(\omega_{1})\\
+& \vdots\\
+\end{aligned}
+\end{equation}
+\begin{align}
+\vb{F}(\vec{x}_{1})&=\vb{h}(1)+\sum_{m=1}^{N}\qty(\vb{J}_{m}(1)-\vb{K}_{m}(1))\\
+\vb{F}(\vec{x}_{1})\Chi_{n}(\vec{x}_{1})&=\varepsilon_{n}\Chi_{n}(\vec{x}_{1})
+\end{align}
+After integrating over all spin parts
+\begin{equation}
+\vb{F}(\vec{r}_{1})\Psi_{n}(\vec{r}_{1})=\varepsilon_{n}\Psi_{n}(\vec{r}_{1})
+\end{equation}
+with
+\begin{equation}
+\vb{F}(\vec{r}_{1})
+\end{equation}
 \end{document}
