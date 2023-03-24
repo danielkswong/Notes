@@ -896,6 +896,126 @@ After integrating over all spin parts
 \end{equation}
 with
 \begin{equation}
-\vb{F}(\vec{r}_{1})
+\vb{F}(\vec{r}_{1})=\vb{h}(\vec{r}_{1})+\sum_{m=1}^{N/2}\qty(2\tikzmarknode{J}{\vb{J}}_{m}(\vec{r}_{1})-\tikzmarknode{K}{\vb{K}}_{m}(\vec{r}_{1}))
 \end{equation}
+\begin{center}
+\begin{tikzpicture}[remember picture,overlay]
+	\draw[red,<-,shorten <=1mm] (J.south) -- ++ (0.2,-0.4) node[below right,align=center] {since $\int\alpha^{*}(\omega_{1})\alpha(\omega_{1})\dd{\omega_{1}}=\int\beta^{*}(\omega_{1})\beta(\omega_{1})\dd{\omega_{1}}=1$};
+	\draw[red,<-,shorten <=2mm] (K.north) -- ++ (0.6,0.5) node[right,text width=7cm,align=center,yshift=0.2cm] {half vanish since $\int\alpha^{*}(\omega_{1})\beta(\omega_{1})\dd{\omega_{1}}=\int\beta^{*}(\omega_{1})\alpha(\omega_{1})\dd{\omega_{1}}=0$};
+\end{tikzpicture}
+\end{center}
+One then obtains $\frac{N}{2}$ orbitals each containing a pair of electrons with opposite spin.
+
+\subsection{Roothaan Equation}
+To implement a Hartree-Fock solver, one must choose a basis set $\{\phi_{j}(\vec{r}_{1})\}$. Ideally, this should be a complete basis. In practice, one must choose a limited basis set with $K$ functions ($j=1,\cdots,K$). In this basis, $\Psi_{n}(\vec{r}_{1})$ is represented as
+\begin{equation}
+\Psi_{n}(\vec{r}_{1})=\sum_{j=1}^{K}c_{jn}\phi_{j}(\vec{r}_{1})
+\end{equation}
+The Hartree-Fock equation becomes
+\begin{equation}
+\vb{F}(\vec{r}_{1})\qty[\sum_{j=1}^{K}c_{jn}\phi_{j}(\vec{r}_{1})]=\varepsilon_{n}\qty[\sum_{j=1}^{K}c_{jn}\phi_{j}(\vec{r}_{1})]
+\end{equation}
+Multiplying by $\phi_{i}^{*}(\vec{r}_{1})$ and integrating
+\begin{equation}
+\begin{aligned}
+\int\phi_{i}^{*}(\vec{r}_{1})\vb{F}(\vec{r}_{1})\qty[\sum_{j=1}^{K}c_{jn}\phi_{j}(\vec{r}_{1})]\dd{\vec{r}_{1}}&=\int\phi_{i}^{*}(\vec{r}_{1})\varepsilon_{n}\qty[\sum_{j=1}^{K}c_{jn}\phi_{j}(\vec{r}_{1})]\dd{\vec{r}_{1}}\\
+\implies\sum_{j=1}^{K}c_{jn}{\color{red}\underbrace{\color{black}\int\phi_i{}^{*}(\vec{r}_{1})\vb{F}(\vec{r}_{1})\phi_{j}(\vec{r}_{1})\dd{\vec{r}_{1}}}_{F_{ij}\,:\,\trm{Fock matrix element}}}&=\sum_{j=1}^{K}\varepsilon_{n}c_{jn}{\color{red}\underbrace{\color{black}\int\phi_{i}^{*}(\vec{r}_{1})\phi_{j}(\vec{r}_{1})\dd{\vec{r}_{1}}}_{\mathclap{S_{ij}\,:\,\trm{Overlap matrix element}}}}
+\end{aligned}
+\end{equation}
+where $i,\cdots,K$. In matrix form
+\begin{equation}
+\tikzmarknode{aa}{\vb{F}}\vb{C}=\tikzmarknode{bb}{\vb{S}}\tikzmarknode{cc}{\vb{C}}\tikzmarknode{dd}{\vb{\varepsilon}}
+\end{equation}
+\begin{tikzpicture}[remember picture,overlay]
+	\draw[red,<-,shorten <=1mm] (aa.west) -- ++ (-0.9,0) node[left] {Fock matrix};
+	\draw[red,<-,shorten <=2mm] (bb.north) -- ++ (0.5,0.3) node[right] {overlap matrix};
+	\draw[red,<-,shorten <=1mm] (cc.south) -- ++ (0,-0.5) node[below] {coefficient matrix};
+	\draw[red,<-,shorten <=1mm] (dd.east) -- ++ (0.5,0) node[right] {eigenvalue matrix};
+\end{tikzpicture}
+\begin{equation}
+\mqty[F_{11} & \ldots & F_{1K}\\ \vdots & \ddots & \vdots \\ F_{K1} & \cdots & F_{KK}]\mqty[c_{11} & \ldots & c_{1K}\\ \vdots & \ddots & \vdots \\ c_{K1} & \cdots & c_{KK}]=\mqty[S_{11} & \ldots & S_{1K}\\ \vdots & \ddots & \vdots \\ S_{K1} & \cdots & S_{KK}]\mqty[c_{11} & \ldots & c_{1K}\\ \vdots & \ddots & \vdots \\ c_{K1} & \cdots & c_{KK}]\mqty[\varepsilon_{1} & \ldots & 0\\ \vdots & \ddots & \vdots \\ 0 & \ldots & \epsilon_{K}]
+\end{equation}
+Note that this method only gives $K$ solutions, namely
+\begin{equation}
+\begin{aligned}
+\Psi_{1}(\vec{r}_{1})&=\sum_{j=1}^{K}c_{j1}\phi_{j}(\vec{r}_{1})\\
+\Psi_{2}(\vec{r}_{1})&=\sum_{j=1}^{K}c_{j2}\phi_{j}(\vec{r}_{1})\\
+&\vdots\\
+\Psi_{K}(\vec{r}_{1})&=\sum_{j=1}^{K}c_{jK}\phi_{j}(\vec{r}_{1})\\
+\end{aligned}
+\end{equation}
+Calculating the Fock matrix
+\begin{equation}
+\begin{aligned}
+F_{ij}&=\int\phi_{i}^{*}(\vec{r}_{1})\qty[\vb{h}(\vec{r}_{1})+\sum_{m=1}^{N/2}\qty(2\vb{J}_{m}(\vec{r}_{1})-\vb{K}_{m}(\vec{r}_{1}))]\phi_{j}(\vec{r}_{1})\dd{\vec{r}_{1}}\\
+&=\int\phi_{i}^{*}(\vec{r}_{1})\vb{h}(\vec{r}_{1})\phi_{j}(\vec{r}_{1})\dd{\vec{r}_{1}}+\sum_{m=2}^{N/2}2\bigg[\int\phi_{i}^{*}(\vec{r}_{1})\Psi_{m}^{*}(\vec{r}_{2})\frac{1}{r_{12}}\Psi_{m}(\vec{r}_{2})\phi_{j}(\vec{r}_{1})\dd{\vec{r}_{1}}\dd{\vec{r}_{2}}\\
+&\quad-\frac{1}{2}\int\phi_{i}^{*}(\vec{r}_{1})\Psi_{m}^{*}(\vec{r}_{2})\frac{1}{r_{12}}\Psi_{m}(\vec{r}_{1})\phi_{j}(\vec{r}_{2})\dd{\vec{r}_{1}}\dd{\vec{r}_{2}}\bigg]\\
+&=\int\phi_{i}^{*}(\vec{r}_{1})\vb{h}(\vec{r}_{1})\phi_{j}(\vec{r}_{1})\dd{\vec{r}_{1}}+\sum_{m=1}^{N/2}2\Bigg[\int\phi_{i}^{*}(\vec{r}_{1})\sum_{\ell=1}^{K}c_{\ell m}^{*}\phi_{\ell}^{*}(\vec{r}_{2})\frac{1}{r_{12}}\sum_{q=1}^{K}c_{qm}\phi_{q}(\vec{r}_{2})\phi_{j}(\vec{r}_{1})\dd{\vec{r}_{1}}\dd{\vec{r}_{2}}\\
+&\quad-\frac{1}{2}\int\phi_{i}^{*}(\vec{r}_{1})\sum_{\ell=1}^{K}c_{\ell m}^{*}\phi_{\ell}^{*}(\vec{r}_{2})\frac{1}{r_{12}}\sum_{q=1}^{K}c_{qm}\phi_{q}(\vec{r}_{1})\phi_{j}(\vec{r}_{2})\dd{\vec{r}_{1}}\dd{\vec{r}_{2}}\Bigg]\\
+&={\color{red}\underbrace{\color{black}\int\phi_{i}^{*}(\vec{r}_{1})\vb{h}(\vec{r}_{1})\phi_{j}(\vec{r}_{1})\dd{\vec{r}_{1}}}_{h_{ij}}}+\sum_{\ell=1}^{K}\sum_{q=1}^{K}{\color{red}\underbrace{\color{black}2\sum_{m=1}^{N/2}c_{\ell m}^{*}c_{qm}}_{P_{q\ell}}}\bigg[\int\phi_{i}^{*}(\vec{r}_{1})\phi_{j}(\vec{r}_{1})\frac{1}{r_{12}}\phi_{\ell}^{*}(\vec{r}_{2})\phi_{q}(\vec{r}_{2})\dd{\vec{r}_{1}}\dd{\vec{r}_{2}}\\
+&\quad-\frac{1}{2}\int\phi_{i}^{*}(\vec{r}_{1})\phi_{q}(\vec{r}_{1})\frac{1}{r_{12}}\phi_{\ell}^{*}(\vec{r}_{2})\phi_{j}(\vec{r}_{2})\dd{\vec{r}_{1}}\dd{\vec{r}_{2}}\bigg]\\
+&=h_{ij}+\sum_{\ell=1}^{K}\sum_{q=1}^{K}P_{q\ell}\qty([ij|\ell q]-\frac{1}{2}[iq|\ell j])
+\end{aligned}
+\end{equation}
+The procedure for the self-consistent field (SCF) method thus becomes
+\begin{enumerate}
+\item Choose a basis set $\{\phi_{j}\}$
+\item Calculate $S_{ij}$ and $h_{ij}$
+\item Construct a guess for $c_{ij}$
+\item Calculate \tikzmarknode{AA}{$P_{q\ell}$}
+\item Calculate $F_{ij}$
+\item Solve $\vb{F}\vb{C}=\vb{S}\vb{C}\vb{\varepsilon}$
+\item Check \tikzmarknode{BB}{convergence}
+\end{enumerate}
+\begin{tikzpicture}[remember picture, overlay]
+	\draw[->,shorten <=1mm, shorten >=1mm] (BB.east) -- ++ (1,0) -- node[right] {NO} ++(0,2.541) -- (AA.east);
+	\draw[->,shorten <=1mm, shorten >=1mm] (BB.east) -- node[above] {YES} ++ (5,0) node[right] {Done};
+\end{tikzpicture}
+
+\newpage
+Note that one does not need to recalculate $h_{ij}$, $S_{ij}$, $[ij|\ell q]$, and $[iq|\ell j]$ in each iteration. Moreover, note that $i$, $j$, $\ell$, and $q$ go from 1 to $K$. Thus, this form of the Hartree-Fock equation scales to the fourth power of the number of basis functions.
+
+\subsection{Density Matrix and Mulliken Charge Population}
+Let us now regard the matrix $P$. Note that if $N$ is the total number of electrons in the system and $\rho(\vec{r})$ is the electron density, then
+\begin{equation}
+N=\int\rho(\vec{r})\dd{\vec{r}}
+\end{equation}
+In terms of the 1-electron orbitals, one may say
+\begin{equation}
+\rho(\vec{r})=\sum_{m=1}^{N/2}2\abs{\Psi_{m}(\vec{r})}^{2}\qq{(for RHF)}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+N&=\int\sum_{n=1}^{N/2}2\abs{\Psi_{n}(\vec{r})}^{2}\dd{\vec{r}}\\
+&=\int\sum_{n=1}^{N/2}2\sum_{\ell=1}^{K}c_{\ell n}^{*}\phi_{\ell}^{*}(\vec{r})\sum_{q=1}^{K}c_{qn}\phi_{q}(\vec{r})\dd{\vec{r}}\\
+&=\sum_{\ell=1}^{K}\sum_{q=1}^{K}{\color{red}\underbrace{\color{black}\sum_{n=1}^{N/2}2c_{\ell n}^{*}c_{qn}}_{P_{ql}}}\,{\color{red}\underbrace{\vphantom{\sum_{n=1}^{N/2}}\color{black}\int\phi_{\ell}^{*}(\vec{r})\phi_{q}(\vec{r})\dd{\vec{r}}}_{S_{\ell q}}}\\
+&=\sum_{\ell=1}^{K}\sum_{q=1}^{K}P_{q\ell}S_{\ell q}\\
+&=\sum_{q=1}^{K}\qty(\vb{P}\vb{S})_{qq}\\
+&=\Tr(\vb{PS})
+\end{aligned}
+\end{equation}
+The object $(\vb{PS})_{qq}$ can be associated with the number of electrons (which may be a fractional number) corresponding with basis function labeled by $q$. This is called \ul{Mullikan population}. Note that $P$ is also a density matrix.
+
+\subsection{Basis Functions}
+A given solution of the problem $\Psi_{n}(\vec{r})$ is expanded over $K$ basis functions.
+\begin{equation}
+\Psi_{n}(\vec{r})=\sum_{j=1}^{K}c_{jn}\phi_{j}(\vec{r})
+\end{equation}
+If the basis set is infinitely large, then the choice of basis should have no bearing on $\Psi_{n}(\vec{r})$. However, in practice, one wants a small basis set that is as ``complete" as possible. In the context of molecules, one can think of molecular orbitals as being built up from combinations of atomic orbitals. As such, it is convenient to choose basis functions that resemble atomic orbitals (1s, 2s, 2p, etc.) centred around the different nuclei.\\
+
+In obtaining a small basis set, the Slater type orbitals have been found to work well. The equations that describe these orbitals are
+\begin{equation}
+e^{-\xi\abs*{\vec{r}-\vec{R}_{A}}}
+\end{equation}
+where $\vec{R}_{A}$ is the location of nucleus $A$.\\
+
+For the purpose of computational efficiency, the Gaussian type orbitals simplify the integrals shown earlier in the Roothaan equation and are described by
+\begin{equation}
+\begin{aligned}
+\end{aligned}
+\end{equation}
+
+
+
 \end{document}
