@@ -1,5 +1,5 @@
 \documentclass[12pt,a4paper,titlepage]{article}
-% Daniel Wong September 10, 2020
+% Daniel Wong March 2023
 
 \usepackage[fleqn]{amsmath} % To write aligned equations
 \usepackage{amssymb} % To write math symbols
@@ -42,17 +42,22 @@
 \usepackage{color} % To use different colours
 \usepackage[makeroom]{cancel} % To cancel terms in equations
 
-\newcommand{\aside}[2]{ % Aligns the environment for examples
-	\bigskip
-	{\color{gray}\hrule}
-	\bigskip
-	\begin{itemize}[align=left,labelindent=0em,labelwidth=3em,labelsep*=0.5em,leftmargin=!]
-		\item[\ul{#1}:]{#2}
-	\end{itemize}
-	\bigskip
-	{\color{gray}\hrule}
-	\bigskip
+\newcommand\hruleMod{% Creates a disappearing line if displayed at the top or bottom of the page
+	\vskip12pt
+	\nointerlineskip
+	{\color{lightgray}\leaders\vrule width \textwidth\vskip0.4pt}
+	\nointerlineskip
+	\vskip12pt
 }
+
+\newcommand{\aside}[3][]{ % Aligns the environment for examples
+	\ifthenelse{\equal{#1}{}}{\hruleMod}{}
+	\begin{itemize}[align=left,labelindent=0em,labelwidth=3em,labelsep*=0.5em,leftmargin=!]
+		\item[\ul{#2}:]{#3}
+	\end{itemize}
+	\ifthenelse{\equal{#1}{}}{\hruleMod}{}
+}
+
 
 \newcommand{\trm}[1]{\textrm{#1}} % Shorthand for \textrm command
 \newcommand{\up}{\uparrow} % Shorthand for \uparrow command
@@ -1013,9 +1018,279 @@ where $\vec{R}_{A}$ is the location of nucleus $A$.\\
 For the purpose of computational efficiency, the Gaussian type orbitals simplify the integrals shown earlier in the Roothaan equation and are described by
 \begin{equation}
 \begin{aligned}
+g_{\trm{s}j}(\vec{r})&\equiv e^{-\alpha_{j}\abs*{\vec{r}-\vec{R}_{A}}^{2}} \qq{\color{red}(s-type Gaussian)}\\
+g_{\trm{p}j}(\vec{r})&\equiv xe^{-\alpha_{j}\abs*{\vec{r}-\vec{R}_{A}}^{2}} \qq{\color{red}(p-type Gaussian along $x$)}\\
+g_{\trm{d}j}(\vec{r})&\equiv xye^{-\alpha_{j}\abs*{\vec{r}-\vec{R}_{A}}^{2}} \qq{\color{red}(d-type Gaussian along $xy$)}\\
+\end{aligned}
+\end{equation}
+The above are called \ul{primitive Gaussians}.\\
+
+To obtain the best features of both orbitals, one introduces \ul{contracted Gaussians}. They are a weighted sum of a number of primitive Gaussians
+\begin{equation}
+\sum_{j}A_{j}g_{j}(\vec{r})
+\end{equation}
+$A_{j}$ and $\alpha_{j}$ are typically determined by running Hartree-Fock on individual atoms in a molecule and matching these variables as closely to the solution given.\\
+
+Note that these are not the only basis functions one can use. It may be desirable for the basis functions to have the same properties as the system being studied. For example, crystals have translational symmetry and long-range distribution. Thus, one could use plane-wave basis functions instead.
+
+\newpage
+\section{Post Hartree-Fock}
+\subsection{Configuration Interaction}
+Let us return to the many-electron Schr\"{o}dinger equation.
+\begin{equation}
+\tikzmarknode{aa}{\vb{H}}\Chi=\tikzmarknode{bb}{E}\tikzmarknode{cc}{\Chi}
+\end{equation}
+\begin{tikzpicture}[remember picture,overlay]
+	\draw[red,<-,shorten <=1mm] (aa.west) -- ++(-0.5,0) node[left,text width=2.5cm,align=center] {many-electron Hamiltonian};
+	\draw[red,<-,shorten <=1mm] (bb.south) -- ++(0,-0.5) node[below] {energy};
+	\draw[red,<-,shorten <=1mm] (cc.east) -- ++(0.5,0) node[right,text width=2.5cm,align=center] {many-electron wavefunction};
+\end{tikzpicture}
+
+In Hartree-Fock, $\Chi$ was assumed to take the form of a Slater determinant. Let us not make this approximation. To solve this problem, we need a basis set to be able to expand $\Chi(\vec{x}_{1},\vec{x}_{2},\cdots,\vec{x}_{N})$ over.\\
+
+Let us recall the Hartree-Fock equation.
+\begin{equation}
+\vb{F}\Chi_{n}(\vec{x}_{1})=\varepsilon_{n}\Chi_{n}(\vec{x}_{1})\qq{,}n=1,\cdots,\infty
+\end{equation}
+Since $\vb{F}$ is Hermitian, the eigenfunctions form a complete basis set. If one takes an arbitrary function $\Psi(\vec{x}_{1})$ of one electron, it can be expanded as
+\begin{equation}
+\Psi(\vec{x}_{1})=\sum_{i=1}^{\infty}a_{i}\Chi_{i}(\vec{x}_{1})
+\end{equation}
+Now consider an arbitrary two-electron function $\Psi(\vec{x}_{1},\vec{x}_{2})$. If $\vec{x}_{2}$ is held fixed, the function depends on $\vec{x}_{1}$ only and can be expanded as done above. For a different value of fixed $\vec{x}_{2}$, the expansion above can still be done, but the values of the coefficients $a_{i}$ must change. Thus
+\begin{equation}
+\Psi(\vec{x}_{1},\vec{x}_{2})=\sum_{i=1}^{\infty}a_{i}(\vec{x}_{2})\Chi_{i}(\vec{x}_{1})
+\end{equation}
+However, if $a_{i}$ is a function of $\vec{x}_{2}$, the coefficient itself can be expanded over the same basis set. Thus
+\begin{equation}
+\begin{aligned}
+a_{i}(\vec{x}_{2})=\sum_{j=1}^{\infty}b_{ji}\Chi_{j}(\vec{x}_{2})\\
+\implies \Psi(\vec{x}_{1},\vec{x}_{2})&=\sum_{i=1}^{\infty}\sum_{j=1}^{\infty}b_{ji}\Chi_{j}(\vec{x}_{2})\Chi_{i}(\vec{x}_{1})
+\end{aligned}
+\end{equation}
+However, $\Psi(\vec{x}_{1},\vec{x}_{2})$ should be anti-symmetric.
+\begin{equation}
+\Psi(\vec{x}_{1},\vec{x}_{2})=-\Psi(\vec{x}_{2},\vec{x}_{1})
+\end{equation}
+which leads to the constraint
+\begin{equation}
+b_{ji}=-b_{ij}
+\end{equation}
+Thus
+\begin{equation}
+\Psi(\vec{x}_{1},\vec{x}_{2})=\sum_{i,j=1}^{\infty}b_{ji}\qty[\Chi_{i}(\vec{x}_{1})\Chi_{j}(\vec{x}_{2})-\Chi_{i}(\vec{x}_{2})\Chi_{j}(\vec{x}_{1})]
+\end{equation}
+with constants being absorbed into $b_{ji}$. Thus, an arbitrary two-electron wavefunction can be expanded over two-electron Slater determinants that are themselves constructed from the one-electron basis set found from Hartree-Fock. These sets of two-electron Slater determinants are themselves a complete basis set for all anti-symmetric two-electron wavefunctions. This argument generalizes to $N$-electron wavefunctions. Note that the one-electron basis set needs not to be obtained from Hartree-Fock for this argument to apply.\\
+
+Thus, for configuration interaction (CI), one first solves Hartree-Fock with $K$ basis functions. One then constructs all possible $N$-electron Slater determinants out of the Hartree-Fock solutions. There are $(^{K}_{N})$ of these Slater determinants. One then writes the original Schr\"{o}dinger equation in matrix form using these Slater determinants as basis functions and solves for the eigenvalues and eigenfunctions. As $K$ approaches infinity, these solutions become exact.
+\begin{center}
+\begin{tikzpicture}
+	\foreach \y in {0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5} {
+		\draw (0,\y) -- (3,\y);
+	}
+	\node[above] at (1.5,5) {HF};
+	\draw[decorate,decoration={brace,amplitude=10pt}] (-0.5,0) -- (-0.5,5) node[left,midway,xshift=-0.5cm] {$K$};
+	\draw[decorate,decoration={brace,amplitude=10pt,mirror}] (3.5,0) -- (3.5,2) node[right,midway,xshift=0.5cm] {$N$};
+	\node[text width=5cm] at (7,4) {$(^{K}_{N})$ Slater determinants serve as CI basis set};
+\end{tikzpicture}
+\end{center}
+In practice, CI becomes extremely computationally intensive. However, there are variants one can use to truncate this set. For instance, using only the singly excited determinants or using only the singly and doubly excited determinants (CISD) drastically reduces the computational resources required.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (-0.5,0) -- (7,0) node[right] {$K$};
+	\draw[->] (0,-0.5) -- (0,5) node[above] {$(^{K}_{N})$};
+	\draw[red,->] (-0.5,0.5) -- node[left,text width=1cm,align=center] {better CI} (-0.5,4.5);
+	\draw[red,->] (0.5,-0.5) -- node[below] {better HF} (6.5,-0.5);
+	\draw[red,->] (0,0) -- (7,5) node[right,text width=7cm,align=center] {Exact solution (non-relativistic + Born-Oppenheimer)};
+	\draw[red,dashed,thin] (0,2) -- (5,2) -- (5,0);
+	\filldraw[red] (5,2) circle (2pt) node[right,xshift=0.2cm] {Solution found by limiting $K$ and $(^{K}_{N})$};
+\end{tikzpicture}
+\end{center}
+One can define the correlation energy as
+\begin{equation}
+E_{\trm{correlation}}=E_{\trm{exact}}-E_{\trm{HF}}
+\end{equation}
+
+\subsection{M{\o}ller-Plesset Perturbation Theory}
+Let us write the many-body Hamiltonian as
+\begin{equation}
+\vb{H}=\tikzmarknode{aa}{\vb{H}_{0}}+\tikzmarknode{bb}{\lambda\vb{V}}
+\end{equation}
+\begin{tikzpicture}[remember picture,overlay]
+	\draw[red,<-] (aa.south) -- ++(0,-0.3) node[below] {reference Hamiltonian};
+	\draw[red,<-] (bb.east) -- ++(0.5,0) node[right] {perturbation};
+\end{tikzpicture}
+
+In M{\o}ller-Plesset perturbation theory (MPPT), $\vb{H}_{0}$ is the Hartree-Fock Hamiltonian (not the Fock operator). It is given by
+\begin{equation}
+\vb{H}_{0}=\sum_{i=1}^{N}\vb{F}(i)
+\end{equation}
+The energy for a given state will be written as
+\begin{equation}
+\begin{aligned}
+E_{i}&=\sum_{j=0}^{\infty}\lambda^{j}E_{i}^{(j)}\\
+&=E_{i}^{(0)}+\lambda E_{i}^{(1)}+\lambda^{2}E_{i}^{(2)}+\ldots
+\end{aligned}
+\end{equation}
+The many-body wavefunction will be written as
+\begin{equation}
+\begin{aligned}
+\ket{\Chi_{i}}&=\sum_{j=0}^{\infty}\lambda^{j}\ket{\Chi_{i}^{(j)}}\\
+&=\ket{\Chi_{i}^{(0)}}+\lambda\ket{\Chi_{i}^{(1)}}+\lambda^{2}\ket{\Chi_{i}^{(2)}}+\ldots
+\end{aligned}
+\end{equation}
+Substituting into the many-electron Schr\"{o}dinger equation
+\begin{equation}
+\qty(\vb{H}_{0}+\lambda\vb{V})\qty(\ket{\Chi_{i}^{(0)}}+\lambda\ket{\Chi_{i}^{(1)}}+\ldots)=\qty(E_{i}^{(0)}+\lambda E_{i}^{(1)}+\ldots)\qty(\ket{\Chi_{i}^{(0)}}+\lambda\ket{\Chi_{i}^{(1)}}+\ldots)
+\end{equation}
+Matching orders of $\lambda$
+\begin{equation}
+\begin{aligned}
+\vb{H}_{0}\ket{\Chi_{i}^{(0)}}&=E_{i}^{(0)}\ket{\Chi_{i}^{(0)}}\qq{(Zeroth order)}\\
+\vb{H}_{0}\ket{\Chi_{i}^{(1)}}&+\vb{V}\ket{\Chi_{i}^{(0)}}=E_{i}^{(0)}\ket{\Chi_{i}^{(1)}}+E_{i}^{(1)}\ket{\Chi_{i}^{(0)}}\qq{(First order)}\\
+\vb{H}_{0}\ket{\Chi_{i}^{(2)}}&+\vb{V}\ket{\Chi_{i}^{(1)}}=E_{i}^{(0)}\ket{\Chi_{i}^{(2)}}+E_{i}^{(1)}\ket{\Chi_{i}^{(1)}}+E_{i}^{(2)}\ket{\Chi_{i}^{(0)}}\qq{(Second order)}\\
+&\qquad\qquad\vdots
+\end{aligned}
+\end{equation}
+One can introduce normalization conditions
+\begin{equation}
+\ip{\Chi_{i}^{(0)}}{\Chi_{i}^{(0)}}=1\qq{\color{red}(can always be done)}
+\end{equation}
+Additionally, one can then choose
+\begin{equation}
+\ip{\Chi_{i}^{(0)}}{\Chi_{i}}=1\qq{\color{red}(chosen to help find $\ket{\Chi_{i}}$)}
+\end{equation}
+Thus
+\begin{equation}
+\ip{\Chi_{i}^{(0)}}{\Chi_{i}^{(1)}}=\ip{\Chi_{i}^{(0)}}{\Chi_{i}^{(2)}}=\ldots=0
+\end{equation}
+Multiplying on the left by $\bra{\Chi_{i}^{(0)}}$ for the first order equation
+\begin{equation}
+\begin{aligned}
+\cancelto{\mathrlap{0\trm{, since }\vb{H}\ket{\Chi_{i}^{(0)}}=E_{i}^{(0)}\ket{\Chi_{i}^{(0)}}}}{\mel{\Chi_{i}^{(0)}}{\vb{H}}{\Chi_{i}^{(1)}}}&+\mel{\Chi_{i}^{(0)}}{\vb{V}}{\Chi_{i}^{(0)}}\\
+&=\cancelto{0}{\mel{\Chi_{i}^{(0)}}{E_{i}^{(0)}}{\Chi_{i}^{(1)}}}+\mel{\Chi_{i}^{(0)}}{E_{i}^{(1)}}{\Chi_{i}^{(0)}}\\
+\implies E_{I}^{(1)}&=\mel{\Chi_{i}^{(0)}}{\vb{V}}{\Chi_{i}^{(0)}}
+\end{aligned}
+\end{equation}
+Solving for $\ket{\Chi_{i}^{(1)}}$
+\begin{equation}
+\qty(E_{i}^{(0)}-\vb{H}_{0})\ket{\Chi_{i}^{(1)}}=\qty(\vb{V}-E_{i}^{(1)})\ket{\Chi_{i}^{(0)}}
+\end{equation}
+Since $\qty{\ket{\Chi_{i}^{(0)}}}$ forms a complete basis set, one can write
+\begin{equation}
+\begin{aligned}
+\ket{\Chi_{i}^{(1)}}&=\sum_{j}c_{ji}\ket{\Chi_{i}^{(0)}}\\
+c_{ji}&=\ip{\Chi_{j}^{(0)}}{\Chi_{i}^{(1)}}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\mel{\Chi_{j}^{(0)}}{\qty(E_{i}^{(0)}-\vb{H}_{0})}{\Chi_{i}^{(1)}}&=\mel{\Chi_{j}^{(0)}}{\qty(\vb{V}-E_{i}^{(1)})}{\Chi_{i}^{(0)}}\\
+\implies E_{i}^{(0)}\ip{\Chi_{j}^{(0)}}{\Chi_{i}^{(1)}}-E_{j}^{(0)}\ip{\Chi_{j}^{(0)}}{\Chi_{i}^{(1)}}&=\mel{\Chi_{j}^{(0)}}{\vb{V}}{\Chi_{i}^{(0)}}-E_{i}^{(1)}\ip{\Chi_{j}^{(0)}}{\Chi_{i}^{(0)}}
+\end{aligned}
+\end{equation}
+For $i\neq j$
+\begin{equation}
+\begin{aligned}
+c_{ji}&=\frac{\mel{\Chi_{j}^{(0)}}{\vb{V}}{\Chi_{i}^{(0)}}}{E_{i}^{(0)}-E_{j}^{(0)}}\\
+\implies\ket{\Chi_{i}^{(1)}}&=\sum_{j\neq i}\frac{\mel{\Chi_{j}^{(0)}}{\vb{V}}{\Chi_{i}^{(0)}}}{E_{i}^{(0)}-E_{j}^{(0)}}\ket{\Chi_{j}^{(0)}}
 \end{aligned}
 \end{equation}
 
+\newpage
+\section{Density Functional Theory}
+\subsection{Functionals and Functional Differentiation}
+A \ul{functional} maps a function to a numeric value. In the case of density functional theory, the electron density gets mapped to different values by various functionals.
+\[
+n(\vec{r})\rightarrow F[n(\vec{r})]
+\]
+For a difference in function $n(\vec{r})$, how does the functional $F[n(\vec{r})]$ change? This is given by
+\[
+\fdv{F[n(\vec{r})]}{n(\vec{r})}\qq{\color{red}(functional differentation)}
+\]
+where
+\begin{equation}
+\int\fdv{F[n(\vec{r})]}{n(\vec{r})}g(\vec{r})\dd{\vec{r}}=\lim_{\varepsilon\rightarrow0}\frac{1}{\varepsilon}\big[F[n(\vec{r})+\varepsilon g(\vec{r})]-F[n(\vec{r})]\big]
+\end{equation}
 
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->] (0,-1) -- (0,4) node[above] {$n(\vec{r})$};
+	\draw[<->] (-4,0) -- (4,0) node[right] {$\vec{r}$};
+	\draw[blue] plot [smooth] coordinates {(-4,1.8) (-3.5,2.1) (-3,2.3) (-2.2,2.7) (-1.5,1.8) (-0.2,1.2) (1.5,1.5) (3.2,2.9) (4,2.5)};
+	\draw[red,dashed] plot [smooth] coordinates {(-4,1.9) (-3.5,2.2) (-3,2.35) (-2.2,2.6) (-1.5,1.9) (-0.2,1.25) (1.5,1.6) (3.2,3.05) (4,2.6)};
+	\draw[->] (3.5,2.5) -- (3.5,2.8);
+	\draw[<-] (3.5,3.1) -- (3.5,3.4) node[right] {$\var{n(\vec{r})}$};
+	\node[blue,below left] at (-4,1.8) {$n(\vec{r})$};
+	\node[red,above left] at (-4,1.9) {$n(\vec{r})+\var{n(\vec{r})}$};
+\end{tikzpicture}
+\end{center}
 
+\aside{Ex}{Consider
+\begin{equation}
+F[n(\vec{r})]=\int v(\vec{r})n(\vec{r})\dd{\vec{r}}
+\end{equation}
+By definition
+\begin{equation}
+\begin{aligned}
+\int\fdv{F[n(\vec{r})]}{n(\vec{r})}g(\vec{r})\dd{\vec{r}}&=\lim_{\varepsilon\rightarrow0}\frac{1}{\varepsilon}\qty[\int v(\vec{r})[n(\vec{r})+\varepsilon g(\vec{r})]\dd{\vec{r}}-\int v(\vec{r})n(\vec{r})\dd{\vec{r}}]\\
+&=\lim_{\varepsilon\rightarrow0}\frac{1}{\varepsilon}\int v(\vec{r})\varepsilon g(\vec{r})\dd{\vec{r}}\\
+&=\int v(\vec{r})g(\vec{r})\dd{\vec{r}}
+\end{aligned}
+\end{equation}
+Thus, since $g(\vec{r})$ is arbitrary
+\begin{equation}
+\fdv{F[n(\vec{r})]}{n(\vec{r})}=v(\vec{r})
+\end{equation}
+}
+
+\subsection{Density Functional Theory}
+The original many-electron problem had the form of
+\begin{equation}
+\vb{H}\ket{\Chi_{i}}=E_{i}\ket{\Chi_{i}}\qq{,}i=1,\cdots,\infty\qq{,}\ket{\Chi_{i}}\equiv\Chi_{i}(\vec{x}_{1},\cdots,\vec{x}_{N})
+\end{equation}
+Density functional theory (DFT) transforms this problem into
+\begin{equation}
+\vb{H}_{\trm{eff}}\Psi_{i}(\vec{r}_{1})=\varepsilon_{i}\Psi_{i}(\vec{r}_{1})
+\end{equation}
+The history of density functional theory can be traced back to two seminal papers: Hohenberg and Kohn (1964) and Kohn and Sham (1965). In essence, it recasts the problem from regarding the many-electron wavefunction to regarding the electron density $n(\vec{r})$.
+
+\subsection{Hohenberg-Kohn Theorems}
+Recall the many-electron Hamiltonian is
+\begin{equation}
+\vb{H}=\sum_{i=1}^{N}-\frac{1}{2}\nabla_{i}^{2}+\sum_{i=1}^{N}\sum_{j\neq i}^{N}\frac{1}{r_{ij}}+{\color{red}\underbrace{\color{black}\sum_{i=1}^{N}{\color{red}\overbrace{\color{black}\sum_{A=1}^{M}-\frac{Z_{A}}{r_{iA}}}^{\mathclap{\trm{external potential $v(\vec{r}_{i})$}}}}}_{\mathclap{\substack{\trm{total external potential acting}\\ \trm{on the electronic system}}}}}
+\end{equation}
+\aside[0]{Theorem 1}{The external potential $v(\vec{r})$ acting as a fully-interacting system of $N$ electrons in a ground state is determined, within an additive constant, by the electron density $n(\vec{r})$.
+}
+\newpage
+\aside{Proof}{Imagine two external potentials, $v(\vec{r})$ and $v^{\prime}(\vec{r})$, which differ by more than an additive constant, which lead to the same electron density $n(\vec{r})$ in the ground state.\\
+
+Let $\vb{H}$ be the Hamiltonian associated with $v(\vec{r})$, with ground state $\ket{\Chi_{0}}$ and ground state energy $E_{0}$. Let $\vb{H}^{\prime}$ be the Hamiltonian associated with $v^{\prime}(\vec{r})$, with ground state $\ket{\Chi_{0}^{\prime}}$ and ground state energy $E_{0}^{\prime}$.\\
+
+By the variational principle
+\begin{equation}
+\begin{aligned}
+\mel{\Chi_{0}^{\prime}}{\vb{H}}{\Chi_{0}^{\prime}}&>E_{0}\\
+\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}&>E_{0}^{\prime}
+\end{aligned}
+\end{equation}
+The terms evaluated explicitly are
+\begin{equation}
+\begin{aligned}
+\mel{\Chi_{0}^{\prime}}{\vb{H}}{\Chi_{0}^{\prime}}&=\int\Chi_{0}^{\prime *}(\vec{x}_{1},\cdots,\vec{x}_{N})\qty(\sum_{i=1}^{N}-\frac{1}{2}\nabla_{i}^{2})\Chi_{0}^{\prime}(\vec{x}_{1},\cdots,\vec{x}_{N})\dd{\vec{x}_{1}}\ldots\dd{\vec{x}_{N}}\\
+&\quad+\int\Chi_{0}^{\prime *}(\vec{x}_{1},\cdots,\vec{x}_{N})\qty(\sum_{i=1}^{N}\sum_{j\neq i}^{N}\frac{1}{r_{ij}})\Chi_{0}^{\prime}(\vec{x}_{1},\cdots,\vec{x}_{N})\dd{\vec{x}_{1}}\ldots\dd{\vec{x}_{N}}\\
+&\quad+\int\Chi_{0}^{\prime *}(\vec{x}_{1},\cdots,\vec{x}_{N})\qty(\sum_{i=1}^{N}v(\vec{r}_{i}))\Chi_{0}^{\prime}(\vec{x}_{1},\cdots,\vec{x}_{N})\dd{\vec{x}_{1}}\ldots\dd{\vec{x}_{N}}\\
+&=\trm{Kinetic term} + \trm{e$^{-}$-e$^{-}$ interaction term}\\
+&\quad+\int\Chi_{0}^{\prime *}(\vec{x}_{1},\cdots,\vec{x}_{N})\qty(\sum_{i=1}^{N}\int v(\vec{r})\delta(\vec{r}_{i}-\vec{r})\dd{\vec{r}})\Chi_{0}^{\prime}(\vec{x}_{1},\cdots,\vec{x}_{N})\dd{\vec{x}_{1}}\ldots\dd{\vec{x}_{N}}
+\end{aligned}
+\end{equation}
+The third term becomes
+\begin{equation}
+\int v(\vec{r})\dd{\vec{r}}{\color{red}\overbrace{\color{black}\int\Chi_{0}^{\prime *}(\vec{x}_{1},\cdots,\vec{x}_{N}){\color{red}\underbrace{\color{black}\qty(\sum_{i=1}^{N}\delta(\vec{r}_{i}-\vec{r}))}_{\mathclap{\trm{density operator}}}}\Chi_{0}^{\prime}(\vec{x}_{1},\cdots,\vec{x}_{N})\dd{\vec{x}_{1}}\ldots\dd{\vec{x}_{N}}}^{n(\vec{r})}}
+\end{equation}
+Thus
+\begin{equation}
+\mel{\Chi_{0}^{\prime}}{\vb{H}}{\Chi_{0}^{\prime}}=\trm{Kinetic term} + \trm{e$^{-}$-e$^{-}$ interaction term}+\int v(\vec{r})n(\vec{r})\dd{\vec{r}}
+\end{equation}
+}
 \end{document}
