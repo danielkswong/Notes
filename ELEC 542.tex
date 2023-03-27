@@ -1,5 +1,5 @@
 \documentclass[12pt,a4paper,titlepage]{article}
-% Daniel Wong March 2023
+% Daniel Wong September 10, 2020
 
 \usepackage[fleqn]{amsmath} % To write aligned equations
 \usepackage{amssymb} % To write math symbols
@@ -1292,5 +1292,136 @@ Thus
 \begin{equation}
 \mel{\Chi_{0}^{\prime}}{\vb{H}}{\Chi_{0}^{\prime}}=\trm{Kinetic term} + \trm{e$^{-}$-e$^{-}$ interaction term}+\int v(\vec{r})n(\vec{r})\dd{\vec{r}}
 \end{equation}
+By a similar argument
+\begin{equation}
+\mel{\Chi_{0}}{\vb{H}^{\prime}}{\Chi_{0}}=\trm{Kinetic term} + \trm{e$^{-}$-e$^{-}$ interaction term}+\int v^{\prime}(\vec{r})n(\vec{r})\dd{\vec{r}}
+\end{equation}
+Note that
+\begin{equation}
+\begin{aligned}
+\mel{\Chi_{0}^{\prime}}{\vb{H}}{\Chi_{0}^{\prime}}&=\mel{\Chi_{0}^{\prime}}{\qty(\vb{H}-\vb{H}^{\prime})}{\Chi_{0}^{\prime}}+\mel{\Chi_{0}^{\prime}}{\vb{H}^{\prime}}{\Chi_{0}^{\prime}}\\
+&=\int\qty(v(\vec{r})-v^{\prime}(\vec{r}))n(\vec{r})\dd{\vec{r}}+E_{0}^{\prime}\\
+\implies E_{0}&< \int\qty(v(\vec{r})-v^{\prime}(\vec{r}))n(\vec{r})\dd{\vec{r}}+E_{0}^{\prime}
+\end{aligned}
+\end{equation}
+Similarly
+\begin{equation}
+\begin{aligned}
+\mel{\Chi_{0}}{\vb{H}^{\prime}}{\Chi_{0}}&=\mel{\Chi_{0}}{\qty(\vb{H}^{\prime}-\vb{H})}{\Chi_{0}}+\mel{\Chi_{0}}{\vb{H}}{\Chi_{0}}\\
+&=\int\qty(v^{\prime}(\vec{r})-v(\vec{r}))n(\vec{r})\dd{\vec{r}}+E_{0}\\
+\implies E_{0}^{\prime}&< \int\qty(v^{\prime}(\vec{r})-v(\vec{r}))n(\vec{r})\dd{\vec{r}}+E_{0}
+\end{aligned}
+\end{equation}
+Thus, adding the two inequalities together
+\begin{equation}
+E_{0}+E_{0}^{\prime}<E_{0}+E_{0}^{\prime}
+\end{equation}
+which is a contradiction.
 }
+Thus, $n(\vec{r})$ uniquely determines $v(\vec{r})$, up to an additive constant, which will give the Hamiltonian $\vb{H}$. This subsequently gives everything else. Therefore, one can write the various energies as a functional of the electron density $n(\vec{r})$.
+\begin{equation}
+E_{0}[n(\vec{r})]={\color{red}\underbrace{\color{black}T[n(\vec{r})]+U_{\trm{ee}}[n(\vec{r})]}_{\mathclap{F_{\trm{HK}}[n(\vec{r})]\,:\,\trm{Hohenberg-Kohn functional}}}}+\int v(\vec{r})n(\vec{r})\dd{\vec{r}}
+\end{equation}
+Thus, one can see that the problem involving $3N$ spatial coordinates has been converted into a problem involving only 3 spatial coordinates.
+
+\aside[0]{Theorem 2}{This restates the variational principle in terms of electron density.
+\begin{equation}
+E_{0}[n^{\prime}(\vec{r})]>E_{0}
+\end{equation}
+}
+
+\aside{Proof}{Note that $n^{\prime}(\vec{r})$ determines the Hamiltonian, which ultimately gives the state $\ket{\Chi_{0}^{\prime}}$. From the previous form of the variational principle
+\begin{equation}
+{\color{red}\underbrace{\color{black}\mel{\Chi_{0}^{\prime}}{\vb{H}}{\Chi_{0}^{\prime}}}_{\mathrlap{=\,F_{\trm{HK}}[n^{\prime}(\vec{r})]+\int v(\vec{r})n^{\prime}(\vec{r})\dd{\vec{r}}\,=\,E_{0}[n^{\prime}(\vec{r})]}}}>E_{0}
+\end{equation}
+}
+
+\subsection{Kohn-Sham Method}
+The functional describing the electron-electron interaction can be broken up into a classical Coulomb term and a non-classical term
+\begin{equation}
+U_{\trm{ee}}[n(\vec{r})]={\color{red}\underbrace{\color{black}\frac{1}{2}\int\frac{n(\vec{r})n(\vec{r}^{\prime})}{\abs{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}}\dd{\vec{r}^{\prime}}}_{J[n(\vec{r})]}}+\trm{non-classical term}
+\end{equation}
+In this method, imagine a reference system of non-interacting electrons
+\begin{equation}
+\vb{H}_{\trm{ref}}=\sum_{i=1}^{N}-\frac{1}{2}\nabla_{i}^{2}+\tikzmarknode{aa}{\sum_{i=1}^{N}v_{\trm{ref}}(\vec{r}_{i})}
+\end{equation}
+\begin{tikzpicture}[remember picture,overlay]
+	\draw[red,<-,shorten <=1mm] (aa.east) -- ++(0.5,-0.3) node[right,text width=6cm,align=center] {acts only on one electron because they are non-interacting};
+\end{tikzpicture}
+with $\vb{H}_{\trm{ref}}\Psi_{i}(\vec{r})=\varepsilon_{i}\Psi_{i}(\vec{r})$ and $\Psi_{i}(\vec{r})$ is some one-electron function.\\
+
+The key feature is that the external potential of the reference system $v_{\trm{ref}}$ is chosen such that the electron density of this reference system is equal to the electron density of the actual system of interest (where the electrons are interesting). The electron density is given by
+\begin{equation}
+n(\vec{r})=\sum_{i=1}^{N}\Psi_{i}^{*}(\vec{r})\Psi_{i}(\vec{r})
+\end{equation}
+The kinetic energy of the reference system is given by
+\begin{equation}
+T_{\trm{ref}}[n(\vec{r})]=\sum_{i=1}^{N}\mel{\Psi_{i}}{-\frac{1}{2}\nabla_{i}^{2}}{\Psi_{i}}\tikzmarknode{aa}{\neq}\,T[n(\vec{r})]
+\end{equation}
+\begin{tikzpicture}[remember picture,overlay]
+	\draw[red,<-,shorten <=1mm] (aa.south) -- ++(0,-0.3) node[below] {do not assume they are the same};
+\end{tikzpicture}
+
+\newpage
+For the actual system
+\begin{equation}
+\begin{aligned}
+E_{0}[n(\vec{r})]&={\color{red}\underbrace{\color{black}T_{\trm{ref}}[n(\vec{r})]+\trm{kinetic energy missing from reference system}}_{T[n(\vec{r})]}}\\
+&\quad+{\color{red}\underbrace{\color{black}J[n(\vec{r})]+\trm{non-classical term}}_{U_{\trm{ee}}[n(\vec{r})]}}+\int v(\vec{r})n(\vec{r})\dd{\vec{r}}
+\end{aligned}
+\end{equation}
+The sum of these two unknown terms is the \ul{exchange-correlation energy} $E_{xc}[n(\vec{r})]$.
+\begin{equation}
+\implies E_{0}[n(\vec{r})]=T_{\trm{ref}}[n(\vec{r})]+J[n(\vec{r})]+\int v(\vec{r})n(\vec{r})\dd{\vec{r}}+E_{\trm{xc}}[n(\vec{r})]
+\end{equation}
+Since the reference system was chosen to match electron density, $n(\vec{r})$ can be calculated using the definition above using the reference $\Psi_{i}(\vec{r})$.\\
+
+We now minimize $E_{0}[n(\vec{r})]$ subject to the constraint that
+\begin{equation}
+\int\Psi_{i}^{*}(\vec{r})\Psi_{j}(\vec{r})\dd{\vec{r}}=\delta_{ij}
+\end{equation}
+Define a Lagrange function
+\begin{equation}
+\begin{aligned}
+\mathcal{L}[n(\vec{r})]=E_{0}[n(\vec{r})]-\sum_{i=1}^{N}\sum_{j\neq i}^{N}\varepsilon_{ij}\qty(\int\Psi_{i}^{*}(\vec{r})\Psi_{j}(\vec{r})\dd{\vec{r}}-\delta_{ij})
+\end{aligned}
+\end{equation}
+Set $\var{\mathcal{L}}=0$ when the set $\{\Psi_{i}\}$ is changed to $\{\Psi_{i}+\var{\Psi_{i}}\}$. To first order, the variation in $n(\vec{r})$ is
+\begin{equation}
+\var{n(\vec{r})}=\sum_{i=1}^{N}\qty[\var{\Psi_{i}^{*}(\vec{r})}\Psi_{i}(\vec{r})+\Psi_{i}^{*}(\vec{r})\var{\Psi_{i}(\vec{r})}]
+\end{equation}
+For the terms in $E_{0}[n(\vec{r})]$, the variations are
+\begin{equation}
+\var{T_{\trm{ref}}[n(\vec{r})]}=\sum_{i=1}^{N}\int\var{\Psi_{i}^{*}(\vec{r})}\qty(-\frac{1}{2}\nabla^{2})\Psi_{i}(\vec{r})\dd{\vec{r}}+\qcc*
+\end{equation}
+\begin{equation}
+\begin{aligned}
+\var{J[n(\vec{r})]}&=\int\frac{n(\vec{r}^{\prime})\var{n(\vec{r})}}{\abs{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}}\dd{\vec{r}^{\prime}}\\
+&=\int\frac{n(\vec{r}^{\prime})}{\abs{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}^{\prime}}\qty(\sum_{i=1}^{N}\var{\Psi_{i}^{*}(\vec{r})}\Psi_{i}(\vec{r})+\trm{c.c.})\dd{\vec{r}}
+\end{aligned}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+\var{\qty(\int v(\vec{r})n(\vec{r})\dd{\vec{r}})}&=\int v(\vec{r})\var{n(\vec{r})}\dd{\vec{r}}\\
+&=\int v(\vec{r})\qty(\sum_{i=1}^{N}\var{\Psi_{i}^{*}(\vec{r})}\Psi_{i}(\vec{r})+\trm{c.c.})\dd{\vec{r}}
+\end{aligned}
+\end{equation}
+The variation in the exchange-correlation energy is
+\begin{equation}
+\begin{aligned}
+\var{E_{\trm{xc}}[n(\vec{r})]}&=\int\fdv{E_{\trm{xc}}[n(\vec{r})]}{n(\vec{r})}\var{n(\vec{r})}\dd{\vec{r}}\\
+&=\int\fdv{E_{\trm{xc}}[n(\vec{r})]}{n(\vec{r})}\qty(\sum_{i=1}^{N}\var{\Psi_{i}^{*}(\vec{r})}\Psi_{i}(\vec{r})+\trm{c.c.})\dd{\vec{r}}
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\var{\mathcal{L}[n(\vec{r})]}&=\sum_{i=1}^{N}\int\dd{\vec{r}}\var{\Psi_{i}^{*}(\vec{r})}\bigg\{\qty[-\frac{1}{2}\nabla^{2}+\int\frac{n(\vec{r}^{\prime})}{\abs*{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}^{\prime}}+v(\vec{r})+\fdv{E_{\trm{xc}}[n(\vec{r})]}{n(\vec{r})}]\Psi_{i}(\vec{r})\\
+&\quad\quad-\sum_{j=1}^{N}\varepsilon_{ij}\Psi_{j}(\vec{r})\bigg\}+\qcc*
+\end{aligned}	
+\end{equation}
+For $\var{\mathcal{L}}=0$ for arbitrary $\{\var{\Psi_{i}}\}$
+\begin{equation}
+\end{equation}
+
 \end{document}
