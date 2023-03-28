@@ -1420,8 +1420,254 @@ Thus
 &\quad\quad-\sum_{j=1}^{N}\varepsilon_{ij}\Psi_{j}(\vec{r})\bigg\}+\qcc*
 \end{aligned}	
 \end{equation}
-For $\var{\mathcal{L}}=0$ for arbitrary $\{\var{\Psi_{i}}\}$
+For $\var{\mathcal{L}}=0$ where $\{\var{\Psi_{i}}\}$ are arbitrary
 \begin{equation}
+\qty[-\frac{1}{2}\nabla^{2}+\int\frac{n(\vec{r}^{\prime})}{\abs*{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}^{\prime}}+v(\vec{r})+\fdv{E_{\trm{xc}}[n(\vec{r})]}{n(\vec{r})}]\Psi_{i}(\vec{r})=\sum_{j=1}^{N}\varepsilon_{ij}\Psi_{j}(\vec{r})
+\end{equation}
+Without loss of generality, let us work with diagonal matrix elements $\varepsilon_{i}$. We shall also define an effective potential given by
+\begin{equation}
+v_{\trm{ref}}(\vec{r})=v(\vec{r})+\int\frac{n(\vec{r}^{\prime})}{\abs{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}^{\prime}}+\fdv{E_{\trm{xc}}[n(\vec{r})]}{n(\vec{r})}
+\end{equation}
+Thus, we recast the above equation as
+\begin{equation}
+\vb{H}_{\trm{eff}}\Psi_{i}(\vec{r})=\varepsilon_{i}\Psi_{i}(\vec{r})\qq{,}i=1,\cdots,\infty
+\end{equation}
+where
+\begin{equation}
+\vb{H}_{\trm{eff}}(\vec{r})=-\frac{1}{2}\nabla^{2}+v_{\trm{eff}}(\vec{r})
+\end{equation}
+and
+\begin{equation}
+n(\vec{r})=\sum_{i=1}^{N}\Psi_{i}^{*}(\vec{r})\Psi_{i}(\vec{r})
+\end{equation}
+These are the \ul{Kohn-Sham equations}. Thus, the steps of the Kohn-Sham method are
+\begin{enumerate}
+\item Guess initial $\{\Psi_{i}\}$
+\item Calculate \tikzmarknode{aa}{$n(\vec{r})$}
+\item Calculate $v_{\trm{eff}}(\vec{r})$
+\item Calculate $\vb{H}_{\trm{eff}}$
+\item Solve $\vb{H}_{\trm{eff}}\Psi_{i}=\varepsilon_{i}\Psi_{i}$
+\item Test for \tikzmarknode{bb}{convergence}
+\end{enumerate}
+\begin{tikzpicture}[remember picture, overlay]
+	\draw[->,shorten <=1mm, shorten >=1mm] (bb.east) -- ++ (1,0) -- node[right] {NO} ++(0,3.5) -- (aa.east);
+	\draw[->,shorten <=1mm, shorten >=1mm] (bb.east) -- node[above] {YES} ++ (5,0) node[right] {Done};
+\end{tikzpicture}
+
+\subsection{Total Energy and Koopmans' Theorem in DFT}
+Recall the total energy functional is
+\begin{equation}
+E_{0}[n(\vec{r})]=T_{\trm{ref}}[n(\vec{r})]+\int v(\vec{r})n(\vec{r})\dd{\vec{r}}+\frac{1}{2}\int\frac{n(\vec{r})n(\vec{r}^{\prime})}{\abs{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}}\dd{\vec{r}^{\prime}}+E_{\trm{xc}}[n(\vec{r})]
+\end{equation}
+We shall relate $\varepsilon_{i}$ to this value. Note that
+\begin{equation}
+\begin{aligned}
+\sum_{i=1}^{N}\varepsilon_{i}&=\sum_{i=1}^{N}\mel{\Psi_{i}}{\vb{H}_{\trm{eff}}}{\Psi_{i}}\\
+&=\sum_{i=1}^{N}\mel{\Psi_{i}}{\bigg(-\frac{1}{2}\nabla_{i}^{2}+v(\vec{r})+\int\frac{n(\vec{r}^{\prime})}{\abs{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}^{\prime}}+{\color{red}\overbrace{\color{black}\fdv{E_{\trm{xc}}[n(\vec{r})]}{n(\vec{r})}}^{\smash{V_{\trm{xc}}[n(\vec{r})]}}}\bigg)}{\Psi_{i}}\\
+&=T_{\trm{ref}}[n(\vec{r})]+\int v(\vec{r})n(\vec{r})\dd{\vec{r}}+\int\frac{n(\vec{r}^{\prime})n(\vec{r})}{\abs{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}^{\prime}}\dd{\vec{r}}+E_{\trm{xc}}[n(\vec{r})]\\
+&\quad+\int V_{\trm{xc}}[n(\vec{r})]n(\vec{r})\dd{\vec{r}}
+\end{aligned}
+\end{equation}
+\begin{equation}
+\implies E_{0}[n(\vec{r})]=\sum_{i=1}^{N}\varepsilon_{i}-\frac{1}{2}\int\frac{n(\vec{r}^{\prime})n(\vec{r})}{\abs{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}^{\prime}}\dd{\vec{r}}+E_{\trm{xc}}[n(\vec{r})]-\int V_{\trm{xc}}[n(\vec{r})]n(\vec{r})\dd{\vec{r}}
+\end{equation}
+Thus
+\begin{equation}
+E_{0}[n(\vec{r})]\neq\sum_{i=1}^{N}\varepsilon_{i}
+\end{equation}
+In DFT, Koopmans' theorem states that the first ionization energy of this system is equal to the negative of the energy of the highest occupied molecular orbital. A proof of this theorem follows a similar vein of the proof done for Hartree-Fock.\\
+
+Let us now consider the chemical potential $\mu$ using the following Lagrange function.
+\begin{equation}
+\mathcal{L}[n(\vec{r})]=E_{0}[n(\vec{r})]-\mu\qty(\int n(\vec{r})\dd{\vec{r}}-N)
+\end{equation}
+Setting $\var{\mathcal{L}}=0$
+\begin{equation}
+\mu=\fdv{E_{0}[n(\vec{r})]}{n(\vec{r})}=v(\vec{r})+\var{F_{\trm{HK}}[n(\vec{r})]}
+\end{equation}
+
+\subsection{Exchange Correlation Functionals}
+What is $E_{\trm{xc}}[n(\vec{r})]$?\\
+
+With local density approximation (LDA), one assumes that the exchange-correlation potential at each point in space is equal to the exchange-correlation potential of a uniform electron gas whose density is equal to the density of the actual system at that point.
+\begin{equation}
+E_{\trm{xc}}[n(\vec{r})]=\int\varepsilon_{\trm{xc}}[n(\vec{r})]n(\vec{r})\dd{\vec{r}}
+\end{equation}
+where
+\begin{equation}
+\varepsilon_{\trm{xc}}[n(\vec{r})]={\color{red}\underbrace{\color{black}\varepsilon_{\trm{x}}[n(\vec{r})]}_{\mathclap{\substack{\trm{exchange}\\\trm{term}}}}}+{\color{red}\underbrace{\color{black}\varepsilon_{\trm{c}}[n(\vec{r})]}_{\mathclap{\substack{\trm{correlation}\\\trm{term}}}}}
+\end{equation}
+One possible exchange term is the Dirac exchange.
+\begin{equation}
+\varepsilon_{\trm{x}}[n]=-\frac{3}{4}\qty(\frac{3}{\pi})^{\frac{1}{3}}n^{\frac{1}{3}}\qq{(for a uniform electron gas)}
+\end{equation}
+Another is the Slater exchange
+\begin{equation}
+\varepsilon_{\trm{x}}[n]=-\frac{3}{2}\tikzmarknode{aa}{\alpha}\qty(\frac{3}{\pi})^{\frac{1}{3}}n^{\frac{1}{3}}
+\end{equation}
+\begin{tikzpicture}[remember picture,overlay]
+	\draw[red,<-,shorten <=1mm] (aa.south) -- ++(0,-0.3) node[below] {adjustable parameter, often around 0.75};
+\end{tikzpicture}
+
+Some common examples of exchange-correlation functionals include:
+\begin{enumerate}
+\item von Barth and Hedin
+\item Gunnarsson and Lundqvist
+\item Vosko, Wilk, and Nusair (VWN)
+\end{enumerate}
+Another category invokes the generalized gradient approximation (GGA). These exchange-correlation functionals go beyond LDA and involves a dependence on $\nabla n(\vec{r})$
+\begin{equation}
+E_{\trm{xc}}[n(\vec{r})]=\int\varepsilon_{xc}[n(\vec{r})]n(\vec{r})\dd{\vec{r}}+\int g[\nabla n(\vec{r})]\dd{\vec{r}}
+\end{equation}
+where $g[\nabla n(\vec{r})]$ is some functional acting on $\nabla n(\vec{r})$. Some examples include:
+\begin{enumerate}
+\item Becke, Lee, Yang, Parr (BLYP), which uses the Becke 88 exchange which tries to approximate the Hartree-Fock exchange by adding corrections to LDA exchange and LYP correlation term (which tries to reproduce the correlation of the helium atom)
+\item Perdew, Burke, Ernzerhot (PBE)
+\end{enumerate}
+There are also hybrid methods, combining DFT with Hartree-Fock. Some examples include:
+\begin{enumerate}
+\item B3LYP, whose exchange term combines the Hartree-Fock exchange with the LDA exchange and Becke correction and whose correlation term combines the LYP correlation with the VWN correlation
+\end{enumerate}
+When comparing computational time for different methods, in general
+\[
+\trm{BLYP}<\trm{HF}<\trm{B3LYP}<\trm{CI}
+\]
+In comparison, the accuracy in general
+\[
+\trm{HF}<\trm{BLYP}<\trm{B3LYP}<\trm{CI}
+\]
+Note in the context of modeling systems, the choice of exchange-correlation functional will depend highly on the system as well as the property of interest.
+
+\subsection{Connection to Thomas-Fermi-Dirac Model}
+The Thomas-Fermi model assumes uniformly distributed electrons in the phase space and that the effective potential comes due to the nuclear charge and the electron distribution itself. To obtain the kinetic energy, one uses a 3D particle-in-a-box problem. This gives the density of states
+\begin{equation}
+g(\varepsilon)\sim\sqrt{\varepsilon}
+\end{equation}
+The electron density then is
+\begin{equation}
+n\sim \int \tikzmarknode{aa}{f_{\trm{FD}}}(\varepsilon)g(\varepsilon)\dd{\varepsilon}\sim\varepsilon_{F}^{\frac{3}{4}}\qq{(at 0 K)}
+\end{equation}
+\begin{tikzpicture}[remember picture,overlay]
+	\draw[red,<-,shorten <=1mm] (aa.south) -- ++(0,-0.3) node[below]{Fermi-Dirac statistics};
+\end{tikzpicture}
+
+The kinetic energy density is
+\begin{equation}
+\rho_{\trm{KE}}\sim\int\varepsilon f_{\trm{FD}}(\varepsilon)g(\varepsilon)\dd{\varepsilon}\sim\varepsilon_{F}^{\frac{5}{2}}\sim n^{\frac{5}{3}}
+\end{equation}
+Thus, kinetic energy is
+\begin{equation}
+T_{\trm{TF}}[n(\vec{r})]=c_{F}\int n^{\frac{5}{3}}(\vec{r})\dd{\vec{r}}
+\end{equation}
+and the total energy is
+\begin{equation}
+E_{\trm{TF}}[n(\vec{r})]=c_{F}\int n^{\frac{5}{3}}(\vec{r})\dd{\vec{r}}+\int-\frac{Z}{r}n(\vec{r})\dd{\vec{r}}+\frac{1}{2}\int\frac{n(\vec{r})n(\vec{r}^{\prime})}{\abs{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}}\dd{\vec{r}^{\prime}}
+\end{equation}
+One assumes that this is minimized for the ground state density, subject to the constraint
+\begin{equation}
+N=\int n(\vec{r})\dd{\vec{r}}
+\end{equation}
+Thus, the Lagrange problem after setting the variation to 0 is
+\begin{equation}
+\var{\qty{E_{\trm{TF}}[n(\vec{r})]-\mu_{\trm{TF}}\qty(\int n(\vec{r})\dd{\vec{r}}-N)}}=0
+\end{equation}
+One gets
+\begin{equation}
+\mu_{\trm{TF}}=\fdv{E_{\trm{TF}}[n(\vec{r})]}{n(\vec{r})}=\frac{5}{3}c_{F}n^{\frac{2}{3}}(\vec{r})+{\color{red}\underbrace{\color{black}\int\frac{n(\vec{r}^{\prime})}{\abs{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}^{\prime}}-\frac{Z}{r}}_{V_{\trm{eff}}(\vec{r})}}
+\end{equation}
+In the context of DFT
+\begin{equation}
+E_{0}[n(\vec{r})]=T[n(\vec{r})]+U_{\trm{ee}}[n(\vec{r})]+\int v(\vec{r})n(\vec{r})\dd{\vec{r}}
+\end{equation}
+In the Thomas-Fermi model, $T[n(\vec{r})]$ is that of a uniform, non-interacting electron gas. This can be calculated using Hartree-Fock and the states of a particle-in-a-box problem with periodic boundary conditions, giving $c_{F}\int n^{\frac{5}{3}}(\vec{r})\dd{\vec{r}}$. Likewise, in this model, $U_{\trm{ee}}[n(\vec{r})]$ is simply the Coulomb term $J[n(\vec{r})]$.\\
+
+Adding the Dirac exchange gives the Thomas-Fermi-Dirac model. Using the Hartree-Fock exchange formula with the same particle-in-a-box states as above gives
+\begin{equation}
+K[n(\vec{r})]=c_{\trm{x}}\int n^{\frac{4}{3}}(\vec{r})\dd{\vec{r}}
+\end{equation}
+Thus, the total energy is
+\begin{equation}
+E_{\trm{TFD}}[n(\vec{r})]=c_{F}\int n^{\frac{5}{3}}(\vec{r})\dd{\vec{r}}+\int v(\vec{r})n(\vec{r})\dd{\vec{r}}+J[n(\vec{r})]-c_{\trm{x}}\int n^{\frac{4}{3}}(\vec{r})\dd{\vec{r}}
+\end{equation}
+The Lagrange method gives
+\begin{equation}
+\mu_{\trm{TFD}}=\frac{5}{3}c_{F}n^{\frac{2}{3}}(\vec{r})-\frac{4}{3}c_{\trm{x}}n^{\frac{1}{3}}(\vec{r})+v_{\trm{eff}}(\vec{r})
+\end{equation}
+This can also be improved with the Thomas-Fermi-Dirac-Weizsacker model, which also adds a second-order gradient correction.\\
+
+The problem currently is formulated in terms of electron density $n(\vec{r})$, but it can be connected to wavefunctions $\Psi_{i}(\vec{r})$ using the Hartree-Fock-Slater formalism
+\begin{equation}
+\qty[-\frac{1}{2}\nabla^{2}+v(\vec{r})+J[n(\vec{r})]-K[n(\vec{r})]]\Psi_{i}(\vec{r})=\varepsilon_{i}\Psi_{i}(\vec{r})
+\end{equation}
+which resembles the Kohn-Sham equations.
+
+\subsection{Bloch's Theorem and Band Structures}
+Bloch's theorem states that wavefunctions in a system with periodicity can be written as
+\begin{equation}
+\Psi_{nk}(\vec{r})=\mathcal{U}_{nk}(\vec{r})e^{i\vec{k}\cdot\vec{r}}
+\end{equation}
+where $\mathcal{U}_{nk}(\vec{r})$ has the same periodicity as that of a crystal, namely $\mathcal{U}_{nk}(\vec{r}+\vec{T})=\mathcal{U}_{nk}(\vec{r})$ with $\vec{T}$ describing the period. Thus
+\begin{equation}
+\Psi_{nk}(\vec{r}+\vec{T})=\mathcal{U}_{nk}(\vec{r})e^{i\vec{k}\cdot\vec{r}}e^{i\vec{k}\cdot\vec{T}}=\Psi_{nk}(\vec{r})e^{i\vec{k}\cdot\vec{T}}
+\end{equation}
+Let us cast $\mathcal{U}_{nk}(\vec{r})$ in the form of its Fourier series
+\begin{equation}
+\mathcal{U}_{nk}(\vec{r})=\sum_{\vec{G}}c_{nk,\vec{G}}e^{i\vec{G}\cdot\vec{r}}
+\end{equation}
+where $\vec{G}$ is called the \ul{reciprocal lattice vector}.\\
+
+Recall the Schr\"{o}dinger equation for the Kohn-Sham method is
+\begin{equation}
+{\color{red}\underbrace{\color{black}\bigg[-\frac{1}{2}\nabla^{2}+v_{\trm{eff}}(\vec{r})\bigg]}_{\vb{H}_{\trm{eff}}}}\Psi_{nk}=\varepsilon_{nk}\Psi_{nk}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+\vb{H}_{\trm{eff}}\qty(\sum_{\vec{G}}c_{nk,\vec{G}}e^{i(\vec{k}+\vec{G})\cdot\vec{r}})&=\varepsilon_{nk}\qty(\sum_{\vec{G}}c_{nk,\vec{G}}e^{i(\vec{k}+\vec{G})\cdot\vec{r}})\\
+\implies \sum_{\vec{G}}\qty[\frac{1}{2}\abs{\vec{k}+\vec{G}}^{2}+v_{\trm{eff}}(\vec{r})]c_{nk,\vec{G}}e^{i(\vec{k}+\vec{G})\cdot\vec{r}}&=\varepsilon_{nk}\qty(\sum_{\vec{G}}c_{nk,\vec{G}}e^{i(\vec{k}+\vec{G})\cdot\vec{r}})
+\end{aligned}
+\end{equation}
+Multiplying both sides by $e^{-i(\vec{k}+\vec{G}^{\prime})\cdot\vec{r}}$ and integrate over the space of $\vec{r}$
+\begin{equation}
+\begin{aligned}
+\sum_{\vec{G}}\int\bigg[\frac{1}{2}\abs{\vec{k}+\vec{G}}^{2}+v_{\trm{eff}}(\vec{r})\bigg]e^{i(\vec{G}-\vec{G}^{\prime})\cdot\vec{r}}\dd{\vec{r}}c_{nk,\vec{G}}&=\varepsilon_{nk}\bigg[\sum_{\vec{G}}\int c_{nk,\vec{G}}e^{i(\vec{G}-\vec{G}^{\prime})\cdot\vec{r}}\bigg]\\
+\implies\sum_{\vec{G}}\bigg[\frac{1}{2}\abs{\vec{k}+\vec{G}}^{2}\delta(\vec{G}-\vec{G}^{\prime})+{\color{red}\underbrace{\color{black}V_{\trm{eff}}(\vec{G}-\vec{G}^{\prime})}_{\mathclap{\trm{Fourier transform of $v_{\trm{eff}}$}}}}\bigg]c_{nk,\vec{G}}&=\varepsilon_{nk}c_{nk,\vec{G}}
+\end{aligned}
+\end{equation}
+Assume a basis set (of plane waves) containing $M$ different vectors $\vec{G}$. Thus, the above equation can be written for all $\vec{G}^{\prime}$ that are part of this set. This gives the matrix equation
+\begin{equation}
+\vb{A}\vec{c}=\vb{\varepsilon}\vec{c}
+\end{equation}
+where the matrix elements $A_{ij}$ are given by
+\begin{equation}
+A_{ij}=\frac{1}{2}\abs{\vec{k}+\vec{G}_{i}}^{2}\delta(\vec{G}_{i}-\vec{G})+V_{\trm{eff}}(\vec{G}_{i}-\vec{G})
+\end{equation}
+and the vector elements are $c_{nk,\vec{G}_{i}}$.\\
+
+Note that $k$ must be chosen for the coefficients $c_{nk,\vec{G}}$. This becomes a choice of \ul{$k$-point sampling}. One choice is the Monkhorst-Pack scheme which uses uniform sampling. One can also implement a cut-off energy
+\begin{equation}
+\frac{1}{2}\abs{\vec{k}+\vec{G}}^{2}<E_{\trm{cutoff}}
+\end{equation}
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[<->,thick] (0,-1) -- (0,4) node[above] {$\varepsilon$};
+	\draw[<->,thick] (-2.5,0) -- (2.5,0) node[right] {$k$};
+	\draw[blue,<->,domain=-2:2,samples=200] plot (\x, {(\x)^2)});
+	\draw[red,dashed] (0.4,0) -- (0.4,0.16) -- (0,0.16);
+	\draw[red,dashed] (0.8,0) -- (0.8,0.64) -- (0,0.64);
+	\draw[red,dashed] (1.2,0) -- (1.2,1.44) -- (0,1.44);
+	\draw[red,dashed] (1.6,0) -- (1.6,2.56) -- (0,2.56);
+	\draw[red,dashed] (2,0) -- (2,4) -- (0,4);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Finite Temperature DFT}
+At finite temperature, entropy can no longer be ignored. One now has to look at the Helmholtz free energy.\\
+
+The grand canonical potential is defined as
+\begin{equation}
+\Omega[n(\vec{r})]
 \end{equation}
 
 \end{document}
