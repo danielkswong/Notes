@@ -1,5 +1,5 @@
 \documentclass[12pt,a4paper,titlepage]{article}
-% Daniel Wong September 10, 2020
+% Daniel Wong, March 2023
 
 \usepackage[fleqn]{amsmath} % To write aligned equations
 \usepackage{amssymb} % To write math symbols
@@ -12,7 +12,6 @@
 \usepackage[english]{babel} % To write accented vowels
 \usepackage[toc,page]{appendix} % To add table of contents
 \usepackage{physics} % To use supported physics notation
-\usepackage[none]{hyphenat} % To remove hyphenation
 \usepackage{mathtools}  % To use \mathclap which removes white space for subscripts
 \usepackage{empheq} % To use \empheq environment
 \usepackage{enumitem} % Adjust spacing of examples and proof itemize lists
@@ -695,7 +694,7 @@ Let us define
 \end{equation}
 \begin{equation}
 \begin{aligned}
-{\color{red}\underbrace{\color{black}\vb{K}_{m}(\vec{x}_{1})}_{\mathclap{\substack{\trm{Exchange operator $m$}\\\trm{(local)}}}}}\Chi_{n}(\vec{x}_{1})&=\int\Chi_{m}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{n}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
+{\color{red}\underbrace{\color{black}\vb{K}_{m}(\vec{x}_{1})}_{\mathclap{\substack{\trm{Exchange operator $m$}\\\trm{(non-local)}}}}}\Chi_{n}(\vec{x}_{1})&=\int\Chi_{m}(\vec{x}_{1})\frac{1}{r_{12}}\Chi_{m}^{*}(\vec{x}_{2})\Chi_{n}(\vec{x}_{2})\dd{\vec{x}_{2}}\\
 &=\qty(\int\Chi_{m}^{*}(\vec{x}_{2})\frac{1}{r_{12}}\Chi_{n}(\vec{x}_{2})\dd{\vec{x}_{2}})\Chi_{m}(\vec{x}_{1})
 \end{aligned}
 \end{equation}
@@ -1667,7 +1666,100 @@ At finite temperature, entropy can no longer be ignored. One now has to look at 
 
 The grand canonical potential is defined as
 \begin{equation}
-\Omega[n(\vec{r})]
+\Omega[n(\vec{r})]=T[n(\vec{r})]+U_{\trm{ee}}[n(\vec{r})]-\Theta S[n(\vec{r})]+\int\qty(v(\vec{r})-\mu)n(\vec{r})\dd{\vec{r}}
 \end{equation}
+where $\Theta$ is the temperature, $S$ is the entropy, and $\mu$ is the chemical potential.\\
+
+The Helmholtz free energy is
+\begin{equation}
+A[n(\vec{r})]=T[n(\vec{r})]-\Theta S[n(\vec{r})]
+\end{equation}
+Let us define a reference system similar as before.
+\begin{equation}
+A_{\trm{ref}}[n(\vec{r})]=T_{\trm{ref}}[n(\vec{r})]-\Theta S_{\trm{ref}}[n(\vec{r})]
+\end{equation}
+Thus
+\begin{equation}
+\Omega[n(\vec{r})]=A_{\trm{ref}}[n(\vec{r})]+J[n(\vec{r})]+\int\qty(v(\vec{r})-\mu)n(\vec{r})\dd{\vec{r}}+{\color{red}\underbrace{\color{black}F_{\trm{xc}}[n(\vec{r})]}_{\mathclap{\substack{\trm{exchange correlation}\\ \trm{functional}}}}}
+\end{equation}
+where
+\begin{equation}
+F_{\trm{xc}}[n(\vec{r})]=\qty(A[n(\vec{r})]-A_{\trm{ref}}[n(\vec{r})])+\qty(U_{\trm{ee}}[n(\vec{r})]-J[n(\vec{r})])
+\end{equation}
+Minimizing $\Omega[n(\vec{r})]$ gives the finite temperature Kohn-Sham equations. One gets
+\begin{equation}
+\fdv{A_{\trm{ref}}[n(\vec{r})]}{n(\vec{r})}+\int\frac{n(\vec{r}^{\prime})}{\abs{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}^{\prime}}+\qty(v(\vec{r})-\mu)+\fdv{F_{\trm{xc}}[n(\vec{r})]}{n(\vec{r})}=0
+\end{equation}
+Thus
+\begin{equation}
+\qty(-\frac{1}{2}\nabla^{2}+v_{\trm{eff}}(\vec{r}))\Psi_{i}(\vec{r})=\varepsilon_{i}\Psi_{i}(\vec{r})
+\end{equation}
+where
+\begin{equation}
+v_{\trm{eff}}(\vec{r})=v(\vec{r})+\int\frac{n(\vec{r}^{\prime})}{\abs{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}^{\prime}}+\fdv{F_{\trm{xc}}[n(\vec{r})]}{n(\vec{r})}
+\end{equation}
+and
+\begin{equation}
+n(\vec{r})=\sum_{i=1}^{\infty}f_{i}\Psi_{i}^{*}(\vec{r})\Psi_{i}(\vec{r})
+\end{equation}
+with $f_{i}$ being the Fermi-Dirac distribution given by
+\begin{equation}
+f_{i}=\frac{1}{1+e^{\frac{\varepsilon_{i}-\mu}{k_{B}T}}}
+\end{equation}
+The exchange-correlation functional can be dealt with much in a similar manner as was done at zero temperature. For example, one can do LDA, where one assumes the potential at each point in space equals the free energy of a uniform electron gas at temperature $\Theta$ whose density is equal to the density of the actual system at that point.
+
+\subsection{Time-Dependent DFT}
+Recall in time-independent DFT, the electron density $n(\vec{r})$ uniquely determines the external potential $v(\vec{r})$ to an additive constant. A similar relation holds in the time-dependent case and was shown in 1984 by Runge and Gross, but the additive constant is now time-dependent, though it remains spatially constant. Note that this assume $v(\vec{r},t)$ can be Taylor expanded about some initial time and both $v(\vec{r},t)$ and $n(\vec{r},t)$ vanish at the boundary of the system.\\
+
+Functionals now depend on $[n,\Psi_{0},\phi_{0}]$, where $\Psi_{0}$ is the initial many-body state at time $t_{0}$ (starting point) and $\phi_{0}$ is the initial Kohn-Sham state.\\
+
+Moreover
+\begin{equation}
+v_{\trm{eff}}(\vec{r},t)=v(\vec{r},t)+\int\frac{n(\vec{r}^{\prime},t)}{\abs{\vec{r}-\vec{r}^{\prime}}}\dd{\vec{r}^{\prime}}+v_{\trm{xc}}[n,\Psi_{0},\phi_{0}](\vec{r},t)
+\end{equation}
+The effective Hamiltonian equation is
+\begin{equation}
+\qty(-\frac{1}{2}\nabla^{2}+v_{\trm{eff}}(\vec{r},t))\Psi_{j}(\vec{r},t)=i\pdv{t}\Psi_{j}(\vec{r},t)
+\end{equation}
+with
+\begin{equation}
+\Psi_{j}(\vec{r},t)=\Psi_{\trm{amp},j}(\vec{r},t)\exp\qty(i\Psi_{\trm{phase},j}(\vec{r},t))
+\end{equation}
+and
+\begin{equation}
+n(\vec{r},t)=\sum_{j=1}^{N}\Psi_{j}^{*}(\vec{r},t)\Psi_{j}(\vec{r},t)
+\end{equation}
+$v_{\trm{xc}}[n,\Psi_{0},\phi_{0}](\vec{r},t)$ can be treated with an adiabatic approximation, where the functional uses LDA given the electron density at that given time.
+
+\newpage
+\section{Semi-empirical Electronic Structure Modeling}
+At the start of the course, topics focused on ab-initio (first-principles) methods, such as Hartree-Fock, which did not bring any parameters from empirical observations, experiments, or other methods. This was followed by post Hartree-Fock methods, which include configuration interaction and perturbation theory. Afterwards, we considered density functional theory.\\
+
+Let us now consider semi-empirical methods. These will include linear combinations of atomic orbitals, tight-binding theory, H\"{u}ckel theory, PPP methods, etc.\\
+
+We are trying to solve problems of the form $\vb{FC}=\vb{SC\varepsilon}$. In practice, semi-empirical methods approximate $\vb{F}$ and $\vb{S}$ in order to reduce the computations required to solve this eigenvalue problem.\\
+
+\subsection{H\"{u}ckel Theory}
+Consider H\"{u}ckel $\pi$-orbital theory. In this theory, the core electrons and their effects are lumped in together with the nuclei. Slater type orbitals are also used as basis functions to describe $\pi$-orbitals. Furthermore, the basis functions are assumed to be orthogonal (i.e. $\vb{S}=\id$).\\
+
+Let us now attempt to determine the matrix elements of the effective Hamiltonian. Note that the same atom, put in different molecular systems, would lead to different Hamiltonian matrix elements. This can be illustrated in the system of pyridine and pyrrole.
+
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) coordinate (A) node[above right,yshift=0.1cm] {\small C} -- ++(0:2) coordinate (B) node[above left,yshift=0.1cm] {\small N};
+	\draw[double distance=3pt] (B) -- ++(60:2) coordinate (C) node[left,xshift=-0.1cm] {\small C};
+	\draw (C) -- ++(120:2) coordinate (D) node[below left,yshift=-0.1cm] {\small C};
+	\draw[double distance=3pt] (D) -- ++(180:2) coordinate (E) node[below right,yshift=-0.1cm] {\small C};
+	\draw (E) -- ++(240:2) coordinate (F) node[right,xshift=0.1cm] {\small C};
+	\draw[double distance=3pt] (F) -- (A);
+	\draw[white,fill=black,line width=2pt] (A) circle (3pt);
+	\draw[white,fill=black,line width=2pt] (B) circle (3pt);
+	\draw[white,fill=black,line width=2pt] (C) circle (3pt);
+	\draw[white,fill=black,line width=2pt] (D) circle (3pt);
+	\draw[white,fill=black,line width=2pt] (E) circle (3pt);
+	\draw[white,fill=black,line width=2pt] (F) circle (3pt);
+\end{tikzpicture}
+\end{center}
+
 
 \end{document}
