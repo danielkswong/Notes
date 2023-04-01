@@ -1746,18 +1746,163 @@ Let us now attempt to determine the matrix elements of the effective Hamiltonian
 
 \begin{center}
 \begin{tikzpicture}
-	\draw (0,0) coordinate (A) node[above right,yshift=0.1cm] {\small C} -- ++(0:2) coordinate (B) node[above left,yshift=0.1cm] {\small N};
+	\draw (-3,0) coordinate (A) node[above right,yshift=0.1cm] {\small C} -- ++(0:2) coordinate (B) node[above left,yshift=0.1cm] {\small N};
 	\draw[double distance=3pt] (B) -- ++(60:2) coordinate (C) node[left,xshift=-0.1cm] {\small C};
 	\draw (C) -- ++(120:2) coordinate (D) node[below left,yshift=-0.1cm] {\small C};
 	\draw[double distance=3pt] (D) -- ++(180:2) coordinate (E) node[below right,yshift=-0.1cm] {\small C};
 	\draw (E) -- ++(240:2) coordinate (F) node[right,xshift=0.1cm] {\small C};
 	\draw[double distance=3pt] (F) -- (A);
+	\draw (A) -- ++(240:1) node[below left] {\small H};
+	\draw (B) -- ++(300:1) node[below right] {\small H};
+	\draw (C) -- ++(0:1) node[right] {\small H};
+	\draw (D) -- ++(60:1) node[above right] {\small H};
+	\draw (E) -- ++(120:1) node[above left] {\small H};
+	\draw (F) -- ++(180:1) node[left] {\small H};
 	\draw[white,fill=black,line width=2pt] (A) circle (3pt);
 	\draw[white,fill=black,line width=2pt] (B) circle (3pt);
 	\draw[white,fill=black,line width=2pt] (C) circle (3pt);
 	\draw[white,fill=black,line width=2pt] (D) circle (3pt);
 	\draw[white,fill=black,line width=2pt] (E) circle (3pt);
 	\draw[white,fill=black,line width=2pt] (F) circle (3pt);
+	\draw[red,<-,shorten <=2mm] (B) -- ++(1,0) node[right,align=center,text width=4cm] {contributes 1 electron to the $\pi$ orbital};
+	\node at (-2,-2) {pyridine (protonated)};
+
+	\draw (5,-7) coordinate (G) node[above,yshift=0.1cm] {\small N} -- ++(36:2) coordinate (H) node[left,xshift=-0.1cm] {\small C};
+	\draw[double distance=3pt] (H) -- ++(108:2) coordinate (I) node[below left,yshift=-0.1cm] {\small C};
+	\draw (I) -- ++(180:2) coordinate (J) node[below right,yshift=-0.1cm] {\small C};
+	\draw[double distance=3pt] (J) -- ++(252:2) coordinate (K) node[right,xshift=0.1cm] {\small C};
+	\draw (K) -- (G);
+	\draw (G) -- ++(270:1) node[below] {\small H};
+	\draw (H) -- ++(348:1) node[right] {\small H};
+	\draw (I) -- ++(54:1) node[above right] {\small H};
+	\draw (J) -- ++(126:1) node[above left] {\small H};
+	\draw (K) -- ++(198:1) node[left] {\small H};
+	\draw[white,fill=black,line width=2pt] (G) circle (3pt);
+	\draw[white,fill=black,line width=2pt] (H) circle (3pt);
+	\draw[white,fill=black,line width=2pt] (I) circle (3pt);
+	\draw[white,fill=black,line width=2pt] (J) circle (3pt);
+	\draw[white,fill=black,line width=2pt] (K) circle (3pt);
+	\draw[red,<-,shorten <=2mm] (G) -- ++(-1,0) node[left,align=center,text width=4cm] {contributes 2 electron to the $\pi$ orbital};
+	\node at (5,-9) {pyrrole};
+\end{tikzpicture}
+\end{center}
+The H\"{u}ckel parameter would be different for the nitrogen atoms in the two cases above. The effective Hamiltonian is written as follows:
+\begin{itemize}
+\item Diagonal elements for carbon atoms are $\alpha_{\trm{C}}$
+\item Off-diagonal elements for carbon-carbon are $\beta_{\trm{CC}}$
+\item For other atoms: $\begin{cases}
+\alpha_{x}=\alpha_{\trm{c}}+h_{x}\beta_{\trm{CC}}\\
+\beta_{xy}=k_{xy}\beta_{\trm{CC}}
+\end{cases}$
+\end{itemize}
+For example, for $N$ contributing one $\pi$ electron yields $h_{x}=0.5$ and $k_{xy}=0.84$ (for connection to C). For example, in pyridine
+\begin{center}
+\begin{tikzpicture}
+	\draw (-3,0) coordinate (A) node[above right,yshift=0.2cm] {\small6} -- ++(0:2) coordinate (B) node[above left,yshift=0.2cm] {\small1};
+	\draw[double distance=3pt] (B) -- ++(60:2) coordinate (C) node[left,xshift=-0.2cm] {\small2};
+	\draw (C) -- ++(120:2) coordinate (D) node[below left,yshift=-0.2cm] {\small3};
+	\draw[double distance=3pt] (D) -- ++(180:2) coordinate (E) node[below right,yshift=-0.2cm] {\small4};
+	\draw (E) -- ++(240:2) coordinate (F) node[right,xshift=0.2cm] {\small5};
+	\draw[double distance=3pt] (F) -- (A);
+	\draw (A) -- ++(240:1) node[below left] {\small H};
+	\draw (B) -- ++(300:1) node[below right] {\small H};
+	\draw (C) -- ++(0:1) node[right] {\small H};
+	\draw (D) -- ++(60:1) node[above right] {\small H};
+	\draw (E) -- ++(120:1) node[above left] {\small H};
+	\draw (F) -- ++(180:1) node[left] {\small H};
+	\node[fill=white] at (A) {\small C};
+	\node[fill=white] at (B) {\small N};
+	\node[fill=white] at (C) {\small C};
+	\node[fill=white] at (D) {\small C};
+	\node[fill=white] at (E) {\small C};
+	\node[fill=white] at (F) {\small C};
+\end{tikzpicture}
+\end{center}
+\begin{equation}
+\vb{F}=\mqty[\alpha_{\trm{C}}+0.5\beta_{\trm{CC}} & 0.8\beta_{\trm{CC}} & 0 & 0 & 0 & 0.8\beta_{\trm{CC}}\\
+0.8\beta_{\trm{CC}} & \alpha_{\trm{C}} & \beta_{\trm{CC}} & 0 & 0 & 0\\
+0 & \beta_{\trm{CC}} & \alpha_{\trm{C}} & \beta_{\trm{CC}} & 0 & 0\\
+0 & 0 & \beta_{\trm{CC}} & \alpha_{\trm{C}} & \beta_{\trm{CC}} & 0\\
+0 & 0 & 0 & \beta_{\trm{CC}} & \alpha_{\trm{C}} & \beta_{\trm{CC}}\\
+0.8\beta_{\trm{CC}} & 0 & 0 & 0 & \beta_{\trm{CC}} & \alpha_{\trm{C}}]
+\end{equation}
+$\vb{S}$ is taken to be unity ($\id$). There is also no iterative process as was done in Hartree-Fock.\\
+
+This describes basic H\"{u}ckel theory. Consider now extended H\"{u}ckel theory. This treats all valence electrons explicitly and uses Slater type orbital basis functions. Depending on which atoms are being treated, additional basis functions may also be included (e.g. Li to Ne includes 2s and 2p orbitals). The diagonal elements of the Hamiltonian are the negative of the valence shell ionization energies (which are obtained from atomic spectra). The off-diagonal elements are written as
+\begin{equation}
+h_{ij}=kS_{ij}\frac{h_{ii}+h_{jj}}{2}
+\end{equation}
+where $k$ is an empirical parameter to fit experimental data and $S_{ij}$ is the overlap integral that is calculated exactly. Note that for the purpose of solving the eigenvalue problem, the basis functions are considered to be orthogonal.
+
+\subsection{Pariser, Parr, Pople (PPP) Method}
+Recall in Hartree-Fock, one was required to compute two-electron integrals $[ij|k\ell]$. The number of integrals scaled with the fourth power of the number of electrons in the problem. Instead of computing each integral, let us discard some integrals and parametrize some of the other ones. The central idea to this is \ul{zero-differential overlap (ZDO)}. This states that the integral $[ij|k\ell]$ is zero if $i$ and $j$ or $k$ and $\ell$ are two basis functions centred on different atoms. We are still solving the Roothaan equation
+\begin{equation}
+\vb{FC}=\vb{SC\varepsilon}
+\end{equation}
+where
+\begin{equation}
+[ij|k\ell]=\int\phi_{i}^{*}(\vec{r}_{1})\phi_{j}(\vec{r}_{1})\frac{1}{r_{12}}\phi_{k}^{*}(\vec{r}_{2})\phi_{\ell}(\vec{r}_{2})\dd{\vec{r}_{1}}\dd{\vec{r}_{2}}
+\end{equation}
+This reduces the scaling from $\order{N^{4}}$ to $\order{N^{2}}$.\\
+
+The Fock matrix element for first raw atoms is
+\begin{equation}
+F_{ii}={\color{red}\underbrace{\color{black}W_{i}}_{\mathclap{\substack{\trm{valence ionization}\\ \trm{energy}}}}}+\frac{1}{2}\,{\color{red}\overbrace{\color{black}P_{ii}}^{\mathclap{\substack{\trm{density matrix}\\ \trm{elements}}}}}\gamma_{ii}+\sum_{k\neq i}\qty(P_{kk}-Z_{k})\gamma_{ik}
+\end{equation}
+where
+\begin{equation}
+\gamma_{ik}=\frac{1}{\tikzmarknode{aa}{R_{ik}}+\tikzmarknode{bb}{\alpha_{ik}}}
+\end{equation}
+\begin{tikzpicture}[remember picture,overlay]
+	\draw[red,<-,shorten <=2mm] (aa.south) -- ++(0.5,-0.5) node[right] {\small separation between two centres};
+	\draw[red,<-,shorten <=1mm] (bb.east) -- ++(0.5,0) node[right] {\small determined using spectral data};
+\end{tikzpicture}
+
+and
+\begin{equation}
+F_{ij}=\beta_{ij}-\frac{1}{2}P_{ij}\gamma_{ij}
+\end{equation}
+One can also include \ul{neglect of diatomic differential overlap (NDDO)}, where the one-electron integrals that involve three centres are neglected. In other words, for $[i|h|j]$, terms that come from nuclei that do not host $i$ or $j$ are neglected.\\
+
+Consider \ul{intermediate neglect of differential overlap (INDO)}. Compared to ZDO, $[ij|k\ell]$ vanishes if $i\neq j$ or $k\neq\ell$ (i.e. must be the same basis function), unless if $i$, $j$, $k$, and $\ell$ all lie on the same centre. For \ul{complete neglect of} \ul{differential overlap (CNDO)}, $[ij|k\ell]=0$ if $i\neq j$ or $k\neq\ell$ in all cases.\\
+
+\newpage
+For complete neglect of differential overlap, some parameterizations include:
+\begin{itemize}
+\item All remaining two-electron integrals involving atoms $A$ and $B$ are assumed to be equal (regardless of basis functions involved)
+\begin{equation}
+F_{ii}={\color{red}\underbrace{\color{black}U_{ii}}_{\mathrlap{=\int\phi_{i}^{*}(\vec{r}_{1})\qty(-\frac{1}{2}\nabla^{2}-\frac{Z_{A}}{R_{A}})\phi_{i}(\vec{r}_{1})\dd{\vec{r}_{1}}}}}+\qty(P_{AA}-\frac{1}{2}P_{ii})\gamma_{AA}+\sum_{B\neq A}(P_{BB}\gamma_{AB}-{\color{red}\underbrace{\color{black}V_{AB}}_{\mathclap{\substack{\trm{contributions from}\\\trm{other nuclei}}}}})
+\end{equation}
+with $P_{AA}$ being the sum of diagonals for all the basis functions on atom $A$. Additionally
+\begin{equation}
+F_{ij}={\color{red}\underbrace{\color{black}\beta_{AB}}_{\mathclap{\substack{\trm{parameter chosen from comparison}\\\trm{with ab-initio calculations}}}}}S_{ij}-\frac{1}{2}P_{ij}\gamma_{AB}
+\end{equation}
+\item Alternatively, $U_{ii}$ is calculated as
+\begin{equation}
+U_{ii}=-\frac{1}{2}\qty(\tikzmarknode{aa}{I_{i}}+\tikzmarknode{bb}{E_{i}})-\qty(Z_{A}-\frac{1}{2})\gamma_{AA}\qq{,}V_{AB}=-Z_{B}\gamma_{AB}
+\end{equation}
+\end{itemize}
+\begin{tikzpicture}[remember picture,overlay]
+	\draw[red,<-,shorten <=1mm] (aa.south) -- ++(-0.3,-0.5) node[below left,xshift=0.3cm] {\footnotesize ionization energy};
+	\draw[red,<-,shorten <=1mm] (bb.south) -- ++(0.4,-0.5) node[below right,xshift=-0.3cm] {\footnotesize electron affinity};
+\end{tikzpicture}
+
+The list continues and includes modified INDO (MINDO), modified neglect of differential order (MNDO), Austin model 1 (AM1), third parameterization of MNDO (PM3), semi ab-initio model (SAM1), and so on.
+
+\newpage
+\section{Molecular Mechanics and Molecular Dynamics}
+The force on each particle will be due to interactions with all other particles. A force field that describes these interactions can be calculated by quantum mechanical ab-initio calculations, but can also come from semi-empirical approaches.
+\begin{center}
+\begin{tikzpicture}
+	\draw[ultra thick,->] (0,0) -- (0,4) node[above]{$z$};
+	\draw[ultra thick,->] (0,0) -- (4,0) node[right]{$y$};
+	\draw[ultra thick,->] (0,0) -- (-1,-1) node[below left]{$x$};
+	\draw[->] (0,0) -- node[below]{$\vec{r}_{i}$} (3,1.5) node[right]{$m_{i}$};
+\end{tikzpicture}
+\end{center}
+Consider some basic force fields. One example is Hooke's law.
+\begin{center}
+\begin{tikzpicture}
 \end{tikzpicture}
 \end{center}
 
