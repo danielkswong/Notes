@@ -1893,18 +1893,319 @@ The list continues and includes modified INDO (MINDO), modified neglect of diffe
 \section{Molecular Mechanics and Molecular Dynamics}
 The force on each particle will be due to interactions with all other particles. A force field that describes these interactions can be calculated by quantum mechanical ab-initio calculations, but can also come from semi-empirical approaches.
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.7]
 	\draw[ultra thick,->] (0,0) -- (0,4) node[above]{$z$};
 	\draw[ultra thick,->] (0,0) -- (4,0) node[right]{$y$};
 	\draw[ultra thick,->] (0,0) -- (-1,-1) node[below left]{$x$};
-	\draw[->] (0,0) -- node[below]{$\vec{r}_{i}$} (3,1.5) node[right]{$m_{i}$};
+	\draw[->] (0,0) -- node[below,xshift=0.2cm,yshift=0.1cm]{$\vec{r}_{i}$} (3,1.5) node[right]{$m_{i}$};
 \end{tikzpicture}
 \end{center}
 Consider some basic force fields. One example is Hooke's law.
 \begin{center}
 \begin{tikzpicture}
+	\draw[decoration={aspect=0.3,segment length=3mm,amplitude=3mm,coil},decorate] (0,0) -- (3,0);
+	\filldraw[black] (-0.5,0) circle (2pt);
+	\filldraw[black] (3.5,0) circle (2pt);
+	\draw (-0.5,0) -- (0,0);
+	\draw (3,0) -- (3.5,0);
+	\draw[->] (0,-1) -- node[below] {$\vec{r}$} (3,-1);
+	\draw[->] (5,-1) -- (9.5,-1) node[right] {$r$};
+	\draw[->] (5.5,-1.5) -- (5.5,1.5) node[above] {$U$};
+	\draw (7.5,-0.9) -- (7.5,-1.1) node[below] {$r_{0}$};
+	\draw[domain=6.1:8.9,samples=200,<->] plot (\x, {(\x-7.5)^2-0.5});
+	\node[right] at (9.5,0.5) {$\vec{F}=-\vec{\nabla}U$};
 \end{tikzpicture}
 \end{center}
+Regardless of the distance $r$, the two atoms will always want to come back together. As such, no bond dissociation is captured.\\
+
+One improvement to this force field is the Morse potential.
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (-0.5,0) -- (6,0) node[right] {$r$};
+	\draw[->] (0,-0.5) -- (0,4) node[above] {$U$};
+	\draw[dashed] (-0.1,1) node[left] {$D_{e}$} -- (6,1);
+	\draw[domain=0.2:5.8,samples=200,<->] plot (\x, {(1-exp(-0.6*(\x-2)))^2});
+	\draw (2,0.1) -- (2,-0.1) node[below] {$r_{0}$};
+	\node[right] at (7,2) {$U=D_{e}\qty[1-\exp\big(\beta(r-r_{0})\big)]^{2}$};
+\end{tikzpicture}
+\end{center}
+A more general form for the force field looks like
+\begin{equation}
+\begin{aligned}
+U_{\trm{tot}}&=\sum_{A,B}U_{AB}+\sum_{\mathclap{A,B,C}}U_{ABC}+\sum_{\mathclap{A,B,C,D}}U_{ABCD,\trm{dih}}\\
+&\quad+\sum_{\mathclap{A,B,C,D}}U_{ABCD,\trm{out of plane}}+\sum U_{\trm{non-bonded}}+\sum U_{\trm{Coulomb}}
+\end{aligned}
+\end{equation}
+\begin{center}
+\begin{tikzpicture}
+	\draw (0,0) -- node[below] {\footnotesize bond length} (1,0);
+	\filldraw[black] (0,0) node[above] {$A$} circle (2pt);
+	\filldraw[black] (1,0) node[above] {$B$} circle (2pt);
+	\draw (3,0) -- (4,0) node[below] {\footnotesize bond angle} -- (4.7,0.7);
+	\filldraw[black] (3,0) node[above] {$A$} circle (2pt);
+	\filldraw[black] (4,0) node[above] {$B$} circle (2pt);
+	\filldraw[black] (4.7,0.7) node[above] {$C$} circle (2pt);
+	\filldraw[draw=black,fill=gray,opacity=0.2] (7,0.8,0) -- (7,0.8,2) -- (9,0.8,2) -- (9,0.8,0) -- cycle;
+	\filldraw[draw=red,fill=red,opacity=0.2] (7,0.5,0.5) -- (7,1.8,0.5) -- (9,1.8,0.5) -- (9,0.5,0.5) -- cycle;
+	\filldraw[black] (7.3,0.8,1.5) node[above left,xshift=-0.3cm] {$A$} circle (2pt);
+	\filldraw[black] (7.3,0.8,0.5) node[above left,xshift=-0.3cm] {$B$} circle (2pt);
+	\filldraw[black] (8.7,0.8,0.5) node[above right,xshift=0.3cm] {$C$} circle (2pt);
+	\filldraw[black] (8.7,1.5,0.5) node[above right,xshift=0.3cm] {$D$} circle (2pt);
+	\draw (7.3,0.8,1.5) -- (7.3,0.8,0.5) --(8.7,0.8,0.5) -- (8.7,1.5,0.5);
+	\node[below] at (7.5,0) {\footnotesize dihedral angle};
+	\filldraw[draw=black,fill=gray,opacity=0.2] (11,0.8,0) -- (11,0.8,2) -- (13,0.8,2) -- (13,0.8,0) -- cycle;
+	\filldraw[black] (11.3,0.8,1.5) node[above left,xshift=-0.3cm] {$A$} circle (2pt);
+	\filldraw[black] (11.3,0.8,0.5) node[above left,xshift=-0.3cm] {$C$} circle (2pt);
+	\filldraw[black] (12.7,0.8,1) node[right,xshift=0.3cm] {$B$} circle (2pt);
+	\filldraw[black] (12,1.4,1) node[above] {$D$} circle (2pt);
+	\draw (11.3,0.8,1.5) -- (12.7,0.8,1) -- (11.3,0.8,0.5);
+	\draw (12.7,0.8,1) -- (12,1.4,1);
+	\node[below] at (11.5,0) {\footnotesize out-of-plane angle};
+\end{tikzpicture}
+\end{center}
+One example is
+\begin{equation}
+\begin{aligned}
+U_{\trm{tot}}&=\sum_{\trm{bonds}}\frac{1}{2}k_{AB}\qty(R_{AB}-R_{\trm{eq},AB})^{2}+\sum_{\trm{bonds}}\frac{1}{2}k_{ABC}\qty(\theta_{ABC}-\theta_{\trm{eq},ABC})^{2}\\
+&\quad+\sum_{\trm{dihedrals}}\frac{U_{0}}{2}\qty[1-\cos\big(n(x-x_{0})\big)]+\sum_{\substack{\trm{out-of-}\\\trm{plane}}}\frac{k}{2\sin^{2}\varphi_{\trm{eq}}}\qty(\cos\psi-\cos\psi_{0})^{2}\\
+&\quad+\sum_{\substack{\trm{non-}\\\trm{bonded}}}\qty(\frac{c_{AB}^{12}}{R_{AB}^{12}}-\frac{c_{AB}^{6}}{R_{AB}^{6}})+\frac{1}{4\pi\en}\sum_{\trm{charges}}\frac{Q_{A}Q_{B}}{R_{AB}}
+\end{aligned}
+\end{equation}
+Some examples of available force fields include
+\begin{itemize}[noitemsep]
+\item Dreiding
+	\begin{itemize}[nolistsep]
+	\item Works for H, C, N, O, P, S ,F, Cl, Br, I
+	\item Does not have a Coulomb term
+	\end{itemize}
+\item MM1
+	\begin{itemize}[nolistsep]
+	\item Works for hydrocarbons
+	\item Does not have a Coulomb term
+	\item Contains exponential-6 Lennard-Jones term
+	\item Includes some mixed (bond length-bond angle) terms
+	\end{itemize}
+\item MM2
+	\begin{itemize}[nolistsep]
+	\item Improves MM1
+	\item Includes more extensive dihedral term
+	\item Includes more extensive bending term
+	\item Drops mixed terms
+	\end{itemize}
+\item AMBER (Assisted Model Building and Energy Refinement)
+	\begin{itemize}[nolistsep]
+	\item Works for nucleic acids and proteins
+	\item Includes distance dependent relative permittivity to include solvent effects
+	\item Hydrogen atoms bonded to carbon are not treated explicitly
+	\item Hydrogen bonds include using a 12-10 Lennard-Jones potential
+	\end{itemize}
+\item OPLS (Optimized Potential for Liquid Simulations)
+	\begin{itemize}[nolistsep]
+	\item Works for amino acids and proteins
+	\item CH$_{\trm{n}}$ groups are treated as unit atoms centred on carbon
+	\end{itemize}
+\item R.A. Johnson
+	\begin{itemize}[nolistsep]
+	\item Works for Fe, W, V
+	\end{itemize}
+\end{itemize}
+
+One could do molecular statics with the force fields above. Moreover, one can also do molecular dynamics (MD). Accelerations are calculated from the force field on each atom and each atom is propagated according to the accelerations. Note that a force field that is suitable for statics may not necessarily be suitable for dynamics.
+
+\subsection{Classical Molecular Dynamics}
+The atoms in a system follow Newton's law
+\begin{equation}
+\vec{F}_{i}=m_{i}\vec{a}_{i}\qq{,}i=1,\cdots,N
+\end{equation}
+which is known from a force field, based on the coordinates of all the atoms in the system. Let us solve these equations of motion. We will start from an initial set of coordinates and propagate in time.\\
+
+There are different time propagations. Consider the \ul{leapfrog algorithm}.
+\begin{equation*}
+\left\{
+\begin{aligned}
+v_{i}\qty(t+\frac{\Delta t}{2})&=v_{i}(t)+\dv{v_{i}}{t}\Bigr|_{t}\qty(\frac{\Delta t}{2})+\frac{1}{2}\dv[2]{v_{i}}{t}\Bigr|_{t}\qty(\frac{\Delta t}{2})^{2}+\ldots\\
+v_{i}\qty(t-\frac{\Delta t}{2})&=v_{i}(t)+\dv{v_{i}}{t}\Bigr|_{t}\qty(-\frac{\Delta t}{2})+\frac{1}{2}\dv[2]{v_{i}}{t}\Bigr|_{t}\qty(-\frac{\Delta t}{2})^{2}+\ldots
+\end{aligned}\right.
+\end{equation*}
+\begin{equation}
+\implies v_{i}\qty(t+\frac{\Delta t}{2})=v_{i}\qty(t-\frac{\Delta t}{2})+{\color{red}\underbrace{\color{black}\dv{v_{i}}{t}\Bigr|_{t}}_{\mathclap{a_{i}(t)=\frac{F_{i}(t)}{m}}}}\qty(\Delta t)\qq{\color{red}(neglecting higher orders)}
+\end{equation}
+Similarly
+\begin{equation}
+r_{i}(t+\Delta t)=r_{i}(t)+{\color{red}\underbrace{\color{black}\dv{r_{i}}{t}\Bigr|_{t+\frac{\Delta t}{2}}}_{v_{i}\qty(t+\frac{\Delta t}{2})}}\qty(\Delta t)
+\end{equation}
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (-0.5,0) -- (8,0) node[right] {$t$};
+	\draw (0,-0.1) -- (0,0.1) node[above] {$v_{i}\qty(t-\frac{\Delta t}{2})$};
+	\draw (3,-0.1) -- (3,0.1) node[above] {$v_{i}\qty(t+\frac{\Delta t}{2})$};
+	\draw (6,-0.1) -- (6,0.1);
+	\filldraw[black] (1.5,0) node[below] {$r_{i}(t)$} circle (2pt);
+	\filldraw[black] (4.5,0) node[below] {$r_{i}(t+\Delta t)$} circle (2pt);
+	\filldraw[black] (7.5,0) circle (2pt);
+	\draw[->,shorten <=1mm,shorten >=1mm] (0,1) to[bend left] (3,1);
+	\draw[->,shorten <=1mm,shorten >=1mm] (3,1) to[bend left] (6,1);
+	\draw[->,shorten <=1mm,shorten >=1mm] (1.5,-1) to[bend right] (4.5,-1);
+	\draw[->,shorten <=1mm,shorten >=1mm] (4.5,-1) to[bend right] (7.5,-1);
+\end{tikzpicture}
+\end{center}
+Consider the \ul{Verlet algorithm}.
+\begin{equation*}
+\left\{
+\begin{aligned}
+r_{i}\qty(t+\Delta t)&=r_{i}(t)+\dv{r_{i}}{t}\Bigr|_{t}\qty(\Delta t)+\frac{1}{2}\dv[2]{r_{i}}{t}\Bigr|_{t}\qty(\Delta t)^{2}+\ldots\\
+r_{i}\qty(t-\Delta t)&=r_{i}(t)+\dv{r_{i}}{t}\Bigr|_{t}\qty(-\Delta t)+\frac{1}{2}\dv[2]{r_{i}}{t}\Bigr|_{t}\qty(-\Delta t)^{2}+\ldots
+\end{aligned}\right.
+\end{equation*}
+\begin{equation}
+\implies r_{i}\qty(t+\Delta t)=2r_{i}(t)-r_{i}(t-\Delta t)+{\color{red}\underbrace{\color{black}\dv[2]{r_{i}}{t}\Bigr|_{t}}_{\mathclap{a_{i}(t)=\frac{F_{i}(t)}{m}}}}\qty(\Delta t)^{2}\qq{\color{red}(neglecting higher orders)}
+\end{equation}
+If the velocities of the atoms are desired
+\begin{equation}
+v_{i}(t)=\frac{r_{i}(t+\Delta t)-r_{i}(t-\Delta t)}{2\Delta t}
+\end{equation}
+Consider the \ul{velocity Verlet algorithm}.
+\begin{equation}
+\begin{aligned}
+r_{i}(t+\Delta t)&=r_{i}(t)+{\color{red}\underbrace{\color{black}\dv{r_{i}}{t}\Bigr|_{t}}_{v_{i}(t)}}+\frac{1}{2}{\color{red}\underbrace{\color{black}\dv[2]{r_{i}}{t}\Bigr|_{t}}_{a_{i}(t)}}(\Delta t)^{2}\\
+v_{i}(t+\Delta t)&=v_{i}(t)+\frac{a_{i}(t)+a_{i}(t+\Delta t)}{2}\Delta t
+\end{aligned}
+\end{equation}
+
+\subsection{Physics of Molecular Dynamics Considerations}
+There are a number of considerations one should account for before performing a molecular dynamics simulation
+\begin{itemize}[noitemsep]
+\item Choice of force field (interatomic potential)
+\item Time propagation algorithm
+\item Time step (should be smaller than or comparable to the time scale of atomic motion, $\sim$ fs order)
+\item Number of time steps required
+\item Boundary conditions (including periodicity provided they are larger than the length scales of importance)
+\item Key features/parameters that describe the system (fixed or changing) which may include particle number, volume, pressure, temperature
+\begin{itemize}[nolistsep]
+\item May require different statistical ensembles such as $nVE$ (microcanonical), $nVT$ (canonical), or $\mu VE$ (grand canonical)
+\end{itemize}
+\end{itemize}
+
+Temperature in the system is treated as
+\begin{equation}
+\begin{aligned}
+\sum_{i=1}^{N}\frac{1}{2}m_{i}v_{i}^{2}&=ND\qty(\frac{1}{2}k_{B}T)\\
+\implies T&=\frac{1}{NDk_{B}}\sum_{i=1}^{N}m_{i}v_{i}^{2}
+\end{aligned}
+\end{equation}
+where $D$ is the dimensionality of the problem.\\
+
+Consider pressure. Starting with the virial theorem
+\begin{equation}
+\begin{aligned}
+2E_{\trm{kin}}&=-\sum_{i=1}^{N}\ev{\vec{r}_{i}\cdot\vec{F}_{i}}\\
+&=-\sum_{i=1}^{N}\ev{\vec{r}_{i}\cdot\vec{F}_{i,\trm{int}}}-\sum_{i=1}^{N}\ev{\vec{r}_{i}\cdot\vec{F}_{i,\trm{ext}}}
+\end{aligned}
+\end{equation}
+
+For example, for the shaded region
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (0,0,0) -- (2.5,0,0) node[right] {$x$};
+	\draw[->] (0,0,0) -- (0,2.5,0) node[above] {$y$};
+	\draw[->] (0,0,0) -- (0,0,2.5) node[below left] {$z$};
+	\filldraw[draw=black,fill opacity=0.2] (0,0,2) -- (2,0,2) -- (2,2,2) -- (0,2,2) -- cycle;
+	\node[above left] at (0,0,2) {$L_{x}$};
+	\draw (2,0,0) node[below right] {$L_{x}$} -- (2,2,0) -- (2,2,2) -- (2,0,2) -- cycle;
+	\draw (0,2,0) node[above left] {$L_{y}$} -- (0,2,2) -- (2,2,2) -- (2,2,0) -- cycle;
+\end{tikzpicture}
+\end{center}
+\begin{equation}
+-\sum_{i=1,\trm{shaded}}^{N}\ev{\vec{r}_{i}\cdot\vec{F}_{i,\trm{ext}}}=L_{x}(PL_{y}L_{z})
+\end{equation}
+Accounting for all sides
+\begin{equation}
+\begin{aligned}
+-\sum_{i=1}^{N}\ev{\vec{r}_{i}\cdot\vec{F}_{i,\trm{ext}}}&=L_{x}(PL_{y}L_{z})+L_{y}(PL_{x}L_{z})+L_{z}(PL_{x}L_{y})+0+0+0\\
+&=DPV
+\end{aligned}
+\end{equation}
+Thus
+\begin{equation}
+\begin{aligned}
+2\qty(ND\frac{1}{2}k_{B}T)&=-\sum_{i=1}^{N}\ev{\vec{r}_{i}\cdot\vec{F}_{i,\trm{int}}}+DPV\\
+\implies PV&=Nk_{B}T+\frac{1}{D}\sum_{i=1}^{N}\ev{\vec{r}_{i}\cdot\vec{F}_{i,\trm{int}}}
+\end{aligned}
+\end{equation}
+
+\subsection{Thermostats and Barostats}
+One simple thermostat is \ul{velocity scaling}.
+\begin{equation}
+v_{i}^{\trm{new}}(t)=\sqrt{\frac{T_{\trm{MD}}}{T(t)}}v_{i}^{\trm{old}}(t)
+\end{equation}
+Another example is the \ul{Berendesen thermostat}.
+\begin{equation}
+\dv{v_{i}}{t}=\frac{F_{i}}{m_{i}}+\frac{1}{2\tau}\qty(\frac{T_{\trm{MD}}}{T(t)}-1)v_{i}
+\end{equation}
+There is also the \ul{Andersen thermostat}. Knowing that particles should follow a Maxwell-Boltzmann distribution, velocities of a prescribed number of particles are drawn from a Maxwell-Boltzmann distribution corresponding to the desired temperature and the resulting particles are allowed to interact with the system.\\
+
+Consider \ul{Langevin dynamics}.
+\begin{equation}
+m_{i}\dv{v_{i}}{t}=F_{i}(t)-m_{i}\Gamma v_{i}(t)+A_{i}(t)
+\end{equation}
+where $\Gamma$ is the friction coefficient and $A_{i}(t)$ is random noise that depends on temperature.\\
+
+One famous example is the \ul{Nos\'{e}-Hoover thermostat}. This uses the velocity Verlet algorithm.
+\begin{equation}
+\begin{aligned}
+r_{i}(t+\Delta t)&=r_{i}(t)+v_{i}(t)\Delta t+\frac{1}{2}a_{i}(t)\Delta t^{2}\\
+v_{i}(t+\Delta t)&=v_{i}(t)+\frac{a_{i}(t)+a_{i}(t+\Delta t)}{2}\Delta t\\
+&=v_{i}\qty(t+\frac{\Delta t}{2})+\frac{a_{i}(t+\Delta t)}{2}\Delta t
+\end{aligned}
+\end{equation}
+The thermostat follows
+\begin{equation}
+m_{i}a_{i}(t)=F_{i}(t)-\mu m_{i}v_{i}(t)
+\end{equation}
+where $\mu$ evolves following
+\begin{equation}
+\dv{\mu}{t}=\frac{1}{\tikzmarknode{aa}{Q}}\Bigg[\,{\color{red}\underbrace{\color{black}\sum_{i=1}^{N}\frac{1}{2}m_{i}v_{i}^{2}(t)-\frac{3N+\tikzmarknode{bb}{1}}{2}k_{B}T_{\trm{MD}}}_{\substack{\trm{deviation between actual}\\ \trm{and expected kinetic energies}}}}\,\Bigg]
+\end{equation}
+\begin{tikzpicture}[remember picture,overlay]
+	\draw[red,<-,shorten <=1mm] (aa.south) -- ++ (0,-0.5) node[below] {\footnotesize weight};
+	\draw[red,<-,shorten <=1mm] (bb.north) -- ++ (0.5,0.5) node[right] {\footnotesize extra degree of freedom from $\mu$};
+\end{tikzpicture}
+
+Thus
+\begin{equation}
+\begin{aligned}
+\mu\qty(t+\frac{\Delta t}{2})&=\mu(t)+\frac{1}{Q}\qty[\sum_{i=1}^{N}\frac{1}{2}m_{i}v_{i}^{2}(t)-\frac{3N+1}{2}k_{B}T_{\trm{MD}}]\frac{\Delta t}{2}\\
+\mu\qty(t+\Delta t)&=\mu(t+\frac{\Delta t}{2})+\frac{1}{Q}\qty[\sum_{i=1}^{N}\frac{1}{2}m_{i}v_{i}^{2}(t)-\frac{3N+1}{2}k_{B}T_{\trm{MD}}]\frac{\Delta t}{2}
+\end{aligned}
+\end{equation}
+Following the velocity Verlet equation and the equation describing the thermostat
+\begin{equation}
+\begin{aligned}
+v_{i}\qty(t+\Delta t)&=v_{i}\qty(t+\frac{\Delta t}{2})+\frac{1}{2m_{i}}\qty[F_{i}\qty(t+\Delta t)-\mu(t+\Delta t)m_{i}v_{i}(t+\Delta t)]\Delta t\\
+&= \frac{v_{i}\qty(t+\frac{\Delta t}{2})+\qty(\frac{\Delta t}{2m_{i}})F_{i}(t+\Delta t)}{1+\frac{\Delta t}{2}\mu(t+\Delta t)}
+\end{aligned}
+\end{equation}
+Moving to barostats, one simple barostat is \ul{volume scaling}. Recall the virial theorem relating pressure and volume. If the pressure differs from the desired value as the system evolves, the volume can be adjusted such that the pressure obtains the value required.\\
+
+Another barostat is the \ul{Berendsen barostat}. The coordinates are scaled by $\eta^{\frac{1}{3}}$, such that the volume is scaled by $\eta$, where
+\begin{equation}
+\eta(t)=1-\frac{\Delta t}{\tau_{P}}\gamma\qty(P_{\trm{MD}}-P(t))
+\end{equation}
+with $\tau_{P}$ gives the relaxation time and $\gamma$ gives the compressibility of the system.\\
+
+There is also the \ul{Andersen barostat}, which follows
+\begin{equation}
+\begin{aligned}
+\dv[2][{V}{t}&=\frac{P(t)-P_{\trm{MD}}}{Q}\qq{,}\begin{cases}
+r_{i}=V^{\frac{1}{3}}s_{i}\\
+v_{i}=V^{\frac{1}{3}}\dv{s_{i}}{t}
+\end{cases}\\
+\implies \dv[2]{s_{i}}{t}&=\frac{F_{i}}{m_{i}V^{\frac{1}{3}}}-\frac{2}{3}\frac{\dv{V}{t}}{V}\qty(\dv{s_{i}}{t})
+\end{aligned}
+\end{equation}
+where $s_{i}$ is an auxiliary variable.\\
+
+Consider finally the \ul{Parinello-Rahman barostat}. It is an extension of the Andersen barostat, but allows the shape of the simulation box to change.
 
 
 \end{document}
